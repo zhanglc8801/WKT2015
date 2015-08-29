@@ -1,0 +1,94 @@
+﻿@model WKT.Model.SiteModel
+@{
+    ViewBag.Title = "专辑寄语_" + Html.SiteName();
+}
+<div class="C_right" style=" height: auto; min-height:720px;">
+    <h4 class="list_site">您当前的位置：<a href="/">首页</a> &gt;&gt; <a>专家寄语</a></h4>
+    <ul><li style="background:0;border-bottom:1px solid #5ec9db;font-weight:900;color:#000;"></li></ul>
+    <div style=" padding-left:30px; padding-top:10px; line-height:25px;">
+        <img src="../../Content/ZHYJY/img/钟南山题词.png" onclick="javascript:ShowImg1()" />
+        <img src="../../Content/ZHYJY/img/盛志勇题词.png" onclick="javascript:ShowImg2()"/>
+        <img src="../../Content/ZHYJY/img/程天民题词.png" onclick="javascript:ShowImg3()"/>
+        <img src="../../Content/ZHYJY/img/贺福初题词.png" onclick="javascript:ShowImg4()"/>
+        <img src="../../Content/ZHYJY/img/樊代明题词.png" onclick="javascript:ShowImg5()"/>
+        <img src="../../Content/ZHYJY/img/王一镗题词.png" onclick="javascript:ShowImg6()"/>
+    </div>
+
+    <div id="img1" style="text-align:center;">
+        <img src="../../Content/ZHYJY/img/钟南山.jpg" />
+    </div>
+    <div id="img2" style="text-align:center; display:none;">
+        <img src="../../Content/ZHYJY/img/盛志勇.jpg" />
+    </div>
+    <div id="img3" style=" text-align:center;display:none;">
+        <img src="../../Content/ZHYJY/img/程天民.jpg" />
+    </div>
+    <div id="img4" style=" text-align:center;display:none;">
+        <img src="../../Content/ZHYJY/img/贺福初.jpg" />
+    </div>
+    <div id="img5" style=" text-align:center;display:none;">
+        <img src="../../Content/ZHYJY/img/樊代明.jpg" />
+    </div>
+    <div id="img6" style=" text-align:center;display:none;">
+        <img src="../../Content/ZHYJY/img/王一镗.jpg" />
+    </div>
+
+    <script type="text/javascript">
+        function ShowImg1() {
+            document.getElementById("img1").style.display = "block";
+            document.getElementById("img2").style.display = "none";
+            document.getElementById("img3").style.display = "none";
+            document.getElementById("img4").style.display = "none";
+            document.getElementById("img5").style.display = "none";
+            document.getElementById("img6").style.display = "none";
+        }
+        function ShowImg2() {
+            document.getElementById("img2").style.display = "block";
+            document.getElementById("img1").style.display = "none";
+            document.getElementById("img3").style.display = "none";
+            document.getElementById("img4").style.display = "none";
+            document.getElementById("img5").style.display = "none";
+            document.getElementById("img6").style.display = "none";
+        }
+        function ShowImg3() {
+            document.getElementById("img3").style.display = "block";
+            document.getElementById("img2").style.display = "none";
+            document.getElementById("img1").style.display = "none";
+            document.getElementById("img4").style.display = "none";
+            document.getElementById("img5").style.display = "none";
+            document.getElementById("img6").style.display = "none";
+        }
+        function ShowImg4() {
+            document.getElementById("img4").style.display = "block";
+            document.getElementById("img2").style.display = "none";
+            document.getElementById("img3").style.display = "none";
+            document.getElementById("img1").style.display = "none";
+            document.getElementById("img5").style.display = "none";
+            document.getElementById("img6").style.display = "none";
+        }
+        function ShowImg5() {
+            document.getElementById("img5").style.display = "block";
+            document.getElementById("img2").style.display = "none";
+            document.getElementById("img3").style.display = "none";
+            document.getElementById("img4").style.display = "none";
+            document.getElementById("img1").style.display = "none";
+            document.getElementById("img6").style.display = "none";
+        }
+        function ShowImg6() {
+            document.getElementById("img6").style.display = "block";
+            document.getElementById("img2").style.display = "none";
+            document.getElementById("img3").style.display = "none";
+            document.getElementById("img4").style.display = "none";
+            document.getElementById("img5").style.display = "none";
+            document.getElementById("img1").style.display = "none";
+        }
+    </script>
+
+</div>
+
+        <div>&nbsp;</div>       
+        <div id="footer" style=" margin-top:-15px;">
+            <p></p><br/>
+            <p>北京市丰台区东大街8号信息楼 《灾害医学与救援（电子版）》 编辑部<br />
+                电话：（010）66947905，（010）51128591 传真：（010）66947906</p>
+        </div>

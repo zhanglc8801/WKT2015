@@ -1,0 +1,328 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>登录-@Html.SiteName()</title>
+    <link href="@Html.RootPath()/content/denglu.css" rel="stylesheet" type="text/css" />
+    <link href="@Html.RootPath()/Content/ligerUI/skins/Aqua/css/ligerui-dialog.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        function onEnterDown(et) {
+            if (et.keyCode) {
+                if (et.keyCode == 13)
+                    login();
+            } else {
+                if (et.which == 13)
+                    login();
+            }
+        }
+    </script>
+</head>
+<body onkeydown='onEnterDown(event);'>
+    <br />
+    <div id="author_content">
+        <div class="author_head">
+            &nbsp;@Html.SiteName()<span style="color: #fff; font-size: 20px; font-weight: normal">&nbsp;稿件处理平台</span>
+        </div>
+        <div class="author_menu">
+            <div class="author_menu_wenzi">
+                <a href="@Html.SiteHome()">期刊首页</a>
+            </div>
+        </div>
+        <div id="author_content_body">
+            <div class="author_content_l">
+                <div style="width: 415px; line-height: 22px;">
+                    @if (string.Compare(ViewBag.Group, "author", true) == 0)
+                    {
+                        <div class="px_14">
+                            在作者中心登录后, 您可以:
+                        </div>
+                        <div class="px_12">
+                            1. 向本刊投稿, 或继续完成您未完成的投稿.<br />
+                            2. 跟踪查询您的稿件处理流程记录和目前的状态.<br />
+                            3. 根据编辑部的要求, 阅读修改意见并上传修改稿.<br />
+                            4. 下载、修订和上传您的清样文件.<br />
+                            5. 查询文章费用缴纳情况.<br />
+                            6. 修改您的个人信息.
+                        </div>
+                        <div class="px_14" style="margin-top: 20px;">
+                            请注意：
+                        </div>
+                        <div class="px_12">
+                            1. 如果您是新作者(即第一次投稿), 请先注册, 并记住您的用户名和口令.
+                            <br />
+                            2. 如果您已经拥有用户名和密码, 直接登录即可. 请不要重复<br />
+                            注册, 否则可能导致您信息查询不完整.<br />
+                            3. 本系统的用户名和密码区别大小写.
+                        </div>
+                    }
+                    else if (string.Compare(ViewBag.Group, "expert", true) == 0)
+                    {
+                        <div class="px_14">
+                            在专家中心登录后, 您可以:
+                        </div>
+                        <div class="px_12">
+                            1. 审阅编辑部送您评审的稿件.<br />
+                            2. 审阅编辑部送您复审的稿件.<br />
+                            3. 查询、浏览您曾经评审过的稿件信息和审稿记录.<br />
+                            4. 修改您的个人信息和登录密码.
+                        </div>
+                        <div class="px_14" style="margin-top: 20px;">
+                            请注意：
+                        </div>
+                        <div class="px_12">
+                            1. 您的初始帐号是由编辑部设置的, 登录后您可以自己修改.<br />
+                            2. 自荐的审稿人须经主编认可后才能进行审稿.
+                            <br />
+                            3. 本系统的用户名和密码区别大小写.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="px_14">
+                            请注意：
+                        </div>
+                        <div class="px_12">
+                            1. 初始帐号由系统管理员设置.<br />
+                            2. 登陆后可以自己修改帐号.
+                            <br />
+                            3. 本系统的用户名和密码区别大小写.
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="login-panel" id="login-panel">
+                <h2>采编系统登录区</h2>
+                
+                <h3></h3>
+
+                <table style="float:right; width:280px;" cellspacing="0">
+                    <tr>
+                        <td></td>
+                        <td><div id="lockmsg" style="border-color:#fc9713; border-style:solid; border-width:1px; background-color:#fff9ab; color:red; font-size:12px; width:206px; height:15px; vertical-align:middle; display:none;"></div></td>
+                    </tr>
+                    <tr style="margin-top:-15px;">
+                        <td style="text-align:right;"><label class="label">帐号:</label></td>
+                        <td><input type="text" name="UserName" tabindex="1" id="txtUserName" value="@ViewBag.UserName" class="input-text" /></td>
+                    </tr>
+                    <tr style="line-height:50px;">
+                        <td style="text-align:right;"><label class="label">密码:</label></td>
+                        <td><input type="password" name="Pwd" tabindex="2" id="txtPwd" class="input-text" /></td>
+                    </tr>
+                    <tr style="line-height:50px;"><td colspan="2"></td></tr>
+                    <tr id="isVerifyCode" style="display:none;">
+                        <td style="text-align:right;"><label class="label" style="margin-left:-14px;">验证码:</label></td>
+                        <td>
+                            <input type="text" name="txtVerifyCode" tabindex="3" id="txtVerifyCode" class="input-text" style="width:120px;" />
+                            <img src="@Html.RootPath()/VerifyCode/VerifyCode/" width="68" height="23" id="imgVerifyCode" style="cursor: pointer; vertical-align:middle;" alt="验证码,不区分大小写,点击更换验证码" title="验证码,不区分大小写,点击更换验证码" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align:left;" colspan="2">
+                            <label style="font-size:12px; margin-left:40px;cursor:pointer;"><input type="checkbox" name="remAutoLogin" id="remAutoLogin" value="true" tabindex="4" class="input-checkbox" />下次自动登录</label>
+                            <a href="@Html.RootPath()/user/retakepwd" target="_blank" style="font-size:12px; margin-top:2px; margin-left:50px; text-decoration:none;">忘记密码？</a> 
+                        </td>
+                    </tr>
+                    <tr style="line-height:50px;">
+                        <td></td>
+                        <td style="text-align:left;">
+                            <input name="btnLogin" id="btnLogin" type="button"  class="loginBtn" value="登&nbsp;录" onclick="login()"/>
+                            <span style="vertical-align:middle; font-size:12px; color:Red;" id="spanMessage"></span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><div class="separator"></div></td>
+                    </tr>
+                    <tr style="line-height:50px;" id="Reg">
+                        <td colspan="2">
+                            <p class="no-account">还没有帐号？ <a href="@Html.RootPath()/user/reg">立即注册</a></p>
+                        </td>
+                    </tr>
+
+                    <tr style="line-height:50px; display:none;" id="ExpertApply">
+                        <td colspan="2">
+                            <p class="no-account"><a href="@Html.RootPath()/user/ExpertApply" target="_blank" style="text-decoration:none; color:#333; font-size:12px; font-weight:bold;">申请成为审稿专家</a></p>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+        <br />
+        <div class="footer">
+            <br />
+            本系统由<a href="http://www.yywkt.cn" target="_blank">北京志清伟业科技发展有限公司</a>设计开发并提供技术支持
+        </div>
+    </div>
+    <input type="hidden" value="@ViewBag.RefererUrl" id="hiddenRefererUrl" />
+    <script src="@Html.RootPath()/Scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/jquery.cookie.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/WKT.Base.js" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+        var Group = '@ViewBag.Group';
+        if (document.getElementById('txtUserName').value.length == 0)
+            document.getElementById('txtUserName').focus();
+        else
+            document.getElementById('txtPwd').focus();
+
+        if ($.cookie("LoginErrorCookie") != null) {
+            $("#isVerifyCode").removeAttr("style");
+        }
+
+        if (document.getElementById("isVerifyCode").style.display == "") {
+            document.getElementById("login-panel").style.height = "auto";
+        }
+
+        if (Group.toLowerCase() == "expert") {
+            document.getElementById("Reg").style.display = "none";
+            document.getElementById("ExpertApply").style.display = "";
+        }
+
+        $(function () {
+            //检测浏览器
+            if (window.ActiveXObject) {
+                var ua = navigator.userAgent.toLowerCase();
+                var ie = ua.match(/msie ([\d.]+)/)[1]
+                if (ie == 6.0) {
+                    if (confirm("检测到您正在使用过时的IE6浏览器,请升级至IE8或者更换其他现代浏览器.")) {
+                        window.open('http://www.yywkt.cn/Content/Tools/IE8-WindowsXP-x86-CHS.exe', '', '');
+                    }
+                    else{
+                        this.close();
+                    }
+                    this.close();
+                }
+            }
+            $("#imgVerifyCode").bind("click", function () {
+                this.src = "@Html.RootPath()/VerifyCode/VerifyCode/?rnd=" + Math.random();
+            });
+
+            $("#txtVerifyCode").keydown(function (event) {
+                if (event.keyCode == 13) {
+                    login();
+                }
+            });
+
+            $("#btnLogin").click(function () {
+                login();
+            });
+
+            $("#btnReister").click(function () {
+                location.href = "@Html.RootPath()/user/reg";
+            });
+
+            $("#aRetakePwd").click(function () {
+                location.href = "@Html.RootPath()/user/retakepwd";
+            });
+        });
+        function validateemail() {
+
+        }
+        function login() {
+            var username = $.trim($('#txtUserName').val());
+            var password = $.trim($('#txtPwd').val());
+            var verifycode = $.trim($('#txtVerifyCode').val());
+            var emppattern = /^([\.a-zA-Z0-9_-])+@@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+            if (username.length == 0) {
+                document.getElementById("spanMessage").innerHTML = "请输入帐号！";
+                return false;
+            }
+            else if (username.length > 0) {
+                if (!emppattern.test(username)) {
+                    document.getElementById("spanMessage").innerHTML = "帐号格式错误！";
+                    $('#txtUserName').focus();
+                    return false;
+                }
+            }
+            if (password.length == 0) {
+                document.getElementById("spanMessage").innerHTML = "请输入密码！";
+                return false;
+            }
+            if (verifycode.length == 0 && document.getElementById("isVerifyCode").style.display!="none") {
+                document.getElementById("spanMessage").innerHTML = "请输入验证码！";
+                return false;
+            }
+            var isAutoLogin = document.getElementById("remAutoLogin").checked ? 1 : 0;
+            $.ajax({
+                beforeSend: function () {
+                    document.getElementById("btnLogin").value = "";
+                    document.getElementById("btnLogin").className = "BtnLoginLoading";
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/user/CheckLoginErrorLogAjax/?rnd=' + Math.random(),
+                data: { LoginName: $('#txtUserName').val(), Pwd: $('#txtPwd').val(), VerifyCode: $('#txtVerifyCode').val(), "Group": Group, IsAutoLogin: isAutoLogin },
+                cache: false,
+                success: function (data) {
+                    //var e = eval("(" + data + ")");
+                    if (data.flag == '1') {
+                        var referurl = $("#hiddenRefererUrl").val();
+                        if (referurl == "") {
+                            var indexhome = '@Html.RootPath()';
+                            if (indexhome == "") {
+                                indexhome = '/';
+                            }
+                            window.location.href = indexhome;
+                        }
+                        else {
+                            window.location.href = referurl;
+                        }
+                    }
+                    else if (data.flag == '0') {
+                        alert("您的帐号尚未激活，请登录您的邮箱点击激活链接后重试。");
+                        LoginMailURL($("#txtUserName").val());
+                    }
+                    else if (data.flag == '-2') {
+                        $("#imgVerifyCode").click();
+                        $("#isVerifyCode").removeAttr("style");
+                        $("#spanMessage").text("用户名或密码错误！");
+                        document.getElementById("lockmsg").style.display = "block";
+                        document.getElementById("login-panel").style.height = "auto";
+                        if (data.Count != "0" && document.getElementById("isVerifyCode").style.display != "none")
+                            document.getElementById("lockmsg").innerHTML = "剩余 " + data.Count + " 次尝试登录次数!";
+                        else
+                            document.getElementById("lockmsg").innerHTML = "帐号已被锁定,请24小时后再尝试登录!";
+                        document.getElementById("btnLogin").value = "登 录";
+                        document.getElementById("btnLogin").className = "loginBtn";
+                    }
+                    else if (data.flag == '-3') {
+                        $("#imgVerifyCode").click();
+                        $("#spanMessage").text("用户名或密码错误！");
+                        if (document.getElementById("isVerifyCode").style.display != "none") {
+                            document.getElementById("lockmsg").style.display = "block";
+                            document.getElementById("lockmsg").innerHTML = "剩余 " + data.Count + " 次尝试登录次数!";
+                        }
+                        document.getElementById("btnLogin").value = "登 录";
+                        document.getElementById("btnLogin").className = "loginBtn";
+
+                    }
+                    else if (data.flag == '-4') {
+                        $("#imgVerifyCode").click();
+                        $("#spanMessage").text("验证码错误！");
+                        $("#isVerifyCode").removeAttr("style");
+                        document.getElementById("btnLogin").value = "登 录";
+                        document.getElementById("btnLogin").className = "loginBtn";
+                    }
+                    else if (data.flag = "LoginLock") {
+                        document.getElementById("lockmsg").style.display = "block";
+                        document.getElementById("lockmsg").innerHTML = "帐号已被锁定,请24小时后再尝试登录!";
+                        $("#spanMessage").text("");
+                        document.getElementById("btnLogin").value = "登 录";
+                        document.getElementById("btnLogin").className = "loginBtn";
+                    }
+                },
+                error: function (xhr) {
+                    $("#spanMessage").text("登录失败");
+                    document.getElementById("btnLogin").value = "登 录";
+                    document.getElementById("btnLogin").className = "loginBtn";
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

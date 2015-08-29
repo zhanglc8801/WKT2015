@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "合并稿件状态";
+}
+
+<div style="" id="notice_container" class="notice notice0">
+    <div class="c">
+        1.请从下列稿件状态列表中选择主状态进行合并。<br />
+        2.合并后该稿件的状态为选择的主状态。<br />
+        3.点击行进行选择。
+    </div>
+</div>
+<div class="clear"></div>
+<div id="box">
+    <div id="divSelStatus" style="margin:5px;color:Blue;"></div>
+    <div id="divContributionGrid"></div>
+</div>
+@section Scripts{
+<script type="text/javascript">
+    var FlowLogID = 0;
+    var contributiongrid = null;
+    $(function () {
+        // 稿件列表
+        contributiongrid = $("#divContributionGrid").ligerGrid({
+            columns: [
+            { display: '作者ID', name: 'AuthorID', hide: true },
+            { display: '稿件ID', name: 'CID', align: 'center', hide: true },
+            { display: '日志ID', name: 'FlowLogID', hide: true },
+            { display: '处理人', name: 'RecUserName', width: '30%', align: 'center' },
+            { display: '稿件状态', name: 'AuditStatus', width: '30%', align: 'center' },
+            { display: '投稿时间', name: 'AddDate', width: '35%', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm:ss' }
+            ], delayLoad: false, width: '99.5%', height: '98%', rownumbers: true, usePager: false, radio: true,
+            url: '@Html.RootPath()/Contribution/GetContributionFlowStatusListAjax?rnd=' + Math.random(), parms: { 'CID': '@ViewBag.CID' },
+            onSelectRow: function (data, rowindex, rowobj) {
+                FlowLogID = data.FlowLogID;
+                $("#divSelStatus").text("您选择的状态为：" + data.AuditStatus);
+            }
+        });
+    });
+</script>
+}

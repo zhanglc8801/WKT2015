@@ -1,0 +1,131 @@
+﻿@model WKT.Model.SiteBlockEntity
+
+@{
+    ViewBag.Title = "Create";
+}
+<style type="text/css">
+    body{ font-size:12px;}
+    .l-table-edit {border:1px solid #bed5f3;border-collapse: collapse;width:100%}
+    .l-table-edit-td-left{ padding:4px;text-align:right;width:90px;}
+    .l-table-edit-td{ padding:4px;}
+    .l-button-submit,.l-button-test{width:80px; float:left; margin-left:10px; padding-bottom:2px;}    
+</style>
+<div style="width: 98%; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>标题：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtTitle" ltype="text" maxlength="25" value="@Model.Title" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>链接地址：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtLinkurl" ltype="text" maxlength="50" value="@Model.Linkurl" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                上传图片：
+            </td>
+            <td align="left" class="l-table-edit-td">                
+                <input type="file" name="uploadify" id="uploadify" />
+                <div id="divFile" style="display:none"><a href="javascript:void(0)" id="aFile">标题图片</a></div>
+            </td>
+        </tr>       
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                简介：
+            </td>
+            <td align="left" class="l-table-edit-td">                
+                <textarea cols="100" rows="4" class="l-textarea" id="txtNote" style="width: 300px">@Model.Note</textarea>
+            </td>
+        </tr>
+    </table>   
+    </form>
+</div>
+@section Scripts{
+    <script type="text/javascript" src="@Html.RootPath()/Scripts/Uploadify/jquery.uploadify.js"></script>
+    <script language="javascript" type="text/javascript">
+        var imgSrc = '@Model.TitlePhoto';
+        $(function () {           
+            $("#uploadify").uploadify({
+                postData: { folder: 'SiteBlock' },
+                uploader: '@Html.RootPath()/Upload/Save/',
+                buttonText: '上传标题图片',
+                fileTypeDesc: 'Image Files',
+                fileTypeExts: "@Html.UploadImgExt()",
+                swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',             
+                onUploadSuccess: function (obj, data, response) {
+                    var result = eval("(" + data + ")");
+                    if (result.result == "success") {
+                        imgSrc = result.url;
+                        LoadImage(imgSrc);
+                    }
+                    else {
+                        alert(result.msg);
+                        return;
+                    }
+                }
+            });
+            $("form").ligerForm({ inputWidth: 240 });
+            LoadImage(imgSrc);
+        });
+
+        function LoadImage(url) {
+            if (url.length < 1)
+                $("#divFile").css("display", "none");
+            else {
+                //$("#aFile").attr("href", "@Html.UploadPath()" + url);
+                $("#aFile").unbind("click");
+                $("#aFile").click(function () { DownLoad('@Html.RootPath()', url, '标题图片'); return false; });
+                $("#divFile").css("display", "inline");
+            }
+        }
+
+        function Save(manager, dialog, ChannelID) {
+            var objTitle = $("#txtTitle"), title = $.trim(objTitle.val());
+            if (title.length < 1) {
+                alert("请输入内容块标题！");
+                objTitle.focus();
+                return;
+            }
+            var objUrl = $("#txtLinkurl"), url = $.trim(objUrl.val());
+            if (url.length < 1) {
+                alert("请输入链接地址！");
+                objUrl.focus();
+                return;
+            }
+            var saveParams = {
+                BlockID: '@Model.BlockID',
+                ChannelID: ChannelID,
+                Title: title,
+                Linkurl: url,
+                TitlePhoto: imgSrc,
+                Note: $.trim($("#txtNote").val())
+            };
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/SiteBlock/Save/',
+                data: saveParams,
+                cache: false,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        dialog.close();
+                        manager.loadData();
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+    </script>
+}

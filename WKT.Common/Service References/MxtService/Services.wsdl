@@ -1,0 +1,2378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:tns="http://tempuri.org/" xmlns:s12="http://tempuri.org/AbstractTypes" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s4="AccountBasicInfo" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s8="SMSStock" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s5="AccountItem" xmlns:s1="CommonReturn" xmlns:s9="JobDescription" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s10="JobSendedDescription" xmlns:s6="BillStatistic" xmlns:s2="LoginReturns" xmlns:s11="CustomJobReturn" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s7="BillItem" xmlns:s3="TrialRegistion" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:import namespace="CommonReturn" />
+      <s:import namespace="LoginReturns" />
+      <s:import namespace="TrialRegistion" />
+      <s:import namespace="AccountBasicInfo" />
+      <s:import namespace="BillStatistic" />
+      <s:import namespace="SMSStock" />
+      <s:import namespace="JobDescription" />
+      <s:import namespace="JobSendedDescription" />
+      <s:import namespace="CustomJobReturn" />
+      <s:element name="HeartBeating">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HeartBeatingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s1:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserLogin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserLoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s2:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserLogOff">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserLogOffResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s1:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTrialID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RegType" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="AreaID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="UsedBefore" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTrialIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s3:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PasswordChange">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="oldPSW" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="newPSW" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PasswordChangeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s1:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s4:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetClientBills">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DayStart" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DayEnd" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetClientBillsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s6:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStockDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStockDetailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s8:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddSubAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="SignNameID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Memo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddSubAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s1:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveSubAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveSubAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s1:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DistributeStock">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DistributeStockResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s1:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateJob">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="SmsType" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="PostFixNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateJobResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s9:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MessSendSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Phones" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="JobID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="SendTime" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MessSendSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s10:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DirectSend">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Phones" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SendTime" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="SendType" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="PostFixNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DirectSendResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s10:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DirectSendGBK">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Phones" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SendTime" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="SendType" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="PostFixNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DirectSendGBKResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s10:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CustomSend">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Pattern" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DefaultDetail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Details" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Phones" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="SmsType" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="PostFixNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SendTime" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CustomSendResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s11:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelJob">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="JobIDs" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelJobResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s1:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FetchSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FetchSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ROOT" nillable="true" type="tns:RepliedSMS" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RepliedSMS">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RetCode" type="tns:RetType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nodes" type="tns:ArrayOfSMSNode" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="RetType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Sucess" />
+          <s:enumeration value="Faild" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfSMSNode">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SMSGroup" nillable="true" type="tns:SMSNode" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SMSNode">
+        <s:simpleContent>
+          <s:extension base="s:string">
+            <s:attribute name="Phone" type="s:string" />
+            <s:attribute name="RecDateTime" type="s:string" />
+            <s:attribute name="PostFixNumber" type="s:string" />
+          </s:extension>
+        </s:simpleContent>
+      </s:complexType>
+      <s:element name="SubAccountPswModify">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="NewPsw" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SubAccountPswModifyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s1:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="KickUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SuperAdminToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="KickUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s1:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BinaryDatas" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s1:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DirectGetStockDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DirectGetStockDetailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" ref="s8:ROOT" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DirectFetchSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DirectFetchSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ROOT" nillable="true" type="tns:RepliedSMS" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ROOT" nillable="true" type="tns:RepliedSMS" />
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="CommonReturn">
+      <s:element name="ROOT" nillable="true" type="s1:CommonReturn" />
+      <s:complexType name="CommonReturn">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RetCode" type="s1:RetType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="RetType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Sucess" />
+          <s:enumeration value="Faild" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="LoginReturns">
+      <s:element name="ROOT" nillable="true" type="s2:RetLoginInfo" />
+      <s:complexType name="RetLoginInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RetCode" type="s2:RetType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Account" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Alive" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SmsServerAddress" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserType" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserRight" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="AgentID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SegmentUpperLimit" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LongSmsLen" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ShortSmsLen" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="FetchSendStat" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SmsStock" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="RetType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Sucess" />
+          <s:enumeration value="Faild" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="TrialRegistion">
+      <s:element name="ROOT" nillable="true" type="s3:TrialRegistration" />
+      <s:complexType name="TrialRegistration">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RetCode" type="s3:RetType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TrialID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Account" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="RetType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Sucess" />
+          <s:enumeration value="Faild" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="AccountBasicInfo">
+      <s:import namespace="AccountItem" />
+      <s:element name="ROOT" nillable="true" type="s4:AccountBasicInfo" />
+      <s:complexType name="AccountBasicInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RetCode" type="s4:RetType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalAccounts" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MailCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="URL" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Contact" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Fax" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AccountList" type="s4:ArrayOfAccountItem" />
+          <s:element minOccurs="1" maxOccurs="1" name="CurRemain" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="SignNameID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Memo" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="RetType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Sucess" />
+          <s:enumeration value="Faild" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfAccountItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AccountItem" nillable="true" type="s5:AccountItem" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="AccountItem">
+      <s:complexType name="AccountItem">
+        <s:simpleContent>
+          <s:extension base="s:string">
+            <s:attribute name="CurRemain" type="s:int" use="required" />
+            <s:attribute name="SignNameID" type="s:int" use="required" />
+            <s:attribute name="Memo" type="s:string" />
+          </s:extension>
+        </s:simpleContent>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="BillStatistic">
+      <s:import namespace="BillItem" />
+      <s:element name="ROOT" nillable="true" type="s6:BillStatistic" />
+      <s:complexType name="BillStatistic">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RetCode" type="s6:RetType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Account" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CurRemain" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CountTotal" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="BillDetail" type="s6:ArrayOfBill" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="RetType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Sucess" />
+          <s:enumeration value="Faild" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfBill">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Bill" nillable="true" type="s7:Bill" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="BillItem">
+      <s:complexType name="Bill">
+        <s:attribute name="BillDay" type="s:string" />
+        <s:attribute name="Account" type="s:string" />
+        <s:attribute name="CurRemain" type="s:int" use="required" />
+        <s:attribute name="CurDaySend" type="s:int" use="required" />
+        <s:attribute name="CurTotal" type="s:int" use="required" />
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="SMSStock">
+      <s:element name="ROOT" nillable="true" type="s8:StockDetails" />
+      <s:complexType name="StockDetails">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RetCode" type="s8:RetType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="StockRemain" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Points" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SendTotal" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CurDaySend" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="RetType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Sucess" />
+          <s:enumeration value="Faild" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="JobDescription">
+      <s:element name="ROOT" nillable="true" type="s9:JobStatus" />
+      <s:complexType name="JobStatus">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RetCode" type="s9:RetType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="JobID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ContentCount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SvrTime" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="RetType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Sucess" />
+          <s:enumeration value="Faild" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="JobSendedDescription">
+      <s:element name="ROOT" nillable="true" type="s10:SendStatus" />
+      <s:complexType name="SendStatus">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RetCode" type="s10:RetType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="JobID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="OKPhoneCounts" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="StockReduced" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrPhones" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="RetType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Sucess" />
+          <s:enumeration value="Faild" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="CustomJobReturn">
+      <s:element name="ROOT" nillable="true" type="s11:CustomJobReturn" />
+      <s:complexType name="CustomJobReturn">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RetCode" type="s11:RetType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CommonJobID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SpecialJobIDs" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalSendCount" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorPhones" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="RetType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Sucess" />
+          <s:enumeration value="Faild" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+    <s:schema targetNamespace="http://tempuri.org/AbstractTypes">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:complexType name="StringArray">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="String" type="s:string" />
+            </s:sequence>
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HeartBeatingSoapIn">
+    <wsdl:part name="parameters" element="tns:HeartBeating" />
+  </wsdl:message>
+  <wsdl:message name="HeartBeatingSoapOut">
+    <wsdl:part name="parameters" element="tns:HeartBeatingResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginSoapIn">
+    <wsdl:part name="parameters" element="tns:UserLogin" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginSoapOut">
+    <wsdl:part name="parameters" element="tns:UserLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserLogOffSoapIn">
+    <wsdl:part name="parameters" element="tns:UserLogOff" />
+  </wsdl:message>
+  <wsdl:message name="UserLogOffSoapOut">
+    <wsdl:part name="parameters" element="tns:UserLogOffResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTrialIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTrialID" />
+  </wsdl:message>
+  <wsdl:message name="GetTrialIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTrialIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="PasswordChangeSoapIn">
+    <wsdl:part name="parameters" element="tns:PasswordChange" />
+  </wsdl:message>
+  <wsdl:message name="PasswordChangeSoapOut">
+    <wsdl:part name="parameters" element="tns:PasswordChangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetClientBillsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetClientBills" />
+  </wsdl:message>
+  <wsdl:message name="GetClientBillsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetClientBillsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStockDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStockDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetStockDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStockDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddSubAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:AddSubAccount" />
+  </wsdl:message>
+  <wsdl:message name="AddSubAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:AddSubAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="RemoveSubAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:RemoveSubAccount" />
+  </wsdl:message>
+  <wsdl:message name="RemoveSubAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:RemoveSubAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="DistributeStockSoapIn">
+    <wsdl:part name="parameters" element="tns:DistributeStock" />
+  </wsdl:message>
+  <wsdl:message name="DistributeStockSoapOut">
+    <wsdl:part name="parameters" element="tns:DistributeStockResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateJobSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateJob" />
+  </wsdl:message>
+  <wsdl:message name="CreateJobSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="MessSendSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:MessSendSMS" />
+  </wsdl:message>
+  <wsdl:message name="MessSendSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:MessSendSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="DirectSendSoapIn">
+    <wsdl:part name="parameters" element="tns:DirectSend" />
+  </wsdl:message>
+  <wsdl:message name="DirectSendSoapOut">
+    <wsdl:part name="parameters" element="tns:DirectSendResponse" />
+  </wsdl:message>
+  <wsdl:message name="DirectSendGBKSoapIn">
+    <wsdl:part name="parameters" element="tns:DirectSendGBK" />
+  </wsdl:message>
+  <wsdl:message name="DirectSendGBKSoapOut">
+    <wsdl:part name="parameters" element="tns:DirectSendGBKResponse" />
+  </wsdl:message>
+  <wsdl:message name="CustomSendSoapIn">
+    <wsdl:part name="parameters" element="tns:CustomSend" />
+  </wsdl:message>
+  <wsdl:message name="CustomSendSoapOut">
+    <wsdl:part name="parameters" element="tns:CustomSendResponse" />
+  </wsdl:message>
+  <wsdl:message name="CancelJobSoapIn">
+    <wsdl:part name="parameters" element="tns:CancelJob" />
+  </wsdl:message>
+  <wsdl:message name="CancelJobSoapOut">
+    <wsdl:part name="parameters" element="tns:CancelJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="FetchSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:FetchSMS" />
+  </wsdl:message>
+  <wsdl:message name="FetchSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:FetchSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="SubAccountPswModifySoapIn">
+    <wsdl:part name="parameters" element="tns:SubAccountPswModify" />
+  </wsdl:message>
+  <wsdl:message name="SubAccountPswModifySoapOut">
+    <wsdl:part name="parameters" element="tns:SubAccountPswModifyResponse" />
+  </wsdl:message>
+  <wsdl:message name="KickUserSoapIn">
+    <wsdl:part name="parameters" element="tns:KickUser" />
+  </wsdl:message>
+  <wsdl:message name="KickUserSoapOut">
+    <wsdl:part name="parameters" element="tns:KickUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadFileSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadFile" />
+  </wsdl:message>
+  <wsdl:message name="UploadFileSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="DirectGetStockDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:DirectGetStockDetails" />
+  </wsdl:message>
+  <wsdl:message name="DirectGetStockDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:DirectGetStockDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DirectFetchSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:DirectFetchSMS" />
+  </wsdl:message>
+  <wsdl:message name="DirectFetchSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:DirectFetchSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="HeartBeatingHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="HeartBeatingHttpGetOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginHttpGetIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="Account" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginHttpGetOut">
+    <wsdl:part name="Body" element="s2:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="UserLogOffHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserLogOffHttpGetOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="GetTrialIDHttpGetIn">
+    <wsdl:part name="RegType" type="s:string" />
+    <wsdl:part name="AreaID" type="s:string" />
+    <wsdl:part name="Name" type="s:string" />
+    <wsdl:part name="Phone" type="s:string" />
+    <wsdl:part name="CompanyName" type="s:string" />
+    <wsdl:part name="UsedBefore" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTrialIDHttpGetOut">
+    <wsdl:part name="Body" element="s3:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="PasswordChangeHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="oldPSW" type="s:string" />
+    <wsdl:part name="newPSW" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PasswordChangeHttpGetOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoHttpGetOut">
+    <wsdl:part name="Body" element="s4:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="GetClientBillsHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="DayStart" type="s:string" />
+    <wsdl:part name="DayEnd" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetClientBillsHttpGetOut">
+    <wsdl:part name="Body" element="s6:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="GetStockDetailsHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockDetailsHttpGetOut">
+    <wsdl:part name="Body" element="s8:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="AddSubAccountHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="AccountName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+    <wsdl:part name="SignNameID" type="s:string" />
+    <wsdl:part name="Memo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddSubAccountHttpGetOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="RemoveSubAccountHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="AccountName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveSubAccountHttpGetOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="DistributeStockHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="AccountName" type="s:string" />
+    <wsdl:part name="Amount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DistributeStockHttpGetOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="CreateJobHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="Content" type="s:string" />
+    <wsdl:part name="SmsType" type="s:string" />
+    <wsdl:part name="PostFixNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateJobHttpGetOut">
+    <wsdl:part name="Body" element="s9:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="MessSendSMSHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="Phones" type="s:string" />
+    <wsdl:part name="JobID" type="s:string" />
+    <wsdl:part name="SendTime" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="MessSendSMSHttpGetOut">
+    <wsdl:part name="Body" element="s10:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="DirectSendHttpGetIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="Account" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+    <wsdl:part name="Phones" type="s:string" />
+    <wsdl:part name="Content" type="s:string" />
+    <wsdl:part name="SendTime" type="s:string" />
+    <wsdl:part name="SendType" type="s:string" />
+    <wsdl:part name="PostFixNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DirectSendHttpGetOut">
+    <wsdl:part name="Body" element="s10:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="DirectSendGBKHttpGetIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="Account" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+    <wsdl:part name="Phones" type="s:string" />
+    <wsdl:part name="Content" type="s:string" />
+    <wsdl:part name="SendTime" type="s:string" />
+    <wsdl:part name="SendType" type="s:string" />
+    <wsdl:part name="PostFixNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DirectSendGBKHttpGetOut">
+    <wsdl:part name="Body" element="s10:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="CustomSendHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="Pattern" type="s:string" />
+    <wsdl:part name="DefaultDetail" type="s:string" />
+    <wsdl:part name="Details" type="s:string" />
+    <wsdl:part name="Phones" type="s:string" />
+    <wsdl:part name="SmsType" type="s:string" />
+    <wsdl:part name="PostFixNumber" type="s:string" />
+    <wsdl:part name="SendTime" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CustomSendHttpGetOut">
+    <wsdl:part name="Body" element="s11:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="CancelJobHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="JobIDs" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CancelJobHttpGetOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="FetchSMSHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FetchSMSHttpGetOut">
+    <wsdl:part name="Body" element="tns:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="SubAccountPswModifyHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="AccountName" type="s:string" />
+    <wsdl:part name="NewPsw" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SubAccountPswModifyHttpGetOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="KickUserHttpGetIn">
+    <wsdl:part name="SuperAdminToken" type="s:string" />
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="AccountName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="KickUserHttpGetOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="UploadFileHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="BinaryDatas" type="s12:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="UploadFileHttpGetOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="DirectGetStockDetailsHttpGetIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="Account" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DirectGetStockDetailsHttpGetOut">
+    <wsdl:part name="Body" element="s8:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="DirectFetchSMSHttpGetIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="Account" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DirectFetchSMSHttpGetOut">
+    <wsdl:part name="Body" element="tns:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="HeartBeatingHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="HeartBeatingHttpPostOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginHttpPostIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="Account" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginHttpPostOut">
+    <wsdl:part name="Body" element="s2:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="UserLogOffHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserLogOffHttpPostOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="GetTrialIDHttpPostIn">
+    <wsdl:part name="RegType" type="s:string" />
+    <wsdl:part name="AreaID" type="s:string" />
+    <wsdl:part name="Name" type="s:string" />
+    <wsdl:part name="Phone" type="s:string" />
+    <wsdl:part name="CompanyName" type="s:string" />
+    <wsdl:part name="UsedBefore" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTrialIDHttpPostOut">
+    <wsdl:part name="Body" element="s3:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="PasswordChangeHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="oldPSW" type="s:string" />
+    <wsdl:part name="newPSW" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PasswordChangeHttpPostOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoHttpPostOut">
+    <wsdl:part name="Body" element="s4:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="GetClientBillsHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="DayStart" type="s:string" />
+    <wsdl:part name="DayEnd" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetClientBillsHttpPostOut">
+    <wsdl:part name="Body" element="s6:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="GetStockDetailsHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockDetailsHttpPostOut">
+    <wsdl:part name="Body" element="s8:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="AddSubAccountHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="AccountName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+    <wsdl:part name="SignNameID" type="s:string" />
+    <wsdl:part name="Memo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddSubAccountHttpPostOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="RemoveSubAccountHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="AccountName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveSubAccountHttpPostOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="DistributeStockHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="AccountName" type="s:string" />
+    <wsdl:part name="Amount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DistributeStockHttpPostOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="CreateJobHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="Content" type="s:string" />
+    <wsdl:part name="SmsType" type="s:string" />
+    <wsdl:part name="PostFixNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateJobHttpPostOut">
+    <wsdl:part name="Body" element="s9:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="MessSendSMSHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="Phones" type="s:string" />
+    <wsdl:part name="JobID" type="s:string" />
+    <wsdl:part name="SendTime" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="MessSendSMSHttpPostOut">
+    <wsdl:part name="Body" element="s10:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="DirectSendHttpPostIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="Account" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+    <wsdl:part name="Phones" type="s:string" />
+    <wsdl:part name="Content" type="s:string" />
+    <wsdl:part name="SendTime" type="s:string" />
+    <wsdl:part name="SendType" type="s:string" />
+    <wsdl:part name="PostFixNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DirectSendHttpPostOut">
+    <wsdl:part name="Body" element="s10:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="DirectSendGBKHttpPostIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="Account" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+    <wsdl:part name="Phones" type="s:string" />
+    <wsdl:part name="Content" type="s:string" />
+    <wsdl:part name="SendTime" type="s:string" />
+    <wsdl:part name="SendType" type="s:string" />
+    <wsdl:part name="PostFixNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DirectSendGBKHttpPostOut">
+    <wsdl:part name="Body" element="s10:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="CustomSendHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="Pattern" type="s:string" />
+    <wsdl:part name="DefaultDetail" type="s:string" />
+    <wsdl:part name="Details" type="s:string" />
+    <wsdl:part name="Phones" type="s:string" />
+    <wsdl:part name="SmsType" type="s:string" />
+    <wsdl:part name="PostFixNumber" type="s:string" />
+    <wsdl:part name="SendTime" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CustomSendHttpPostOut">
+    <wsdl:part name="Body" element="s11:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="CancelJobHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="JobIDs" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CancelJobHttpPostOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="FetchSMSHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FetchSMSHttpPostOut">
+    <wsdl:part name="Body" element="tns:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="SubAccountPswModifyHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="AccountName" type="s:string" />
+    <wsdl:part name="NewPsw" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SubAccountPswModifyHttpPostOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="KickUserHttpPostIn">
+    <wsdl:part name="SuperAdminToken" type="s:string" />
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="AccountName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="KickUserHttpPostOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="UploadFileHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="BinaryDatas" type="s12:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="UploadFileHttpPostOut">
+    <wsdl:part name="Body" element="s1:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="DirectGetStockDetailsHttpPostIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="Account" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DirectGetStockDetailsHttpPostOut">
+    <wsdl:part name="Body" element="s8:ROOT" />
+  </wsdl:message>
+  <wsdl:message name="DirectFetchSMSHttpPostIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="Account" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DirectFetchSMSHttpPostOut">
+    <wsdl:part name="Body" element="tns:ROOT" />
+  </wsdl:message>
+  <wsdl:portType name="ServicesSoap">
+    <wsdl:operation name="HeartBeating">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">用户心跳</wsdl:documentation>
+      <wsdl:input message="tns:HeartBeatingSoapIn" />
+      <wsdl:output message="tns:HeartBeatingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">用户登录</wsdl:documentation>
+      <wsdl:input message="tns:UserLoginSoapIn" />
+      <wsdl:output message="tns:UserLoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogOff">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">用户注销</wsdl:documentation>
+      <wsdl:input message="tns:UserLogOffSoapIn" />
+      <wsdl:output message="tns:UserLogOffSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTrialID">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取试用账号</wsdl:documentation>
+      <wsdl:input message="tns:GetTrialIDSoapIn" />
+      <wsdl:output message="tns:GetTrialIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PasswordChange">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">修改密码</wsdl:documentation>
+      <wsdl:input message="tns:PasswordChangeSoapIn" />
+      <wsdl:output message="tns:PasswordChangeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取用户信息</wsdl:documentation>
+      <wsdl:input message="tns:GetUserInfoSoapIn" />
+      <wsdl:output message="tns:GetUserInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClientBills">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取账单</wsdl:documentation>
+      <wsdl:input message="tns:GetClientBillsSoapIn" />
+      <wsdl:output message="tns:GetClientBillsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockDetails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取短信量信息</wsdl:documentation>
+      <wsdl:input message="tns:GetStockDetailsSoapIn" />
+      <wsdl:output message="tns:GetStockDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSubAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">添加子账号</wsdl:documentation>
+      <wsdl:input message="tns:AddSubAccountSoapIn" />
+      <wsdl:output message="tns:AddSubAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSubAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">移除子帐户</wsdl:documentation>
+      <wsdl:input message="tns:RemoveSubAccountSoapIn" />
+      <wsdl:output message="tns:RemoveSubAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DistributeStock">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">为各子账号分配短信量</wsdl:documentation>
+      <wsdl:input message="tns:DistributeStockSoapIn" />
+      <wsdl:output message="tns:DistributeStockSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateJob">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">创建一个任务，返回任务ID</wsdl:documentation>
+      <wsdl:input message="tns:CreateJobSoapIn" />
+      <wsdl:output message="tns:CreateJobSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MessSendSMS">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">短信群发</wsdl:documentation>
+      <wsdl:input message="tns:MessSendSMSSoapIn" />
+      <wsdl:output message="tns:MessSendSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DirectSend">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">直接发送，不需要登录服务器</wsdl:documentation>
+      <wsdl:input message="tns:DirectSendSoapIn" />
+      <wsdl:output message="tns:DirectSendSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DirectSendGBK">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">直接发送，不需要登录服务器,GB格式</wsdl:documentation>
+      <wsdl:input message="tns:DirectSendGBKSoapIn" />
+      <wsdl:output message="tns:DirectSendGBKSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomSend">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">发送自定义短信</wsdl:documentation>
+      <wsdl:input message="tns:CustomSendSoapIn" />
+      <wsdl:output message="tns:CustomSendSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelJob">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">取消发送任务</wsdl:documentation>
+      <wsdl:input message="tns:CancelJobSoapIn" />
+      <wsdl:output message="tns:CancelJobSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FetchSMS">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取已回复的短信</wsdl:documentation>
+      <wsdl:input message="tns:FetchSMSSoapIn" />
+      <wsdl:output message="tns:FetchSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SubAccountPswModify">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">修改子帐号密码</wsdl:documentation>
+      <wsdl:input message="tns:SubAccountPswModifySoapIn" />
+      <wsdl:output message="tns:SubAccountPswModifySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="KickUser">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">强行将用户T下线</wsdl:documentation>
+      <wsdl:input message="tns:KickUserSoapIn" />
+      <wsdl:output message="tns:KickUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadFile">
+      <wsdl:input message="tns:UploadFileSoapIn" />
+      <wsdl:output message="tns:UploadFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DirectGetStockDetails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">直接获取短信量信息</wsdl:documentation>
+      <wsdl:input message="tns:DirectGetStockDetailsSoapIn" />
+      <wsdl:output message="tns:DirectGetStockDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DirectFetchSMS">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">直接获取回复短信内容</wsdl:documentation>
+      <wsdl:input message="tns:DirectFetchSMSSoapIn" />
+      <wsdl:output message="tns:DirectFetchSMSSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ServicesHttpGet">
+    <wsdl:operation name="HeartBeating">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">用户心跳</wsdl:documentation>
+      <wsdl:input message="tns:HeartBeatingHttpGetIn" />
+      <wsdl:output message="tns:HeartBeatingHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">用户登录</wsdl:documentation>
+      <wsdl:input message="tns:UserLoginHttpGetIn" />
+      <wsdl:output message="tns:UserLoginHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogOff">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">用户注销</wsdl:documentation>
+      <wsdl:input message="tns:UserLogOffHttpGetIn" />
+      <wsdl:output message="tns:UserLogOffHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTrialID">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取试用账号</wsdl:documentation>
+      <wsdl:input message="tns:GetTrialIDHttpGetIn" />
+      <wsdl:output message="tns:GetTrialIDHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PasswordChange">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">修改密码</wsdl:documentation>
+      <wsdl:input message="tns:PasswordChangeHttpGetIn" />
+      <wsdl:output message="tns:PasswordChangeHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取用户信息</wsdl:documentation>
+      <wsdl:input message="tns:GetUserInfoHttpGetIn" />
+      <wsdl:output message="tns:GetUserInfoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClientBills">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取账单</wsdl:documentation>
+      <wsdl:input message="tns:GetClientBillsHttpGetIn" />
+      <wsdl:output message="tns:GetClientBillsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockDetails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取短信量信息</wsdl:documentation>
+      <wsdl:input message="tns:GetStockDetailsHttpGetIn" />
+      <wsdl:output message="tns:GetStockDetailsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSubAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">添加子账号</wsdl:documentation>
+      <wsdl:input message="tns:AddSubAccountHttpGetIn" />
+      <wsdl:output message="tns:AddSubAccountHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSubAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">移除子帐户</wsdl:documentation>
+      <wsdl:input message="tns:RemoveSubAccountHttpGetIn" />
+      <wsdl:output message="tns:RemoveSubAccountHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DistributeStock">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">为各子账号分配短信量</wsdl:documentation>
+      <wsdl:input message="tns:DistributeStockHttpGetIn" />
+      <wsdl:output message="tns:DistributeStockHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateJob">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">创建一个任务，返回任务ID</wsdl:documentation>
+      <wsdl:input message="tns:CreateJobHttpGetIn" />
+      <wsdl:output message="tns:CreateJobHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MessSendSMS">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">短信群发</wsdl:documentation>
+      <wsdl:input message="tns:MessSendSMSHttpGetIn" />
+      <wsdl:output message="tns:MessSendSMSHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DirectSend">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">直接发送，不需要登录服务器</wsdl:documentation>
+      <wsdl:input message="tns:DirectSendHttpGetIn" />
+      <wsdl:output message="tns:DirectSendHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DirectSendGBK">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">直接发送，不需要登录服务器,GB格式</wsdl:documentation>
+      <wsdl:input message="tns:DirectSendGBKHttpGetIn" />
+      <wsdl:output message="tns:DirectSendGBKHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomSend">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">发送自定义短信</wsdl:documentation>
+      <wsdl:input message="tns:CustomSendHttpGetIn" />
+      <wsdl:output message="tns:CustomSendHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelJob">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">取消发送任务</wsdl:documentation>
+      <wsdl:input message="tns:CancelJobHttpGetIn" />
+      <wsdl:output message="tns:CancelJobHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FetchSMS">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取已回复的短信</wsdl:documentation>
+      <wsdl:input message="tns:FetchSMSHttpGetIn" />
+      <wsdl:output message="tns:FetchSMSHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SubAccountPswModify">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">修改子帐号密码</wsdl:documentation>
+      <wsdl:input message="tns:SubAccountPswModifyHttpGetIn" />
+      <wsdl:output message="tns:SubAccountPswModifyHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="KickUser">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">强行将用户T下线</wsdl:documentation>
+      <wsdl:input message="tns:KickUserHttpGetIn" />
+      <wsdl:output message="tns:KickUserHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadFile">
+      <wsdl:input message="tns:UploadFileHttpGetIn" />
+      <wsdl:output message="tns:UploadFileHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DirectGetStockDetails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">直接获取短信量信息</wsdl:documentation>
+      <wsdl:input message="tns:DirectGetStockDetailsHttpGetIn" />
+      <wsdl:output message="tns:DirectGetStockDetailsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DirectFetchSMS">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">直接获取回复短信内容</wsdl:documentation>
+      <wsdl:input message="tns:DirectFetchSMSHttpGetIn" />
+      <wsdl:output message="tns:DirectFetchSMSHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ServicesHttpPost">
+    <wsdl:operation name="HeartBeating">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">用户心跳</wsdl:documentation>
+      <wsdl:input message="tns:HeartBeatingHttpPostIn" />
+      <wsdl:output message="tns:HeartBeatingHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">用户登录</wsdl:documentation>
+      <wsdl:input message="tns:UserLoginHttpPostIn" />
+      <wsdl:output message="tns:UserLoginHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogOff">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">用户注销</wsdl:documentation>
+      <wsdl:input message="tns:UserLogOffHttpPostIn" />
+      <wsdl:output message="tns:UserLogOffHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTrialID">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取试用账号</wsdl:documentation>
+      <wsdl:input message="tns:GetTrialIDHttpPostIn" />
+      <wsdl:output message="tns:GetTrialIDHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PasswordChange">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">修改密码</wsdl:documentation>
+      <wsdl:input message="tns:PasswordChangeHttpPostIn" />
+      <wsdl:output message="tns:PasswordChangeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取用户信息</wsdl:documentation>
+      <wsdl:input message="tns:GetUserInfoHttpPostIn" />
+      <wsdl:output message="tns:GetUserInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClientBills">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取账单</wsdl:documentation>
+      <wsdl:input message="tns:GetClientBillsHttpPostIn" />
+      <wsdl:output message="tns:GetClientBillsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockDetails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取短信量信息</wsdl:documentation>
+      <wsdl:input message="tns:GetStockDetailsHttpPostIn" />
+      <wsdl:output message="tns:GetStockDetailsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSubAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">添加子账号</wsdl:documentation>
+      <wsdl:input message="tns:AddSubAccountHttpPostIn" />
+      <wsdl:output message="tns:AddSubAccountHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSubAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">移除子帐户</wsdl:documentation>
+      <wsdl:input message="tns:RemoveSubAccountHttpPostIn" />
+      <wsdl:output message="tns:RemoveSubAccountHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DistributeStock">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">为各子账号分配短信量</wsdl:documentation>
+      <wsdl:input message="tns:DistributeStockHttpPostIn" />
+      <wsdl:output message="tns:DistributeStockHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateJob">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">创建一个任务，返回任务ID</wsdl:documentation>
+      <wsdl:input message="tns:CreateJobHttpPostIn" />
+      <wsdl:output message="tns:CreateJobHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MessSendSMS">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">短信群发</wsdl:documentation>
+      <wsdl:input message="tns:MessSendSMSHttpPostIn" />
+      <wsdl:output message="tns:MessSendSMSHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DirectSend">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">直接发送，不需要登录服务器</wsdl:documentation>
+      <wsdl:input message="tns:DirectSendHttpPostIn" />
+      <wsdl:output message="tns:DirectSendHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DirectSendGBK">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">直接发送，不需要登录服务器,GB格式</wsdl:documentation>
+      <wsdl:input message="tns:DirectSendGBKHttpPostIn" />
+      <wsdl:output message="tns:DirectSendGBKHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomSend">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">发送自定义短信</wsdl:documentation>
+      <wsdl:input message="tns:CustomSendHttpPostIn" />
+      <wsdl:output message="tns:CustomSendHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelJob">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">取消发送任务</wsdl:documentation>
+      <wsdl:input message="tns:CancelJobHttpPostIn" />
+      <wsdl:output message="tns:CancelJobHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FetchSMS">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取已回复的短信</wsdl:documentation>
+      <wsdl:input message="tns:FetchSMSHttpPostIn" />
+      <wsdl:output message="tns:FetchSMSHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SubAccountPswModify">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">修改子帐号密码</wsdl:documentation>
+      <wsdl:input message="tns:SubAccountPswModifyHttpPostIn" />
+      <wsdl:output message="tns:SubAccountPswModifyHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="KickUser">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">强行将用户T下线</wsdl:documentation>
+      <wsdl:input message="tns:KickUserHttpPostIn" />
+      <wsdl:output message="tns:KickUserHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadFile">
+      <wsdl:input message="tns:UploadFileHttpPostIn" />
+      <wsdl:output message="tns:UploadFileHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DirectGetStockDetails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">直接获取短信量信息</wsdl:documentation>
+      <wsdl:input message="tns:DirectGetStockDetailsHttpPostIn" />
+      <wsdl:output message="tns:DirectGetStockDetailsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DirectFetchSMS">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">直接获取回复短信内容</wsdl:documentation>
+      <wsdl:input message="tns:DirectFetchSMSHttpPostIn" />
+      <wsdl:output message="tns:DirectFetchSMSHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServicesSoap" type="tns:ServicesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HeartBeating">
+      <soap:operation soapAction="http://tempuri.org/HeartBeating" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <soap:operation soapAction="http://tempuri.org/UserLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogOff">
+      <soap:operation soapAction="http://tempuri.org/UserLogOff" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrialID">
+      <soap:operation soapAction="http://tempuri.org/GetTrialID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PasswordChange">
+      <soap:operation soapAction="http://tempuri.org/PasswordChange" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <soap:operation soapAction="http://tempuri.org/GetUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientBills">
+      <soap:operation soapAction="http://tempuri.org/GetClientBills" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockDetails">
+      <soap:operation soapAction="http://tempuri.org/GetStockDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSubAccount">
+      <soap:operation soapAction="http://tempuri.org/AddSubAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSubAccount">
+      <soap:operation soapAction="http://tempuri.org/RemoveSubAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DistributeStock">
+      <soap:operation soapAction="http://tempuri.org/DistributeStock" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateJob">
+      <soap:operation soapAction="http://tempuri.org/CreateJob" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MessSendSMS">
+      <soap:operation soapAction="http://tempuri.org/MessSendSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectSend">
+      <soap:operation soapAction="http://tempuri.org/DirectSend" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectSendGBK">
+      <soap:operation soapAction="http://tempuri.org/DirectSendGBK" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomSend">
+      <soap:operation soapAction="http://tempuri.org/CustomSend" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelJob">
+      <soap:operation soapAction="http://tempuri.org/CancelJob" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FetchSMS">
+      <soap:operation soapAction="http://tempuri.org/FetchSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubAccountPswModify">
+      <soap:operation soapAction="http://tempuri.org/SubAccountPswModify" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KickUser">
+      <soap:operation soapAction="http://tempuri.org/KickUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFile">
+      <soap:operation soapAction="http://tempuri.org/UploadFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectGetStockDetails">
+      <soap:operation soapAction="http://tempuri.org/DirectGetStockDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectFetchSMS">
+      <soap:operation soapAction="http://tempuri.org/DirectFetchSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServicesSoap12" type="tns:ServicesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HeartBeating">
+      <soap12:operation soapAction="http://tempuri.org/HeartBeating" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <soap12:operation soapAction="http://tempuri.org/UserLogin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogOff">
+      <soap12:operation soapAction="http://tempuri.org/UserLogOff" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrialID">
+      <soap12:operation soapAction="http://tempuri.org/GetTrialID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PasswordChange">
+      <soap12:operation soapAction="http://tempuri.org/PasswordChange" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetUserInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientBills">
+      <soap12:operation soapAction="http://tempuri.org/GetClientBills" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockDetails">
+      <soap12:operation soapAction="http://tempuri.org/GetStockDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSubAccount">
+      <soap12:operation soapAction="http://tempuri.org/AddSubAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSubAccount">
+      <soap12:operation soapAction="http://tempuri.org/RemoveSubAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DistributeStock">
+      <soap12:operation soapAction="http://tempuri.org/DistributeStock" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateJob">
+      <soap12:operation soapAction="http://tempuri.org/CreateJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MessSendSMS">
+      <soap12:operation soapAction="http://tempuri.org/MessSendSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectSend">
+      <soap12:operation soapAction="http://tempuri.org/DirectSend" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectSendGBK">
+      <soap12:operation soapAction="http://tempuri.org/DirectSendGBK" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomSend">
+      <soap12:operation soapAction="http://tempuri.org/CustomSend" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelJob">
+      <soap12:operation soapAction="http://tempuri.org/CancelJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FetchSMS">
+      <soap12:operation soapAction="http://tempuri.org/FetchSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubAccountPswModify">
+      <soap12:operation soapAction="http://tempuri.org/SubAccountPswModify" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KickUser">
+      <soap12:operation soapAction="http://tempuri.org/KickUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFile">
+      <soap12:operation soapAction="http://tempuri.org/UploadFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectGetStockDetails">
+      <soap12:operation soapAction="http://tempuri.org/DirectGetStockDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectFetchSMS">
+      <soap12:operation soapAction="http://tempuri.org/DirectFetchSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServicesHttpGet" type="tns:ServicesHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="HeartBeating">
+      <http:operation location="/HeartBeating" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <http:operation location="/UserLogin" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogOff">
+      <http:operation location="/UserLogOff" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrialID">
+      <http:operation location="/GetTrialID" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PasswordChange">
+      <http:operation location="/PasswordChange" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <http:operation location="/GetUserInfo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientBills">
+      <http:operation location="/GetClientBills" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockDetails">
+      <http:operation location="/GetStockDetails" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSubAccount">
+      <http:operation location="/AddSubAccount" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSubAccount">
+      <http:operation location="/RemoveSubAccount" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DistributeStock">
+      <http:operation location="/DistributeStock" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateJob">
+      <http:operation location="/CreateJob" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MessSendSMS">
+      <http:operation location="/MessSendSMS" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectSend">
+      <http:operation location="/DirectSend" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectSendGBK">
+      <http:operation location="/DirectSendGBK" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomSend">
+      <http:operation location="/CustomSend" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelJob">
+      <http:operation location="/CancelJob" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FetchSMS">
+      <http:operation location="/FetchSMS" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubAccountPswModify">
+      <http:operation location="/SubAccountPswModify" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KickUser">
+      <http:operation location="/KickUser" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFile">
+      <http:operation location="/UploadFile" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectGetStockDetails">
+      <http:operation location="/DirectGetStockDetails" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectFetchSMS">
+      <http:operation location="/DirectFetchSMS" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServicesHttpPost" type="tns:ServicesHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="HeartBeating">
+      <http:operation location="/HeartBeating" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <http:operation location="/UserLogin" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogOff">
+      <http:operation location="/UserLogOff" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrialID">
+      <http:operation location="/GetTrialID" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PasswordChange">
+      <http:operation location="/PasswordChange" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <http:operation location="/GetUserInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientBills">
+      <http:operation location="/GetClientBills" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockDetails">
+      <http:operation location="/GetStockDetails" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSubAccount">
+      <http:operation location="/AddSubAccount" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSubAccount">
+      <http:operation location="/RemoveSubAccount" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DistributeStock">
+      <http:operation location="/DistributeStock" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateJob">
+      <http:operation location="/CreateJob" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MessSendSMS">
+      <http:operation location="/MessSendSMS" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectSend">
+      <http:operation location="/DirectSend" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectSendGBK">
+      <http:operation location="/DirectSendGBK" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomSend">
+      <http:operation location="/CustomSend" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelJob">
+      <http:operation location="/CancelJob" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FetchSMS">
+      <http:operation location="/FetchSMS" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubAccountPswModify">
+      <http:operation location="/SubAccountPswModify" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KickUser">
+      <http:operation location="/KickUser" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFile">
+      <http:operation location="/UploadFile" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectGetStockDetails">
+      <http:operation location="/DirectGetStockDetails" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirectFetchSMS">
+      <http:operation location="/DirectFetchSMS" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Services">
+    <wsdl:port name="ServicesSoap" binding="tns:ServicesSoap">
+      <soap:address location="http://www.mxtong.net.cn/GateWay/Services.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServicesSoap12" binding="tns:ServicesSoap12">
+      <soap12:address location="http://www.mxtong.net.cn/GateWay/Services.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServicesHttpGet" binding="tns:ServicesHttpGet">
+      <http:address location="http://www.mxtong.net.cn/GateWay/Services.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServicesHttpPost" binding="tns:ServicesHttpPost">
+      <http:address location="http://www.mxtong.net.cn/GateWay/Services.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

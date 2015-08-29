@@ -1,0 +1,126 @@
+﻿@model WKT.Model.SiteResourceEntity
+
+@{
+    ViewBag.Title = "Create";
+}
+<style type="text/css">
+    body{ font-size:12px;}
+    .l-table-edit {border:1px solid #bed5f3;border-collapse: collapse;width:100%}
+    .l-table-edit-td-left{ padding:4px;text-align:right;width:90px;}
+    .l-table-edit-td{ padding:4px;}
+    .l-button-submit,.l-button-test{width:80px; float:left; margin-left:10px; padding-bottom:2px;}    
+</style>
+<div style="width: 98%; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>文件名称：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtName" ltype="text" maxlength="25" value="@Model.Name" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                上传文件：
+            </td>
+            <td align="left" class="l-table-edit-td">                
+                <input type="file" name="uploadify" id="uploadify" />
+                <div id="divFile" style="display:none"><a href="javascript:void(0)" id="aFile">资源文件</a></div>            
+            </td>
+        </tr>       
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                文件说明：
+            </td>
+            <td align="left" class="l-table-edit-td">                
+                <textarea cols="100" rows="4" class="l-textarea" id="txtFileIntro" style="width: 300px">@Model.FileIntro</textarea>
+            </td>
+        </tr>
+    </table>   
+    </form>
+</div>
+@section Scripts{
+    <script type="text/javascript" src="@Html.RootPath()/Scripts/Uploadify/jquery.uploadify.js"></script>
+    <script language="javascript" type="text/javascript">
+        var fileSrc = '@Model.FilePath', fileSize = '@Model.FileSize', fileExt = '@Model.FileEx';
+        $(function () {
+            $("#uploadify").uploadify({
+                postData: { folder: 'SiteResource' },
+                uploader: '@Html.RootPath()/Upload/SaveDetail/',
+                buttonText: '上传文件',
+                fileTypeExts: "@Html.UploadFileExt()",
+                swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',               
+                onUploadSuccess: function (obj, data, response) {
+                    var result = eval("(" + data + ")");
+                    if (result.result == "success") {
+                        fileSrc = result.url;
+                        fileSize = result.size;
+                        fileExt = result.ext;
+                        LoadImage(fileSrc);
+                    }
+                    else {
+                        alert(result.msg);
+                        return;
+                    }
+                }, onUploadError: function (file, errorCode, errorMsg, errorString) {
+                    alert('The file ' + file.name + ' errorCode ' + errorCode + ' errorMsg ' + errorMsg + ' errorString ' + errorString);
+                }
+            });
+            $("form").ligerForm({ inputWidth: 240 });
+            LoadImage(fileSrc);
+        });
+
+        function LoadImage(url) {
+            if (url.length < 1)
+                $("#divFile").css("display", "none");
+            else {
+                //$("#aFile").attr("href", "@Html.UploadPath()" + url);
+                $("#aFile").unbind("click");
+                $("#aFile").click(function () { DownLoad('@Html.RootPath()', url, '资源文件'); return false; });
+                $("#divFile").css("display", "inline");
+            }
+        }
+
+        function Save(manager, dialog, ChannelID) {
+            var objTitle = $("#txtName"), title = $.trim(objTitle.val());
+            if (title.length < 1) {
+                alert("请输入文件名称！");
+                objTitle.focus();
+                return;
+            }
+            if (fileSrc.length < 1 || fileSize.length < 1 || fileExt.length < 1) {
+                alert("请上传资源文件！");               
+                return;
+            }
+            var saveParams = {
+                ResourceID: '@Model.ResourceID',
+                ChannelID: ChannelID,
+                Name: title,
+                FileIntro: $.trim($("#txtFileIntro").val()),
+                FilePath: fileSrc,
+                FileEx: fileExt,
+                FileSize: fileSize
+            };
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/SiteResource/Save/',
+                data: saveParams,
+                cache: false,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        dialog.close();
+                        manager.loadData();
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+    </script>
+}
+

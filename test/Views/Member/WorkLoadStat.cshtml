@@ -1,0 +1,267 @@
+﻿<link href="@Html.RootPath()/Content/Editor/css/style.css" rel="stylesheet" type="text/css" />
+<div id="container">
+</div>
+
+<div style="" id="notice_container" class="notice notice0">
+	<div class="c">
+       @{
+           if (@Html.isStatByGroup() == true)
+           {
+               <span>统计组：@Html.Raw(Html.SelectRole("selRole","100","","0","-请选择-"))&nbsp;</span>
+           }   
+        }
+        编辑姓名：<input type="text" name="RealName" class="txtbox" id="txtRealName" style="width:80px;" /> &nbsp;
+        开始日期：<input type="text" name="StartDate" class="txtbox" id="txtStartDate" style="width:90px;" /> &nbsp;
+        结束日期：<input type="text" name="EndDate" class="txtbox" id="txtEndDate" style="width:90px;" /> &nbsp;
+        <input type="button" value="搜索" class="btnsearch" id="btnSearch" />&nbsp;
+        <input type="button" value="导出Excel" class="btnexcel" id="btnExportExcel" />
+        <span><a id="ReportLink" style="display:inherit;"></a></span>
+    </div>
+</div>
+<div id="box">
+	<div id="divWorkloadList">
+        <img src="@Html.RootPath()/Content/images/checkreg.gif" style="vertical-align:middle;" /><span style="font-size:14px;color:#333;">正在加载统计信息...</span>
+    </div>
+</div>
+@section Scripts{
+<script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+    var grid; var strHtml = "";var AllCount = 0;
+    $(function () {
+        $("#btnSearch").click(function () {
+            $("#divWorkloadList").html("<img src=\"@Html.RootPath()/Content/images/checkreg.gif\" style=\"vertical-align:middle;\" /><span style=\"font-size:14px;color:#333;\">正在加载统计信息...</span>");
+            strHtml = ""; AllCount = 0;
+            if ('@Html.isStatByGroup()' == 'True') {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Html.RootPath()/expertstat/GetWorkloadList/?rnd=' + Math.random(),
+                    data: { GroupID: 1, RoleID: $("#selRole").val(), RealName: $("#txtRealName").val(), isStatByGroup: true, StartDate: $("#txtStartDate").val(), EndDate: $("#txtEndDate").val() },
+                    success: function (data) {
+                        if (data.Rows.length > 0) {
+                            for (var i = 0; i < data.Rows.length; i++) {
+                                LoadMoreWorkLoadStat(data.Rows[i].AuthorID, data.Rows[i].RealName, data.Rows[i].RoleID, data.Rows[i].RoleName, $("#txtStartDate").val(), $("#txtEndDate").val());
+                            }
+                        }
+                        else {
+                            if ($("#selRole").val() != 0 && $("#txtRealName").val() == "") {
+                                $("#divWorkloadList").html("<span style='margin-left:10px;color:red;'>无本组统计数据！</span>");
+                            }
+                            else {
+                                $("#divWorkloadList").html("<span style='margin-left:10px;color:red;'>没有符合条件的统计数据！</span>");
+                            }
+                        }
+
+                    },
+                    error: function (xhr) {
+                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Html.RootPath()/expertstat/GetWorkloadList/?rnd=' + Math.random(),
+                    data: { GroupID: 1, RoleID: $("#selRole").val(), RealName: $("#txtRealName").val(), StartDate: $("#txtStartDate").val(), EndDate: $("#txtEndDate").val() },
+                    success: function (data) {
+                        if (data.Rows.length > 0) {
+                            for (var i = 0; i < data.Rows.length; i++) {
+                                LoadMoreWorkLoadStat(data.Rows[i].AuthorID, data.Rows[i].RealName, data.Rows[i].RoleID, data.Rows[i].RoleName, $("#txtStartDate").val(), $("#txtEndDate").val());
+                            }
+                        }
+                        else {
+                            if ($("#selRole").val() != 0 && $("#txtRealName").val() == "") {
+                                $("#divWorkloadList").html("<span style='margin-left:10px;color:red;'>无本组统计数据！</span>");
+                            }
+                            else {
+                                $("#divWorkloadList").html("<span style='margin-left:10px;color:red;'>没有符合条件的统计数据！</span>");
+                            }
+                        }
+
+                    },
+                    error: function (xhr) {
+                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                    }
+                });
+            }
+
+        });
+
+        // 日期选择
+        $("#txtStartDate").bind("click", function () {
+            var d5222 = $dp.$('txtEndDate');
+            WdatePicker({ readOnly: true, onpicked: function () { d5222.focus(); }, maxDate: '#F{$dp.$D(\'txtEndDate\')}' });
+        });
+        $("#txtEndDate").bind("click", function () { WdatePicker({ readOnly: true, minDate: '#F{$dp.$D(\'txtStartDate\')}' }); });
+
+    });
+    function ViewDetail(IsHandled,StatusID, AuthorID) {
+        var url = '@Html.RootPath()/expertstat/StatDetail?IsHandled=' + IsHandled + '&StatusID=' + StatusID + "&AuthorID=" + AuthorID;
+        var StartDate = $("#txtStartDate").val();
+        var EndDate = $("#txtEndDate").val();
+        if ($.trim(StartDate) != "") {
+            url += '&StartDate=' + StartDate;
+        }
+        if ($.trim(EndDate) != "") {
+            url += '&EndDate=' + EndDate;
+        }
+        url += '&rnd=' + Math.random();
+        $.ligerDialog.open({ height: 490, url: url, title: '查看审稿明细', width: 700, slide: false, buttons: [
+        
+        { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }
+        ]
+        });
+    }
+    if ('@Html.isStatByGroup()' == 'True') {
+        $.ajax({
+            type: 'POST',
+            url: '@Html.RootPath()/expertstat/GetWorkloadList/?rnd=' + Math.random(),
+            data: { GroupID: 1,isStatByGroup:true },
+            success: function (data) {
+                if (data.Rows.length == 0) {
+                    $("#divWorkloadList").html("<span style='margin-left:10px;color:red;'>无统计数据！</span>");
+                }
+                else {
+                    for (var i = 0; i < data.Rows.length; i++) {
+                        LoadMoreWorkLoadStat(data.Rows[i].AuthorID, data.Rows[i].RealName, data.Rows[i].RoleID, data.Rows[i].RoleName, null, null);
+                    }
+                }
+
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+    else {
+        $.ajax({
+            type: 'POST',
+            url: '@Html.RootPath()/expertstat/GetWorkloadList/?rnd=' + Math.random(),
+            data: { GroupID: 1 },
+            success: function (data) {
+                if (data.Rows.length == 0) {
+                    $("#divWorkloadList").html("<span style='margin-left:10px;color:red;'>无统计数据！</span>");
+                }
+                else {
+                    for (var i = 0; i < data.Rows.length; i++) {
+                        LoadMoreWorkLoadStat(data.Rows[i].AuthorID, data.Rows[i].RealName, 0, "", null, null);
+                    }
+                }
+
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+    
+
+    function LoadMoreWorkLoadStat(AuthorID, RealName, RoleID, RoleName,startDate,endDate) {
+        var AlreadyHTML = "";
+        var WaitHTML = "";
+        var ACount = 0;//初始化已处理稿件数
+        var WCount = 0; //初始化待处理稿件数
+        var TempCount = 0;
+        $.ajax({
+            type: 'POST',
+            url: '@Html.RootPath()/expertstat/GetWorkloadListForAuthorID/?rnd=' + Math.random(),
+            data: { CurAuthorID: AuthorID, RoleID: RoleID, StartDate: startDate, EndDate: endDate },
+            success: function (data) {
+                for (var tmp = 0; tmp < data.Rows1.length; tmp++) {
+                    TempCount += data.Rows1[tmp].ContributionCount;
+                }
+                AllCount += TempCount;          
+                if (TempCount > 0) {
+                    strHtml += "<div class=\"list\">";
+                    if ('@Html.isStatByGroup()' == 'True') {
+                        strHtml += "<div class=\"top\" style=\"cursor:pointer;\" onclick=\"WorkToExcelForEditor('" + RoleID + "','" + AuthorID + "','" + RealName + "')\" >" + RealName + "(" + RoleName + ")&nbsp;<a id=\"link_" + RoleID+"_"+AuthorID + "\"></a></div>";
+                    }
+                    else {
+                        strHtml += "<div class=\"top\" style=\"cursor:pointer;\" onclick=\"WorkToExcelForEditor('0','" + AuthorID + "','" + RealName + "')\" >" + RealName + "&nbsp;<a id=\"link_0_"+AuthorID + "\"></a></div>";
+                    }
+                    
+                    strHtml += "<div class=\"content\">";
+                    strHtml += "<div style=\"color:Green;font-weight:bold;\">已处理稿件</div>";
+                    for (var m = 0; m < data.Rows1.length; m++) {
+                        AlreadyHTML += "<a href='javascript:ViewDetail(\"1\",\"" + data.Rows1[m].StatusID + "\",\"" + AuthorID + "\")' style=\"text-decoration:none;color:Green;font-size:14px;\">" + data.Rows1[m].StatusName + "(" + data.Rows1[m].ContributionCount + ")" + "</a><br />";
+                        ACount += data.Rows1[m].ContributionCount;
+                    }
+                    strHtml += AlreadyHTML;
+                    strHtml += "<div style=\"color:Green;font-weight:bold;\">总计：" + ACount + "</div>";
+                    strHtml += "<div style=\"color:#ac7305;font-weight:bold;\">待处理稿件</div>";
+                    for (var n = 0; n < data.Rows0.length; n++) {
+                        WaitHTML += "<a href='javascript:ViewDetail(\"0\",\"" + data.Rows0[n].StatusID + "\",\"" + AuthorID + "\")' style=\"text-decoration:none;color:#ac7305;font-size:14px;\">" + data.Rows0[n].StatusName + "(" + data.Rows0[n].ContributionCount + ")" + "</a><br />";
+                        WCount += data.Rows0[n].ContributionCount;
+                    }
+                    strHtml += WaitHTML;
+                    strHtml += "<div style=\"color:#ac7305;font-weight:bold;\">总计：" + WCount + "</div>";
+                    strHtml += "</div>";
+                    strHtml += "<div style=\"margin-top:-10px\"><img src=\"@Html.RootPath()/Content/Editor/img/button.png\" /></div>";
+                    strHtml += "</div> ";
+                    $("#divWorkloadList").html(strHtml);
+                }
+                else {  
+                    if ($("#selRole").val() != 0 && AllCount==0) {
+                        $("#divWorkloadList").html("<span style='margin-left:10px;color:red;'>无本组统计数据！</span>");
+                    }     
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+
+    $("#btnExportExcel").click(function () {
+        var FileName = "编辑部工作量统计.xls";
+        $.ajax({
+            beforeSend: function () {
+                $("#ReportLink").removeAttr("href");
+                document.getElementById("ReportLink").style.color = "#000000";
+                $("#ReportLink").html("正在生成下载链接...");
+            },
+            type: 'POST',
+            url: '@Html.RootPath()/ExpertStat/WorkloadListToExcel/?rnd=' + Math.random(),
+            data: { RoleID:$("#selRole").val(),StartDate: $('#txtStartDate').val(), EndDate: $('#txtEndDate').val() },
+            cache: false,
+            success: function (data) {
+                if (data.flag == 1) {
+                    $("#ReportLink").attr("href", "@Html.RootPath()/Upload/DownLoadFile?path=" + data.ExcelPath + "&fileName=" + FileName + "");
+                    document.getElementById("ReportLink").style.color = "Green";
+                    $("#ReportLink").html(FileName);
+                }
+
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    });
+
+    //导出某个编辑的工作量列表
+    function WorkToExcelForEditor(RoleID,EditorID,EditorName)
+    {
+        var FileName = EditorName+"_工作量统计.xls";
+        $.ajax({
+            beforeSend: function () {
+                $("#link_" + RoleID+"_"+EditorID).html("请稍候..");
+            },
+            type: 'POST',
+            url: '@Html.RootPath()/ExpertStat/WorkloadListForEditorToExcel/?rnd=' + Math.random(),
+            data: { CurAuthorID: EditorID, RealName: EditorName, RoleID: RoleID, StartDate: $('#txtStartDate').val(), EndDate: $('#txtEndDate').val() },
+            cache: false,
+            success: function (data) {
+                if (data.flag == 1) {
+                    $("#link_" + RoleID+"_"+EditorID).attr("href", "@Html.RootPath()/Upload/DownLoadFile?path=" + data.ExcelPath + "&fileName=" + FileName + "");
+                    //document.getElementById("#link_" + EditorID).style.color = "Green";
+                    $("#link_" + RoleID+"_"+EditorID).html("导出");
+                }
+
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+
+</script>
+}

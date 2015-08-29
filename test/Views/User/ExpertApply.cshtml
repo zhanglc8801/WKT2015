@@ -1,0 +1,289 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>审稿专家申请-@Html.SiteName()</title>
+<link href="@Html.RootPath()/content/denglu.css" rel="stylesheet" type="text/css" />
+<link href="@Html.RootPath()/Content/ContributionInfo.css" rel="stylesheet" type="text/css" />
+<script src="@Html.RootPath()/Scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
+<script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+<style type="text/css">
+    .l-table-edit {font-size:14px;}
+    .l-table-edit-td{ padding:4px;height:35px;}
+    .l-verify-tip{ left:230px; top:120px;}
+    .l-button-submit,.l-button-test{width:80px; float:left; margin-left:10px; padding-bottom:2px;}
+</style>
+
+
+<script type="text/javascript">
+    //检查是否已提交过申请
+    function CheckIsApply(LoginName) {
+        document.getElementById("RegMsg").innerHTML = "<img src='@Html.RootPath()/Content/images/checkreg.gif' width='14px' height='14px' />正在检测...";
+        $.ajax({
+            type: 'POST',
+            url: '@Html.RootPath()/User/CheckIsApplyAjax/?rnd=' + Math.random(),
+            data: { LoginName: LoginName },
+            cache: false,
+            success: function (data) {
+                if (data.flag == "1") {
+                    document.getElementById("RegMsg").innerHTML = "<img src='@Html.RootPath()/Content/images/actionok.png' width='14px' height='14px' />"+data.msg+"";
+                    document.getElementById("RegMsg").style.color = "Green";
+                    document.getElementById("RegMsg").style.display = "block";
+                    document.getElementById("btnSubmit").disabled = false;
+                }
+                else {
+                    document.getElementById("RegMsg").innerHTML = "<img src='@Html.RootPath()/Content/images/actionno.png' width='14px' height='14px' />"+data.msg+"";
+                    document.getElementById("RegMsg").style.color = "Red";
+                    document.getElementById("RegMsg").style.display = "block";
+                    document.getElementById("btnSubmit").disabled = true;
+                }
+                
+            }
+
+        });
+
+    }
+</script>
+
+</head>
+<body>
+<br />
+<div id="author_content">
+    <div class="author_head">&nbsp;@Html.SiteName()<span style="color:#fff; font-size:20px; font-weight:normal">&nbsp;申请为本刊审稿专家</span></div>
+    <div class="author_menu">
+    	<div class="author_menu_wenzi"><a href="@Html.SiteHome()">期刊首页</a></div>
+    </div>
+    <!-----------------------------导航结束----------------------------------->
+    <!-----------------------------正文开始----------------------------------->
+    <div id="author_content_body" style="height:auto; text-align:center;">
+        <h2 style=" margin-bottom:5px; margin-top:-5px;">审稿专家申请区</h2>
+        <h3></h3>
+        <form id="formReg" action="" method="post">
+                <table border="0" class="mainTable" cellpadding="0" cellspacing="0" align="center" width="98%">
+                    <tr>
+                        <td class="left" style="width: 80px; border-top-width:0px;">
+                            登录邮箱：
+                        </td>
+                        <td class="right" style="width: 38%;border-top-width:0px;">
+                            <input type="text" name="LoginName" tabindex="0" id="txtLoginName" class="input-text" onblur="javascript:CheckIsApply(this.value);" /><span style="color:Red; vertical-align:middle;" >&nbsp;*</span>
+                            <span id="RegMsg" style="display:none; font-size:12px;"></span>
+                        </td>
+                        <td class="left" style="width: 80px; border-top-width:0px;">
+                            您的姓名：
+                        </td>
+                        <td class="right" style="border-top-width:0px; border-right-width:0px;">
+                            <input class="input-text" name="RealName" tabindex="1" id="txtRealName" type="text" /><span style="color:Red; vertical-align:middle;">&nbsp;*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            性别：
+                        </td>
+                        <td class="right">
+                            <input type="radio" id="Gender1" value="1" name="Gender" tabindex="2" /><label for="Gender1">男</label>
+                            <input type="radio" id="Gender2" value="2" name="Gender" tabindex="2" /><label for="Gender2">女</label>
+                            <span style="color:Red; vertical-align:middle;">&nbsp;*</span>
+                        </td>
+                        <td class="left" style="width: 80px;">
+                            出生年月：
+                        </td>
+                        <td class="right" style="border-right-width:0px;">
+                            <input type="text" name="Birthday" class="txtbox Wdate" style="width:203px;" id="txtBirthday" tabindex="3" />
+                            <span style="color:Red; vertical-align:middle;">&nbsp;*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            学历：
+                        </td>
+                        <td class="right">
+                            @Html.Raw(Html.SelectDcitValue("Education", "200px;", "Education", "", string.Empty, "请选择"))
+                        </td>
+                        <td class="left" style="width: 80px;">
+                            职称：
+                        </td>
+                        <td class="right" style="border-right-width:0px;">
+                            @Html.Raw(Html.SelectDcitValue("JobTitle", "200px;", "JobTitle", "", string.Empty, "请选择"))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            联系电话：
+                        </td>
+                        <td class="right">
+                             <input class="input-text" name="Tel" tabindex="4" id="txtTel" type="text" /><span style="color:#333; vertical-align:middle;">&nbsp;*</span>
+                        </td>
+                        <td class="left" style="width: 80px;">
+                            手机：
+                        </td>
+                        <td class="right" style="border-right-width:0px;">
+                            <input class="input-text" name="Mobile" tabindex="5" id="txtMobile" type="text" /><span style="color:#333; vertical-align:middle;">&nbsp;*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            单位：
+                        </td>
+                        <td class="right">
+                            <input class="input-text" name="WorkUnit" tabindex="6" id="txtWorkUnit" type="text" /><span style="color:Red; vertical-align:middle;">&nbsp;*</span>
+                        </td>
+                        <td class="left" style="width: 80px;">
+                            地址：
+                        </td>
+                        <td class="right" style="border-right-width:0px;">
+                            <input class="input-text" name="Address" tabindex="7" id="txtAddress" type="text" /><br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            审稿领域：
+                        </td>
+                        <td class="right">
+                            <textarea cols="100" rows="4" class="l-textarea" id="txtReviewDomain" tabindex="8" style="width:203px; color:Gray; text-align:left; font-size:12px;" onfocus="if(this.value=='请填写您擅长的审稿领域'){javascript:this.value='';this.style.color='WindowText';}">请填写您擅长的审稿领域</textarea><span style="color:Red; vertical-align:middle;">&nbsp;*</span>
+                        </td>
+                        <td class="left">
+                            研究方向：
+                        </td>
+                        <td class="right" style="border-right-width:0px;">
+                            <textarea cols="100" rows="4" class="l-textarea" id="txtResearchTopics" tabindex="9" style="width:203px; color:Gray; text-align:left; font-size:12px;" onfocus="if(this.value=='请填写您的研究方向'){javascript:this.value='';this.style.color='WindowText';}">请填写您的研究方向</textarea><span style="color:Red; vertical-align:middle;">&nbsp;*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="left">
+                            银行账号：
+                        </td>
+                        <td class="right">
+                            <input class="input-text" name="BankID" tabindex="10" id="txtBankID" type="text" />
+                        </td>
+                        <td class="left">
+                            银行类型：
+                        </td>
+                        <td class="right" style="border-right-width:0px;">
+                            @Html.Raw(Html.SelectDcitValue("BankType", "200px;", "BankType", "", string.Empty, "请选择"))
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="left">
+                            邮编：
+                        </td>
+                        <td class="right">
+                            <input class="input-text" name="ZipCode" tabindex="11" id="txtZipCode" type="text" />
+                        </td>
+                        <td class="left">
+                            备注：
+                        </td>
+                        <td class="right" style="border-right-width:0px;">
+                            <textarea cols="100" rows="4" class="l-textarea" id="txtRemark" tabindex="12" style="width:203px; color:Gray; text-align:left; font-size:12px;" onfocus="if(this.value=='请填写您需要发送给编辑部的其他信息'){javascript:this.value='';this.style.color='WindowText';}">请填写您需要发送给编辑部的其他信息</textarea>
+                        </td>
+                    </tr>
+                </table>
+                <div style="margin-top:20px;">
+                    <span><label class="label">验&nbsp;证&nbsp;码：</label></span>
+                    <input class="input-text" name="txtVerifyCode" tabindex="13" id="txtVerifyCode" maxlength="4" style=" width:120px;" type="text"/><span style="color:Red; vertical-align:middle;">&nbsp;*</span>
+                    <img src="@Html.RootPath()/VerifyCode/VerifyCode/" width="68" height="23" id="imgVerifyCode" style="cursor: pointer; vertical-align:middle;" alt="验证码,不区分大小写"  title="验证码,不区分大小写" />
+                </div>
+                <div style="margin-top:20px;">
+                    <input type="button" value="提交申请" tabindex="14" id="btnSubmit" class="loginBtn" style="cursor:pointer;" />
+                    <input type="reset" id="btnReset" tabindex="15" value="全部重置" class="register"/>
+                </div>	    
+		</form>
+        
+    </div>
+    <br/>
+    <div class="footer"><br />本系统由<a href="http://www.yywkt.cn" target="_blank">北京志清伟业科技发展有限公司</a>设计开发并提供技术支持</div>
+</div>
+
+
+<script language="javascript" type="text/javascript">
+    document.getElementById("txtLoginName").focus();
+    $("#txtBirthday").bind("click", function () { WdatePicker({ readOnly: true, minDate: '#F{$dp.$D(\'txtBirthday\')}' }); });
+    $(function () {
+        $("#imgVerifyCode").bind("click", function () {
+            this.src = "@Html.RootPath()/VerifyCode/VerifyCode/?rnd=" + Math.random();
+        });
+
+        $("#btnSubmit").click(function () {
+            if ($('#txtRealName').val() == "") {
+                alert("请输入您的姓名!");
+                document.getElementById("txtRealName").focus();
+                document.getElementById("txtRealName").style.borderColor = "red";
+                return;
+            }
+            if ($('#txtTel').val() == "" && $('#txtMobile').val() == "") {
+                alert("联系电话与手机请至少填写一个!");
+                document.getElementById("txtTel").focus();
+                document.getElementById("txtTel").style.borderColor = "Blue";
+                document.getElementById("txtMobile").style.borderColor = "Blue";
+                return;
+            }
+            if ($('#txtVerifyCode').val() == "") {
+                alert("请输入验证码!");
+                document.getElementById("txtVerifyCode").focus();
+                document.getElementById("txtVerifyCode").style.borderColor = "red";
+                return;
+            }
+            $.ajax({
+                beforeSend: function () {
+                    document.getElementById("btnSubmit").value = "正在提交...";
+                    document.getElementById("btnSubmit").disabled = true;
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/User/ExpertApplyAjax/?rnd=' + Math.random(),
+                data: {
+                    LoginName: $('#txtLoginName').val(),
+                    RealName: $('#txtRealName').val(),
+                    Gender: $("input[name='Gender']:checked").val(),
+                    Birthday: $('#txtBirthday').val(),
+                    Education: $('#Education').val(),
+                    JobTitle: $('#JobTitle').val(),
+                    Tel: $('#txtTel').val(),
+                    Mobile: $('#txtMobile').val(),
+                    WorkUnit: $('#txtWorkUnit').val(),
+                    Address: $('#txtAddress').val(),
+                    ReviewDomain: $('#txtReviewDomain').val(),
+                    ResearchTopics: $('#txtResearchTopics').val(),
+                    BankID: $('#txtBankID').val(),
+                    BankType: $('#BankType').val(),
+                    ZipCode: $('#txtZipCode').val(),
+                    Remark: $('#txtRemark').val(),
+                    VerifyCode: $('#txtVerifyCode').val()
+                },
+                cache: false,
+                success: function (data) {
+                    if (data.result == 'success') {
+                        alert(data.msg);
+                        document.getElementById("btnSubmit").value = "提交申请";
+                        document.getElementById("btnSubmit").disabled = false;
+                    }
+                    if (data.result == '-1') {
+                        alert(data.msg);
+                        document.getElementById("btnSubmit").value = "提交申请";
+                        document.getElementById("btnSubmit").disabled = false;
+                    }
+                    if (data.result == '0') {
+                        alert(data.msg);
+                        document.getElementById("btnSubmit").value = "提交申请";
+                        document.getElementById("btnSubmit").disabled = false;
+                    }
+                    else {
+                        alert(data.msg);
+                    }
+
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+
+        });
+
+    });
+</script>
+
+</body>
+</html>

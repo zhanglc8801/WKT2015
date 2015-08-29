@@ -1,0 +1,46 @@
+﻿@model SysAccountInfoEntity
+<script type="text/javascript">
+    // 只调用最顶的jBox
+    if (top.jBox != undefined) {
+        window.jBox = top.jBox;
+    }
+    Index.SetTitle('后台首页');
+</script>
+<div class="container">
+    <div class="location">当前位置：后台首页</div>
+    <table class="hide" width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+        <td width="62" height="55" valign="middle"><img src="/content/images/title.gif" width="54" height="55" alt="" /></td>
+            <td valign="top" style="line-height:20px;">
+                为了账号的安全，如果下面的登录情况不正常，建议您马上<a href="/Account/EditPwd" class="txt-blue">修改密码</a>。
+            </td>
+        </tr>
+    </table>
+    <div class="blank10"></div>
+    <div class="box">
+        <div class="box-title txt-blue-b">您的角色</div>
+        <div class="box-content">
+            <i>系统管理员</i>
+        </div>
+    </div>
+    <div class="blank10"></div>
+    <div class="box">
+        <div class="box-title txt-blue-b">登录情况</div>
+        <div class="box-content">
+            <i>登录总数：</i>@Model.LogOnTimes 次<br />
+            <i>本次登录IP：</i>@Model.LastIP<br />
+            <i>本次登录时间：</i>@Model.LoginDate<br />
+        </div>
+    </div>
+    <div class="blank10"></div>
+    <img src="/content/images/ts.gif" style="margin-bottom:-2px;" width="16" height="16" alt="tip" /> 提示：为了账号的安全，如果上面的登录情况不正常，建议您马上<a href="/account/editpwd">修改密码</a>。
+    <div class="blank10"></div>
+    <div class="line"></div>
+    <div class="blank10"></div>
+    <img src="/content/images/icon-mail.gif" style="margin-bottom:-1px;" width="16" height="11" alt="mail" /> 联系：xdsong@gmail.com<br />
+    <img src="/content/images/icon-phone.gif" style="margin-bottom:-2px;" width="17" height="14" alt="phone" /> 网站：<a href="http://www.scj.cn" target="_blank">http://www.scj.cn</a>
+</div>
+<div class="clear"></div>
+@section Scripts{
+
+}

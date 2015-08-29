@@ -1,0 +1,85 @@
+﻿@model ApiServerInfoEntity
+<script type="text/javascript">
+    // 设置标题
+    Index.SetTitle('@(Model == null ? "新增API站点" : "编辑API站点")');
+    </script>
+<div class="container">
+    <div class="location">当前位置：系统设置 -&gt; API站点管理 -&gt; @(Model == null ? "新增API站点" : "编辑API站点")</div>
+    <div class="blank10"></div>
+    <div class="block">
+        <div class="h">
+            <span class="icon-sprite icon-list"></span>
+            <h3>@(Model == null ? "新增API站点" : "编辑API站点")</h3>
+            <div class="bar">
+                <a class="btn-lit" href="javascript:Index.Open('/ApiSite');"><span>返回</span></a>
+            </div>
+        </div>
+        <div class="tl corner"></div><div class="tr corner"></div><div class="bl corner"></div><div class="br corner"></div>
+        <div class="cnt-wp">
+            <div class="cnt form">
+                <form method="post" id="frmApiSiteAdd" name="frmApiSiteAdd">
+                <table class="data-form" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <th scope="row">站点名称：</th>
+                            <td><input value="@(Model != null ? Model.SiteName.ToString() : "")" type="text" name="SiteName" id="txtSiteName" class="input-normal" /></td>
+                            <td align="left"><div id="txtSiteNameTip" style="line-height:13px;"></div></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">站点URL：</th>
+                            <td><input value="@(Model != null ? Model.SiteUrl.ToString() : "")" type="text" name="SiteUrl" id="txtSiteUrl" class="input-normal" /></td>
+                            <td align="left"><div id="txtSiteUrlTip" style="line-height:13px;"></div></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">状态：</th>
+                            <td>
+                                @if (Model == null)
+                                {
+                                    <select name="Status" id="selStatus"><option value="1">启用</option><option value="0">禁用</option></select>
+                                }
+                                else
+                                {
+                                    <select name="Status" id="selStatus"><option value="1" @(Model.Status == 1 ? "selected" : "")>启用</option><option value="0" @(Model.Status == 0 ? "selected" : "")>禁用</option></select>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">备注：</th>
+                            <td><input value="@(Model != null ? Model.Note.ToString() : "")" type="text" name="Note" id="txtNote" class="input-big" /></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">&nbsp;</th>
+                            <td>
+                                <a class="btn-lit" id="btnSubmit" href="javascript:void(0)"><span>确定</span></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table><input type="hidden" id="hiddenApiServerID" value="@(Model != null ? Model.ApiServerID.ToString() : "")" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script src="/Scripts/Validator/formValidator-4.1.1.js" type="text/javascript"></script>
+<script src="/Scripts/Validator/formValidatorRegex.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $.formValidator.initConfig({ formID: "frmDBServerAdd", theme: "ArrowSolidBox", submitOnce: true });
+        $("#txtSiteName").formValidator({ onShowText: "", onShow: "站点名称", onFocus: "请输入服务器IP", onCorrect: "ok" }).inputValidator({ min: 2, max: 30, onError: "请输入站点名称" });
+        $("#txtSiteUrl").formValidator({ onShowText: "", onShow: "站点URL", onFocus: "请输入站点URL", onCorrect: "ok" }).regexValidator({ regExp: "url", dataType: "enum", onError: "请输入正确的站点URL" });
+
+        $("#btnSubmit").click(
+        function () {
+            var objParam = { "SiteName": $("#txtSiteName").val(), "SiteUrl": $("#txtSiteUrl").val(), "Status": $("#selStatus").val(), "Note": $("#txtNote").val() };
+            var url = "/ApiSite/AddAjax";
+            if ($("#hiddenApiServerID").val() != "") {
+                url = "/ApiSite/EditAjax";
+                objParam = { "ApiServerID": $("#hiddenApiServerID").val(), "SiteName": $("#txtSiteName").val(), "SiteUrl": $("#txtSiteUrl").val(), "Status": $("#selStatus").val(), "Note": $("#txtNote").val() };
+            }
+            Admin.SubmitForm(url, objParam, '/ApiSite');
+        }
+    )
+    });
+</script>
+}

@@ -1,0 +1,234 @@
+﻿<div id="divRoleLayout">
+    <input type="hidden" value="0" id="year" />
+    <div position="left" title="年卷设置">
+        <div id="divYearList" style="margin: 2px;">
+        </div>
+    </div>
+    <div position="center" title="期设置">
+        <div id="divIssueList" style="margin: 2px;">
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        var managerYear, managerIssue;
+        var year = $("#year").val();
+        $(function () {
+            $("#divRoleLayout").ligerLayout({ leftWidth: '49%', centerWidth: '49%', allowLeftCollapse: false });
+            managerYear = $("#divYearList").ligerGrid({
+                columns: [
+            { display: '编号', name: 'SetID', hide: true },
+            { display: '年', name: 'Year', width: '30%', align: 'center' },
+            { display: '卷', name: 'Volume', width: '30%', align: 'center' },
+            { display: '状态', name: 'Status', width: '20%', align: 'center', render: function (item) {
+                if (item.Status == 1)
+                    return "<span style='color:red'>√ </span>";
+                return '';
+            }
+            }
+            ], width: '99%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+                url: '@Html.RootPath()/Issue/GetYearVolumePageList', pageSize: 20, enabledSort: false,
+                onSelectRow: function (data, rowindex, rowobj) {
+                    LoadStatusActionList(data.Year);
+                },
+                toolbar: { items: [
+            { text: '新增', click: AddYear, icon: 'add' },
+            { line: true },
+            { text: '修改', click: UpdateYear, icon: 'modify' },
+            { line: true },
+            { text: '删除', click: DelYear, icon: 'delete' }
+            ]
+                }
+            });
+            managerIssue = $("#divIssueList").ligerGrid({
+                columns: [
+            { display: '编号', name: 'IssueSetID', hide: true },
+            { display: '期', name: 'Issue', width: '10%', align: 'center' },
+             { display: '印刷费', name: 'PrintExpenses', width: '20%', align: 'center' },
+            { display: '状态', name: 'Status', width: '20%', align: 'center', render: function (item) {
+                if (item.Status == 1)
+                    return "<span style='color:red'>√ </span>";
+                return '';
+            }
+            },
+            { display: '期刊封面', name: 'TitlePhoto', width: '20%', align: 'center', render: function (item) {
+                if (item.TitlePhoto.length < 1)
+                    return '';
+                return '<a href="javascript:void(0)" onclick="ViewPhoto(\'' + item.TitlePhoto + '\')" >查看封面</a>';
+            }
+            }
+            ], width: '99%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+                url: '@Html.RootPath()/Issue/GetIssueSetPageList', pageSize: 20, enabledSort: false,
+                toolbar: { items: [
+            { text: '新增', click: AddIssue, icon: 'add' },
+            { line: true },
+            { text: '修改', click: UpdateIssue, icon: 'modify' },
+            { line: true },
+            { text: '删除', click: DelIssue, icon: 'delete' }
+            ]
+                }
+            });
+        });
+
+        function AddYear() {
+            $.ligerDialog.open({
+                height: 200,
+                width: 400,
+                url: '@Html.RootPath()/Issue/CreateYearVolume',
+                title: '新增年卷设置',
+                slide: false,
+                buttons: [{ text: '确认', onclick: function (item, dialog) {
+                    dialog.frame.Save(managerYear, dialog);
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function UpdateYear() {
+            var rows = managerYear.getSelectedRows();
+            if (rows == "") { alert('请选择需要编辑的年卷设置！'); return; }
+            $.ligerDialog.open({
+                height: 200,
+                width: 400,
+                url: '@Html.RootPath()/Issue/CreateYearVolume?SetID=' + rows[0].SetID,
+                title: '编辑年卷设置',
+                slide: false,
+                buttons: [{ text: '确认', onclick: function (item, dialog) {
+                    dialog.frame.Save(managerYear, dialog);
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function DelYear() {
+            var rows = managerYear.getSelectedRows();
+            if (rows == "") { alert('请选择需要删除的年卷设置！'); return; }
+            var data = [];
+            for (i = 0; i < rows.length; i++) {
+                data.push(rows[i].SetID);
+            }
+            if (!confirm("确定删除所选的年卷设置吗？")) return;
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/Issue/DelYearVolume/',
+                data: { "SetIDs": data },
+                cache: false,
+                traditional: true,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        managerYear.loadData();
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+        function ViewPhoto(url) {
+            DownLoad('@Html.RootPath()', url, '期刊封面');
+        }
+
+        function AddIssue() {
+            if ($("#year").val() == 0) {
+                alert("请先在年卷设置中选择一行,确定年卷，再执行操作");
+                return;
+            }
+            $.ligerDialog.open({
+                height: 200,
+                width: 500,
+                url: '@Html.RootPath()/Issue/CreateIssueSet?year=' + $("#year").val(),
+                title: '新增期设置',
+                slide: false,
+                buttons: [{ text: '确认', onclick: function (item, dialog) {
+                    dialog.frame.Save(managerIssue, dialog);
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function UpdateIssue() {
+            if ($("#year").val() == 0) {
+                alert("请先在年卷设置中选择一行,确定年卷，再执行操作");
+                return;
+            }
+            var rows = managerIssue.getSelectedRows();
+            if (rows == "") { alert('请选择需要编辑的期设置！'); return; }
+            $.ligerDialog.open({
+                height: 200,
+                width: 500,
+                url: '@Html.RootPath()/Issue/CreateIssueSet?IssueSetID=' + rows[0].IssueSetID + "&year=" + $("#year").val(),
+                title: '编辑期设置',
+                slide: false,
+                buttons: [{ text: '确认', onclick: function (item, dialog) {
+                    dialog.frame.Save(managerIssue, dialog);
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function DelIssue() {
+            if ($("#year").val() == 0) {
+                alert("请先在年卷设置中选择一行,确定年卷，再执行操作");
+                return;
+            }
+            var rows = managerIssue.getSelectedRows();
+            if (rows == "") { alert('请选择需要删除的期设置！'); return; }
+            var data = [];
+            for (i = 0; i < rows.length; i++) {
+                data.push(rows[i].IssueSetID);
+            }
+            if (!confirm("确定删除所选的期设置吗？")) return;
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/Issue/DelIssueSet/',
+                data: { "IssueSetIDs": data },
+                cache: false,
+                traditional: true,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        managerIssue.loadData();
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+
+        function LoadStatusActionList(StatusID) {
+            $("#year").val(StatusID);
+            managerIssue = $("#divIssueList").ligerGrid({
+                columns: [
+            { display: '编号', name: 'IssueSetID', hide: true },
+            { display: '期', name: 'Issue', width: '10%', align: 'center' },
+             { display: '印刷费', name: 'PrintExpenses', width: '20%', align: 'center' },
+            { display: '状态', name: 'Status', width: '20%', align: 'center', render: function (item) {
+                if (item.Status == 1)
+                    return "<span style='color:red'>√ </span>";
+                return '';
+            }
+            },
+            { display: '期刊封面', name: 'TitlePhoto', width: '20%', align: 'center', render: function (item) {
+                if (item.TitlePhoto.length < 1)
+                    return '';
+                return '<a href="javascript:void(0)" onclick="ViewPhoto(\'' + item.TitlePhoto + '\')" >查看封面</a>';
+            }
+            }
+            ], width: '99%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+                url: '@Html.RootPath()/Issue/GetIssueSetPageList?Year=' + StatusID, pageSize: 20, enabledSort: false,
+                toolbar: { items: [
+            { text: '新增', click: AddIssue, icon: 'add' },
+            { line: true },
+            { text: '修改', click: UpdateIssue, icon: 'modify' },
+            { line: true },
+            { text: '删除', click: DelIssue, icon: 'delete' }
+            ]
+                }
+            });
+        }
+    </script>
+}

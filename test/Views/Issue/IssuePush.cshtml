@@ -1,0 +1,167 @@
+﻿<style type="text/css">   
+    .l-table-edit-td-left{ padding:4px;width:60px;}
+    .l-table-edit-td{ padding:4px;}  
+    .l-button-search{width:80px; margin-left:10px; padding-bottom:2px;display:inline;}    
+</style>
+<div style="min-width:1000px;" tabid="IssuePush" id="notice_container" class="notice notice0">
+	<div class="c">
+        @Html.Raw(Html.SelectIssueYear("Year", "100px", string.Empty, string.Empty, "请选择年"))                 
+        @Html.Raw(Html.SelectIssueSet("Issue", "100px", string.Empty, string.Empty, "请选择期"))  
+        @Html.Raw(Html.SelectJChannel("ChannelName", "100px", string.Empty, string.Empty, "请选择栏目"))        
+        <input type="button" value="搜索" class="btnsearch" id="btnSearch" />&nbsp;
+        <input type="button" value="重置" class="btnreset" id="btnReset" />&nbsp;
+        <input type="button" value="发送" class="btnsend"  id="btnSend" style="display:none;" />
+        <span id="spanReciveType" style="display:none;">
+            <span>接收人类型：</span>
+            <input type="radio" id="ReciveType1" value="1" name="ReciveType" /><label for="ReciveType1">从系统中选择</label>
+            <input type="radio" id="ReciveType2" value="2" name="ReciveType" /><label for="ReciveType2">输入邮件地址</label>
+        </span>
+    </div>
+
+    <div class="c" id="selectDiv" style="display:none;">
+        <span id="spanSelect"><input type="button" value="选择作者"  id="btnSelect"/>&nbsp;<input type="button" value="选择专家"  id="btnSelectExpert"/></span><input type="button" value="发送" class="btnsend"  id="btnSend1" /><br />
+        <textarea cols="100" rows="4" class="l-textarea" id="txtUser" disabled="disabled" style="width: 740px"></textarea>
+    </div>
+    <div class="c" id="inputDiv" style="display:none;">
+        <label>接收人姓名：</label><input type="text" id="RecUserName" style="width:80px;" /><label>&nbsp;&nbsp;&nbsp;接收人地址：</label><input type="text" id="RecEmail" /><input type="button" value="发送" class="btnsend"  id="btnSend2" />
+    </div>
+
+</div>
+<div id="divList" style="width:820px; float:left;">
+    
+</div>
+@section Scripts{
+
+    <script type="text/javascript">
+        $("#btnSearch").click(function () {
+            if ($('#Year').val() == "" || $('#Issue').val() == "") {
+                alert("查询条件不完整！请选择完整的年期。");
+                return;
+            }
+            $.ajax({
+                beforeSend: function () {
+                    $("#divList").html("<img src=\"@Html.RootPath()/Content/images/checkreg.gif\" style=\"vertical-align:middle;margin-left:10px;\" /><span style=\"font-size:14px;color:#333;\">正在生成预览...</span>");
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/Issue/IssuePush/?rnd=' + Math.random(),
+                data: { Year: $('#Year').val(), Issue: $('#Issue').val(), JChannelID: $('#ChannelName').val() },
+                cache: false,
+                success: function (data) {
+                    if (data.flag == 1) {
+                        $("#divList").html(data.htmlContent);
+                        $("#spanReciveType").removeAttr("style");
+                    }
+
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+
+
+        });
+        function SelectAuthor() {
+            $.ligerDialog.open({ height: 400, url: '@Html.RootPath()/member/SelDialog?isAll=1', title: '选择作者', width: 600, slide: false, buttons: [
+                    { text: '确定', onclick: function (item, dialog) {
+                        rows = dialog.frame.checkedExpert;
+                        if (rows == "") { alert('请选择要添加的作者！'); return; }
+                        var str = "," + $("#txtUser").val() + ",", appendStr = '';
+                        for (i = 0; i < rows.length; i++) {
+                            if (ValiEmial(rows[i].LoginName) && str.indexOf("," + rows[i].AuthorID + ",") == -1) {
+                                appendStr += rows[i].LoginName + ',';
+                            }
+                        }
+                        $("#txtUser").append(appendStr);
+                        dialog.close();
+                    }
+                    },
+                    { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+                    ]
+            });
+        }
+        function SelectExpert() {
+            $.ligerDialog.open({ height: 400, url: '@Html.RootPath()/Expert/SelDialog?isAll=1', title: '选择专家', width: 600, slide: false, buttons: [
+                    { text: '确定', onclick: function (item, dialog) {
+                        rows = dialog.frame.checkedExpert;
+                        if (rows == "") { alert('请选择要添加的专家！'); return; }
+                        var str = "," + $("#txtUser").val() + ",", appendStr = '';
+                        for (i = 0; i < rows.length; i++) {
+                            if (ValiEmial(rows[i].LoginName) && str.indexOf("," + rows[i].AuthorID + ",") == -1) {
+                                appendStr += rows[i].LoginName + ',';
+                            }
+                        }
+                        $("#txtUser").append(appendStr);
+                        dialog.close();
+                    }
+                    },
+                    { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+                    ]
+            });
+        }
+        function ValiEmial(value) {
+            var txt = $.trim(value);
+            if (value.length == 0)
+                return true;
+            if (!/^([\.a-zA-Z0-9_-])+@@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/.test(txt))
+                return false;
+            return true;
+        }
+        $("#btnSelect").bind("click", function () { SelectAuthor(); });
+        $("#btnSelectExpert").bind("click", function () { SelectExpert(); });
+        $("#ReciveType1").click(function () {
+            $("#selectDiv").removeAttr("style");
+            document.getElementById("inputDiv").style.display = "none";
+        });
+        $("#ReciveType2").click(function () {
+            $("#inputDiv").removeAttr("style");
+            document.getElementById("selectDiv").style.display = "none";
+        });
+
+        //从系统中选择发送
+        $("#btnSend1").click(function () {
+            $.ajax({
+                beforeSend: function () {
+
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/Issue/SendIssueListSelectAuthor/?rnd=' + Math.random(),
+                data: { RecEmail: $('#txtUser').val(), Content: $('#divList').html() },
+                cache: false,
+                success: function (data) {
+                    if (data.flag == 1) {
+                        alert("发送成功！");
+                    }
+
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        });
+        //手动输入发送
+        $("#btnSend2").click(function () {
+            $.ajax({
+                beforeSend: function () {
+                    
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/Issue/SendIssueListInput/?rnd=' + Math.random(),
+                data: { RecUserName: $('#RecUserName').val(), RecEmail: $('#RecEmail').val(), Content: $('#divList').html() },
+                cache: false,
+                success: function (data) {
+                    if (data.flag == 1) {
+                        alert("发送成功！");
+                    }
+
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+
+
+
+        });
+
+    </script>
+}

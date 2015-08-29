@@ -1,0 +1,1838 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WKT.Facade.Service.Interface</name>
+    </assembly>
+    <members>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteConfigModel(WKT.Model.SiteConfigQuery)">
+            <summary>
+            获取站点配置实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.EditSiteConfig(WKT.Model.SiteConfigEntity)">
+            <summary>
+            修改站点配置
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetDictPageList(WKT.Model.DictQuery)">
+            <summary>
+            获取数据字典分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetDictModel(WKT.Model.DictQuery)">
+            <summary>
+            获取数据字典实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SaveDict(WKT.Model.DictEntity)">
+            <summary>
+            保存数据字典
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.DelDict(WKT.Model.DictQuery)">
+            <summary>
+            删除数据字典
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetDictValuePageList(WKT.Model.DictValueQuery)">
+            <summary>
+            获取数据字典值分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetDictValueModel(WKT.Model.DictValueQuery)">
+            <summary>
+            获取数据字典值实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SaveDictValue(WKT.Model.DictValueEntity)">
+            <summary>
+            保存数据字典值
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.DelDictValue(WKT.Model.DictValueQuery)">
+            <summary>
+            删除数据字典值
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetDictValueDcit(WKT.Model.DictValueQuery)">
+            <summary>
+            获取数据字典值键值对
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteChannelList(WKT.Model.SiteChannelQuery)">
+            <summary>
+            获取栏目属性数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteChannelTreeList(WKT.Model.SiteChannelQuery)">
+            <summary>
+            获取栏目属性数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteChannelModel(WKT.Model.SiteChannelQuery)">
+            <summary>
+            获取栏目实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SaveSiteChannel(WKT.Model.SiteChannelEntity)">
+            <summary>
+            保存栏目数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.DelSiteChannel(WKT.Model.SiteChannelQuery)">
+            <summary>
+            删除数据字典值
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetContactWayPageList(WKT.Model.ContactWayQuery)">
+            <summary>
+            获取联系人分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetContactWayList(WKT.Model.ContactWayQuery)">
+            <summary>
+            获取联系人数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetContactWayModel(WKT.Model.ContactWayQuery)">
+            <summary>
+            获取联系人实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SaveContactWay(WKT.Model.ContactWayEntity)">
+            <summary>
+            保存联系人数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.DelContactWay(WKT.Model.ContactWayQuery)">
+            <summary>
+            删除联系人
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteNoticePageList(WKT.Model.SiteNoticeQuery)">
+            <summary>
+            获取站点公告分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteNoticeList(WKT.Model.SiteNoticeQuery)">
+            <summary>
+            获取站点公告数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteNoticeModel(WKT.Model.SiteNoticeQuery)">
+            <summary>
+            获取站点公告实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SaveSiteNotice(WKT.Model.SiteNoticeEntity)">
+            <summary>
+            保存站点公告数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.DelSiteNotice(WKT.Model.SiteNoticeQuery)">
+            <summary>
+            删除站点公告
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetFriendlyLinkPageList(WKT.Model.FriendlyLinkQuery)">
+            <summary>
+            获取友情链接分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetFriendlyLinkList(WKT.Model.FriendlyLinkQuery)">
+            <summary>
+            获取友情链接数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetFriendlyLinkModel(WKT.Model.FriendlyLinkQuery)">
+            <summary>
+            获取友情链接实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SaveFriendlyLink(WKT.Model.FriendlyLinkEntity)">
+            <summary>
+            保存友情链接数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.DelFriendlyLink(WKT.Model.FriendlyLinkQuery)">
+            <summary>
+            删除友情链接
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteContentPageList(WKT.Model.SiteContentQuery)">
+            <summary>
+            获取新闻资讯分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteContentList(WKT.Model.SiteContentQuery)">
+            <summary>
+            获取新闻资讯数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteContentModel(WKT.Model.SiteContentQuery)">
+            <summary>
+            获取新闻资讯实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SaveSiteContent(WKT.Model.SiteContentEntity)">
+            <summary>
+            保存新闻资讯数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.DelSiteContent(WKT.Model.SiteContentQuery)">
+            <summary>
+            删除新闻资讯
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteResourcePageList(WKT.Model.SiteResourceQuery)">
+            <summary>
+            获取资源文件分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteResourceList(WKT.Model.SiteResourceQuery)">
+            <summary>
+            获取资源文件数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteResourceModel(WKT.Model.SiteResourceQuery)">
+            <summary>
+            获取资源文件实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SaveSiteResource(WKT.Model.SiteResourceEntity)">
+            <summary>
+            保存资源文件数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.AccumSiteResourceDownLoadCount(WKT.Model.SiteResourceEntity)">
+            <summary>
+            累加资源文件下载次数
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.DelSiteResource(WKT.Model.SiteResourceQuery)">
+            <summary>
+            删除资源文件
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteBlockPageList(WKT.Model.SiteBlockQuery)">
+            <summary>
+            获取内容块分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteBlockList(WKT.Model.SiteBlockQuery)">
+            <summary>
+            获取内容块数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteBlockModel(WKT.Model.SiteBlockQuery)">
+            <summary>
+            获取内容块实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SaveSiteBlock(WKT.Model.SiteBlockEntity)">
+            <summary>
+            保存内容块数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.DelSiteBlock(WKT.Model.SiteBlockQuery)">
+            <summary>
+            删除内容块
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteMessagePageList(WKT.Model.SiteMessageQuery)">
+            <summary>
+            获取站内消息分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteMessageList(WKT.Model.SiteMessageQuery)">
+            <summary>
+            获取站内消息数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteMessageModel(WKT.Model.SiteMessageQuery)">
+            <summary>
+            获取站内消息实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SaveSiteMessage(WKT.Model.SiteMessageEntity)">
+            <summary>
+            保存站内消息数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.DelSiteMessage(WKT.Model.SiteMessageQuery)">
+            <summary>
+            删除站内消息
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.UpdateMsgViewed(WKT.Model.SiteMessageQuery)">
+            <summary>
+            阅读站内消息
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetMessageTempPageList(WKT.Model.MessageTemplateQuery)">
+            <summary>
+            获取邮件短信模版分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetMessageTempList(WKT.Model.MessageTemplateQuery)">
+            <summary>
+            获取邮件短信模版数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetMessageTempModel(WKT.Model.MessageTemplateQuery)">
+            <summary>
+            获取邮件短信模版实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SaveMessageTemp(WKT.Model.MessageTemplateEntity)">
+            <summary>
+            保存邮件短信模版数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.DelMessageTemp(WKT.Model.MessageTemplateQuery)">
+            <summary>
+            删除邮件短信模版
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetTCategoryDict(WKT.Model.MessageTemplateQuery)">
+            <summary>
+            获取模版类型键值对
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetTCategoryDictChecked(WKT.Model.MessageTemplateQuery)">
+            <summary>
+            获取模版类型键值对(去除已经存在模版的模版类型)
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetEmailVariable">
+            <summary>
+            获取短信邮件全局变量
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetEmailOrSmsContent(System.Collections.Generic.IDictionary{System.String,System.String},System.String)">
+            <summary>
+            获取替换模版后的邮件短信内容
+            </summary>
+            <param name="dict"></param>
+            <param name="config"></param>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SaveSendRecode(System.Collections.Generic.IList{WKT.Model.MessageRecodeEntity})">
+            <summary>
+            保存邮件短信发送记录
+            </summary>
+            <param name="list"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetMessageRecodePageList(WKT.Model.MessageRecodeQuery)">
+            <summary>
+            获取发送记录分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetMessageRecodeList(WKT.Model.MessageRecodeQuery)">
+            <summary>
+            获取发送记录数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetMsgRecodeModel(WKT.Model.MessageRecodeQuery)">
+            <summary>
+            获取发送记录实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SendEmailOrSms(WKT.Model.MessageRecodeEntity)">
+            <summary>
+            发送短信或邮件(不使用模版发送)
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SendEmailOrSms(System.Collections.Generic.IList{System.Int64},WKT.Model.MessageRecodeEntity,System.Boolean)">
+             <summary>
+             发送短信或邮件(不使用模版发送)   选择作者信息
+             </summary>
+             <param name="ReciveUserList"></param>
+            <param name="entity">(必填项 MsgType,JournalID,SendUser,MsgTitle,MsgContent)</param>      
+             <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SendEmailOrSms(System.Collections.Generic.IList{System.String},WKT.Model.MessageRecodeEntity,System.Boolean)">
+            <summary>
+            发送短信或邮件(不使用模版发送)  直接使用短信号码或邮件地址
+            </summary>
+            <param name="ReciveAddressList"></param>
+            <param name="entity">(必填项 MsgType,JournalID,SendUser,MsgTitle,MsgContent)</param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SendEmailOrSms(System.Collections.Generic.IDictionary{System.Int64,System.Collections.Generic.IDictionary{System.String,System.String}},WKT.Model.MessageRecodeEntity,System.Boolean)">
+            <summary>
+            发送短信或邮件(使用模版)
+            </summary>
+            <param name="ReciveUserdict">子级键值对中必须包含 $稿件主键$ </param>
+            <param name="entity">(必填项 MsgType,JournalID,SendType,SendUser)</param>      
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteGuestBookPageList(WKT.Model.GuestbookQuery)">
+            <summary>
+            获取留言分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.SaveSiteGuestBook(WKT.Model.GuestbookEntity)">
+            <summary>
+            保存留言
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.UpdateSiteAccessCount(WKT.Model.SiteConfigQuery)">
+            <summary>
+            更新总访问数
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteConfigFacadeService.GetSiteAccessCount(WKT.Model.SiteConfigQuery)">
+            <summary>
+            获取总访问数
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WKT.Facade.Service.Interface.IContributionFacadeService">
+            <summary>
+            稿件Service
+            </summary>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.GetContributionAttachment(WKT.Model.ContributionInfoQuery)">
+            <summary>
+            获取稿件的附件
+            </summary>
+            <param name="cQuery">稿件ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.GetContributeSetInfo(WKT.Model.QueryBase)">
+            <summary>
+            得到投稿配置信息
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.SetContruibuteStatement(WKT.Model.ContributeSetEntity)">
+            <summary>
+            更新投稿公告
+            </summary>
+            <param name="cSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.SetContributeNumberFormat(WKT.Model.ContributeSetEntity)">
+            <summary>
+            设置稿件编号格式
+            </summary>
+            <param name="cSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.GetFieldsSet">
+            <summary>
+            获取投稿字段设置
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.SetFields(System.Collections.Generic.List{WKT.Model.FieldsSet})">
+            <summary>
+            设置投稿字段
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.GetAllowAllotInfo(WKT.Model.EditorAutoAllotQuery)">
+            <summary>
+            得到投稿自动分配设置
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.SetAllowAllot(WKT.Model.EditorAutoAllotEntity)">
+            <summary>
+            设置稿件自动分配
+            </summary>
+            <param name="cSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.GetAutoAllotEditor(WKT.Model.EditorAutoAllotQuery)">
+            <summary>
+            得到投稿自动分配编辑
+            </summary>
+            <param name="query">指定稿件编号，编辑部ID，学科ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.SetContributeFlag(System.Collections.Generic.List{WKT.Model.ContributionInfoQuery})">
+            <summary>
+            设置稿件旗帜标记
+            </summary>
+            <param name="cEntityList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.SetContributeQuick(System.Collections.Generic.List{WKT.Model.ContributionInfoQuery})">
+            <summary>
+            设置稿件加急标记
+            </summary>
+            <param name="cEntityList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.DeleteContribute(System.Collections.Generic.List{WKT.Model.ContributionInfoQuery})">
+            <summary>
+            删除稿件
+            </summary>
+            <param name="cEntityList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.SetContributeEditor(WKT.Model.SetContributionEditorEntity)">
+            <summary>
+            设置稿件的责任编辑
+            </summary>
+            <param name="setEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.UpdateIntroLetter(WKT.Model.ContributionInfoQuery)">
+            <summary>
+            更新介绍信标记
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IContributionFacadeService.DealWithdrawal(WKT.Model.ContributionInfoQuery)">
+            <summary>
+            处理撤稿申请
+            </summary>        
+            <param name="cEntity">稿件信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetYearVolumePageList(WKT.Model.YearVolumeQuery)">
+            <summary>
+            获取年卷设置分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>        
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetYearVolumeList(WKT.Model.YearVolumeQuery)">
+            <summary>
+            获取年卷设置列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetYearVolumeModel(WKT.Model.YearVolumeQuery)">
+            <summary>
+            获取年卷设置实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.SaveYearVolume(WKT.Model.YearVolumeEntity)">
+            <summary>
+            保存年卷设置
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.DelYearVolume(WKT.Model.YearVolumeQuery)">
+            <summary>
+            删除年卷设置
+            </summary>
+            <param name="query"></param>
+            <returns></returns>      
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetIssueSetPageList(WKT.Model.IssueSetQuery)">
+            <summary>
+            获取期设置分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetIssueSetList(WKT.Model.IssueSetQuery)">
+            <summary>
+            获取期设置列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>        
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetIssueSetModel(WKT.Model.IssueSetQuery)">
+            <summary>
+            获取期设置实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.SaveIssueSet(WKT.Model.IssueSetEntity)">
+            <summary>
+            保存期设置
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.DelIssueSet(WKT.Model.IssueSetQuery)">
+            <summary>
+            删除期设置
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetJournalChannelPageList(WKT.Model.JournalChannelQuery)">
+            <summary>
+            获取期刊栏目分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetJournalChannelList(WKT.Model.JournalChannelQuery)">
+            <summary>
+            获取期刊栏目列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetJournalChannelModel(WKT.Model.JournalChannelQuery)">
+            <summary>
+            获取期刊栏目实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>        
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.SaveJournalChannel(WKT.Model.JournalChannelEntity)">
+            <summary>
+            保存期刊栏目
+            </summary>
+            <param name="query"></param>
+            <returns></returns>      
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.DelJournalChannel(WKT.Model.JournalChannelQuery)">
+            <summary>
+            删除期刊栏目
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetJournalChannelTreeList(WKT.Model.JournalChannelQuery)">
+            <summary>
+            获取期刊栏目数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.SetContributionYearIssue(WKT.Model.IssueContentQuery)">
+            <summary>
+            设置录用稿件的年期
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetIssueContentPageList(WKT.Model.IssueContentQuery)">
+            <summary>
+            获取期刊分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetIssueContentList(WKT.Model.IssueContentQuery)">
+            <summary>
+            获取期刊列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>        
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetIssueContentModel(WKT.Model.IssueContentQuery)">
+            <summary>
+            获取期刊实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.SaveIssueContent(WKT.Model.IssueContentEntity)">
+            <summary>
+            保存期刊
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.DelIssueContent(WKT.Model.IssueContentQuery)">
+            <summary>
+            删除期刊
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.UpdateIssueContentHits(WKT.Model.IssueContentQuery)">
+            <summary>
+            更新期刊内容浏览次数
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.UpdateIssueContentDownloads(WKT.Model.IssueContentQuery)">
+            <summary>
+            更新期刊内容下载次数
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetIssueSubscribePageList(WKT.Model.IssueSubscribeQuery)">
+            <summary>
+            获取期刊订阅分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>     
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetIssueSubscribeList(WKT.Model.IssueSubscribeQuery)">
+            <summary>
+            获取期刊订阅列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetIssueSubscribeModel(WKT.Model.IssueSubscribeQuery)">
+            <summary>
+            获取期刊订阅实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.SaveIssueSubscribe(WKT.Model.IssueSubscribeEntity)">
+            <summary>
+            保存期刊订阅
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.DelIssueSubscribe(WKT.Model.IssueSubscribeQuery)">
+            <summary>
+            删除期刊订阅
+            </summary>
+            <param name="query"></param>
+            <returns></returns>      
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetCurIssueInfo(WKT.Model.IssueSetQuery)">
+            <summary>
+            获取当前期刊最新的年、卷、期、当期封面图片
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.SaveViewLog(WKT.Model.IssueViewLogEntity)">
+            <summary>
+            保存访问日志
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.SaveDownloadLog(WKT.Model.IssueDownLogEntity)">
+            <summary>
+            保存下载日志
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetIssueDownLogPageList(WKT.Model.IssueDownLogQuery)">
+            <summary>
+            获取期刊下载次数
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IIssueFacadeService.GetIssueDownLogDetailPageList(WKT.Model.IssueDownLogQuery)">
+            <summary>
+            获取期刊下载明细
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.GetTreeNodeList(WKT.Model.MenuQuery)">
+            <summary>
+            获取菜单列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.GetTreeNodeListHaveRole(WKT.Model.RoleMenuQuery)">
+            <summary>
+            获取菜单列表，带有权限标示
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.GetHaveRightMenuAjaxByRole(WKT.Model.RoleMenuQuery)">
+            <summary>
+            获取菜单列表，带有权限标示
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.GetHaveRightMenu(WKT.Model.RoleMenuQuery)">
+            <summary>
+            获取菜单列表，带有权限标示
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.GetAllMenuList(WKT.Model.MenuQuery)">
+            <summary>
+            获取菜单列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.GetMenu(WKT.Model.MenuQuery)">
+            <summary>
+            获取指定菜单信息
+            </summary>
+            <param name="queryMenu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.UpdateMenuStatus(WKT.Model.MenuQuery)">
+            <summary>
+            更新菜单状态
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.SetMenuRight(System.Collections.Generic.List{WKT.Model.RoleMenuEntity})">
+            <summary>
+            菜单角色赋权
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.IsHaveAccessRight(WKT.Model.RoleMenuQuery)">
+            <summary>
+            是否有权限访问当前地址
+            如果该地址出现在menu表中了，则进行判断，如果没有则不判断
+            </summary>
+            <param name="RoleIDList"></param>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.IsHaveAccessRightByGroup(WKT.Model.RoleMenuQuery)">
+            <summary>
+            是否有权限访问当前地址,根据分组判断
+            如果该地址出现在menu表中了，则进行判断，如果没有则不判断
+            </summary>
+            <param name="query"></param>        
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.GetRoleList(WKT.Model.RoleInfoQuery)">
+            <summary>
+            获取角色列表
+            </summary>
+            <param name="roleQuery"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.GetRoleEntity(WKT.Model.RoleInfoQuery)">
+            <summary>
+            获取角色实体
+            </summary>
+            <param name="roleQuery"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.UpdateRoleInfo(WKT.Model.RoleInfoEntity)">
+            <summary>
+            更新角色信息
+            </summary>
+            <param name="roleEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.AddRole(WKT.Model.RoleInfoEntity)">
+            <summary>
+            新增角色
+            </summary>
+            <param name="roleEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.DelRole(WKT.Model.RoleInfoQuery)">
+            <summary>
+            删除角色
+            </summary>
+            <param name="queryRole"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.DelMember(WKT.Model.AuthorInfoQuery)">
+            <summary>
+            删除成员
+            </summary>
+            <param name="queryRole"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.ISiteSystemFacadeService.EditMember(WKT.Model.AuthorInfoEntity)">
+            <summary>
+            编辑成员
+            </summary>
+            <param name="queryRole"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.GetAuthorDetailPageList(WKT.Model.AuthorDetailQuery)">
+            <summary>
+            获取作者详细信息分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.GetAuthorDetailList(WKT.Model.AuthorDetailQuery)">
+            <summary>
+            获取作者详细信息数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.GetAuthorDetailModel(WKT.Model.AuthorDetailQuery)">
+            <summary>
+            获取作者详细信息实体
+            </summary>
+            <param name="loginAuthor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.SaveAuthorDetail(WKT.Model.AuthorDetailEntity)">
+            <summary>
+            保存作者详细信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.DelAuthorDetail(WKT.Model.AuthorDetailQuery)">
+            <summary>
+            删除作者详细信息
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.SetAuthorExpert(WKT.Model.AuthorDetailQuery)">
+            <summary>
+            设置作者为专家
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.CancelAuthorExpert(WKT.Model.AuthorDetailQuery)">
+            <summary>
+            取消作者为专家
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.GetExpertGroupMapList(WKT.Model.ExpertGroupMapEntity)">
+            <summary>
+            设置作者为专家
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.SaveExpertGroupMap(WKT.Model.ExpertGroupMapQuery)">
+            <summary>
+            取消作者为专家
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.GetContributionInfoPageList(WKT.Model.ContributionInfoQuery)">
+            <summary>
+            获取稿件分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.GetContributionInfoList(WKT.Model.ContributionInfoQuery)">
+            <summary>
+            获取稿件数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.GetContributionInfoModel(WKT.Model.ContributionInfoQuery)">
+            <summary>
+            获取稿件实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.SaveContributionInfo(WKT.Model.ContributionInfoEntity)">
+            <summary>
+            投稿
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.DelContributionInfo(WKT.Model.ContributionInfoQuery)">
+            <summary>
+            删除稿件数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.ChangeContributionInfoStatus(WKT.Model.ContributionInfoQuery)">
+            <summary>
+            改变稿件状态
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.DraftContributionInfo(WKT.Model.RetractionsBillsEntity)">
+            <summary>
+            撤稿
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.AddRetractionsBills(WKT.Model.RetractionsBillsEntity)">
+            <summary>
+            新增撤稿表信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.UpdateRetractionsBills(WKT.Model.RetractionsBillsEntity)">
+            <summary>
+            编辑撤稿表信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.GetRetractionsBillsModel(WKT.Model.RetractionsBillsQuery)">
+            <summary>
+            获取撤稿信息实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.SaveCRemark(WKT.Model.CRemarkEntity)">
+            <summary>
+            保存稿件备注
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.GetCRemarkModel(WKT.Model.CRemarkQuery)">
+            <summary>
+            获取稿件备注实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.GetContributionAccountListByYear(WKT.Model.ContributionAccountQuery)">
+            <summary>
+            按年月统计收稿量
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.GetContributionAccountListByFund(WKT.Model.ContributionAccountQuery)">
+            <summary>
+            按基金级别统计收稿量
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorPlatformFacadeService.GetContributionAccountListByAuhor(WKT.Model.ContributionAccountQuery)">
+            <summary>
+            按作者统计收稿量
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.AuthorLogin(WKT.Model.AuthorInfoQuery)">
+            <summary>
+            作者登录
+            </summary>
+            <param name="queryAuthor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.AuthorRetakePwd(WKT.Model.AuthorInfoQuery)">
+            <summary>
+            作者忘记密码
+            </summary>
+            <param name="queryAuthor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.AuthorReg(WKT.Model.AuthorInfoEntity)">
+            <summary>
+            作者注册
+            </summary>
+            <param name="authorEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.EditPwd(WKT.Model.AuthorInfoEntity)">
+            <summary>
+            作者修改密码
+            </summary>
+            <param name="authorEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.RecordLoginInfo(WKT.Model.AuthorInfoEntity)">
+            <summary>
+            记录登录信息
+            </summary>
+            <param name="authorEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.InsertToken(WKT.Model.TokenEntity)">
+            <summary>
+            新增令牌
+            </summary>
+            <param name="tokenEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetToken(WKT.Model.TokenQuery)">
+            <summary>
+            获取令牌
+            </summary>
+            <param name="tokenQuery"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetAuthorList(WKT.Model.AuthorInfoQuery)">
+            <summary>
+            获取编辑部成员列表
+            </summary>
+            <param name="loginAuthor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetAuthorListByRole(WKT.Model.AuthorInfoQuery)">
+            <summary>
+            根据角色获取编辑部成员列表
+            </summary>
+            <param name="loginAuthor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.SetAurhorRole(WKT.Model.RoleAuthorEntity)">
+            <summary>
+            设置作者角色
+            </summary>
+            <param name="loginAuthor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.DelAurhorRole(WKT.Model.RoleAuthorEntity)">
+            <summary>
+            删除作者角色
+            </summary>
+            <param name="loginAuthor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.SetAurhorMenuRightException(WKT.Model.AuthorMenuRightExceptionEntity)">
+            <summary>
+            设置作者角色菜单例外
+            </summary>
+            <param name="loginAuthor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.EditMember(WKT.Model.AuthorInfoEntity)">
+            <summary>
+            编辑编辑部成员信息
+            </summary>
+            <param name="authorQueryEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetMemberInfo(WKT.Model.AuthorInfoQuery)">
+            <summary>
+            获取编辑部成员信息
+            </summary>
+            <param name="authorQueryEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetMemberInfoList(WKT.Model.AuthorInfoQuery)">
+            <summary>
+            获取编辑部成员列表
+            </summary>
+            <param name="authorQueryEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetExpertPageList(WKT.Model.AuthorInfoQuery)">
+            <summary>
+            获取专家列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetFieldsSet">
+            <summary>
+            获取作者字段设置
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.SetFields(System.Collections.Generic.List{WKT.Model.FieldsSet})">
+            <summary>
+            设置作者字段
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetAuthorContributeStat(WKT.Model.QueryBase)">
+            <summary>
+            作者总数及投稿作者数量统计
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetAuthorProvinceStat(WKT.Model.QueryBase)">
+            <summary>
+            获取作者按省份统计数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetAuthorEducationStat(WKT.Model.QueryBase)">
+            <summary>
+            获取作者按学历统计数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetAuthorProfessionalStat(WKT.Model.QueryBase)">
+            <summary>
+            获取作者按专业统计数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetAuthorJobTitleStat(WKT.Model.QueryBase)">
+            <summary>
+            获取作者按职称统计数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetAuthorGenderStat(WKT.Model.QueryBase)">
+            <summary>
+            获取作者按性别统计数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetWorkloadList(WKT.Model.WorkloadQuery)">
+            <summary>
+            编辑、专家工作量统计
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetEditorWorkloadList(WKT.Model.WorkloadQuery)">
+            <summary>
+            编辑工作量统计
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetDealContributionDetail(WKT.Model.StatQuery)">
+            <summary>
+            编辑、专家处理稿件明细
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IAuthorFacadeService.GetAuthorInfo(WKT.Model.AuthorInfoQuery)">
+            <summary>
+            获取作者实体
+            </summary>
+            <param name="authorQueryEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WKT.Facade.Service.Interface.IFlowFacadeService">
+            <summary>
+            审稿流程服务
+            </summary>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetHaveRightFlowStatus(WKT.Model.FlowStatusQuery)">
+            <summary>
+            获取拥有权限的审稿状态
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowStatusDictStatusName(WKT.Model.FlowStatusQuery)">
+            <summary>
+            获取审稿状态键值对，审稿状态名称
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowStatusDictDisplayName(WKT.Model.FlowStatusQuery)">
+            <summary>
+            获取审稿状态键值对，审稿状态显示名称
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowStatusList(WKT.Model.FlowStatusQuery)">
+            <summary>
+            获取审稿状态列表
+            </summary>
+            <param name="queryFlowStatus"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowStatusInfoByID(WKT.Model.FlowStatusQuery)">
+            <summary>
+            根据指定的审稿状态ID，得到审稿状态的基本信息
+            </summary>
+            <param name="JournalID"></param>
+            <param name="StatusID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowStatusSortID(WKT.Model.FlowStatusQuery)">
+            <summary>
+            获取审稿流程状态序号
+            </summary>
+            <param name="queryFlowSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.CheckCStatusIsExists(WKT.Model.FlowStatusQuery)">
+            <summary>
+            判断审稿状态对应的稿件状态是否存在
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowStepInfo(WKT.Model.FlowStatusQuery)">
+            <summary>
+            获取审稿状态基本信息及配置信息
+            </summary>
+            <param name="queryFlowSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.AddFlowStatus(WKT.Model.FlowStep)">
+            <summary>
+            新增审稿状态
+            </summary>
+            <param name="flowStepEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.EditFlowStatus(WKT.Model.FlowStep)">
+            <summary>
+            修改审稿状态
+            </summary>
+            <param name="flowStepEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.DelFlowStatus(WKT.Model.FlowStatusEntity)">
+            <summary>
+            删除审稿环节
+            </summary>
+            <param name="flowStatusEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.UpdateFlowStatus(WKT.Model.FlowStatusEntity)">
+            <summary>
+            修改审稿状态状态
+            </summary>
+            <param name="flowStatusEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowActionEntity(WKT.Model.FlowActionQuery)">
+            <summary>
+            获取操作实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowActionByStatus(WKT.Model.FlowActionQuery)">
+            <summary>
+            根据当前操作状态获取可以做的操作
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowActionList(WKT.Model.FlowActionQuery)">
+            <summary>
+            获取当前状态下的所有操作
+            </summary>
+            <param name="queryFlowSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.AddFlowAction(WKT.Model.FlowActionEntity)">
+            <summary>
+            新增审稿操作
+            </summary>
+            <param name="flowActionEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.EditFlowAction(WKT.Model.FlowActionEntity)">
+            <summary>
+            修改审稿操作
+            </summary>
+            <param name="flowActionEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.DelFlowAction(WKT.Model.FlowActionEntity)">
+            <summary>
+            删除审稿操作
+            </summary>
+            <param name="flowSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowAuthAuthorList(WKT.Model.FlowAuthAuthorQuery)">
+            <summary>
+            获取审稿环节作者权限设置
+            </summary>
+            <param name="queryFlowAuthAuthor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.SetFlowAuthAuthor(System.Collections.Generic.IList{WKT.Model.FlowAuthAuthorEntity})">
+            <summary>
+            设置审稿环节作者权限
+            </summary>
+            <param name="flowAuthAuthorEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.DeleteFlowAuthAuthor(System.Collections.Generic.IList{WKT.Model.FlowAuthAuthorEntity})">
+            <summary>
+            删除审稿环节作者权限
+            </summary>
+            <param name="flowAuthAuthorEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowAuthRoleList(WKT.Model.FlowAuthRoleQuery)">
+            <summary>
+            获取审稿环节角色权限设置
+            </summary>
+            <param name="queryFlowAuthRole"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.SetFlowAuthRole(System.Collections.Generic.IList{WKT.Model.FlowAuthRoleEntity})">
+            <summary>
+            设置审稿环节角色权限
+            </summary>
+            <param name="flowSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.DeleteFlowAuthRole(System.Collections.Generic.IList{WKT.Model.FlowAuthRoleEntity})">
+            <summary>
+            删除审稿环节角色权限
+            </summary>
+            <param name="flowSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetContributionProcesser(WKT.Model.CirculationEntity)">
+            <summary>
+            得到稿件的处理人
+            </summary>
+            <param name="cirEntity">稿件ID(CID)、稿件状态(EnumCStatus)、编辑部ID(JournalID)</param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowContributionList(WKT.Model.CirculationEntity)">
+            <summary>
+            根据当前所处环节获取稿件列表
+            </summary>
+            <param name="cirEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetAuthorContributionList(WKT.Model.CirculationEntity)">
+            <summary>
+            获取作者最新稿件状态稿件列表
+            </summary>
+            <param name="cirEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetExpertContributionList(WKT.Model.CirculationEntity)">
+            <summary>
+            获取专家待审、已审稿件列表
+            </summary>
+            <param name="cirEntity">需要传值:JournalID，CurAuthorID，Status</param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetSynchroStatusContributionList(WKT.Model.CirculationEntity)">
+            <summary>
+            获取同步状态稿件列表，例如：专家拒审，作者退修、已发校样、录用、退稿稿件列表
+            </summary>
+            <param name="cirEntity">需要传值:JournalID，CurAuthorID，EnumCStatus</param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetNextFlowStep(WKT.Model.CirculationEntity)">
+            <summary>
+            得到下一步骤信息
+            </summary>
+            <param name="ciEntity">流转信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.SendSysMessage(WKT.Model.AuditBillEntity,System.Boolean)">
+            <summary>
+            发送系统通知
+            </summary>
+            <param name="auditBillEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.SubmitAuditBill(WKT.Model.AuditBillEntity)">
+            <summary>
+            提交审稿单
+            </summary>
+            <param name="auditBillEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowLogEntity(WKT.Model.FlowLogInfoQuery)">
+            <summary>
+            获取处理日志信息
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <!-- 对于成员“M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowLog(WKT.Model.CirculationEntity)”忽略有格式错误的 XML 注释 -->
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowLogAttachment(WKT.Model.FlowLogQuery)">
+            <summary>
+            获取处理日志的附件
+            </summary>
+            <param name="flowLogQuery">流程日志ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetFlowLogAllAttachment(WKT.Model.FlowLogQuery)">
+            <summary>
+            获取处理日志的附件
+            </summary>
+            <param name="flowLogQuery">流程日志ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.UpdateFlowLogIsView(WKT.Model.FlowLogQuery)">
+            <summary>
+            更新日志的查看状态
+            </summary>
+            <param name="flowLogQuery">流程日志ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.ExpertDeledit(WKT.Model.CirculationEntity)">
+            <summary>
+            专家拒审
+            </summary>
+            <param name="cirEntity">CID,AuthorID,CNumber,JournalID,EnumCStatus</param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetReviewBillPageList(WKT.Model.ReviewBillQuery)">
+            <summary>
+            获取审稿单项分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetReviewBillList(WKT.Model.ReviewBillQuery)">
+            <summary>
+            获取审稿单项列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetReviewBillModel(WKT.Model.ReviewBillQuery)">
+            <summary>
+            获取审稿单项实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>        
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.SaveReviewBill(WKT.Model.ReviewBillEntity)">
+            <summary>
+            保存审稿单项
+            </summary>
+            <param name="query"></param>
+            <returns></returns>      
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.DelReviewBill(WKT.Model.ReviewBillQuery)">
+            <summary>
+            删除审稿单项
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.ReviewBillIsEnabled(WKT.Model.ReviewBillQuery)">
+            <summary>
+            审稿单项是否已经被使用
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetReviewBillTreeList(WKT.Model.ReviewBillQuery)">
+            <summary>
+            获取审稿单项数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.SaveReviewBillContent(WKT.Model.ReviewBillContentQuery)">
+            <summary>
+            保存审稿单
+            </summary>
+            <param name="query"></param>
+            <returns></returns>      
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetReviewBillContentList(WKT.Model.ReviewBillContentQuery)">
+            <summary>
+            获取审稿单项列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetReviewBillContentListByCID(WKT.Model.ReviewBillContentQuery)">
+            <summary>
+            获取审稿单初始化项
+            </summary>
+            <param name="query"></param>
+            <returns></returns>       
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetReviewBillContentStr(System.Int64,System.Int64,System.Int64)">
+            <summary>
+            获取审稿单创建字符串
+            </summary>
+            <param name="JournalID"></param>
+            <param name="AuthorID"></param>
+            <param name="CID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetReviewBillContentHead(System.Int64,System.Int64,System.Int64)">
+            <summary>
+            获取审稿单前言
+            </summary>
+            <param name="JournalID"></param>
+            <param name="ExpertID"></param>
+            <param name="CID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.JudgeIsMoreStatus(WKT.Model.FlowLogInfoQuery)">
+            <summary>
+            查看该稿件是否存在多个状态
+            </summary>
+            <param name="flowLogQuery">流程日志ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.MergeMoreStatus(WKT.Model.FlowLogInfoQuery)">
+            <summary>
+            合并多状态
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.GetContributionMoreStatusList(WKT.Model.FlowLogInfoQuery)">
+            <summary>
+            根据当前所处环节获取稿件列表
+            </summary>
+            <param name="cirEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFlowFacadeService.ContinuSend(WKT.Model.ContinuSendEntity)">
+            <summary>
+            继续送交
+            </summary>
+            <param name="sendEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFinanceFacadeAPIService.GetFinanceContributePageList(WKT.Model.FinanceContributeQuery)">
+            <summary>
+            获取稿件费用分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFinanceFacadeAPIService.GetFinanceContributeList(WKT.Model.FinanceContributeQuery)">
+            <summary>
+            获取稿件费用数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFinanceFacadeAPIService.GetFinanceContributeModel(WKT.Model.FinanceContributeQuery)">
+            <summary>
+            获取稿件费用实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFinanceFacadeAPIService.SaveFinanceContribute(WKT.Model.FinanceContributeEntity)">
+            <summary>
+            保存稿件费用数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFinanceFacadeAPIService.DelFinanceContribute(WKT.Model.FinanceContributeQuery)">
+            <summary>
+            删除稿件费用
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFinanceFacadeAPIService.GetFinanceAccountPageList(WKT.Model.ContributionInfoQuery)">
+            <summary>
+            获取财务入款通知分页列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFinanceFacadeAPIService.GetFinanceGlancePageList(WKT.Model.FinanceContributeQuery)">
+            <summary>
+            获取财务统计一览表分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFinanceFacadeAPIService.GetPayNoticePageList(WKT.Model.PayNoticeQuery)">
+            <summary>
+            获取缴费通知分页数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFinanceFacadeAPIService.GetPayNoticeList(WKT.Model.PayNoticeQuery)">
+            <summary>
+            获取缴费通知数据
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFinanceFacadeAPIService.GetPayNoticeModel(WKT.Model.PayNoticeQuery)">
+            <summary>
+            获取缴费通知实体
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFinanceFacadeAPIService.SavePayNotice(WKT.Model.PayNoticeEntity)">
+            <summary>
+            保存缴费通知数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFinanceFacadeAPIService.DelPayNotice(WKT.Model.PayNoticeQuery)">
+            <summary>
+            删除缴费通知
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFinanceFacadeAPIService.ChangePayNoticeStatus(WKT.Model.PayNoticeQuery)">
+            <summary>
+            更新缴费通知状态
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WKT.Facade.Service.Interface.IFinanceFacadeAPIService.AddFinancePayDetail(WKT.Model.FinancePayDetailEntity)">
+            <summary>
+            新增支付记录
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

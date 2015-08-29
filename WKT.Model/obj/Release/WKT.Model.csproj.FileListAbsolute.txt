@@ -1,0 +1,6 @@
+F:\workplace\trunk\WKT.Model\bin\Release\WKT.Model.dll
+F:\workplace\trunk\WKT.Model\bin\Release\WKT.Model.pdb
+F:\workplace\trunk\WKT.Model\bin\Release\MongoDB.Bson.dll
+F:\workplace\trunk\WKT.Model\obj\Release\ResolveAssemblyReference.cache
+F:\workplace\trunk\WKT.Model\obj\Release\WKT.Model.dll
+F:\workplace\trunk\WKT.Model\obj\Release\WKT.Model.pdb

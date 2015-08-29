@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0BF0173B-F0C7-42F1-B5F7-41957D042E2C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WKT.BLL</RootNamespace>
+    <AssemblyName>WKT.BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\ExpertApplyBusiness.cs" />
+    <Compile Include="Admin\IssueBusiness.cs" />
+    <Compile Include="Admin\LoginBusiness.cs" />
+    <Compile Include="Admin\SiteMessageBusiness.cs" />
+    <Compile Include="Finance\FinanceContributeBusiness.cs" />
+    <Compile Include="Finance\FinancePayDetailBusiness.cs" />
+    <Compile Include="Author\AuthorDetailBusiness.cs" />
+    <Compile Include="Admin\AuthorInfoBusiness.cs" />
+    <Compile Include="Admin\ContactWayBusiness.cs" />
+    <Compile Include="Admin\DictBusiness.cs" />
+    <Compile Include="Admin\DictValueBusiness.cs" />
+    <Compile Include="Admin\FriendlyLinkBusiness.cs" />
+    <Compile Include="Admin\GuestbookBusiness.cs" />
+    <Compile Include="Admin\MenuBusiness.cs" />
+    <Compile Include="Admin\MessageRecodeBusiness.cs" />
+    <Compile Include="Admin\MessageTemplateBusiness.cs" />
+    <Compile Include="Admin\RoleAuthorBusiness.cs" />
+    <Compile Include="Admin\RoleInfoBusiness.cs" />
+    <Compile Include="Admin\RoleMenuBusiness.cs" />
+    <Compile Include="Admin\SiteBlockBusiness.cs" />
+    <Compile Include="Admin\SiteChannelBusiness.cs" />
+    <Compile Include="Admin\SiteConfigBusiness.cs" />
+    <Compile Include="Admin\SiteContentBusiness.cs" />
+    <Compile Include="Admin\SiteNoticeBusiness.cs" />
+    <Compile Include="Admin\SiteResourceBusiness.cs" />
+    <Compile Include="Author\ContributionInfoBusiness.cs" />
+    <Compile Include="Contribution\ContributeSetBusiness.cs" />
+    <Compile Include="Finance\PayNoticeBusiness.cs" />
+    <Compile Include="Flow\EditorAutoAllotBusiness.cs" />
+    <Compile Include="Flow\FlowActionBusiness.cs" />
+    <Compile Include="Flow\FlowAuthAuthorBusiness.cs" />
+    <Compile Include="Flow\FlowAuthRoleBusiness.cs" />
+    <Compile Include="Flow\FlowCirculationBusiness.cs" />
+    <Compile Include="Flow\FlowNodeConditionBusiness.cs" />
+    <Compile Include="Flow\FlowStatusBusiness.cs" />
+    <Compile Include="Flow\ReviewBillBusiness.cs" />
+    <Compile Include="Flow\ReviewBillContentBusiness.cs" />
+    <Compile Include="Issue\IssueDownLogBusiness.cs" />
+    <Compile Include="Issue\IssueViewLogBusiness.cs" />
+    <Compile Include="Author\TokenBusiness.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System\ApiServerInfoBusiness.cs" />
+    <Compile Include="System\DBServerInfoBusiness.cs" />
+    <Compile Include="System\JournalInfoBusiness.cs" />
+    <Compile Include="System\JournalSetInfoBusiness.cs" />
+    <Compile Include="System\SysAccountInfoBusiness.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Web\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WKT.BLL.Interface\WKT.BLL.Interface.csproj">
+      <Project>{B1ABD199-DBEE-49A9-9C5D-9E50147BCCA9}</Project>
+      <Name>WKT.BLL.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.DataAccess\WKT.DataAccess.csproj">
+      <Project>{6841607A-746C-42B4-94CC-98EC7C7AE08E}</Project>
+      <Name>WKT.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Model\WKT.Model.csproj">
+      <Project>{73BD5439-9F9A-4DCB-A80E-6E3DCD0A0181}</Project>
+      <Name>WKT.Model %28WKT.Model\WKT.Model%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,156 @@
+﻿
+<script type="text/javascript">
+
+    // 设置标题
+    Index.SetTitle('访问日志');
+
+    // 快速搜索
+    Search = function () {
+        var username = $('#username').trim();
+        var gender = $('#gender').trim();
+        var status = $('#status').trim();
+        var pageSize = $('#pageSize').trim();
+
+        var url = 'list.html';
+        url = J.FormatString(url + '?username={0}&gender={1}&status={2}&pageSize={3}', J.Encode(username), gender, status, pageSize);
+        Index.Open(url);
+    };
+
+    // 根据ID删除用户
+    DeleteById = function (id) {
+        jBox.confirm("此操作不可恢复，确定要删除吗？", "删除用户", function (v, h, f) {
+            if (v == 'ok') {
+                jBox.tip('正在处理...', 'loading');
+
+                // 在这ajax处理
+                window.setTimeout(function () {
+                    jBox.tip('删除成功！', 'success');
+                    Index.Open(location.href);
+                }, 2000);
+            }
+            return true;
+        });
+    };
+
+    // 删除多个用户
+    DeleteByIds = function () {
+        var ids = CheckBox.GetCheckedIds();
+
+        //alert(ids.join(','));
+
+        if (ids.length == 0) {
+            jBox.tip("请选择至少一个用户！");
+            return;
+        }
+
+        jBox.confirm("此操作不可恢复，确定要删除选中的用户吗？", "删除用户", function (v, h, f) {
+            if (v == 'ok') {
+                jBox.tip('正在处理...', 'loading');
+
+                // 在这ajax处理
+                window.setTimeout(function () {
+                    jBox.tip('删除成功！', 'success');
+                    Index.Open(location.href);
+                }, 2000);
+            }
+            return true;
+        });
+    };
+</script>
+<div class="container">
+    <div class="location">当前位置：系统日志 -&gt; 访问日志</div>
+    
+    <div class="blank10"></div>
+
+    <div class="search block">
+        <div class="h">
+            <span class="icon-sprite icon-magnifier"></span>
+            <h3>快速搜索</h3>
+        </div>
+        <div class="tl corner"></div><div class="tr corner"></div><div class="bl corner"></div><div class="br corner"></div>
+        <div class="cnt-wp">
+            <div class="cnt">
+                <div class="search-bar">
+                    <label class="first txt-green">用户名：</label>
+                    <input value="" type="text" name="username" id="username" class="input-small" />
+                    <label class="txt-green">性别：</label>
+                    <select name="gender" id="gender"><option value="">不限</option><option value="Male">男</option><option value="Female">女</option></select>
+                    <label class="txt-green">状态：</label>
+                    <select name="status" id="status"><option value="">不限</option><option value="Natural">正常</option><option value="Disabled">禁用</option></select>
+                    <label class="txt-green">每页：</label>
+                    <select name="pageSize" id="pageSize"><option value="10">10</option><option value="20">20</option><option value="50">50</option></select>
+                    <label><a class="btn-lit btn-middle" href="javascript:Search();"><span>搜索</span></a></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="blank10"></div>
+    <div class="block">
+        <div class="h">
+            <span class="icon-sprite icon-list"></span>
+            <h3>访问日志</h3>
+            <div class="bar">
+                <a class="btn-lit" href="javascript:Index.Open('add.html');"><span>新增</span></a>
+                <a class="btn-lit" href="javascript:DeleteByIds();"><span>删除选中</span></a>
+            </div>
+        </div>
+        <div class="tl corner"></div><div class="tr corner"></div><div class="bl corner"></div><div class="br corner"></div>
+        <div class="cnt-wp">
+            <div class="cnt">
+                <table class="data-table" width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <th scope="col"><input value="true" type="checkbox" title="全选/不选" onclick="CheckBox.CheckAll(this);" name="CheckAll" id="CheckAll" /><input value="false" type="hidden" name="CheckAll" /></th>
+                            <th scope="col">用户</th>
+                            <th scope="col">姓名</th>
+                            <th scope="col">性别</th>
+                            <th scope="col">邮箱</th>
+                            <th scope="col">手机</th>
+                            <th scope="col">备注信息</th>
+                            <th scope="col">状态</th>
+                            <th scope="col">登录限制</th>
+                            <th scope="col">编辑</th>
+                            <th scope="col">删除</th>
+                        </tr>
+                                    
+                        <tr>
+                            <td class="chk"><input value="true" type="checkbox" rel="2" name="CheckBox" class="check-box" /><input value="false" type="hidden" name="CheckBox" /></td>
+                            <td class="txt c"><a href="#" title="查看资料">test</a></td>
+                            <td class="txt160 c">&nbsp;</td>
+                            <td class="txt40 c">男</td>
+                            <td class="txt80 c">&nbsp;</td>
+                            <td class="txt80 c">&nbsp;</td>
+                            <td class="txt80 c">测试用户&nbsp;</td>
+                            <td class="txt80 c">正常</td>
+                            <td class="txt80 c"><a href="#" title="登录限制">登录限制</a></td>
+                            <td class="icon"><a class="opt" title="编辑" href="#"><span class="icon-sprite icon-edit"></span></a></td>
+                            <td class="icon tail"><a class="opt" title="删除" href="javascript:DeleteById(2);"><span class="icon-sprite icon-delete"></span></a></td>
+                        </tr>
+                                    
+                        <tr>
+                            <td class="chk"><input value="true" type="checkbox" rel="1" name="CheckBox" class="check-box" /><input value="false" type="hidden" name="CheckBox" /></td>
+                            <td class="txt c"><a href="#" title="查看资料">admin</a></td>
+                            <td class="txt160 c">管理员&nbsp;</td>
+                            <td class="txt40 c">男</td>
+                            <td class="txt80 c">&nbsp;</td>
+                            <td class="txt80 c">&nbsp;</td>
+                            <td class="txt80 c">&nbsp;</td>
+                            <td class="txt80 c">正常</td>
+                            <td class="txt80 c"><a href="#" title="登录限制">登录限制</a></td>
+                            <td class="icon"><a class="opt" title="编辑" href="#"><span class="icon-sprite icon-edit"></span></a></td>
+                            <td class="icon tail"><a class="opt" title="删除" href="javascript:DeleteById(1);"><span class="icon-sprite icon-delete"></span></a></td>
+                        </tr>
+                                    
+                    </tbody>
+                </table>
+            </div>
+            <script type="text/javascript">
+                var pagerUrl = 'list.html?pageIndex={0}';
+                Pager.Output(pagerUrl, '10', '1', '20', '200'); //(urlFormat, pageSize, pageIndex, pageCount, recordCount)
+            </script>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+}

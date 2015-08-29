@@ -1,0 +1,106 @@
+﻿@model WKT.Model.PayNoticeEntity
+<link href="@Html.RootPath()/Content/ContributionInfo.css" rel="stylesheet" type="text/css" />
+<table border="0" class="mainTable" cellpadding="0" cellspacing="1" align="center"
+    width="100%">
+    <tr>
+        <td class="title" colspan="2">
+            在线支付
+        </td>
+    </tr>
+    <tr>
+        <td class="leftnone">
+            <table border="0" cellpadding="4" cellspacing="20" align="center" width="100%">
+                <tr>
+                    <td style="text-align: right; font-size: 14px;">
+                        稿件标题：
+                    </td>
+                    <td style="font-size: 14px;">
+                        @Model.CTitle
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right; font-size: 14px;">
+                        交费类型：
+                    </td>
+                    <td style="font-size: 14px;">
+                        @Model.PayTypeName
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right; font-size: 14px;">
+                        交费金额：
+                    </td>
+                    <td style="font-size: 14px;">
+                        @Model.Amount.ToString("C")&nbsp;元
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td style="font-size: 14px; font-weight: bolder;">
+                        <input type="button" value="确定交费，去网银付款" id="btnGoRecharge" class="l-button" style="display: inline;width:200px;" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="title">
+            合作单位
+        </td>
+    </tr>
+    <tr>
+        <td class="leftnone">
+            <table border="0" cellpadding="0" cellspacing="1" align="center" width="100%">
+                <tr>
+                    <td style="width: 80px; font-size: 14px;">
+                        合作单位：
+                    </td>
+                    <td>
+                        <img src="@Html.RootPath()/Content/images/tenpay.jpg" alt="财付通" />
+                        &nbsp;&nbsp;&nbsp;
+                        <img src="@Html.RootPath()/Content/images/alipay.jpg" alt="支付宝" />
+                        &nbsp;&nbsp;&nbsp;
+                        <img src="@Html.RootPath()/Content/images/yeepay.jpg" alt="易宝支付" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<div style="display: none">
+        <form name="action_command" action="" target="_blank" method="post">
+        </form>
+    </div>
+@section Scripts{
+<script type="text/javascript">
+    $(function () {
+        $("#btnGoRecharge").click(function () {
+            var saveParams = {
+                PayType: '@Model.PayType',
+                Amount: '@Model.Amount',
+                CNumber: '@Model.CNumber',
+                CTitle: '@Model.CTitle',
+                NoticeID: '@Model.NoticeID'
+            };
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/AuthorFinance/GoPay/',
+                data: saveParams,
+                cache: false,
+                success: function (data) {
+                    if (data.result == "success") {
+                        $('form[name="action_command"]').attr("action", data.url).attr("method", "post").submit();
+                    }
+                    else {
+                        alert(data.msg);
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+}

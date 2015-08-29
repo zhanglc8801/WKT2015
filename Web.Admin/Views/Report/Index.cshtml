@@ -1,0 +1,173 @@
+﻿<style type="text/css">
+    .l-table-edit {font-size:14px;border: 1px solid #ccc;width:99%}
+    .l-table-edit-td{ padding:4px;height:28px; border: 1px solid #ccc;}
+    .l-verify-tip{ left:230px; top:120px;}
+    .l-table-edit th,l-table-edit td{padding:4px;}
+    .l-table-edit th{text-align:center;color:#000;}
+    .l-table-edit .query-th th{cursor:pointer;}
+    .l-table-edit .query-th{border:1px solid #c6c6c6;background:url(/content/images/data-table-th.png) repeat-x;height:19px;}
+    .l-table-edit th{border-left:1px solid #ddd;border-right:1px solid #ddd;color:#445055;font-weight:bold;text-align:center;}
+    img{vertical-align:middle;}
+    .txtbox{margin: 0px 5px 0px 5px}
+</style>
+<table cellpadding="0" cellspacing="0" class="l-table-edit">
+    <tr class="query-th">
+        <th style="width: 50px;">
+            排序
+        </th>
+        <th>
+            导出字段
+        </th>
+        <th style="width: 50px;">
+            选择
+        </th>
+        <th>
+            备询字段
+        </th>
+    </tr>
+    <tr>
+        <td align="center">
+            <input type="button" id="btnUp" value=" ↑ " /><br />
+            <input type="button" id="btnDown" value=" ↓ " />
+        </td>
+        <td align="center" style="padding:5px;">
+            <select id="selNextNodes" multiple style="width: 180px; height: 280px;">
+            </select><br />
+            <input type="button" value="全选" id="btnSelAllNextNodes" />
+        </td>
+        <td align="center">
+            <input type="button" value=" ← " id="btnAddNextNodes" /><br />
+            <input type="button" value=" → " id="btnRemoveNextNodes" />
+        </td>
+        <td align="center" style="padding:5px;">
+            <select id="selEnableNodes" multiple style="width: 180px; height: 280px;">
+            </select><br />
+            <input type="button" value="全选" id="btnSelAllEnableNodes" />
+        </td>
+    </tr>
+</table>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var type = '@ViewBag.Type';
+        $(function () {
+            InitFlow();
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/Report/GetShowField/',
+                data: { type: type },
+                cache: false,
+                success: function (data) {
+                    var dict = data, obj = $("#selEnableNodes");
+                    for (var key in dict) {
+                        obj.append('<option value="' + key + '">' + dict[key] + '</option>');
+                    }
+                    for (var i = 0; i < dict.length; i++) {
+                        obj.append('<option value="' + dict[i].key + '">' + dict[i].value + '</option>');
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        });
+
+        function GetFileds() {
+            var arry = [];
+            $("#selNextNodes option").each(function () {
+                arry.push({
+                    key: $(this).val(),
+                    value: $(this).text()
+                });
+            });
+            if (arry.length < 1) {
+                alert("请选择导出字段！");
+                return '';
+            }
+            return $.toJSON({ dict:arry });
+        }
+
+        function InitFlow() {
+            //导出字段    
+            $("#btnSelAllNextNodes").click(function () {
+                $("#selNextNodes option").each(function () {
+                    $(this).attr("selected", true);
+                })
+            });
+            // 上移
+            $("#btnUp").click(function () {                
+                var selCount = $("#selNextNodes option:selected").length;
+                if (selCount == 0) {
+                    alert("调整导出的顺序时，请选择其中一项！");
+                    return;
+                }
+                else if (selCount > 1) {
+                    alert("调整导出的顺序时，只能选择其中一项！");
+                    return;
+                }
+                var selectedIndex = $('#selNextNodes')[0].selectedIndex;
+                if (selectedIndex != 0) {
+                    var my_option = document.createElement("option");
+                    my_option.text = $('#selNextNodes')[0].options[selectedIndex].text;
+                    my_option.value = $('#selNextNodes')[0].options[selectedIndex].value;
+
+                    $('#selNextNodes')[0].options.add(my_option, selectedIndex - 1);
+                    $('#selNextNodes')[0].remove(selectedIndex + 1);
+                    $('#selNextNodes')[0].options[selectedIndex - 1].selected = true;
+                }                
+            });
+            // 下移
+            $("#btnDown").click(function () {
+                var selCount = $("#selNextNodes option:selected").length;
+                if (selCount == 0) {
+                    alert("调整导出字段的顺序时，请选择其中一项！");
+                    return;
+                }
+                else if (selCount > 1) {
+                    alert("调整导出字段的顺序时，只能选择其中一项！");
+                    return;
+                }
+                var selectedIndex = $('#selNextNodes')[0].selectedIndex;
+                if (selectedIndex != ($("#selNextNodes option").length - 1)) {
+                    var my_option = document.createElement("option");
+                    my_option.text = $('#selNextNodes')[0].options[selectedIndex].text;
+                    my_option.value = $('#selNextNodes')[0].options[selectedIndex].value;
+
+                    $('#selNextNodes')[0].options.add(my_option, selectedIndex + 2);
+                    $('#selNextNodes')[0].remove(selectedIndex);
+                    $('#selNextNodes')[0].options[selectedIndex + 1].selected = true;
+                }
+            });
+            // 备选字段全选
+            $("#btnSelAllEnableNodes").click(function () {
+                $("#selEnableNodes option").each(function () {
+                    $(this).attr("selected", true);
+                })
+            });
+            // 添加到导出字段
+            $("#btnAddNextNodes").click(function () {
+                if ($("#selEnableNodes option:selected").length > 0) {
+                    $("#selEnableNodes option:selected").each(function () {
+                        $("#selNextNodes").append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option");
+                        $(this).remove();
+                    })
+                }
+                else {
+                    alert("请选择要添加的备选字段！");
+                }
+            });
+            // 从导出字段中移除
+            $("#btnRemoveNextNodes").click(function () {
+                if ($("#selNextNodes option:selected").length > 0) {
+                    $("#selNextNodes option:selected").each(function () {
+                        $("#selEnableNodes").append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option");
+                        $(this).remove();
+                    })
+                }
+                else {
+                    alert("请选择要移除的导出字段！");
+                }
+            });
+        }
+    </script>
+}

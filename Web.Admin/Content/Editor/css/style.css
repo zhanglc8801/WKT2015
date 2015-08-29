@@ -1,0 +1,8 @@
+@charset "utf-8";
+/* CSS Document */
+
+.list{width:200px;float:left;margin-left:8px;}
+.top{background:url(../img/top.png) no-repeat;height:37px;text-align:center;color:#fff;line-height:37px;}
+.content{background:url(../img/bg.png) repeat-y;text-align:center;}
+.content a{font-size:12px;}
+.content div{height:25px;line-height:25px;}

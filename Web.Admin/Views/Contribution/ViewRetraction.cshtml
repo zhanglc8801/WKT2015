@@ -1,0 +1,11 @@
+﻿@model WKT.Model.RetractionsBillsEntity
+<div>审情理由：@Model.Reason</div>
+<div>申请时间：@Model.ApplyDate.ToString("yyyy-MM-dd HH:mm:ss")</div>
+@if (Model.HandDate != null)
+{
+    <div>处理意见：@Model.HandAdvice</div>
+    <div>处理人：@Model.Handler</div>
+    <div>处理时间：@Model.HandDate.Value.ToString("yyyy-MM-dd HH:mm:ss")</div>
+}
+@section Scripts{
+}

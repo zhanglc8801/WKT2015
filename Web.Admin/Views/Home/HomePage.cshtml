@@ -1,0 +1,461 @@
+﻿
+    <link href="@Html.RootPath()/Content/homeStyle/css/focustop_dae105ca.css" rel="stylesheet" />
+    <link href="@Html.RootPath()/Content/Editor/css/style.css" rel="stylesheet" type="text/css" />
+
+
+    <div class="main" style="float:left;">
+        <div style="border:0px dashed  #111; float:left; width:auto; min-width:450px; height:auto;">
+                    @*待处理稿件*@
+                    <div class="list">
+                        <div class="top" style="cursor:pointer;">待处理稿件</div>
+                        <div id="WaitList" class="content" style="line-height:25px;">
+                            <a href="" style="text-decoration:none;color:#ac7305;font-size:14px;">待处理（12）</a><br />
+                            <div style="color:Green;font-weight:bold;">总计123</div>
+                        </div>
+                        <div style="margin-top:-8px;"><img src="@Html.RootPath()/Content/Editor/img/button.png" /></div>
+                    </div>
+                    @*已处理稿件*@
+                    <div class="list">
+                        <div class="top" style="cursor:pointer;">已处理稿件<a id="ViewAll" href="javascript:LoadAllFinishStatusList();" style="font-size:14px; padding-left:5px; text-decoration:none;">查看全部</a><img id="HelpImg" src="@Html.RootPath()/Content/images/helpmsg.gif" title="Help" alt="Help" style="cursor:help; vertical-align:middle; margin-left:12px;" /></div>
+                        <div id="FinishList" class="content" style=" line-height:25px;">
+                            <a href="" style="text-decoration:none;color:#ac7305;font-size:14px;">已处理（12）</a><br />
+                            <div style="color:Green;font-weight:bold;">总计456</div>
+                        </div>
+                        <div style="margin-top:-8px;"><img src="@Html.RootPath()/Content/Editor/img/button.png" /></div>
+                    </div>
+                    
+                    @*收到消息*@
+                    <div class="list" style="display:none;">
+                        <div class="top" style="cursor:pointer; ">收到消息</div>
+                        <div class="content" style=" line-height:25px;">
+                            <a href="" style="text-decoration:none;color:#ac7305;font-size:14px;">新稿件（12）</a><br />
+                            <a href="" style="text-decoration:none;color:#ac7305;font-size:14px;">专家已审（10）</a><br />
+                            <a href="" style="text-decoration:none;color:#ac7305;font-size:14px;">作者已修（25）</a><br />
+                            <a href="" style="text-decoration:none;color:#ac7305;font-size:14px;">专家已审（7）</a><br />
+                            <div style="color:Green;font-weight:bold;">总计789</div>
+                        </div>
+                        <div style="margin-top:-8px;"><img src="@Html.RootPath()/Content/Editor/img/button.png" /></div>
+                    </div>
+                </div>
+        <div style="width:auto; float:right;">
+            <iframe allowtransparency="true" frameborder="0" width="140" height="428" scrolling="no" src="http://tianqi.2345.com/plugin/widget/index.htm?s=2&z=1&t=0&v=1&d=5&bd=0&k=&f=&q=1&e=1&a=1&c=54511&w=140&h=428&align=right"></iframe>
+        </div><br />
+        
+        
+    </div>
+    <div id="divContributionGrid" style="height:0px; border-width:0px;"></div>
+    <input id="hiddenStatus" type="hidden" />
+
+
+@section Scripts{
+      <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+      <script src="../../Content/ligerUI/js/plugins/ProductData.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var contributiongrid;
+    function LoadWaitList(StatusID) {
+        document.getElementById("hiddenStatus").value = StatusID;
+        // 稿件列表
+        contributiongrid = $("#divContributionGrid").ligerGrid({
+            columns: [
+            { display: '作者ID', name: 'AuthorID', hide: true, type: 'int' },
+            { display: '稿件ID', name: 'CID', hide: true },
+            { display: '日志ID', name: 'FlowLogID', hide: true },
+            { display: '稿件编号', name: 'CNumber', width: '85', align: 'center', render: function (item) {
+                if (item.Status == "-1")
+                    return "<span style=\"color:#cfa205;\" title=\"已撤稿件\">" + item.CNumber + "</span>";
+                if (item.Status == "-999")
+                    return "<span style=\"color:#505050;\" title=\"已删除稿件\">" + item.CNumber + "</span>";
+                else
+                    return item.CNumber;
+
+            }
+            },
+            { display: '稿件标题', name: 'Title', width: '255', align: 'left', render: function (item) {
+                var title = item.Title;
+
+                if (item.IsRetractions) {
+                    if (item.Status == "-1")
+                        title = "<span style=\"color:#cfa205;font-weight:100;\">" + title + "</span>";
+                    else
+                        title = "<span style=\"color:red;font-weight:100;\">(作者申请撤稿)" + title + "</span>";
+                }
+                if (item.Status == "-999") {
+                    title = "<span style=\"color:#505050;font-weight:100;\">" + title + "</span>";
+                }
+                if (!item.IsView) {
+                    title = "<span class=\"bluebold\">" + title + "</span>";
+                }
+                title = item.IsQuick == true ? "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/up.gif' alt='加急稿件' title='加急稿件'/>&nbsp;" + title : title;
+                if (item.Flag != "") {
+                    title = "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/" + item.Flag + ".gif' alt='旗帜标记' title='旗帜标记'/>&nbsp;" + title;
+                }
+                if (item.Status == "-1")
+                    title = '<a href="javascript:void(0)" style="text-decoration:none;" title="已撤稿件" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\'' + ')">' + title + '</a>';
+                if (item.Status == "-999")
+                    title = '<a href="javascript:void(0)" style="text-decoration:none;" title="已删除稿件" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\'' + ')">' + title + '</a>';
+                else
+                    title = '<a href="javascript:void(0)" onclick="ViewWaitDetail(' + item.CID + ',\'' + item.CNumber + '\',' + $("#hiddenStatus").val() + "," + item.FlowLogID + ')">' + title + '</a>';
+                return title;
+            }
+            },
+            { display: '稿件状态', name: 'AuditStatus', width: '70', align: 'center' },
+            { display: '第一作者', name: 'FirstAuthor', width: '70', align: 'center' },
+            { display: '发送人', name: 'SendUserName', width: '70', align: 'center' },
+            { display: '发送时间', name: 'HandTime', width: '80', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm:ss' },
+            { display: '天数', name: 'Days', width: '60', align: 'center' },
+            { display: '其他标记', name: 'IsRetractions', width: '70', align: 'center', render: function (item) {
+                var title = "";
+                if (item.IsRetractions) {
+                    if (item.Status == "-1")
+                        title = "<a href=\"javascript:void(0);\" style=\"color:#cfa205;text-decoration:none;\" onclick=\"ViewRetractions(" + item.CID + ")\"><b>已处理撤稿</b></a>";
+                    else
+                        title = "<a href=\"javascript:void(0);\" onclick=\"ViewRetractions(" + item.CID + ")\"><b>处理撤稿?</b></a>";
+                }
+                if (item.Status == "-3") {
+                    title = "<a href=\"javascript:void(0);\" onclick=\"UpContribute(" + item.AuthorID + ")\"><b>上传修改稿</b></a>";
+                }
+                if (item.Status == "-999") {
+                    title = "<a href=\"javascript:void(0);\" onclick=\"CancelDelete('" + item.CID + "','" + item.Title + "')\"><b>撤销删除</b></a>";
+                }
+
+                return title;
+            }
+        }
+            ], width: '798px', height: 'auto', rownumbers: false, usePager: true, checkbox: false,
+        url: '@Html.RootPath()/Contribution/GetContributionListAjax?isPersonal_Order=' + "@Html.isPersonal_Order()" + '&rnd=' + Math.random(), pageSize: 15, parms: { 'StatusID': StatusID, 'IsHandled': 0 }
+
+        });
+    }
+
+    //载入已处理稿件列表
+    function LoadFinishList(StatusID) {
+        document.getElementById("hiddenStatus").value = StatusID;
+        // 稿件列表
+        contributiongrid = $("#divContributionGrid").ligerGrid({
+            columns: [
+            { display: '作者ID', name: 'AuthorID', hide: true, type: 'int' },
+            { display: '稿件ID', name: 'CID', hide: true },
+            { display: '日志ID', name: 'FlowLogID', hide: true },
+            { display: '稿件编号', name: 'CNumber', width: '85', align: 'center', render: function (item) {
+                if (item.Status == "-1")
+                    return "<span style=\"color:#cfa205;\" title=\"已撤稿件\">" + item.CNumber + "</span>";
+                if (item.Status == "-999")
+                    return "<span style=\"color:#505050;\" title=\"已删除稿件\">" + item.CNumber + "</span>";
+                else
+                    return item.CNumber;
+
+            }
+            },
+            { display: '稿件标题', name: 'Title', width: '255', align: 'left', render: function (item) {
+                var title = item.Title;
+
+                if (item.IsRetractions) {
+                    if (item.Status == "-1")
+                        title = "<span style=\"color:#cfa205;font-weight:100;\">" + title + "</span>";
+                    else
+                        title = "<span style=\"color:red;font-weight:100;\">(作者申请撤稿)" + title + "</span>";
+                }
+                if (item.Status == "-999") {
+                    title = "<span style=\"color:#505050;font-weight:100;\">" + title + "</span>";
+                }
+                if (!item.IsView) {
+                    title = "<span class=\"bluebold\">" + title + "</span>";
+                }
+                title = item.IsQuick == true ? "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/up.gif' alt='加急稿件' title='加急稿件'/>&nbsp;" + title : title;
+                if (item.Flag != "") {
+                    title = "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/" + item.Flag + ".gif' alt='旗帜标记' title='旗帜标记'/>&nbsp;" + title;
+                }
+                if (item.Status == "-1")
+                    title = '<a href="javascript:void(0)" style="text-decoration:none;" title="已撤稿件" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\'' + ')">' + title + '</a>';
+                if (item.Status == "-999")
+                    title = '<a href="javascript:void(0)" style="text-decoration:none;" title="已删除稿件" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\'' + ')">' + title + '</a>';
+                else
+                    title = '<a href="javascript:void(0)" onclick="ViewWaitDetail(' + item.CID + ',\'' + item.CNumber + '\',' + $("#hiddenStatus").val() + "," + item.FlowLogID + ')">' + title + '</a>';
+                return title;
+            }
+            },
+            { display: '稿件状态', name: 'AuditStatus', width: '70', align: 'center' },
+            { display: '第一作者', name: 'FirstAuthor', width: '70', align: 'center' },
+            { display: '接收人', name: 'RecUserName', width: '70', align: 'center' },
+            { display: '处理时间', name: 'HandTime', width: '80', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm:ss' },
+            { display: '天数', name: 'Days', width: '60', align: 'center' },
+            { display: '其他标记', name: 'IsRetractions', width: '70', align: 'center', render: function (item) {
+                var title = "";
+                if (item.IsRetractions) {
+                    if (item.Status == "-1")
+                        title = "<a href=\"javascript:void(0);\" style=\"color:#cfa205;text-decoration:none;\" onclick=\"ViewRetractions(" + item.CID + ")\"><b>已处理撤稿</b></a>";
+                    else
+                        title = "<a href=\"javascript:void(0);\" onclick=\"ViewRetractions(" + item.CID + ")\"><b>处理撤稿?</b></a>";
+                }
+                if (item.Status == "-3") {
+                    title = "<a href=\"javascript:void(0);\" onclick=\"UpContribute(" + item.AuthorID + ")\"><b>上传修改稿</b></a>";
+                }
+                if (item.Status == "-999") {
+                    title = "<a href=\"javascript:void(0);\" onclick=\"CancelDelete('" + item.CID + "','" + item.Title + "')\"><b>撤销删除</b></a>";
+                }
+
+                return title;
+            }
+            }
+            ], width: '798px', height: 'auto', rownumbers: false, usePager: true, checkbox: false,
+            url: '@Html.RootPath()/Contribution/GetContributionListAjax?isPersonal_Order=' + "@Html.isPersonal_Order()" + '&rnd=' + Math.random(), pageSize: 15, parms: { 'StatusID': StatusID, 'IsHandled': 1 }
+
+        });
+    }
+
+    //载入全部已处理稿件列表(点击仅可查看)
+    function LoadAllFinishList(StatusID) {
+        document.getElementById("hiddenStatus").value = StatusID;
+        // 稿件列表
+        contributiongrid = $("#divContributionGrid").ligerGrid({
+            columns: [
+            { display: '作者ID', name: 'AuthorID', hide: true, type: 'int' },
+            { display: '稿件ID', name: 'CID', hide: true },
+            { display: '日志ID', name: 'FlowLogID', hide: true },
+            { display: '稿件编号', name: 'CNumber', width: '85', align: 'center', render: function (item) {
+                if (item.Status == "-1")
+                    return "<span style=\"color:#cfa205;\" title=\"已撤稿件\">" + item.CNumber + "</span>";
+                if (item.Status == "-999")
+                    return "<span style=\"color:#505050;\" title=\"已删除稿件\">" + item.CNumber + "</span>";
+                else
+                    return item.CNumber;
+
+            }
+            },
+            { display: '稿件标题', name: 'Title', width: '255', align: 'left', render: function (item) {
+                var title = item.Title;
+
+                if (item.IsRetractions) {
+                    if (item.Status == "-1")
+                        title = "<span style=\"color:#cfa205;font-weight:100;\">" + title + "</span>";
+                    else
+                        title = "<span style=\"color:red;font-weight:100;\">(作者申请撤稿)" + title + "</span>";
+                }
+                if (item.Status == "-999") {
+                    title = "<span style=\"color:#505050;font-weight:100;\">" + title + "</span>";
+                }
+                if (!item.IsView) {
+                    title = "<span class=\"bluebold\">" + title + "</span>";
+                }
+                title = item.IsQuick == true ? "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/up.gif' alt='加急稿件' title='加急稿件'/>&nbsp;" + title : title;
+                if (item.Flag != "") {
+                    title = "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/" + item.Flag + ".gif' alt='旗帜标记' title='旗帜标记'/>&nbsp;" + title;
+                }
+                if (item.Status == "-1")
+                    title = '<a href="javascript:void(0)" style="text-decoration:none;" title="已撤稿件" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\'' + ')">' + title + '</a>';
+                if (item.Status == "-999")
+                    title = '<a href="javascript:void(0)" style="text-decoration:none;" title="已删除稿件" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\'' + ')">' + title + '</a>';
+                else
+                    title = '<a href="javascript:void(0)" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\')">' + title + '</a>';
+                return title;
+            }
+            },
+            { display: '稿件状态', name: 'AuditStatus', width: '70', align: 'center' },
+            { display: '第一作者', name: 'FirstAuthor', width: '70', align: 'center' },
+            { display: '接收人', name: 'RecUserName', width: '70', align: 'center' },
+            { display: '处理时间', name: 'HandTime', width: '80', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm:ss' },
+            { display: '天数', name: 'Days', width: '60', align: 'center' }
+            ], width: '798px', height: 'auto', rownumbers: false, usePager: true, checkbox: false,
+            url: '@Html.RootPath()/Contribution/GetContributionListAjax?isPersonal_Order=' + "@Html.isPersonal_Order()" + '&rnd=' + Math.random(), pageSize: 15, parms: { 'StatusID': StatusID, 'IsHandled': 3 }
+
+        });
+    }
+
+</script>
+
+<script type="text/javascript">
+    LoadWaitStatusList();
+    LoadFinishStatusList();
+    //载入待处理稿件状态
+    function LoadWaitStatusList() {
+        $.ajax({
+            beforeSend: function () {
+                $("#WaitList").html("<span style=\"font-size:12px;\">正在载入待处理稿件状态...</span>");
+            },
+            type: 'POST',
+            url: '@Html.RootPath()' + '/Contribution/GetHaveRightFlowStatus/?rnd=' + Math.random(),
+            data: { WorkStatus: 0 },
+            success: function (e) {
+                if (e.result == 'success') {
+                    var statusList = "";
+                    var count = 0;
+                    for (var i = 0; i < e.ItemList.length; i++) {
+                        statusList += "<a href=\"javascript:LoadWaitList(" + e.ItemList[i].StatusID + ");\" style=\"text-decoration:none;color:#ac7305;font-size:14px;\">" + e.ItemList[i].StatusName + "（" + e.ItemList[i].ContributionCount + "）</a><br />";
+                        count += e.ItemList[i].ContributionCount;
+                        
+                    }
+                    statusList += "<div style=\"color:Green;font-weight:bold;\">总计：" + count + "</div>";
+                    $("#WaitList").html(statusList);
+                }
+                else if (e.result == 'failure') {
+                    alert(e.msg);
+                }
+                else if (e.result == 'error') {
+                    alert(e.msg);
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+
+    //载入已处理稿件状态
+    function LoadFinishStatusList() {
+        $.ajax({
+            beforeSend: function () {
+                $("#FinishList").html("<span style=\"font-size:12px;\">正在载入已处理稿件状态...</span>");
+            },
+            type: 'POST',
+            url: '@Html.RootPath()' + '/Contribution/GetHaveRightFlowStatus/?rnd=' + Math.random(),
+            data: { WorkStatus: 1 },
+            success: function (e) {
+                if (e.result == 'success') {
+                    var statusList = "";
+                    var count = 0;
+                    for (var i = 0; i < e.ItemList.length; i++) {
+                        statusList += "<a href=\"javascript:LoadFinishList(" + e.ItemList[i].StatusID + ");\" style=\"text-decoration:none;color:#ac7305;font-size:14px;\">" + e.ItemList[i].StatusName + "（" + e.ItemList[i].ContributionCount + "）</a><br />";
+                        count += e.ItemList[i].ContributionCount;
+                        $("div .l-menu-inner").first().append('<div class="l-menu-item" onclick="StatusClick(' + e.ItemList[i].StatusID + ',\'' + e.ItemList[i].StatusName + '\',' + e.ItemList[i].CStatus + ')"><div class="l-menu-item-text">' + e.ItemList[i].StatusName + '(' + e.ItemList[i].ContributionCount + ')</div></div>');
+                    }
+                    statusList += "<div style=\"color:Green;font-weight:bold;\">总计：" + count + "</div>";
+                    $("#FinishList").html(statusList);
+                    $("#ViewAll").attr("href", "javascript:LoadAllFinishStatusList()");
+                    $("#ViewAll").html("查看全部");
+                    $("#HelpImg").attr("onclick", "javascript:alert('您可在[查看全部]状态下查看全部已处理稿件的详细信息，但无法再对其进行其他操作。')");
+                }
+                else if (e.result == 'failure') {
+                    alert(e.msg);
+                }
+                else if (e.result == 'error') {
+                    alert(e.msg);
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+    //载入全部已处理稿件状态
+    function LoadAllFinishStatusList() {
+        $.ajax({
+            beforeSend: function () {
+                $("#FinishList").html("<span style=\"font-size:12px;\">正在载入所有已处理稿件状态...</span>");
+            },
+            type: 'POST',
+            url: '@Html.RootPath()' + '/Contribution/GetHaveRightFlowStatus/?rnd=' + Math.random(),
+            data: { WorkStatus: 3 },
+            success: function (e) {
+                if (e.result == 'success') {
+                    var statusList = "";
+                    var count = 0;
+                    for (var i = 0; i < e.ItemList.length; i++) {
+                        statusList += "<a href=\"javascript:LoadAllFinishList(" + e.ItemList[i].StatusID + ");\" style=\"text-decoration:none;color:#ac7305;font-size:14px;\">" + e.ItemList[i].StatusName + "（" + e.ItemList[i].ContributionCount + "）</a><br />";
+                        count += e.ItemList[i].ContributionCount;
+                        $("div .l-menu-inner").first().append('<div class="l-menu-item" onclick="StatusClick(' + e.ItemList[i].StatusID + ',\'' + e.ItemList[i].StatusName + '\',' + e.ItemList[i].CStatus + ')"><div class="l-menu-item-text">' + e.ItemList[i].StatusName + '(' + e.ItemList[i].ContributionCount + ')</div></div>');
+                    }
+                    statusList += "<div style=\"color:Green;font-weight:bold;\">总计：" + count + "</div>";
+                    $("#FinishList").html(statusList);
+                    $("#ViewAll").attr("href", "javascript:LoadFinishStatusList()");
+                    $("#ViewAll").html("查看当前");
+                    $("#HelpImg").attr("onclick", "javascript:alert('您可在[查看当前]状态下继续执行其他操作。')");
+                }
+                else if (e.result == 'failure') {
+                    alert(e.msg);
+                }
+                else if (e.result == 'error') {
+                    alert(e.msg);
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+
+</script>
+
+<script type="text/javascript">
+
+    function ViewDetail(CID, CNumber) {
+        window.parent.f_addTab('View' + CNumber, '稿件详细信息[' + CNumber + ']', '@Html.RootPath()/ContributionInfo/SearchViewDetail?CID=' + CID + "&rnd=" + Math.random());
+    }
+    function ViewWaitDetail(cID, cNumber, StatusID, FlowLogID, AuthorID) {
+        window.parent.f_addTab('ViewWaitDetail' + cNumber, '稿件详细信息[' + cNumber + ']', '@Html.RootPath()/ContributionInfo/ViewDetail?CID=' + cID + "&StatusID=" + StatusID + "&FlowLogID=" + FlowLogID + "&AuthorID=" + AuthorID + "&rnd=" + Math.random());
+    }
+    // 查看撤稿申请
+    function ViewRetractions(CID) {
+        $.ligerDialog.open({ height: 400, url: '@Html.RootPath()/Contribution/ViewRetraction?CID=' + CID + '&rnd=' + Math.random(), title: '撤稿申请处理', width: 600, slide: false, buttons: [
+        { text: '同意', onclick: function (item, dialog) {
+            $.ajax({
+                beforeSend: function () {
+
+                },
+                type: 'POST',
+                url: RootPath + '/Contribution/DealWithdrawal/?rnd=' + Math.random(),
+                data: { CID: CID },
+                success: function (data) {
+                    var e = eval("(" + data + ")");
+                    if (e.result == 'success') {
+                        contributiongrid.loadData();
+                        dialog.close();
+                    }
+                    else if (e.result == 'failure') {
+                        alert(e.msg);
+                    }
+                    else if (e.result == 'error') {
+                        alert(e.msg);
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+        },
+        { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+        ]
+        });
+    }
+
+    //撤销删除
+    function CancelDelete(CID, Title) {
+        if (!confirm("将要撤销稿件【" + Title + "】的删除状态！\r\n撤销删除后您可以在稿件处理专区中继续处理该稿件。\r\n继续撤销删除吗？")) return;
+        $.ajax({
+            beforeSend: function () {
+
+            },
+            type: 'POST',
+            url: '@Html.RootPath()/Contribution/CancelDelete/?rnd=' + Math.random(),
+            data: { CID: CID },
+            success: function (data) {
+                var e = eval("(" + data + ")");
+                if (e.result == 'success') {
+                    contributiongrid.loadData();
+                }
+                else if (e.result == 'failure') {
+                    alert(e.msg);
+                }
+                else if (e.result == 'error') {
+                    alert(e.msg);
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+
+    }
+
+    //编辑为作者上传修改稿
+    function UpContribute(AuthorID) {
+        window.parent.f_addTab('UpContribute', '代作者上传修改稿', '@Html.RootPath()/ContributionInfo/EditorRetreatIndex?AuthorID=' + AuthorID + "&rdm=" + Math.random());
+    }
+
+</script>
+
+
+}
+
+
+

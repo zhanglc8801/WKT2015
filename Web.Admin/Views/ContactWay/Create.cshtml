@@ -1,0 +1,120 @@
+﻿@model WKT.Model.ContactWayEntity
+
+@{
+    ViewBag.Title = "Create";
+}
+<style type="text/css">
+    body{ font-size:12px;}
+    .l-table-edit {border:1px solid #bed5f3;border-collapse: collapse;width:100%}
+    .l-table-edit-td-left{ padding:4px;text-align:right;width:90px;}
+    .l-table-edit-td{ padding:4px;}
+    .l-button-submit,.l-button-test{width:80px; float:left; margin-left:10px; padding-bottom:2px;}    
+</style>
+<div style="width: 98%; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+        <tr>
+            <td align="right" class="l-table-edit-td-left"  >
+                <span style="color: Red">*</span>联系人：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtKey" ltype="text" maxlength="25" value="@Model.LinkMan" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                公司：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtCompany" ltype="text" maxlength="25" value="@Model.Company" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                联系电话：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtTel" ltype="text" maxlength="25" value="@Model.Tel" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                传真：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtFax" ltype="text" maxlength="25" value="@Model.Fax" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                邮编：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtZipCode" ltype="text" maxlength="10" value="@Model.ZipCode" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                联系地址：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <textarea cols="100" rows="4" class="l-textarea" id="txtAddress" style="width: 300px">@Model.Address</textarea>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+@section Scripts{
+    <script language="javascript" type="text/javascript">
+        $(function () {
+            $("form").ligerForm({ inputWidth: 240 });
+        });
+
+        function Save(manager, dialog, ChannelID) {
+            var objTitle = $("#txtKey"), title = $.trim(objTitle.val());
+            if (title.length < 1) {
+                alert("请输入联系人！");
+                objTitle.focus();
+                return;
+            }
+            var objCode = $("#txtZipCode"), code = $.trim(objCode.val());
+            if (code.length > 0 & !/^[1-9][0-9]{5}$/.test(code)) {
+                alert("请输入正确邮编！");
+                objCode.focus();
+                return;
+            }
+            var objNode = $("#txtAddress"), node = $.trim(objNode.val());       
+            if (node.length > 100) {
+                alert("联系地址必须小于50个字符！");
+                objNode.focus();
+                return;
+            }
+            var saveParams = {
+                ContactID: '@Model.ContactID',
+                ChannelID:ChannelID,
+                LinkMan: title,
+                ZipCode: code,
+                Company:$.trim($("#txtCompany").val()),
+                Tel: $.trim($("#txtTel").val()),
+                Fax: $.trim($("#txtFax").val()),
+                Address: encodeURIComponent(node)
+            };
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/ContactWay/Save/',
+                data: saveParams,
+                cache: false,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        dialog.close();
+                        manager.loadData();
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+    </script>
+}

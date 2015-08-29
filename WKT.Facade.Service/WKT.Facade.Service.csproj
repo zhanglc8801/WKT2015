@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{133D3557-E5F8-4E85-825B-40E80EB67120}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WKT.Facade.Service</RootNamespace>
+    <AssemblyName>WKT.Facade.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuthorFacadeAPIService.cs" />
+    <Compile Include="AuthorPlatformFacadeAPIService.cs" />
+    <Compile Include="ContributionFacadeAPIService.cs" />
+    <Compile Include="ExpertApplyFacadeAPIService.cs" />
+    <Compile Include="FinanceFacadeAPIService.cs" />
+    <Compile Include="FlowFacadeService.cs" />
+    <Compile Include="IssueFacadeAPIService.cs" />
+    <Compile Include="LoginFacadeAPIService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleAuthorFacadeAPIService.cs" />
+    <Compile Include="Service References\MxtService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceBase.cs" />
+    <Compile Include="SiteConfigFacadeAPIService.cs" />
+    <Compile Include="SiteSystemFacadeAPIService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WKT.Cache\WKT.Cache.csproj">
+      <Project>{7DDED5E4-AA70-4CE5-B823-632ECBD6B61B}</Project>
+      <Name>WKT.Cache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Common\WKT.Common.csproj">
+      <Project>{E1A15C95-A5CA-45B9-A850-9341DE2B416F}</Project>
+      <Name>WKT.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Config\WKT.Config.csproj">
+      <Project>{7D766DEF-62FA-48D2-8896-07976FDF1656}</Project>
+      <Name>WKT.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Facade.Service.Interface\WKT.Facade.Service.Interface.csproj">
+      <Project>{2FF205FB-22AC-40B5-9607-FF1E86DBF685}</Project>
+      <Name>WKT.Facade.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Log\WKT.Log.csproj">
+      <Project>{BA831EA9-2B69-4D05-BF93-A1A4618D408C}</Project>
+      <Name>WKT.Log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Model\WKT.Model.csproj">
+      <Project>{73BD5439-9F9A-4DCB-A80E-6E3DCD0A0181}</Project>
+      <Name>WKT.Model %28WKT.Model\WKT.Model%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Service References\MxtService\Services.wsdl" />
+    <None Include="Service References\MxtService\WKT.Facade.Service.MxtService.AccountBasicInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Facade.Service.MxtService.BillStatistic.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Facade.Service.MxtService.CommonReturn.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Facade.Service.MxtService.CustomJobReturn.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Facade.Service.MxtService.JobStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Facade.Service.MxtService.RepliedSMS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Facade.Service.MxtService.RetLoginInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Facade.Service.MxtService.SendStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Facade.Service.MxtService.StockDetails.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Facade.Service.MxtService.TrialRegistration.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\MxtService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MxtService\Services.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MxtService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MxtService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MxtService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

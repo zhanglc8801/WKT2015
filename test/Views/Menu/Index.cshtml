@@ -1,0 +1,87 @@
+﻿<div id="divToolbar"></div>
+<div id="divMenuTree"></div>
+@section Scripts{
+<script type="text/javascript">
+    var manager;
+    $(function () {
+        window['g'] =
+        manager = $("#divMenuTree").ligerGrid({
+            columns: [
+            { display: '菜单名称', name: 'MenuName', width: 260, align: 'left' },
+            { display: '启用', name: 'Status', width: 80, align: 'center', render: function (item) {
+                return item.Status == 1 ? "<img src='@Html.RootPath()/Content/icons/ok.png' alt='启用' title='启用'/>" : "<img src='@Html.RootPath()/Content/icons/stop.png' alt='停用' title='停用'/>";
+            }
+            },
+            { display: 'URL', name: 'MenuUrl', width: 360, align: 'left' },
+            { display: '类型', name: 'MenuType', width: 100, align: 'center', render: function (item) {
+                return item.MenuType == 1 ? "<img src='@Html.RootPath()/Content/icons/page.png' alt='页面' title='页面'/>" : "<img src='@Html.RootPath()/Content/icons/button.png' alt='按钮' title='按钮'/>";
+            }
+            }
+            ], width: '99%', height: '100%', autoCheckChildren: false, allowHideColumn: false, rownumbers: true, usePager: false, colDraggable: false, rowDraggable: false, checkbox: true,
+            url: '@Html.RootPath()/menu/GetMenuAjax?rnd=' + Math.random(), width: '99.5%', alternatingRow: false, tree: { columnName: 'MenuName' }
+        }
+        );
+        // tool bar
+        $("#divToolbar").ligerToolBar({ items: [
+            { text: '查看', click: MenuClick, icon: 'search2' },
+            { line: true },
+            { text: '启用', click: MenuClick, icon: 'right' },
+            { line: true },
+            { text: '停用', click: MenuClick, icon: 'busy' }
+        ]
+        });
+
+        function MenuClick(item) {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择行'); return; }
+            var data = [];
+            for (i = 0; i < rows.length; i++) {
+                data.push(rows[i].MenuID);
+            }
+            switch (item.text) {
+                case "查看":
+                    View(data[0]);
+                    break;
+                case "启用":
+                    SetStatus(1, data);
+                    break;
+                case "停用":
+                    SetStatus(0, data);
+                    break;
+            }
+        }
+        function View(MenuID) {
+            $.ligerDialog.open({ height: 315, url: '@Html.RootPath()/menu/view?MenuID=' + MenuID + "&rnd=" + Math.random(), title: '查看菜单信息', width: 300, showMax: true, showToggle: false, showMin: true, isResize: true, slide: false });
+        }
+        function SetStatus(status, MenuIDArray) {
+            $.ajax({
+                beforeSend: function () {
+
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/menu/setmenustatus/?rnd=' + Math.random(),
+                data: { "Status": status, "IDAarry": MenuIDArray },
+                cache: false,
+                traditional: true,
+                success: function (data) {
+                    var e = eval("(" + data + ")");
+                    
+                    if (e.result == 'success') {
+                        alert('设置成功');
+                        manager.loadData();
+                    }
+                    else if (e.result == 'failure') {
+                        alert(e.msg);
+                    }
+                    else if (e.result == 'error') {
+                        alert(e.msg);
+                    }
+                },
+                error: function (xhr) {                    
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+    });
+</script>
+}

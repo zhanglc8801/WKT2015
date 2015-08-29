@@ -1,0 +1,23 @@
+﻿<div id="box">
+	<div id="divWorkloadList"></div>
+</div>
+@section Scripts{
+
+<script language="javascript" type="text/javascript">
+    var grid;
+    $(function () {
+        grid = $("#divWorkloadList").ligerGrid({
+            columns: [
+            { display: '稿件ID', name: 'CID', width: '10', align: 'center', hide: true },
+            { display: '稿件编号', name: 'CNumber', width: '80', align: 'center' },
+            { display: '稿件标题', name: 'Title', width: '250', align: 'left' },
+            { display: '发送人', name: 'SendUserName', width: '60', align: 'center' },
+            { display: '接收人', name: 'RecUserName', width: '60', align: 'center' },
+            { display: '稿件状态', name: 'AuditStatus', width: '80', align: 'center' },
+            { display: '处理时间', name: 'HandTime', width: '100', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm:ss' }
+            ], width: '99.5%', height: 'auto', rownumbers: true, usePager: true, checkbox: false,
+            url: '@Html.RootPath()/expertstat/GetEditorContributionListAjax?CurAuthorID=@ViewBag.AuthorID&Status=@ViewBag.IsHandled&StatusID=@ViewBag.StatusID&StartDate=@ViewBag.StartDate&EndDate=@ViewBag.EndDate&IsStat=true&rnd=' + Math.random(), pageSize: 15
+        });
+    });
+</script>
+}

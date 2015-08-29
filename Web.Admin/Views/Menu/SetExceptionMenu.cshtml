@@ -1,0 +1,34 @@
+﻿<div id="divTreeLayout">
+    <div position="left" title="角色拥有的权限">
+        <ul id="ulMenuTree"></ul>
+    </div>
+    <div position="center" title="成员设置例外后的菜单权限">
+        <ul id="ulExceptionTree"></ul>
+    </div>
+</div>
+@section Scripts{
+<script language="javascript" type="text/javascript">
+    var setexmenutree;
+    $(function () {
+        $("#divTreeLayout").ligerLayout({ leftWidth: 260, allowLeftCollapse: false });
+        //树
+        $("#ulMenuTree").html("");
+        rolerightmenutree = $("#ulMenuTree").ligerTree({
+            url: '@Html.RootPath()/menu/GetExceptionMenuAjaxByRole?RoleID=' + @ViewBag.RoleID + "&rnd=" + Math.random(),
+            checkbox: true,
+            slide: false,
+            nodeWidth: 180,
+            attribute: ['nodename', 'url']
+        });
+
+        $("#ulExceptionTree").html("");
+        setexmenutree = $("#ulExceptionTree").ligerTree({
+            url: '@Html.RootPath()/menu/GetExceptionMenuAjaxByRole?RoleID=' + @ViewBag.RoleID + "&AuthorID=" + @ViewBag.AuthorID + "&rnd=" + Math.random(),
+            checkbox: true,
+            slide: false,
+            nodeWidth: 180,
+            attribute: ['nodename', 'url']
+        });
+    });
+</script>
+}

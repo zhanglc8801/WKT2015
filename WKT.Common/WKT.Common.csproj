@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E1A15C95-A5CA-45B9-A850-9341DE2B416F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WKT.Common</RootNamespace>
+    <AssemblyName>WKT.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CarlosAg.ExcelXmlWriter, Version=1.0.0.6, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\CarlosAg.ExcelXmlWriter.dll</HintPath>
+    </Reference>
+    <Reference Include="ChilkatDotNet2, Version=8.8.0.0, Culture=neutral, PublicKeyToken=eb5fc1fc52ef09bd, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ChilkatDotNet2.dll</HintPath>
+    </Reference>
+    <Reference Include="chinadoiIF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\chinadoiIF.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay">
+      <HintPath>..\lib\Pay\com.yeepay.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.bank">
+      <HintPath>..\lib\Pay\com.yeepay.bank.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.bankutils.Buy">
+      <HintPath>..\lib\Pay\com.yeepay.bankutils.Buy.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.bankutils.Digest">
+      <HintPath>..\lib\Pay\com.yeepay.bankutils.Digest.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.bankutils.FormatQueryString">
+      <HintPath>..\lib\Pay\com.yeepay.bankutils.FormatQueryString.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.bankutils.HmacMD5">
+      <HintPath>..\lib\Pay\com.yeepay.bankutils.HmacMD5.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.bankutils.HttpUtils">
+      <HintPath>..\lib\Pay\com.yeepay.bankutils.HttpUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.model.BuyBankDirectConnectResult">
+      <HintPath>..\lib\Pay\com.yeepay.model.BuyBankDirectConnectResult.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.model.BuyCallbackResult">
+      <HintPath>..\lib\Pay\com.yeepay.model.BuyCallbackResult.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.model.BuyQueryOrdDetailResult">
+      <HintPath>..\lib\Pay\com.yeepay.model.BuyQueryOrdDetailResult.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.model.BuyRefundOrdResult">
+      <HintPath>..\lib\Pay\com.yeepay.model.BuyRefundOrdResult.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.utils.Buy">
+      <HintPath>..\lib\Pay\com.yeepay.utils.Buy.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.utils.Digest">
+      <HintPath>..\lib\Pay\com.yeepay.utils.Digest.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.utils.FormatQueryString">
+      <HintPath>..\lib\Pay\com.yeepay.utils.FormatQueryString.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.utils.HmacMD5">
+      <HintPath>..\lib\Pay\com.yeepay.utils.HmacMD5.dll</HintPath>
+    </Reference>
+    <Reference Include="com.yeepay.utils.HttpUtils">
+      <HintPath>..\lib\Pay\com.yeepay.utils.HttpUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\WebAPI\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\WebAPI\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\WebAPI\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\ExcelHelperEx.cs" />
+    <Compile Include="Data\RenderToExcel.cs" />
+    <Compile Include="Data\RenderToWord.cs" />
+    <Compile Include="Email\EmailUtils.cs" />
+    <Compile Include="Extension\DataExtension.cs" />
+    <Compile Include="Extension\EnumExtension.cs" />
+    <Compile Include="Extension\ModelStateExtensions.cs" />
+    <Compile Include="Extension\StringExtension.cs" />
+    <Compile Include="Extension\IListExtension.cs" />
+    <Compile Include="Extension\ListComparison.cs" />
+    <Compile Include="Pay\YeepayHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\AES.cs" />
+    <Compile Include="Security\DES.cs" />
+    <Compile Include="Security\DESEncrypt.cs" />
+    <Compile Include="Security\MD5.cs" />
+    <Compile Include="Security\MD516.cs" />
+    <Compile Include="Security\RSAClass.cs" />
+    <Compile Include="Security\TripleDES.cs" />
+    <Compile Include="Service References\MxtService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="SMS\SmsHelper.cs" />
+    <Compile Include="Utils\ClassHelper.cs" />
+    <Compile Include="Utils\DoiUtils.cs" />
+    <Compile Include="Utils\HttpClientHelper.cs" />
+    <Compile Include="Utils\HttpUtils.cs" />
+    <Compile Include="Utils\IdentityGenerator.cs" />
+    <Compile Include="Utils\QQWryLocator.cs" />
+    <Compile Include="Utils\QuickWebRequest.cs" />
+    <Compile Include="Utils\QuickWebResponse.cs" />
+    <Compile Include="Security\SecurityUtils.cs" />
+    <Compile Include="Utils\RadomCode.cs" />
+    <Compile Include="Utils\SerializationHelper.cs" />
+    <Compile Include="Utils\SimpleOneceAgent.cs" />
+    <Compile Include="Utils\TextHelper.cs" />
+    <Compile Include="Security\TicketTool.cs" />
+    <Compile Include="Utils\TypeParse.cs" />
+    <Compile Include="Utils\Utils.cs" />
+    <Compile Include="VerifyCode\VerifyCode.cs" />
+    <Compile Include="Xml\InvalidXmlException.cs" />
+    <Compile Include="Xml\XmlDocumentExtender.cs" />
+    <Compile Include="Xml\XMLOper.cs" />
+    <Compile Include="Xml\XmlUtils.cs" />
+    <Compile Include="Xml\XmlVisitor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WKT.Model\WKT.Model.csproj">
+      <Project>{73BD5439-9F9A-4DCB-A80E-6E3DCD0A0181}</Project>
+      <Name>WKT.Model %28WKT.Model\WKT.Model%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Service References\MxtService\Services.wsdl" />
+    <None Include="Service References\MxtService\WKT.Common.MxtService.AccountBasicInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Common.MxtService.BillStatistic.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Common.MxtService.CommonReturn.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Common.MxtService.CustomJobReturn.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Common.MxtService.JobStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Common.MxtService.RepliedSMS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Common.MxtService.RetLoginInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Common.MxtService.SendStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Common.MxtService.StockDetails.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MxtService\WKT.Common.MxtService.TrialRegistration.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\MxtService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MxtService\Services.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MxtService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MxtService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MxtService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,66 @@
+﻿<div id="searchbar">
+    登录邮箱：<input id="txtLoginName" name="LoginName" type="text" />&nbsp;真实姓名：<input id="txtRealName" name="RealName" type="text" />&nbsp;<input id="btnSearch" type="button" value="搜索"/>
+</div>
+<div id="divList"></div>
+@section Scripts{
+<script type="text/javascript">
+    var memberSelDialog;
+    $(function () {      
+        memberSelDialog = $("#divList").ligerGrid({
+            columns: [
+            { display: '编号', name: 'AuthorID', width: '10%', align: 'center' },
+            { display: '登录名', name: 'LoginName', width: '30%', align: 'left' },
+            { display: '手机号码', name: 'Mobile', width: '30%', align: 'center' },
+            { display: '真实姓名', name: 'RealName', width: '20%', align: 'center' }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+            url: '@Html.RootPath()/Author/GetAuthorList?rnd=' + Math.random(), pageSize: 10, isChecked: f_isChecked, onCheckRow: f_onCheckRow, onCheckAllRow: f_onCheckAllRow
+        });
+        $("#btnSearch").click(function () {
+            memberSelDialog.setOptions({ parms: {
+                RealName: $("#txtRealName").val(),
+                LoginName: $("#txtLoginName").val()
+            }
+            });
+            memberSelDialog.loadData();
+        });
+    });
+
+    function f_onCheckAllRow(checked) {
+        for (var rowid in this.records) {
+            if (checked)
+                AddCheckedExpert({ AuthorID: this.records[rowid]['AuthorID'], AuthorName: this.records[rowid]['RealName'], LoginName: this.records[rowid]['LoginName'], Mobile: this.records[rowid]['Mobile'] });
+            else
+                RemovecheckedExpert({ AuthorID: this.records[rowid]['AuthorID'], AuthorName: this.records[rowid]['RealName'], LoginName: this.records[rowid]['LoginName'], Mobile: this.records[rowid]['Mobile'] });
+        }
+    }
+
+    /*
+    利用onCheckRow将选中的行记忆下来，并利用isChecked将记忆下来的行初始化选中
+    */
+    var checkedExpert = [];
+    function FindcheckedExpert(AuthorObj) {
+        for (var i = 0; i < checkedExpert.length; i++) {
+            if (checkedExpert[i].AuthorID == AuthorObj.AuthorID) return i;
+        }
+        return -1;
+    }
+    function AddCheckedExpert(AuthorObj) {
+        if (FindcheckedExpert(AuthorObj) == -1)
+            checkedExpert.push(AuthorObj);
+    }
+    function RemovecheckedExpert(AuthorObj) {
+        var i = FindcheckedExpert(AuthorObj);
+        if (i == -1) return;
+        checkedExpert.splice(i, 1);
+    }
+    function f_isChecked(rowdata) {
+        if (FindcheckedExpert({ AuthorID: rowdata.AuthorID, AuthorName: rowdata.RealName, LoginName: rowdata.LoginName, Mobile: rowdata.Mobile }) == -1)
+            return false;
+        return true;
+    }
+    function f_onCheckRow(checked, data) {
+        if (checked) AddCheckedExpert({ AuthorID: data.AuthorID, AuthorName: data.RealName, LoginName: data.LoginName, Mobile: data.Mobile });
+        else RemovecheckedExpert({ AuthorID: data.AuthorID, AuthorName: data.RealName, LoginName: data.LoginName, Mobile: data.Mobile });
+    }
+</script>
+}

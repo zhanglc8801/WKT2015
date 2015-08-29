@@ -1,0 +1,130 @@
+﻿<style type="text/css">
+    .l-table-edit-td-left
+    {
+        padding: 4px;
+        text-align: right;
+        width: 70px;
+    }
+    .l-table-edit-td
+    {
+        padding: 4px;
+    }
+    .l-button-search
+    {
+        width: 80px;
+        margin-left: 10px;
+        padding-bottom: 2px;
+        display: inline;
+    }
+</style>
+<div id="divSearch">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                类型：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <select id="ddlType">
+                    <option value="">全部</option>
+                    <option value="1">发送的消息</option>
+                    <option value="2">接收到的消息</option>
+                </select>
+            </td>
+            <td align="right" class="l-table-edit-td-left">
+                是否查看：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <select id="ddlIsView">
+                    <option value="">全部</option>
+                    <option value="1">已查看</option>
+                    <option value="0">未查看</option>
+                </select>
+            </td>
+            <td colspan="2" style="text-align: center">
+                <input type="button" id="btnSearch" value="搜索" class="l-button l-button-search" />
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+<div id="divList">
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        var manager, currentUser = '@ViewBag.User';
+        $(function () {
+            $("form").ligerForm();
+            manager = $("#divList").ligerGrid({
+                columns: [
+            { display: '编号', name: 'MessageID', hide: true },
+            { display: '发送人', name: 'SendUserName', width: '10%', align: 'center' },
+            { display: '接收人', name: 'ReciverName', width: '10%', align: 'center' },
+            { display: '标题', name: 'Title', width: '15%', align: 'left' },
+            { display: '是否查看', name: 'IsView', width: '10%', align: 'center', render: function (item) {
+                if (item.IsView == 1)
+                    return '<input type="checkbox" checked="checked" disabled="disabled" />';
+                return '<input type="checkbox" disabled="disabled" />';
+            }
+            },
+            { display: '发送时间', name: 'SendDate', width: '15%', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm' },
+            { display: '操作', name: 'Linkurl', width: '10%', align: 'center', render: function (item) {
+                if (currentUser == item.SendUser)
+                    return '<a href="javascript:void(0)" onclick="ViewDetail(' + item.MessageID + ')">查看</a>';
+                return '<a href="javascript:void(0)" onclick="Reply(' + item.MessageID + ')">回复</a>';
+            }
+            },
+            { display: '信息内容', name: 'Linkurl', width: '10%', align: 'center', render: function (item) {
+                return '<a href="javascript:void(0)" onclick="View(' + item.MessageID + ')">信息内容</a>';
+            }
+            }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true, enabledSort: false,
+                url: '@Html.RootPath()/SiteMessage/GetPageList', pageSize: 20,
+                parms: [{ name: 'IsView', value: $("#ddlIsView").val() }, { name: 'MsgType', value: $("#ddlType").val()}]
+            });
+            $("#btnSearch").click(function () {
+                manager.setOptions({ parms: {
+                    IsView: $("#ddlIsView").val(),
+                    MsgType: $("#ddlType").val()
+                }
+                });
+                manager.loadData();
+            });
+        });
+
+        function Reply(id) {
+            $.ligerDialog.open({
+                height: 500,
+                width: 700,
+                url: '@Html.RootPath()/SiteMessage/Detail?MessageID=' + id,
+                title: '回复站内消息',
+                slide: false,
+                buttons: [{ text: '回复', onclick: function (item, dialog) {
+                    dialog.frame.Save(manager, dialog, true);
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function ViewDetail(id) {
+            $.ligerDialog.open({
+                height: 300,
+                width: 500,
+                url: '@Html.RootPath()/SiteMessage/Detail?Type=0&MessageID=' + id,
+                title: '查看站内消息',
+                slide: false,
+                buttons: [{ text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function View(obj) {
+            $.ligerDialog.open({
+                height: 450,
+                width: 800,
+                url: '@Html.RootPath()/SiteMessage/Content?MessageID=' + obj + '&rnd=' + Math.random(),
+                title: '查看信息内容',
+                slide: false
+            });
+        }
+    </script>
+}

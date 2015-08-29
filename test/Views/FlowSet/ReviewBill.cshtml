@@ -1,0 +1,120 @@
+﻿<ul id="ulTree" style="margin-top: 3px;">
+</ul>
+@section Scripts{
+    <script type="text/javascript">
+        var activeNode, menu1, menu2, manager = null;
+        $(function () {
+            menu1 = $.ligerMenu({ top: 100, left: 100, width: 120, items:
+            [
+            { text: '新增下级', click: Add, icon: 'add' },
+            { text: '修改', click: Update, icon: 'modify' },
+            { line: true },
+            { text: '删除', click: Del, icon: 'delete' }
+            ]
+            });
+            menu2 = $.ligerMenu({ top: 100, left: 100, width: 120, items:
+                        [
+                        { text: '修改', click: Update, icon: 'modify' },
+                        { line: true },
+                        { text: '删除', click: Del, icon: 'delete' }
+                        ]
+            });
+            loadTree();
+        });
+
+        function loadTree() {
+            if (manager != null)
+                manager.clear();
+            manager = $("#ulTree").ligerTree({
+                url: '@Html.RootPath()/FlowSet/GetReviewBillTree?v=' + new Date().getMilliseconds(),
+                checkbox: false,
+                slide: false,
+                nodeWidth: 240,
+                attribute: ['nodename', 'url'],
+                onContextmenu: function (node, e) {
+                    activeNode = node.data;
+                    if (activeNode.key != undefined && activeNode.key == "1")
+                        menu2.show({ top: e.pageY, left: e.pageX });
+                    else
+                        menu1.show({ top: e.pageY, left: e.pageX });
+                    return false;
+                },
+                onSelect: function (node) {
+
+                }
+            });
+
+        }
+
+        function Add(item, i) {
+            $.ligerDialog.open({
+                height: 200,
+                width: 400,
+                url: '@Html.RootPath()/FlowSet/CreateReviewBill',
+                title: '新增下级选项【' + activeNode.text + '】',
+                slide: false,
+                buttons: [{ text: '确认', onclick: function (item, dialog) {
+                    dialog.frame.Save(loadTree, dialog, activeNode.Id);
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function Update(item, i) {
+            if (activeNode.Id == 0)
+                alert("根节点不允许修改！");
+            $.ligerDialog.open({
+                height: 200,
+                width: 400,
+                url: '@Html.RootPath()/FlowSet/CreateReviewBill?ItemID=' + activeNode.Id,
+                title: '修改选项',
+                slide: false,
+                buttons: [{ text: '确认', onclick: function (item, dialog) {
+                    dialog.frame.Save(loadTree, dialog, manager.getParent(activeNode));
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function Del(item, i) {
+            if (activeNode.Id == 0) {
+                alert("根节点不允许删除！");
+                return;
+            }
+            if (manager.hasChildren(activeNode)) {
+                alert("请先删除子选项！");
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/FlowSet/ReviewBillIsEnabled/',
+                data: { "ItemID": activeNode.Id },
+                cache: false,
+                traditional: true,
+                success: function (data) {
+                    var flag = data.result ? confirm("删除该选项将会把该选项相关的稿件审稿单项数据完全删除\r\n您确定继续删除该选项【" + activeNode.text + "】吗？") : confirm("确定删除选项【" + activeNode.text + "】吗？");
+                    if (!flag) return;
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Html.RootPath()/FlowSet/DelReviewBill/',
+                        data: { "ItemID": activeNode.Id },
+                        cache: false,
+                        traditional: true,
+                        success: function (data) {
+                            alert(data.msg);
+                            if (data.result == "success") {
+                                loadTree();
+                            }
+                        },
+                        error: function (xhr) {
+                            alert('数据源访问错误' + '\n' + xhr.responseText);
+                        }
+                    });
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+    </script>
+}

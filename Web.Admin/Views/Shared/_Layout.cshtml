@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.SiteTitle-@Html.SiteName()</title>
+    <link href="@Html.RootPath()/Content/style.css" rel="stylesheet" type="text/css" />
+    <link href="@Html.RootPath()/Content/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+    <link href="@Html.RootPath()/Content/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
+    <link href="@Html.RootPath()/Content/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
+    <script src="@Html.RootPath()/Scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Content/ligerUI/js/ligerui.all.js" type="text/javascript"></script> 
+    <script src="../../Scripts/JsEncryption/sjcl.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/WKT.Base.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/jquery.showLoading.min.js" type="text/javascript"></script>
+</head>
+<body>
+<div style="margin:3px; ">
+@RenderBody()
+</div>
+@RenderSection("Scripts")
+</body>
+</html>

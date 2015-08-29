@@ -1,0 +1,123 @@
+﻿@model WKT.Model.MessageTemplateEntity
+@{
+    ViewBag.Title = "Create";
+}
+<style type="text/css">
+    body{ font-size:12px;}
+    .l-table-edit {border:1px solid #bed5f3;border-collapse: collapse;width:100%}
+    .l-table-edit-td-left{ padding:4px;text-align:right;width:90px;}
+    .l-table-edit-td{ padding:4px;}
+    .l-button-submit,.l-button-test{width:80px; float:left; margin-left:10px; padding-bottom:2px;}    
+</style>
+<div style="width: 98%; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>模版名称：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtTitle" ltype="text" maxlength="25" value="@Model.Title" />
+            </td>
+            <td colspan="2">
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>模版类型：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                @if (Model.TemplateID == 0)
+                {
+                    @Html.Raw(Html.SelectTCategory("ddlTCategory", "150px", 1, string.Empty, string.Empty, "请选择"))}
+                else
+                {             
+                    @Model.TCategoryName}
+            </td>
+            <td align="right" class="l-table-edit-td-left">
+                全局变量：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                @Html.Raw(Html.SelectEmailVariable("ddlVariable", "150px", string.Empty, string.Empty, "请选择"))
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>邮件内容：
+            </td>
+            <td align="left" class="l-table-edit-td" colspan="3">
+                <textarea cols="100" rows="4" class="l-textarea" id="txtContent" style="width: 525px">@Model.TContent</textarea>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+@section Scripts{
+    <script type="text/javascript" charset="utf-8" src="@Html.RootPath()/content/ueditor/ueditor.config4.js"></script>
+    <script type="text/javascript" charset="utf-8" src="@Html.RootPath()/content/ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="@Html.RootPath()/content/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script language="javascript" type="text/javascript">
+        var TemplateID = '@Model.TemplateID';
+        UE.getEditor('txtContent');
+        $(function () {
+            $("form").ligerForm({ inputWidth: 200 });
+            $("#ddlVariable").change(function () {
+                var val = $(this).val();
+                if (val.length < 1) return;
+                if (val == "${审稿链接}$") {
+                    UE.getEditor('txtContent').execCommand("insertHtml","A1" + val + "A2");
+                }
+                else {
+                    UE.getEditor('txtContent').execCommand("insertHtml", val);
+                }
+            });
+        });
+
+        function Save(manager, dialog) {
+            var objTitle = $("#txtTitle"), title = $.trim(objTitle.val());
+            if (title.length < 1) {
+                alert("请输入文件名称！");
+                objTitle.focus();
+                return;
+            }
+            var TCategory = '@Model.TCategory';
+            if (TemplateID == "0") {
+                TCategory = $("#ddlTCategory").val();
+                if (TCategory.length < 1) {
+                    alert("请选择模版类型！");
+                    return;
+                }
+            }
+            if (UE.getEditor('txtContent').getContent().length < 1) {
+                alert("请输入邮件内容！");
+                $("#txtContent").focus();
+                return;
+            }
+            var saveParams = {
+                TemplateID: TemplateID,              
+                Title: title,
+                TCategory: TCategory,
+                TContent: encodeURIComponent(UE.getEditor('txtContent').getContent())              
+            };
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/EmailTemp/Save/',
+                data: saveParams,
+                cache: false,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        dialog.close();
+                        manager.loadData();
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+    </script>
+}
+
+

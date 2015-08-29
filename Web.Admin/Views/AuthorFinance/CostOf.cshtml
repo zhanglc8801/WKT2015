@@ -1,0 +1,52 @@
+﻿<div id="divList">
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        var manager;
+        $(function () {
+            window['g'] =
+        manager = $("#divList").ligerGrid({
+            columns: [
+            { display: '编号', name: 'CID', hide: true },
+            { display: '稿件编号', name: 'CNumber', width: '10%', align: 'center' },
+            { display: '稿件标题', name: 'Title', width: '18%', align: 'left', render: function (item) {
+                return '<a href="javascript:void(0)" onclick="ViewDetail(' + item.CID + ')">' + item.Title + '</a>';
+            }
+            },
+            { display: '支付方式', name: 'PayTypeName', width: '8%', align: 'center' },
+            { display: '费用类型', name: 'FeeTypeName', width: '8%', align: 'center' },
+            { display: '缴费金额', name: 'Amount', width: '8%', align: 'right' },
+            { display: '汇款单号', name: 'RemitBillNo', width: '9%', align: 'center' },
+            { display: '银行编号', name: 'InvoiceNo', width: '9%', align: 'center' },
+            { display: '挂号号码', name: 'PostNo', width: '9%', align: 'center' },
+            { display: '状态', name: 'Status', width: '8%', align: 'center', render: function (item) {
+                return item.Status == 1 ? "已交" : "未交";
+            }
+            },
+            { display: '寄出日期', name: 'SendDate', width: '12%', align: 'center', type: 'date', format: 'yyyy-MM-dd' }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+            url: '@Html.RootPath()/AuthorFinance/GetCostOfPageList', pageSize: 20, enabledSort: false, 
+            toolbar: { items: [
+            { text: '查看详情', click: ViewDetail, icon: 'search2' }
+            ]
+            }
+        });
+        });
+
+        function ViewDetail(cID) {
+            if (cID.text != undefined) {
+                var rows = manager.getSelectedRows();
+                if (rows == "") { alert('请选择需要查看的稿件！'); return; }
+                cID = rows[0].CID;
+            }
+            $.ligerDialog.open({
+                height: 500,
+                width: 800,
+                url: '@Html.RootPath()/ContributionInfo/View?CID=' + cID,
+                title: '查看稿件详情',
+                slide: false,
+                buttons: [{ text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+    </script>
+}

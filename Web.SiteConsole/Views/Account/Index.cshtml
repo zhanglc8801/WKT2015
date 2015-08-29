@@ -1,0 +1,201 @@
+﻿@model List<WKT.Model.SysAccountInfoEntity>
+<script type="text/javascript">
+    // 设置标题
+    Index.SetTitle('账户管理');
+</script>
+<div class="container">
+    <div class="location">当前位置：账户管理 -&gt; 账户管理</div>
+    <div class="blank10"></div>
+    <div class="search block">
+        <div class="cntsearch">
+            <div class="cnt">
+                <div class="search-bar">
+                    <label class="first txt-green">用户名：</label>
+                    <input value="" type="text" name="LoginName" id="txtLoginName" class="input-small" />
+                    <label class="txt-green">状态：</label>
+                    <select name="Status" id="selStatus"><option value="">不限</option><option value="0">有效</option><option value="1">无效</option></select>
+                    <label><a class="btn-lit btn-middle" href="javascript:void(0);"><span id="spanSearch">搜索</span></a></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="blank10"></div>
+
+    <div class="block">
+        <div class="h">
+            <span class="icon-sprite icon-list"></span>
+            <h3>账户管理</h3>
+            <div class="bar">
+                <a class="btn-lit" href="javascript:Index.Open('/Account/Add');"><span>新增</span></a>
+                <a class="btn-lit" href="javascript:DeleteByIds();"><span>删除选中</span></a>
+            </div>
+        </div>
+        <div class="tl corner"></div><div class="tr corner"></div><div class="bl corner"></div><div class="br corner"></div>
+        <div class="cnt-wp">
+            <div class="cnt">
+                <table class="data-table" width="100%" border="0" cellspacing="0" cellpadding="0" id="tbList">
+                    <tr>
+                        <th scope="col"><input value="true" type="checkbox" title="全选/不选" onclick="CheckBox.CheckAll(this);" name="CheckAll" id="CheckAll" /><input value="false" type="hidden" name="CheckAll" /></th>
+                        <th scope="col">用户</th>
+                        <th scope="col">姓名</th>
+                        <th scope="col">性别</th>
+                        <th scope="col">邮箱</th>
+                        <th scope="col">手机</th>
+                        <th scope="col">最后登录时间</th>
+                        <th scope="col">最后登录IP</th>
+                        <th scope="col">登录次数</th>
+                        <th scope="col">状态</th>
+                        <th scope="col">编辑</th>
+                        <th scope="col">删除</th>
+                    </tr>  
+                    <tbody id="tbodyList">
+                        @foreach (WKT.Model.SysAccountInfoEntity item in Model)
+                        {
+                            <tr>
+                                <td class="chk"><input value="true" type="checkbox" rel="@item.AdminID" name="CheckBox" class="check-box" /><input value="@item.AdminID" type="hidden" name="CheckBox" /></td>
+                                <td class="txt c"><a href="javascript:void(0);" title="查看资料">@item.LoginName</a></td>
+                                <td class="txt80 c">@item.UserName</td>
+                                <td class="txt40 c">@(item.Gender == 0 ? "男" : "女")</td>
+                                <td class="txt160 c">@item.Email</td>
+                                <td class="txt100 c">@item.Mobile</td>
+                                <td class="txt160 c">@item.LoginDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                <td class="txt100 c">@item.LastIP</td>
+                                <td class="txt80 c">@item.LogOnTimes</td>
+                                <td class="txt80 c">@(item.Status == 0 ? "有效" : "无效")</td>
+                                <td class="icon"><a class="opt" title="编辑" href="javascript:void(0);" onclick="Edit(@item.AdminID);"><span class="icon-sprite icon-edit"></span></a></td>
+                                <td class="icon tail"><a class="opt" title="删除" href="javascript:void(0);" onclick="DeleteById(@item.AdminID);"><span class="icon-sprite icon-delete"></span></a></td>
+                            </tr> 
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div id="divPage" class="pager-bar"></div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script type="text/javascript" src="/Scripts/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="/Scripts/jquery.pagination.js"></script>
+<script id="jsTemplate" type="text/x-jquery-tmpl">
+    <tr>
+        <td class="chk"><input value="true" type="checkbox" rel="${AdminID}" name="CheckBox" class="check-box" /><input value="${AdminID}" type="hidden" name="CheckBox" /></td>
+        <td class="txt c"><a href="javascript:void(0);" title="查看资料">${LoginName}</a></td>
+        <td class="txt80 c">${UserName}</td>
+        <td class="txt40 c">${FormatGender(Gender)}</td>
+        <td class="txt160 c">${Email}</td>
+        <td class="txt100 c">${Mobile}</td>
+        <td class="txt160 c">${$.format.date(LoginDate,"yyyy-MM-dd hh:mm:ss")}</td>
+        <td class="txt100 c">${LastIP}</td>
+        <td class="txt80 c">${LogOnTimes}</td>
+        <td class="txt80 c">${FormatStatus(Status)}</td>
+        <td class="icon"><a class="opt" title="编辑" href="javascript:void(0);" onclick="Edit(${AdminID});"><span class="icon-sprite icon-edit"></span></a></td>
+        <td class="icon tail"><a class="opt" title="删除" href="javascript:void(0);" onclick="DeleteById(${AdminID});"><span class="icon-sprite icon-delete"></span></a></td>
+    </tr> 
+</script>
+<script type="text/javascript">
+
+    jQuery(document).ready(function () {
+        PageInit(0);
+        $.template('pagetemplate', $("#jsTemplate").html());
+        // 搜索
+        $("#spanSearch").click(function()
+        {
+            PageCallback(0);
+        });
+    });
+
+    function PageInit(pageIndex,totalcount) {
+        if(totalcount == undefined){
+            totalcount = @ViewBag.TotalCount
+        }
+        pageobje = $("#divPage").pagination(totalcount, {
+            callback: PageCallback,
+            items_per_page:10,
+		    num_display_entries:0,
+		    current_page:pageIndex,
+		    num_edge_entries:0
+        });
+    }
+
+    function PageCallback(page_id, jq)
+    {
+        $.ajax({
+            type: "POST",//用POST方式传输
+            dataType:"json",//数据格式:JSON
+            url:'/account/indexajax/?rnd=' + Math.random(),//目标地址
+            data:{"LoginName":$("#txtLoginName").val(),"Status":$("#selStatus").val(),"CurrentPage": page_id, "PageSize": 10 },
+            beforeSend:function(){$("#divload").show();},//发送数据之前
+            complete:function(){$("#divload").hide();},//接收数据完毕
+            success:function(json) {
+                var jsonobj = eval(json);
+                if (jsonobj.result == "success") {
+                    $("#tbodyList").empty();
+                    $.tmpl('pagetemplate',jsonobj.data.ItemList).appendTo('#tbodyList');
+                    // 隔行变色
+                    $('#tbList tr:even').addClass('even');
+                    if(jq == undefined)
+                    {
+                        PageInit(page_id,jsonobj.data.TotalRecords);
+                    }
+                }
+                else {
+                    alert(jsonobj.message);
+                }
+            }});
+    }
+
+    function FormatGender(gender)
+    {
+        if(gender == 0){
+            return "男";
+        }
+        else{
+            return "女";
+        }
+    }
+
+    function FormatStatus(status)
+    {
+        if(status == 0){
+            return "有效";
+        }
+        else{
+            return "无效";
+        }
+    }
+
+    function Edit(AdminID)
+    {
+        Index.Open('/Account/Add?AdminID=' + AdminID);
+    }
+
+    // 根据ID删除用户
+    DeleteById = function (id) {
+        var data = [];
+        data.push(id);
+        jBox.confirm("此操作不可恢复，确定要删除吗？", "删除账户", function (v, h, f) {
+            if (v == 'ok') {
+                Admin.SubmitForm("/Account/DeleteAjax", {"IDAarry":data}, '/Account');
+            }
+            return true;
+        });
+    };
+
+    // 删除多个用户
+    DeleteByIds = function () {
+        var idArray = CheckBox.GetCheckedIds();
+        if (idArray.length == 0) {
+            jBox.tip("请选择至少一个用户！");
+            return;
+        }
+
+        jBox.confirm("此操作不可恢复，确定要删除选中的用户吗？", "删除账户", function (v, h, f) {
+            if (v == 'ok') {
+                jBox.tip('正在处理...', 'loading');
+                Admin.SubmitForm("/Account/DeleteAjax", {"IDAarry":idArray}, '/Account');
+            }
+            return true;
+        });
+    };
+</script>
+}

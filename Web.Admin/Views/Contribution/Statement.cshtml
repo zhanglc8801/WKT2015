@@ -1,0 +1,57 @@
+﻿@model WKT.Model.ContributeSetEntity
+<div style="" id="notice_container" class="notice notice0">
+	<div class="c">
+        <a href="javascript:void(0)" id="noticeTip">系统提示：设置了投稿声明后，会在每次作者投稿前显示，提示作者注意。如果不设置则不显示。 </a>
+    </div>
+</div>
+<div class="clear"></div>
+<div style=" float:left">
+    <textarea id="fckContent" name="fckContent" cols="68" rows="15">@(Model == null ? "" : Model.Statement)</textarea>
+    <input type="button" id="btnSave" value="保存设置" class="btnset" />
+</div>
+<div class="clear"></div>
+@section Scripts{
+
+
+<script type="text/javascript" src="@Html.RootPath()/content/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="@Html.RootPath()/Scripts/jquery-1.7.2.min.js"></script>   
+<script language="javascript" type="text/javascript">
+    jQuery(document).ready(function () {
+        CKEDITOR.replace('fckContent');
+        CKEDITOR.instances.fckContent.setData($("#fckContent").val());
+        $("#btnSave").click(function () {
+            $("#fckContent").val(CKEDITOR.instances.fckContent.getData())
+            $.ajax({
+                beforeSend: function () {
+                    $(this).attr("disabled", true);
+                },
+                complete: function () { $(this).attr("disabled", false); },
+                type: 'POST',
+                url: '@Html.RootPath()/Contribution/SetStatementAjax/?rnd=' + Math.random(),
+                data: { "Statement": $("#fckContent").val() },
+                cache: false,
+                traditional: true,
+                success: function (data) {
+                    var e = eval("(" + data + ")");
+                    if (e.result == 'success') {
+                        alert('设置成功');
+                    }
+                    else if (e.result == 'failure') {
+                        alert(e.msg);
+                    }
+                    else if (e.result == 'error') {
+                        alert(e.msg);
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        })
+    });
+
+    function seek(obj) {
+        window.open(obj);
+    }
+</script>
+}

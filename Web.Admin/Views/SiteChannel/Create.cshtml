@@ -1,0 +1,144 @@
+﻿@model WKT.Model.SiteChannelEntity
+@{
+    ViewBag.Title = "Create";
+}
+<style type="text/css">
+    body{ font-size:12px;}
+    .l-table-edit {border:1px solid #bed5f3;border-collapse: collapse;width:100%}
+    .l-table-edit-td-left{ padding:4px;text-align:right;width:90px;}
+    .l-table-edit-td{ padding:4px;}
+    .l-button-submit,.l-button-test{width:80px; float:left; margin-left:10px; padding-bottom:2px;}    
+</style>
+<div style="width: 98%; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+        @if (Model.ChannelID > 0)
+        {
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red"></span>栏目ID：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                @Model.ChannelID
+            </td>
+        </tr>
+        }
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>栏目名称：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtKey" ltype="text" maxlength="25" value="@Model.Keywords" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                栏目URL：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                 <input type="text" id="txtUrl" ltype="text" maxlength="50" value="@Model.ChannelUrl" />               
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>内容类型：
+            </td>
+            <td align="left" class="l-table-edit-td">               
+                @Html.Raw(Html.SelectDictionary<WKT.Model.Enum.EnumContentType>("ddlContentType","150px","","0","请选择"))
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                排序值：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtSort" ltype="text" maxlength="10" value="@Model.SortID" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                栏目状态：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="checkbox" id="chkIsNan" /><label for="chkIsNan">是否导航</label>
+                <input type="checkbox" id="chkStatus" /><label for="chkStatus">是否启用</label>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                栏目描述：
+            </td>
+            <td align="left" class="l-table-edit-td" colspan="3">
+                <textarea cols="100" rows="4" class="l-textarea" id="txtDescription" style="width: 400px">@Model.Description</textarea>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+@section Scripts{
+    <script language="javascript" type="text/javascript">
+        var regex = /^(-|\+)?\d+$/;
+        $(function () {            
+            if ('@Model.Status' == "1")
+                $("#chkStatus").attr("checked", "checked");
+            if ('@Model.IsNav' == "1")
+                $("#chkIsNan").attr("checked", "checked");
+            $("#ddlContentType").val('@Model.ContentType');
+            $("#txtSort").bind("change", function () {
+                var val = $.trim(this.value);
+                if (val.length > 0) {
+                    if (!regex.test(val))
+                        this.value = 0;
+                }
+            });
+            $("form").ligerForm({ inputWidth: 150 });
+        });
+
+        function Save(loadTree, dialog,fid) {
+            var objTitle = $("#txtKey"), title = $.trim(objTitle.val());
+            if (title.length < 1) {
+                alert("请输入栏目名称！");
+                objTitle.focus();
+                return;
+            }
+            if ($("#ddlContentType").val()=="0") {
+                alert("请选择内容类型！");               
+                return;
+            }
+            var objNode = $("#txtDescription"),node = $.trim(objNode.val());       
+            if (node.length > 250) {
+                alert("描述必须小于250个字符！");
+                objNode.focus();
+                return;
+            }
+            var saveParams = {
+                ChannelID: '@Model.ChannelID',
+                PChannelID: fid,
+                IsNav: document.getElementById("chkIsNan").checked?1:0,
+                ContentType: $("#ddlContentType").val(),
+                Keywords: title,
+                Description:node,
+                ChannelUrl:$.trim($("#txtUrl").val()),
+                SortID:$("#txtSort").val(),
+                Status: document.getElementById("chkStatus").checked?1:0,
+            };
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/SiteChannel/Save/',
+                data: saveParams,
+                cache: false,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        dialog.close();                        
+                        loadTree.call(this);
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+    </script>
+}
+

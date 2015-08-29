@@ -1,0 +1,187 @@
+﻿<div style="" id="notice_container" class="notice notice0">
+	<div class="c">
+        <a href="javascript:void(0)" id="noticeTip" style="line-height:21px;">系统提示：点击显示名称可以对其进行修改.</a>
+    </div>
+</div>
+<div id="divContributionToolbar"></div>
+<div id="divContributionFieldsSet" style="height:auto; overflow:hidden;"></div>
+
+<div id="divContributionAuthorToolbar"></div>
+<div id="divContributionAuthorFieldsSet" style="height:auto; overflow:hidden;"></div>
+@section Scripts{
+<script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript">
+    var fieldgrid;
+    $(function () {
+        $("#divContributionToolbar").ligerToolBar({ items: [
+            { text: '保存稿件字段设置', click: MenuClick, icon: 'save' }
+        ]
+        });
+        fieldgrid = $("#divContributionFieldsSet").ligerGrid({
+            columns: [
+            { display: '显示名称', name: 'DisplayName', width: '20%', align: 'center',editor: { type: 'text' } },
+            { display: '字段名称', name: 'FieldName', width: '15%', align: 'left' },
+            { display: '子段', name: 'DBField', width: '10%', align: 'center' },
+            { display: '是否显示', name: 'IsShow', width: '10%', align: 'center', render: function (rowdata, rowindex, value) {
+                var r = "";
+                if (rowdata.IsShow) {
+                    r = '<input type="checkbox" name="IsShow" onclick="ChangeIsShow(this,' + rowindex + ');" checked/> ';
+                }
+                else {
+                    r = '<input type="checkbox" name="IsShow" onclick="ChangeIsShow(this,' + rowindex + ');"/> ';
+                }
+                return r;
+            } 
+            },
+            { display: '是否必填', name: 'IsRequire', width: '10%', align: 'center', render: function (rowdata, rowindex, value) {
+                var r = "";
+                if (rowdata.IsRequire) {
+                    r = '<input type="checkbox" name="IsRequire" onclick="ChangeIsRequire(this,' + rowindex + ');" checked/> ';
+                }
+                else {
+                    r = '<input type="checkbox" name="IsRequire" onclick="ChangeIsRequire(this,' + rowindex + ');"/> ';
+                }
+                return r;
+            } 
+            }
+            ], width: '99.5%', height: 'auto', rownumbers: true, usePager: false, clickToEdit: true, enabledEdit: true,
+            url: '@Html.RootPath()/Contribution/GetFieldsAjax?rnd=' + Math.random()
+        });
+    });
+
+    function MenuClick(item) {
+        if (item.text == "保存稿件字段设置") {
+            var dataArray = fieldgrid.getData();
+            var filedsArray = new Array();
+            for (i = 0; i < dataArray.length; i++) {
+                var o = { "DisplayName": dataArray[i].DisplayName, "FieldName": dataArray[i].FieldName, "DBField": dataArray[i].DBField, "IsShow": dataArray[i].IsShow, "IsRequire": dataArray[i].IsRequire };
+                filedsArray.push(o);
+            }
+            
+            $.ajax({
+                beforeSend: function () {
+
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/Contribution/SaveFieldsSetAjax/?rnd=' + Math.random(),
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                data: $.toJSON({ FieldsArray: filedsArray }),
+                success: function (e) {
+                    if (e.result == 'success') {
+                        alert('设置成功');                        
+                    }
+                    else if (e.result == 'failure') {
+                        alert(e.msg);
+                    }
+                    else if (e.result == 'error') {
+                        alert(e.msg);
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+    }
+
+    // 选择是否显示
+    function ChangeIsShow(obj, rowindex) {
+        row = fieldgrid.getRow(rowindex);
+        if ($(obj).is(":checked")) {
+            row.IsShow = true;
+        }
+        else {
+            row.IsShow = false;
+        }
+    }
+
+    // 选择是否必填
+    function ChangeIsRequire(obj, rowindex) {
+        row = fieldgrid.getRow(rowindex);
+        if ($(obj).is(":checked")) {
+            row.IsRequire = true;
+        }
+        else {
+            row.IsRequire = false;
+        }
+    }
+</script>
+
+<script type="text/javascript" language="javascript">
+    var ContributionAuthorFieldGrid;
+    $(function () {
+        $("#divContributionAuthorToolbar").ligerToolBar({ items: [
+            { text: '保存稿件作者字段设置', click: MenuContributionAuthorClick, icon: 'save' }
+        ]
+        });
+        ContributionAuthorFieldGrid = $("#divContributionAuthorFieldsSet").ligerGrid({
+            columns: [
+            { display: '显示名称', name: 'DisplayName', width: '20%', align: 'center', editor: { type: 'text'} },
+            { display: '字段名称', name: 'FieldName', width: '15%', align: 'left' },
+            { display: '子段', name: 'DBField', width: '10%', align: 'center' },
+            { display: '是否必填', name: 'IsRequire', width: '10%', align: 'center', render: function (rowdata, rowindex, value) {
+                var r = "";
+                if (rowdata.IsRequire) {
+                    r = '<input type="checkbox" name="IsRequire" onclick="ChangeContributionAuthorIsRequire(this,' + rowindex + ');" checked/> ';
+                }
+                else {
+                    r = '<input type="checkbox" name="IsRequire" onclick="ChangeContributionAuthorIsRequire(this,' + rowindex + ');"/> ';
+                }
+                return r;
+            }
+            }
+            ], width: '99.5%', height: 'auto', rownumbers: true, usePager: false, clickToEdit: true, enabledEdit: true,
+            url: '@Html.RootPath()/Contribution/GetContributionAuthorFieldsAjax?rnd=' + Math.random()
+        });
+    });
+
+    function MenuContributionAuthorClick(item) {
+        if (item.text == "保存稿件作者字段设置") {
+            var dataArray = ContributionAuthorFieldGrid.getData();
+            var filedsArray = new Array();
+            for (i = 0; i < dataArray.length; i++) {
+                var o = { "DisplayName": dataArray[i].DisplayName, "FieldName": dataArray[i].FieldName, "DBField": dataArray[i].DBField, "IsRequire": dataArray[i].IsRequire };
+                filedsArray.push(o);
+            }
+
+            $.ajax({
+                beforeSend: function () {
+
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/Contribution/SaveContributionAuthorFieldsSetAjax/?rnd=' + Math.random(),
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                data: $.toJSON({ FieldsArray: filedsArray }),
+                success: function (e) {
+                    if (e.result == 'success') {
+                        alert('设置成功');
+                    }
+                    else if (e.result == 'failure') {
+                        alert(e.msg);
+                    }
+                    else if (e.result == 'error') {
+                        alert(e.msg);
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+    }
+
+    // 选择是否必填
+    function ChangeContributionAuthorIsRequire(obj, rowindex) {
+        row = ContributionAuthorFieldGrid.getRow(rowindex);
+        if ($(obj).is(":checked")) {
+            row.IsRequire = true;
+        }
+        else {
+            row.IsRequire = false;
+        }
+    }
+</script>
+
+}

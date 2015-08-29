@@ -1,0 +1,1446 @@
+﻿<?xml version='1.0'?>
+<?mso-application progid='Excel.Sheet'?>
+<s:Workbook xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:s="urn:schemas-microsoft-com:office:spreadsheet">
+  <s:Styles>
+    <s:Style s:ID="titleStyle">
+      <s:Alignment s:Horizontal="Center" s:Vertical="Center" />
+      <s:Font s:Bold="1" />
+      <s:Interior s:Color="#999999" s:Pattern="Solid" />
+    </s:Style>
+    <s:Style s:ID="dataStyle1">
+      <s:Font s:Color="Red" />
+    </s:Style>
+    <s:Style s:ID="dataStyle2">
+      <s:Font s:Color="Green" />
+    </s:Style>
+  </s:Styles>
+  <s:Worksheet s:Name="作者版面费报表">
+    <s:Table>
+      <s:Column s:Width="60" />
+      <s:Column s:Width="200" />
+      <s:Column s:Width="60" />
+      <s:Column s:Width="60" />
+      <s:Column s:Width="70" />
+      <s:Column s:Width="80" />
+      <s:Column s:Width="70" />
+      <s:Column s:Width="80" />
+      <s:Column s:Width="50" />
+      <s:Column s:Width="50" />
+      <s:Column s:Width="70" />
+      <s:Column s:Width="70" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="40" />
+      <s:Column s:Width="120" />
+      <s:Row>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">稿件编号</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">稿件标题</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">审稿费(通知)</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">版面费(通知)</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">审稿费(已入款)</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">备注</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">版面费(已入款)</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">备注</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">第一作者</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">通讯作者</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">联系电话</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">手机</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">发票单位</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">邮编</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">投稿日期</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0333</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">HPLC法同时测定不同来源溪黄草药材中8个水溶性成分的含量</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">唐海明</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">唐海明</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">020-39358183</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">15088068915</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">广州中医药大学</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">510006</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/4/13 19:42:42</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0354</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">酸水解提取HPLC法测定不同来源莲须中槲皮素和山柰酚的含量</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">陈建忠</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">陈建忠</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13115914001</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">福建中医药大学</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">350122</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/4/18 14:51:34</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0471</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">HPLC法同时测定双金连合剂中11种成分的含量</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">李向阳</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">屠万倩</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0371-63388283</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">18625569075</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">河南省食品药品检验所</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">450003</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/5/22 10:19:35</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0476</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">抗真菌药物与新药研发的研究进展</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">刘晓环</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">张朝晖</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0536-7276313</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13185054206</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">浙江工业大学</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">310014</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/5/23 15:34:13</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0523</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">苗药金铁锁质量标准完善研究</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">房楠</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">石晋丽</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">010-84738623</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">15652779353</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">北京中医药大学</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">100102</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/6/6 22:51:12</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0530</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">HPLC法同时测定玉叶清火胶囊中栀子苷、穿心莲内酯和脱水穿心莲内酯</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">唐维宏</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">唐维宏</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13877951777</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">广西北海市中医医院</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">536000</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/6/9 10:55:27</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0547</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">韩信草的高效液相指纹图谱及化学模式识别</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">潘海峰</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">潘海峰</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13613240555</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">承德医学院</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">067000</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/6/12 10:29:45</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0549</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">蛇葡萄素纳米胶束含量与包封率的测定</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">黄仁杰</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">黄仁杰</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">15960100598</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">福建卫生职业技术学院</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">350101</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/6/12 19:44:42</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0551</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">10种中药材和3种食品污染 赭曲霉毒素A的LC-MS/MS检测研究</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">郑润生</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">徐晖</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">020-39358331</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13632347329</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">广州中医药大学</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">510006</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/6/13 16:15:13</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0553</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">联合酶联免疫的微量病毒中和法检测大流行流感疫苗血清中和抗体的可行性研究</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">赵慧</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">李长贵</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">010-67095426</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13810123953</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">中国食品药品检定研究院</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">100050</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/6/13 19:48:23</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0556</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">离子色谱法检测三磷酸胞苷二钠注射液含量及有关物质</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">山广志</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">山广志</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">010-63021345</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13581727375</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">中国医学科学院医药生物技术研究所</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">100050</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/6/17 11:40:02</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0562</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">泽泻提取物三萜类成分含量测定研究</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">吴水生</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">吴水生</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0591-22861217</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">15806031248</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">福建中医药大学</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/6/18 19:57:43</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">梯度洗脱HPLC法同时测定盐酸头孢他美酯中的有关物质和聚合物</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">王建</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">王建</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13906527963</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">杭州市机场路一巷86号浙江省食品药品检验研究院</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">310004</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/6/19 7:06:07</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0574</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">超高效液相色谱-三重四极杆质谱法检测复方阿胶浆中阿胶</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">陈佳</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">陈佳</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">010-67095424</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">18610078832</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">中国食品药品检定研究院</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">100050</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/6/23 15:13:46</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0575</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">HPLC法测定小鼠血清中的4-甲基-3-硝基苯甲酸</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">待确认(¥2,100.00)</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">孟素蕊</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">孟素蕊</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">15122567742</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">天津医科大学第二医院药剂科</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">300211</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/9/12 17:17:26</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0576</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">氟代同系物内标在LC-MS/MS法测定人血浆中苯烯莫德浓度中的应用</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">方翼</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">方翼</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13581640773</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13581640773</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">贵阳医学院</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">550004</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/6/25 10:27:18</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0599</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">甲啶铂原料药的高效液相色谱分析及其稳定性研究</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">陈宏</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">普绍平</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">68328147</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13669778825</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">昆明贵研药业有限公司</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">650106</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/9/17 10:18:40</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0605</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">液相色谱-串联质谱法测定策划药物MDPV及其代谢物</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">陈学国</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">陈学国</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">024-86982839</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">15640516315</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">中国刑事警察学院</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">110854</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/7/6 15:29:27</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0613</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">中药山茱萸炮制前后特征化学成分的分析</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">郭洪祝</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">郭洪祝</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">010-83221414</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13621284803</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">北京市药品检验所(北京市保健食品化妆品检验中心）</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">100035</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/7/8 10:51:04</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0617</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">复方磺胺甲噁唑片均匀性的相关因素分析</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">董艳虹</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">范琦</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">15215020618</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">重庆医科大学</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">400016</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/7/9 0:35:15</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0639</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">HPLC-DAD法测定左卡尼汀注射液的含量及有关物质</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">张倩</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">张倩</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">010-64286180</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">15201391374</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">北京中医药大学</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">100029</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/9/13 18:55:27</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0658</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">甘松新酮的稳定性研究</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">石晋丽</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">石晋丽</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">010-84738623</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">15652779353</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">北京中医药大学</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">100102</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/7/23 17:14:37</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0666</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">固相萃取-紫外分光光度法快速测定黄花蒿中青蒿素含量</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">郑志福</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">李国清</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0595-22919972</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">15392150979</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">泉州师院</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">362000</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/9/19 10:45:20</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0668</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">HPLC-MS法分析甲苯磺酸拉帕替尼中痕量基因毒性杂质</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">张莉</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">张莉</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">18933398082</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">珠海联邦制药股份有限公司中山分公司</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">528467</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/9/19 10:26:05</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0524</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">HPLC法同时测定六味能消胶囊中木香烃内酯、去氢木香烃内酯、大黄素、大黄酚的含量</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">待确认(¥2,200.00)</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">裴贵珍</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">张淑兰</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0991-2668521</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13699370110</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">新疆生产建设兵团医院</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/6/7 9:34:55</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0690</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">HPLC法测定化橘红中水合橘皮内酯、橘皮内酯、马尔敏和葡萄内酯的含量*</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">裴昆</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">杨武亮</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">87118659</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">15083836236</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">江西中医药大学</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">330004</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/9/11 17:35:30</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0708</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">国产罗红霉素杂质谱及其与合成工艺相关性评价</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥2,500.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0708</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">王俊秋</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">李文东</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">010-83284447</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13681073364</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">北京市药品检验所</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">100035</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/8/12 14:06:21</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0707</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">中国钩端螺旋体疫苗生产用菌种罗株分子遗传特性分析</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">张金龙</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">李晓玲</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">010-67095549</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">18655772065</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">中国食品药品检定研究院</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">100050</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/8/12 13:40:50</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">2014-0594</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">HPLC法测定杞菊地黄丸中莫诺苷、马钱苷和丹皮酚的含量</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">未通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已通知</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥100.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">李润泽</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">郭洪祝</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">010-83221414</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13621284803</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">北京市药品检验所(北京市保健食品化妆品检验中心）</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">100035</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2014/7/1 20:17:47</s:Data>
+        </s:Cell>
+      </s:Row>
+    </s:Table>
+  </s:Worksheet>
+</s:Workbook>

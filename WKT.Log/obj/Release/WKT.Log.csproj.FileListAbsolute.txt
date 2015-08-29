@@ -1,0 +1,6 @@
+F:\workplace\trunk\WKT.Log\bin\Release\WKT.Log.dll
+F:\workplace\trunk\WKT.Log\bin\Release\WKT.Log.pdb
+F:\workplace\trunk\WKT.Log\bin\Release\log4net.dll
+F:\workplace\trunk\WKT.Log\obj\Release\ResolveAssemblyReference.cache
+F:\workplace\trunk\WKT.Log\obj\Release\WKT.Log.dll
+F:\workplace\trunk\WKT.Log\obj\Release\WKT.Log.pdb

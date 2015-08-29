@@ -1,0 +1,118 @@
+﻿<div style="" id="notice_container" class="notice notice0">
+	<div class="c">
+        真实姓名：<input type="text" name="RealName" class="txtbox" id="txtRealName" />&nbsp;角色：@Html.Raw(Html.SelectRole("selRole","100","","","-请选择-")) &nbsp;状态：<select id="selStatus" name="Status"><option>-请选择-</option><option value="1">启用</option><option value="0">禁用</option></select> &nbsp;<input type="button" value="搜索" class="btnsearch" id="btnSearch" />
+    </div>
+</div>
+<div id="box">
+	<div class="act-bar" id="divMemberToolbar"></div>
+	<div id="divMemberList"></div>
+</div>
+@section Scripts{
+<script language="javascript" type="text/javascript">
+    var membergrid;
+    $(function () {
+        $("#divMemberToolbar").ligerToolBar({ items: [
+            { text: '添加成员', click: MenuClick, icon: 'add' },
+            { line: true },
+            { text: '编辑成员', click: MenuClick, icon: 'modify' },
+            { line: true },
+            { text: '删除成员', click: MenuClick, icon: 'delete' }
+        ]
+        });
+        membergrid = $("#divMemberList").ligerGrid({
+            columns: [
+            { display: '编号', name: 'AuthorID', width: '5%', align: 'center' },
+            { display: '登录名', name: 'LoginName', width: '12%', align: 'left' },
+            { display: '真实姓名', name: 'RealName', width: '8%', align: 'center' },
+            { display: '角色', name: 'RoleName', width: '8%', align: 'center' },
+            { display: '手机号', name: 'Mobile', width: '8%', align: 'center' },
+            { display: '登录次数', name: 'LoginCount', width: '8%', align: 'center' },
+            { display: '登录IP', name: 'LoginIP', width: '10%', align: 'center' },
+            { display: '登录时间', name: 'LoginDate', width: '15%', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm:ss' },
+            { display: '状态', name: 'Status', width: '5%', align: 'center',render: function (item) {
+                return item.Status == 1 ? "<img src='@Html.RootPath()/Content/icons/ok.png' alt='启用' title='启用'/>" : "<img src='@Html.RootPath()/Content/icons/stop.png' alt='禁用' title='禁用'/>";
+            }},
+            { display: '注册时间', name: 'AddDate', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm:ss' }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+            url: '@Html.RootPath()/member/GetMemberList?rnd=' + Math.random(), pageSize: 15
+        });
+
+        $("#btnSearch").click(function () {
+            membergrid.setOptions({ parms: {
+                RealName: $("#txtRealName").val(),
+                Status: $("#selStatus").val(),
+                RoleID: $("#selRole").val()
+            }
+            });
+            membergrid.loadData();
+        });
+    });
+
+    var windows = [];
+    function MenuClick(item) {
+        switch (item.text) {
+            case "添加成员":
+                windows['adddialog'] = $.ligerDialog.open({ height: 420, url: '@Html.RootPath()/member/addmember', title: '添加成员', width: 480, slide: false, buttons: [
+                    { text: '确定', onclick: function (item, dialog) {
+                        dialog.frame.Save(membergrid, dialog);
+                    }
+                    },
+                    { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+                    ]
+                });
+                break;
+            case "编辑成员":
+                var rows = membergrid.getSelectedRows();
+                if (rows == "") { alert('请选择要编辑的成员'); return; }
+                windows['editdialog'] = $.ligerDialog.open({ height: 420, url: '@Html.RootPath()/member/editmember?AuthorID=' + rows[0].AuthorID, title: '编辑成员', width: 480, slide: false, buttons: [
+                    { text: '确定', onclick: function (item, dialog) {
+                        dialog.frame.Save(membergrid, dialog);
+                    }
+                    },
+                    { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+                    ]
+                });
+                break;
+            case "删除成员":
+                var rows = membergrid.getSelectedRows();
+                if (rows == "") { alert('请选择要删除的成员'); return; }
+                var data = [];
+                for (i = 0; i < rows.length; i++) {
+                    data.push(rows[i].AuthorID);
+                }
+                delmemeber(data);
+                break;
+        }
+    }
+    // 删除成员
+    function delmemeber(IDArray) {
+        if (confirm('您确认要删除选中的成员吗？')) {
+            $.ajax({
+                beforeSend: function () {
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/member/DelMemberAjax/?rnd=' + Math.random(),
+                data: { "IDAarry": IDArray },
+                cache: false,
+                traditional: true,
+                success: function (data) {
+                    var e = eval("(" + data + ")");
+                    if (e.result == 'success') {
+                        alert('删除成功');
+                        membergrid.loadData();
+                    }
+                    else if (e.result == 'failure') {
+                        alert(e.msg);
+                    }
+                    else if (e.result == 'error') {
+                        alert(e.msg);
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+    }
+</script>
+}

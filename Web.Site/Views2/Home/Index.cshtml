@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = Html.SiteName();
+    WKT.Model.IssueSiteEntity CurIssueInfo = Html.GetCurIssueInfo();
+}
+<div id="center">
+    	<div class="adpic" id="divHotImg" style="padding-top:2px;">
+            <script src="@Url.Content("~/Scripts/jquery.imagechange.min.js")" type="text/javascript"></script>
+            <script src="@Url.Content("~/Scripts/msclass.js")" type="text/javascript"></script>
+                <script language="javascript" type="text/javascript">
+                var hotimgdata = [
+	                { title: '经济与社会转型中的人口与劳动力市场学术研讨会', src: '/content/zgrkkx/images/12.jpg', href: 'http://arts.scj.cn/20121108/201452113125.shtml', target: '_blank' }
+                ];
+                </script>
+		        <!--幻灯结束-->
+			    <script type="text/javascript">
+			        $('#divHotImg').d_imagechange({ data: hotimgdata, playTime: 3500, btnTop: 25, width: 490, height: 240, bgHeight: 45, desc: false });
+			    </script>
+        </div>
+    	<div class="tzgg" style="margin-top:5px;">
+            <a href="/list/23"><img src="/content/zgrkkx/images/gonggao.jpg" alt="公告" title="公告"/></a>
+            <div class="tzgg_wenzi" id="divNotice">
+            	<ul id="ulNotice">
+                    @foreach (WKT.Model.SiteNoticeEntity item in Html.GetNoticeList(23, 5))
+                    {
+					<li><a href="/Show/23/?itemid=@item.NoticeID" target="_blank">@Html.CutString(item.Title,25,"...")</a></li>
+                    }
+				</ul>	
+            </div>
+            <script language="javascript" type="text/javascript">
+                new Marquee(["divNotice", "ulNotice"], 0, 2, 400, 115, 50, 0, 0);
+            </script>
+        </div>
+    
+    <div class="qk">
+    	<p class="qkml">期刊目录&nbsp;&nbsp;@(CurIssueInfo.Year)年第@(CurIssueInfo.Issue)期<a href="/Magazine" style="float:right;font-size:12px; font-weight:normal;">更多&gt;&gt;</a></p>
+		@{
+      int i = 0;
+      foreach (WKT.Model.IssueContentEntity item in Html.GeIssueContentList(14))
+  {
+            if(i % 2 == 0){
+			    @:<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f4f4f4">
+            }
+            else
+            {
+            @:<table width="100%" border="0" cellspacing="0" cellpadding="0">
+            }
+				<tbody>
+                    <tr style="height:25px;">
+                        <td colspan="2"><a href="/Magazine/Show/?ID=@item.ContentID" target="_blank"><b>@Html.CutString(item.Title, 36, "...")</b></a></td>
+                    </tr>
+                    <tr style="height:25px;">
+                        <td width="5%"><a href="javascript:void(0);" onclick="javascript:Copylist('@Html.GetAuthorsString(item.Authors). @(item.Title)[J]. 中国人口科学, @item.Year,@(item.Volume)(@(item.Issue)): @(item.PageNumber)&gt;')" title="复制索引"><img border="0" src="/content/zgrkkx/images/copy.gif" alt="复制索引" title="复制索引"/></a></td>
+                        <td>@Html.GetAuthorsString(item.Authors)</td>
+                    </tr>
+                    <tr style="height:25px;">
+                        <td></td>
+                        <td>@item.Year Vol. @item.Volume (@(item.Issue)): @item.PageNumber [<a href="/Magazine/Show/?ID=@item.ContentID" target="_blank">摘要</a>] ( <font color="red">@(item.Hits)</font> ) <a href="/Magazine/htmlShow.aspx?ID=@item.ContentID">HTML</a>  <a href="/Magazine/PDFShow.aspx?ID=@item.ContentID">PDF</a> (@item.FileSize KB)   </td>
+                    </tr>
+                    <tr><td height="1" background="/content/zgrkkx/images/dq.gif" colspan="2"></td></tr>
+				</tbody>
+			@:</table>
+      i++;
+  }}
+    </div>
+    
+    </div>
+    
+    <div id="right">
+        <img src="/content/zgrkkx/images/down_ebook.jpg"/>
+    	<div class="down_content">
+        	<a href="http://www.zgrkkx.com/Magazine/MagazineDown.aspx" target="_blank"><img src="/content/zgrkkx/images/book.png" width="219" height="315" title="中国人口科学" alt="中国人口科学" /></a>
+        </div>
+    	<img src="/content/zgrkkx/images/title_r1.jpg"/>
+        <div class="qkjs" style="padding:10px;">
+        	<form action="/Magazine" method="post">
+		    <select name="Year" id="selYear">
+                <option value="">全部年</option>
+                @foreach (WKT.Model.YearVolumeEntity item in Html.GetYearVolumeList())
+                {
+	            <option value="@item.Year">@(item.Year)年</option>
+                }
+            </select>
+            <select name="Issue" id="selIssue">
+            <option value="">全部期</option>
+            @foreach (WKT.Model.IssueSetEntity item in Html.GetIssueSetList())
+            {
+	        <option value="@item.Issue">No.@item.Issue</option>
+            }
+            </select>
+		<input name="Title" type="text" value="标题" style="width:213px;" onfocus="javascript:if(this.value=='标题'){ this.value='';}" onblur="javaxcript: if(this.value==''){this.value='标题';}" />
+		<input name="Authors" type="text" value="作者姓名" style="width:213px;" onfocus="javascript:if(this.value=='作者姓名'){ this.value='';}" onblur="javaxcript: if(this.value==''){this.value='作者姓名';}" />
+		<input name="WorkUnit" type="text" value="作者单位" style="width:213px;" onfocus="javascript:if(this.value=='作者单位'){ this.value='';}" onblur="javaxcript: if(this.value==''){this.value='作者单位';}" />
+		<input name="Keywords" type="text" value="关键词" size="20" onfocus="javascript:if(this.value=='关键词'){ this.value='';}" onblur="javaxcript: if(this.value==''){this.value='关键词';}" />
+		<input type="image" src="/content/zgrkkx/images/button.png" alt="搜索" style=" vertical-align:top;" />
+		</form>
+        </div>
+        <a href="http://www.zgrkkx.com/blog.zgrkkx.com" target="_blank"><img src="/content/zgrkkx/images/title_r2.jpg" alt="个人主页"/></a>
+        <div class="grzy"><br />
+        	<a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=A">A&nbsp; </a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=B">B&nbsp; </a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=C">C&nbsp; </a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=D">D&nbsp; </a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=E">E&nbsp; </a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=F">F&nbsp; </a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=G">G&nbsp; </a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=H">H&nbsp; </a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=I">I</a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=G">&nbsp; G</a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=K">&nbsp; K&nbsp; </a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=L">L</a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=M">&nbsp; M</a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=N">&nbsp; N</a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=O">&nbsp; O</a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=P">&nbsp; P</a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=Q">&nbsp; Q</a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=R">&nbsp; R&nbsp; </a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=S">S</a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=T">&nbsp; T&nbsp; </a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=U">U</a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=V">&nbsp; V&nbsp; </a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=W">W</a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=X">&nbsp; X&nbsp; </a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=Y">Y&nbsp; </a><a href="http://www.zgrkkx.com/Controls/Blog.aspx?k=Z">Z</a><br />
+             @foreach (WKT.Model.BlogEntity item in Html.GetBlogList(10))
+             {
+            <a href="http://blog.zgrkkx.com/BlogPage/Default.aspx?doctorID=@item.BlogID">@item.BlogName</a>
+             }
+        </div>
+       <a href="http://www.zgrkkx.com/blog.zgrkkx.com" target="_blank"><img src="/content/zgrkkx/images/title_r3.jpg" title="博客更新" alt="博客更新"/></a>
+        <div class="bkgx"><br />
+        @foreach (WKT.Model.BlogEntity item in Html.GetUpdateBlogList(10))
+        {
+        	<a href="http://blog.zgrkkx.com/BlogPage/Default.aspx?doctorID=@item.BlogID">@item.BlogName</a>
+        }
+        </div>
+       <a href="javascript:void(0);"> <img src="/content/zgrkkx/images/title_r4.jpg" alt="下期导读"/></a>
+        <div class="xqdd">
+            @foreach (WKT.Model.SiteNoticeEntity item in Html.GetNoticeList(24, 1))
+            {
+			<a href="/Show/24/?itemid=@item.NoticeID" target="_blank">@Html.CutString(item.Description, 200, "...")</a>
+            }
+        </div>
+        <img src="/content/zgrkkx/images/title_r5.jpg"/>
+        <div class="yqlj">
+        <br />
+		<li><a href="http://www.cnki.net/">中国知网</a></li>
+		<li><a href="http://www.baidu.com/">百度</a></li>
+		<li><a href="http://cn.yahoo.com/">雅虎</a></li>
+		<li><a href="http://www.163.com/">网易</a></li>
+		<li><a href="http://www.sohu.com/">搜狐</a></li>
+        </div>
+        <img src="/content/zgrkkx/images/title_r6.jpg">
+        <div class="fwtj"><br />
+        	<div align="center" style="font-size:14px; font-weight:bolder">您是第 @Html.GetAllHits() 位浏览者
+			</div>
+        </div>
+    </div>

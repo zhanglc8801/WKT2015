@@ -1,0 +1,144 @@
+@model WKT.Model.IssueContentEntity
+@{
+    ViewBag.Title = @Html.CleanHtml(Model.Title) + "-" + Html.SiteName();
+    ViewBag.Position = Model.Title;
+}
+<div style=" display:none;"><input type="hidden" id="HKey" value="@Html.CleanHtml(Model.Title)" /></div>
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    $(function () {
+        $('#noPDFactivator').click(function () {
+            $('#noPDF').animate({ 'top': '65px' }, 500);
+        });
+        $('#noPDFclose').click(function () {
+            $('#noPDF').animate({ 'top': '-400px' }, 500);
+        });
+        $('#activator_share').click(function () {
+            $('#box_share').animate({ 'top': '65px' }, 500);
+        });
+        $('#boxclose_share').click(function () {
+            $('#box_share').animate({ 'top': '-400px' }, 500);
+        });
+
+    });
+    $(document).ready(function () {
+        $(".toggle_container").hide();
+        $(".trigger").click(function () {
+            $(this).toggleClass("active").next().slideToggle("slow");
+            return false;
+        });
+
+    });
+</script>
+<!-- Hide Mobiles Browser Navigation Bar -->
+<script type="text/javascript">
+    window.addEventListener("load", function () {
+        // Set a timeout...
+        setTimeout(function () {
+            // Hide the address bar!
+            window.scrollTo(0, 1);
+        }, 0);
+    });
+</script>
+
+<script type="text/javascript">
+    function ToCNKI() {
+        var Key = encodeURI(document.getElementById("HKey").value);
+        window.location.href = "http://wap.cnki.net/acasearch.aspx?q="+Key+"&library=CJFDTOTAL&type=&topic=&p=1&rank=relevant&place=qw";
+    }
+</script>
+
+
+<div id="main_container">
+	<div class="header">
+    <a href="javascript:history.go(-1);" class="left_bt"><<</a>
+    <span>文章摘要</span>
+    <a href="/Home/" class="left_bt" style="float: right;">Home</a>
+    <a href="#" id="noPDFactivator"></a>
+    </div>
+    
+    <!--PDF无附件对话框-->
+    <div class="box" id="noPDF">
+        <div class="box_content">
+            <div class="box_content_tab">PDF附件未上传</div>
+            <div class="box_content_center">
+                <div class="form_content">
+                    <label>该文章的PDF附件尚未上传，是否要转到知网进行查询？</label><br/>
+                    <a class="boxclose" id="noPDFclose">否</a>
+                    <input type="button" class="form_submit" value="是" onclick="ToCNKI()" /> 
+                </div> 
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box" id="box_share">
+        <div class="box_content">
+            <div class="box_content_tab">Social Share</div>
+            <div class="box_content_center">
+                <div class="social_share">
+                <ul>
+                    <li><a href="#"><img src="/Content/images/social/rss.png" alt="" title="" border="0" /></a></li>
+                    <li><a href="#"><img src="/Content/images/social/google.png" alt="" title="" border="0" /></a></li>
+                    <li><a href="#"><img src="/Content/images/social/twitter.png" alt="" title="" border="0" /></a></li>
+                    <li><a href="#"><img src="/Content/images/social/delicious.png" alt="" title="" border="0" /></a></li>
+                    <li><a href="#"><img src="/Content/images/social/digg.png" alt="" title="" border="0" /></a></li>
+                    <li><a href="#"><img src="/Content/images/social/linkedin.png" alt="" title="" border="0" /></a></li>
+                    <li><a href="#"><img src="/Content/images/social/facebook.png" alt="" title="" border="0" /></a></li>
+                    <li><a href="#"><img src="/Content/images/social/reddit.png" alt="" title="" border="0" /></a></li>
+                    <li><a href="#"><img src="/Content/images/social/myspace.png" alt="" title="" border="0" /></a></li>
+                    <li><a href="#"><img src="/Content/images/social/technorati.png" alt="" title="" border="0" /></a></li>
+                    <li><a href="#"><img src="/Content/images/social/stumbleupon.png" alt="" title="" border="0" /></a></li>
+                    <li><a href="#"><img src="/Content/images/social/flickr.png" alt="" title="" border="0" /></a></li>
+               </ul>
+                </div>
+                <a class="boxclose_right" id="boxclose_share">close</a>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+  
+	<div class="content">
+    	<div class="corner_wrap">
+            <div class="entry">      
+                <h3>@Html.CleanHtmlNbsp(Model.Title)<br/><span style="font-size: 12px;">@Html.CleanHtmlNbsp(Model.EnTitle)</span></h3>
+                <a href="javascript:PDF('@Model.FilePath');"><img src="/Content/images/pdf.png" style="border-width: 0;"/></a>
+                <p style="margin-top: 5px;">            
+                    <span style="font-weight:bold;">-----作者-----</span><br/>@Html.Raw(Model.Authors)<br/>
+                    <span style="font-weight:bold;">-----Authors-----</span><br/>@Html.Raw(Model.EnAuthors)<br/>
+                    <span style="font-weight:bold;">-----单位-----</span><br/>@Html.Raw(Model.WorkUnit)<br/>
+                    <span style="font-weight:bold;">-----Units-----</span><br/>@Html.Raw(Model.EnWorkUnit)<br/>
+                    <span style="font-weight:bold;">-----关键词-----</span><br/>@Html.Raw(Model.Keywords)<br/>
+                    <span style="font-weight:bold;">-----Keywords-----</span><br/>@Html.Raw(Model.EnKeywords)<br/>
+                    <span style="font-weight:bold;">-----分类号-----</span><br/>@Html.Raw(Model.CLC)<br/>
+                    <span style="font-weight:bold;">-----出版年·卷·期（页码）-----</span><br/>@Model.Year·@Model.Volume·第 @Model.Issue 期（@Model.StartPageNum-@Model.EndPageNum）<br/>
+                    <span style="font-weight:bold;">-----中文摘要-----</span><br/>@Html.Raw(Model.Abstract)<br/>
+                    <span style="font-weight:bold;">-----Abstract-----</span><br/>@Html.Raw(Model.EnAbstract)<br/>
+                </p>&nbsp;                  
+            </div>         
+        </div>
+   		<div class="clear_left"></div>
+    </div>
+    <script type="text/javascript">
+        function PDF(pdfsrc) {
+            if (pdfsrc.length > 0) {
+                window.location.href = pdfsrc;
+
+            } else {
+                $('#noPDF').animate({ 'top': '65px' }, 500);
+            }
+
+        }
+    </script>
+    
+    
+    <div id="footer">
+        <a href="#" class="left_bt" id="activator_share">Share</a>
+        <span>@Html.SiteName()</span>
+        <a onclick="jQuery('html, body').animate( { scrollTop: 0 }, 'slow' );"  href="javascript:void(0);" title="Go on top" class="right_bt"><img src="/Content/images/top.png" alt="" title="" border="0" /></a>
+    </div>
+</div>
+
+
+
+

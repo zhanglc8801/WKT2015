@@ -1,0 +1,20 @@
+﻿<div id="divEnvelope" style="margin:10px;">
+@Html.Raw(ViewBag.EnvelopeContent)
+</div>
+<div style="display: none">
+        <form name="action_command" action="" target="_self" method="post">
+        </form>
+    </div>
+@section Scripts{
+  <script type="text/javascript">
+      $(function () {
+          
+      });
+
+      function EnvelopePrint() {
+          if (!confirm("您确定导出该邮寄信封吗？")) return;
+          var html = '<input type="hidden" name="html" value="' + encodeURIComponent($("#divEnvelope").html()) + '"/>';
+          $('form[name="action_command"]').html(html).attr("action", '@Html.RootPath()/Contribution/EnvelopeToWord').attr("method", "post").submit();
+      }
+  </script>
+}

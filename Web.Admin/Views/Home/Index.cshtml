@@ -1,0 +1,539 @@
+﻿@{
+    Layout = null;
+}
+@model WKT.Model.SiteConfigEntity
+@{
+    
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.SiteTitle-@Html.SiteName()</title>
+    <link href="@Html.RootPath()/Content/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+    <link href="@Html.RootPath()/Content/indexcss.css" rel="stylesheet" type="text/css" />
+    <script src="@Html.RootPath()/Scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="../../Scripts/JsEncryption/sjcl.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/WKT.Base.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Content/ligerUI/js/core/base.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Content/ligerUI/js/plugins/ligerLayout.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Content/ligerUI/js/plugins/ligerTab.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Content/ligerUI/js/plugins/ligerTree.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Content/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Content/ligerUI/js/plugins/ligerDrag.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Content/ligerUI/js/plugins/ligerMenu.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Content/ligerUI/js/plugins/ligerAccordion.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="@Html.RootPath()/content/ui/jquery.ui.all.css"/>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.core.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.widget.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.position.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.menu.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.autocomplete.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    
+    <script type="text/javascript">
+        var tab = null;
+        var accordion = null;
+        var tree = null;
+        var returl = '@ViewBag.RETURL';
+        $(function () {
+            var common = new CommonPage();
+            common.AutoAuthor("txtAuthor", "");
+            common.AutoAuthor("txtInAuthor", "");
+
+            //检测浏览器
+            if (window.ActiveXObject) {
+                var ua = navigator.userAgent.toLowerCase();
+                var ie = ua.match(/msie ([\d.]+)/)[1]
+                if (ie == 6.0) {
+                    if (confirm("您的浏览器版本过低，您需要升级您的浏览器到IE8才能继续当前的操作！请点击确定下载IE8安装程序安装并重新启动系统后继续。")) {
+                        window.open('http://www.yywkt.cn/Content/Tools/IE8-WindowsXP-x86-CHS.exe', '', '');
+                    }
+                    else {
+                        this.close();
+                    }
+                    this.close();
+                }
+            }
+
+            //布局
+            $("#layout1").ligerLayout({ leftWidth: 230, height: '100%', heightDiff: -34, space: 4, onHeightChanged: f_heightChanged });
+            var height = $(".l-layout-center").height();
+            //Tab
+            $("#framecenter").ligerTab({ height: height, dblClickToClose: true });
+            //面板
+            $("#accordion1").ligerAccordion({ height: height - 24, speed: null });
+
+            $(".l-link").hover(function () {
+                $(this).addClass("l-link-over");
+            }, function () {
+                $(this).removeClass("l-link-over");
+            });
+
+            tab = $("#framecenter").ligerGetTabManager();
+            $("#pageloading").hide();
+            if (returl != "") {
+                f_addTab(new Date().getTime(), "系统提示", returl);
+            }
+
+            // 显示搜索框
+            $("#bShowSearch").click(function () {
+                $("#divSearchRegion").show();
+            });
+            //关闭搜索区
+            $("#spanCancelSearch,#spanCloseSearchRegion").click(function () {
+                $("#divSearchRegion").hide();
+            });
+
+            // 切换工作角色
+            $("#selRoleList").change(function () {
+                $.ajax({
+                    beforeSend: function () {
+
+                    },
+                    type: 'POST',
+                    url: '@Html.RootPath()/Home/ChanageCurRole/?rnd=' + Math.random(),
+                    data: { RoleID: $(this).val() },
+                    cache: false,
+                    success: function (data) {
+                        var e = eval("(" + data + ")");
+                        if (e.result == 'success') {
+                            location.reload(true);
+                            //LoadTree();
+                        }
+                        else if (e.result == 'failure') {
+                            alert(e.msg);
+                        }
+                        else if (e.result == 'error') {
+                            alert(e.msg);
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                    }
+                });
+            });
+            // 日期选择
+            $("#txtStartDate").bind("click", function () {
+                var d5222 = $dp.$('txtEndDate');
+                WdatePicker({ readOnly: true, onpicked: function () { d5222.focus(); }, maxDate: '#F{$dp.$D(\'txtEndDate\')}' });
+            });
+            $("#txtEndDate").bind("click", function () { WdatePicker({ readOnly: true, minDate: '#F{$dp.$D(\'txtStartDate\')}' }); });
+            LoadTree();
+            // 搜索
+            $("#spanTopSearchBut,#btnTopSearch").click(function () {
+                var key = 'topsearch';
+                if (tab.isTabItemExist(key)) {
+                    tab.reload(tab.getSelectedTabItemID());
+                }
+                else {
+                    f_addTab('topsearch', "稿件搜索", '@Html.RootPath()/Contribution/Search/');
+                }
+            });
+
+            $("#txtTopSearchTitle").focus(function () {
+                $("#lblSearchTip").text('');
+            });
+            $("#txtTopSearchTitle").blur(function () {
+                if ($(this).val() == "") {
+                    $("#lblSearchTip").text('稿件搜索');
+                }
+            });
+
+            _InitLoadMsg();
+
+            accordion = $("#accordion1").ligerGetAccordionManager();
+            tree = $("#ulTree").ligerGetTreeManager();
+        });
+        function editpwd() {
+            tab.addTabItem({ tabid: new Date().getTime(), text: "修改登录密码", url: "@Html.RootPath()/member/editpwd" });
+        }
+
+        function RealoadTab(tabid) {
+            $.ligerDialog.waitting('操作成功！'); setTimeout(function () { $.ligerDialog.closeWaitting(); }, 2000);
+            tab.reload(tabid);
+        }
+
+        function f_heightChanged(options) {
+            if (tab)
+                tab.addHeight(options.diff);
+            if (accordion && options.middleHeight - 24 > 0)
+                accordion.setHeight(options.middleHeight - 24);
+        }
+        function f_addTab(tabid, text, url) {
+            tab.addTabItem({ tabid: tabid, text: text, url: url });
+        }
+        function f_removeSelectedTabItem() {
+            tab.removeSelectedTabItem();
+        }
+        function f_removeTabItem(tabid) {
+            tab.removeTabItem(tabid);
+        }
+        function RemoveSelectedAndRedirect(tabid, text, url) {
+            tab.removeSelectedTabItem();
+            f_addTab(tabid, text, url);
+        }
+        //关闭当前页并刷新指定页 by zhanglc
+        function RemoveReloadTab(tabid) {
+            tab.removeSelectedTabItem();
+            tab.reload(tabid);
+        }
+
+        //关闭当前页并打开新页(指定URL) by zhanglc
+        function RemoveAddTab(tabid, text, url) {
+            tab.removeSelectedTabItem();
+            tab.removeTabItem(tabid);
+            f_addTab(tabid, text, url);
+            //tab.reload(tabid);
+        }
+
+        function LoadTree() {
+            $("#ulTree").empty();
+            //树
+            tree = $("#ulTree").ligerTree({
+                url: '@Html.RootPath()/menu/GetHaveRightMenuAjax?rnd=' + Math.random(),
+                checkbox: false,
+                slide: false,
+                nodeWidth: 180,
+                attribute: ['nodename', 'url'],
+                onSelect: function (node) {
+                    if (!node.data.url) return;
+                    var tabid = $(node.target).attr("tabid");
+
+                    if (!tabid) {
+                        if (node.data.text == "稿件处理专区") {
+                            tabid = "ContributionArea";
+                        }
+                        else if (node.data.text == "待审稿件") {
+                            tabid = "Wait";
+                        }
+                        else if (node.data.text == "Review manuscript") {
+                            tabid = "EnWait";
+                        }
+                        else if (node.data.text == "期刊列表") {
+                            tabid = "IssueContentList";
+                        }
+                        else {
+                            tabid = new Date().getTime();
+                        }
+                        $(node.target).attr("tabid", tabid);
+                    }
+                    f_addTab(tabid, node.data.text, node.data.url);
+                }
+            });
+        }
+
+        function _InitLoadMsg() {
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/SiteMessage/GetCurrentMsgList/',
+                cache: false,
+                success: function (data) {
+                    var list = data.list, str = '';
+                    if (list.length > 0) {
+                        for (var i = 0; i < list.length; i++) {
+                            str += '<p style="margin-top:5px;">' + (i + 1) + '.<a href="javascript:void(0)" onclick="ViewMsg(\'' + list[i].ID + '\')">'
+                              + list[i].Title + '</a>(发送人：' + list[i].SendUser + '&nbsp;发送时间：' + list[i].SendDate + ')</p>';
+                        }
+                        str += '<p style="margin-top:5px;"><a href="javascript:void(0)" onclick="MsgList()">更多...</a><p>';
+                        $.ligerDialog.tip({ title: '站内消息(' + list.length + '条)', content: str, width: 400, height: 300 });
+                    }
+                    setTimeout("_InitLoadMsg()", 300000);
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+        function ViewMsg(id) {
+            $.ligerDialog.open({
+                height: 500,
+                width: 700,
+                url: '@Html.RootPath()/SiteMessage/Detail?MessageID=' + id,
+                title: '回复站内消息',
+                slide: false,
+                buttons: [{ text: '回复', onclick: function (item, dialog) {
+                    dialog.frame.Save(null, dialog, false);
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function MsgList() {
+            f_addTab('OpenMsgList', '站内消息列表', '@Html.RootPath()/SiteMessage/Index');
+        }
+
+        function GetHeight() {
+            return $(".l-layout-center").height();
+            
+        }
+    </script>
+</head>
+<body style="padding: 0px; background: #EAEEF5;">
+    <div id="pageloading">
+    </div>
+    <div id="topmenu" class="l-topmenu">
+        <div class="l-topmenu-logo">@ViewBag.SiteTitle</div>
+        <div class="l-topmenu-welcome" @(ViewBag.Group == 1 ? "" : "style=right:100px;")>
+            <div id="divTopMenu">
+                <a href="javascript:update()" class="l-link2">欢迎您：@ViewBag.CurUserName</a>
+                @((Boolean)ViewBag.IsShowMoreRole ? Html.Raw("，您的当前角色为：" + ViewBag.RoleList) : Html.Raw(""))
+                <span class="space">|</span><a href="@Html.SiteHome()" class="l-link2" target="_blank">网站首页</a><span
+                    class="space">|</span><a href="javascript:void(0);" onclick="MsgList();" class="l-link2">站内消息</a><span
+                        class="space">|</span><a href="javascript:void(0);" onclick="editpwd();" class="l-link2">修改登录密码</a>
+                <span class="space">|</span> <a href="@Html.RootPath()/user/logout" class="l-link2">
+                    退出</a>
+            </div>
+        </div>
+        <div class="ms" id="divTopSearch">
+            @if (ViewBag.Group == 1)
+            {
+                <span class="nui-ipt nui-ipt-hasIconBtn" style="" id="SearchText">
+                    <label class="nui-ipt-placeholder" id="lblSearchTip" style="color:Blue;">稿件搜索</label>
+                    <input type="text" value="" id="txtTopSearchTitle" class="nui-ipt-input" />
+                    <span class="nui-ipt-iconBtn"><b class="nui-ico nui-ico-dArr" id="bShowSearch" style=" color:Red; width:20px;">V</b></span>
+                </span>
+                <span class="nui-mainBtn nui-btn" id="spanTopSearchBut">
+                    <span class="nui-btn-text"><b class="nui-ico nui-ico-frameSearch"></b></span>
+                </span>
+            }
+        </div>
+    </div>
+    <div id="layout1" style="width: 99.2%; margin: 0 auto; margin-top: 4px;">
+        <div title="功能菜单" class="l-scroll" id="accordion1" position="left" style="overflow: auto">
+            <ul id="ulTree" style="margin-top: 3px;">
+            </ul>
+        </div>
+        <div position="center" id="framecenter" style="overflow:visible; height:100%;">
+            @if (ViewBag.Group == 1)
+            {
+                <div tabid="home" title="我的主页" style="height: 300px">
+                    <iframe frameborder="0" name="home" id="home" src="@Html.RootPath()/home/HomePage">
+                    </iframe>
+                </div>
+                <div tabid="ContributionArea" title="稿件处理专区" style="height: 300px">
+                    <iframe frameborder="0" name="ContributionArea" id="ContributionArea" src="@Html.RootPath()/Contribution/ContributionArea">
+                    </iframe>
+                </div>
+               
+            }
+	        @if (ViewBag.Group == 2)
+            {
+                <div tabid="home" title="我的主页" style="height: 300px">
+                    <iframe frameborder="0" name="home" id="home" src="@Html.RootPath()/home/welcome">
+                    </iframe>
+                </div>
+            }
+            @if (ViewBag.Group == 3)
+            {
+                <div tabid="Wait" title="待审稿件" style="height: 300px">
+                    <iframe frameborder="0" name="Wait" id="Wait" src="@Html.RootPath()/Expert/Wait">
+                    </iframe>
+                </div>
+            }
+            @if (ViewBag.Group == 4)
+            {
+                <div tabid="Wait" title="待审稿件" style="height: 300px">
+                    <iframe frameborder="0" name="EnWait" id="EnWait" src="@Html.RootPath()/Expert/EnWait">
+                    </iframe>
+                </div>
+            }
+        </div>
+    </div>
+    <div style="height: 32px; line-height: 32px; text-align: center;">
+        Copyright © 2012-@DateTime.Now.Year
+    </div>
+    @if (ViewBag.Group == 1)
+    {
+        <div class="nui-layer nui-layer-hasClose" id="divSearchRegion" style="top: 43px;
+            right: 12px; display: none; z-index: 10;">
+            <span class="nui-layer-close nui-close" id="spanCloseSearchRegion"><b class="nui-ico nui-ico-close" style="color:Red;" title="关闭">X</b></span>
+            <div>
+                <div class="nui-simpleForm kF nui-form">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="nui-form-title">
+                                    <strong>稿件编号</strong>
+                                </td>
+                                <td class="nui-form-cont">
+                                    <span class="nui-ipt">
+                                        <input type="text" value="" class="nui-ipt-input" name="CNumber" id="txtCNumber" /></span>
+                                        @{
+                                            if (ViewBag.IsShowSearch == false)
+                                            { 
+                                                    <input type="hidden" id="IsNotAccessSearch" value="1" />
+                                            }
+                                            else
+                                            { 
+                                                    <input type="hidden" id="IsNotAccessSearch" value="0" />
+                                            }
+                                         }
+                                        
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nui-form-title">
+                                    稿件标题
+                                </td>
+                                <td class="nui-form-cont">
+                                    <span class="nui-ipt">
+                                        <input type="text" value="" class="nui-ipt-input" name="Title" id="txtTitle" /></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nui-form-title">
+                                    关键字
+                                </td>
+                                <td class="nui-form-cont">
+                                    <span class="nui-ipt">
+                                        <input type="text" value="" class="nui-ipt-input" name="Keyword" id="txtKeyword" /></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nui-form-title">
+                                    第一作者
+                                </td>
+                                <td class="nui-form-cont">
+                                    <span class="nui-ipt">
+                                        <input type="text" value="" class="nui-ipt-input" name="Author" id="txtAuthor" /></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nui-form-title">
+                                    第一作者单位
+                                </td>
+                                <td class="nui-form-cont">
+                                    <span class="nui-ipt">
+                                        <input type="text" value="" class="nui-ipt-input" name="InAuthor" id="txtFirstAuthorWorkUnit" /></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nui-form-title">
+                                    投稿人
+                                </td>
+                                <td class="nui-form-cont">
+                                    <span class="nui-ipt">
+                                        <input type="text" value="" class="nui-ipt-input" name="InAuthor" id="txtInAuthor" /></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nui-form-title">
+                                    稿件状态
+                                </td>
+                                <td class="nui-form-cont">
+                                    <select id="selStatus" class="nui-txt-s12 fN">
+                                        <option class="nui-txt-flag0" value="-999">不限</option>
+                                        @if (ViewBag.flowStatuslist != null)
+                                        {
+                                            foreach (var item in ViewBag.flowStatuslist as IEnumerable<WKT.Model.FlowStatusEntity>)
+                                            {
+                                                <option class="nui-txt-flag1" value="@item.StatusID">@item.StatusName</option>
+                                            }
+                                            <option style="color:#cfa205" value="-9">已撤稿件</option>
+                                            <option style="color:#505050" value="-10">已删除稿件</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                @{                 
+                                    if (Html.SiteID() == "20150420001")
+                                    {
+                                        <td class="nui-form-title">
+                                            选择省份
+                                        </td>
+                                        <td class="nui-form-cont">
+                                            @Html.Raw(Html.SelectDcitValue("SubjectCat", "190px;\" validate=\"{required:true}", "SubjectCat", string.Empty, string.Empty, "请选择省份"))
+                                        </td>
+                                    }
+                                    else
+                                    { 
+                                        <td class="nui-form-title">
+                                            学科分类
+                                        </td>
+                                        <td class="nui-form-cont">
+                                            @Html.Raw(Html.SelectDcitValue("SubjectCat", "190px;\" validate=\"{required:true}", "SubjectCat", string.Empty, string.Empty, "请选择学科分类"))
+                                        </td>
+                                    }   
+                                 }                      
+                            </tr>
+
+                            <tr>
+                                <td class="nui-form-title">
+                                    旗帜范围
+                                </td>
+                                <td class="nui-form-cont">
+                                    <select id="selflag" class="nui-txt-s12 fN">
+                                        <option class="nui-txt-flag0" value="">不限</option>
+                                        <option class="nui-txt-flag1" value="redflag">红旗</option>
+                                        <option class="nui-txt-flag2" value="greenflag">绿旗</option>
+                                        <option class="nui-txt-flag3" value="orangeflag">橙旗</option>
+                                        <option class="nui-txt-flag4" value="blueflag">蓝旗</option>
+                                        <option class="nui-txt-flag5" value="pinkflag">粉旗</option>
+                                        <option class="nui-txt-flag6" value="cyanflag">青旗</option>
+                                        <option class="nui-txt-flag7" value="yellowflag">黄旗</option>
+                                        <option class="nui-txt-flag8" value="purpleflag">紫旗</option>
+                                        <option class="nui-txt-flag15" value="grayflag">灰旗</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nui-form-title">
+                                    开始日期
+                                </td>
+                                <td class="nui-form-cont">
+                                    <span class="nui-ipt">
+                                        <input type="text" value="" class="nui-ipt-input" name="StartDate" id="txtStartDate" /></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nui-form-title">
+                                    结束日期
+                                </td>
+                                <td class="nui-form-cont">
+                                    <span class="nui-ipt">
+                                        <input type="text" value="" class="nui-ipt-input" name="EndDate" id="txtEndDate" /></span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="nui-form-title">
+                                    录用年期
+                                </td>
+                                <td class="nui-form-cont">
+                                        @Html.Raw(Html.SelectIssueYear("Year", "100px", string.Empty, string.Empty, "请选择年"))                 
+                                        @Html.Raw(Html.SelectIssueSet("Issue", "100px", string.Empty, string.Empty, "请选择期"))               
+                                    <div class="nui-item-spc2x">
+                                        <span class="nui-mainBtn nui-btn" id="btnTopSearch"><span class="nui-btn-text">搜索</span></span>
+                                        <span class="nui-btn" id="spanCancelSearch"><span class="nui-btn-text">取消</span></span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+<script type="text/javascript">
+    function update() {
+        if ('@ViewBag.Group' == '1') {
+            window.parent.f_addTab('update', '修改个人信息【@ViewBag.CurUserName】', '@Html.RootPath()/AuthorDetail/UpdateSelfEditor/?AuthorID=@ViewBag.Author&GroupID=@ViewBag.Group');
+        }
+        if ('@ViewBag.Group' == '2') {
+            window.parent.f_addTab('update', '修改个人信息【@ViewBag.CurUserName】', '@Html.RootPath()/AuthorDetail/UpdateSelf/?AuthorID=@ViewBag.Author&GroupID=@ViewBag.Group');
+        }
+        if ('@ViewBag.Group' == '3') {
+            window.parent.f_addTab('update', '修改个人信息【@ViewBag.CurUserName】', '@Html.RootPath()/AuthorDetail/UpdateSelfExpert/?AuthorID=@ViewBag.Author&GroupID=@ViewBag.Group');
+        } 
+
+    }
+
+   
+    
+</script>

@@ -1,0 +1,16 @@
+﻿<!--有WKT.Base.js中的DownLoad()方法使用。-->
+<div style="display: none">
+        <form id="action_Report" action="@Html.RootPath()/Upload/DownLoadFile" target="_self" method="post">
+            <input type="hidden" name="path" value="@ViewBag.Path"/>;
+             <input type="hidden" name="fileName" value="@ViewBag.FileName"/>;
+             <input type="hidden" name="brower" value="@ViewBag.Brower"/>;
+        </form>
+</div>
+@section Scripts{
+<script type="text/javascript">
+    $(function () {
+        $('#action_Report').submit();
+    })
+</script>
+}
+

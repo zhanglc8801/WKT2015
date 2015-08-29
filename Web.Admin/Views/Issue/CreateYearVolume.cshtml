@@ -1,0 +1,89 @@
+﻿@model WKT.Model.YearVolumeEntity
+<style type="text/css">
+    body{ font-size:12px;}
+    .l-table-edit {border:1px solid #bed5f3;border-collapse: collapse;width:100%}
+    .l-table-edit-td-left{ padding:4px;text-align:right;width:90px;}
+    .l-table-edit-td{ padding:4px;}
+    .l-button-submit,.l-button-test{width:80px; float:left; margin-left:10px; padding-bottom:2px;}    
+</style>
+<div style="width: 98%; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>年：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtYear" ltype="text" maxlength="25" value="@Model.Year" readonly="readonly"/>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>卷：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtVolume" ltype="text" maxlength="25" value="@Model.Volume" readonly="readonly" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>状态：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="checkbox" id="chkStatus" @Html.Raw(Model.Status == 1 ? "checked=\"checked\"" : string.Empty) /><label for="chkStatus">启用</label>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+@section Scripts{
+    <script language="javascript" type="text/javascript">
+        $(function () {
+            $("#txtYear,#txtVolume").bind("keypress", function (evt) {
+                var k = window.event ? evt.keyCode : evt.which;
+                if ((k <= 57 && k >= 48) || k == 8) {
+                    return true;
+                }
+                return false;
+            });
+            $("form").ligerForm({ inputWidth: 150 });
+        });
+
+        function Save(manager, dialog) {
+            var objYear = $("#txtYear"), year = $.trim(objYear.val());
+            if (year.length < 1) {
+                alert("请输入年！");
+                objYear.focus();
+                return;
+            }
+            var objVolume = $("#txtVolume"), volume = $.trim(objVolume.val());
+            if (volume.length < 1) {
+                alert("请输入卷！");
+                objVolume.focus();
+                return;
+            }
+            var saveParams = {
+                SetID: '@Model.SetID',
+                Year: year,
+                Volume: volume,
+                Status: $("#chkStatus").attr("checked") ? 1 : 0
+            };
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/Issue/SaveYearVolume/',
+                data: saveParams,
+                cache: false,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        manager.loadData();
+                        dialog.close();
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,458 @@
+﻿@model WKT.Model.IssueContentEntity
+<link href="@Html.RootPath()/Content/ContributionInfo.css" rel="stylesheet" type="text/css" />
+<div style="width: 99%; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    <table border="0" class="mainTable" cellpadding="0" cellspacing="1" align="center"
+        width="100%" id="tbBody">
+        <tr>
+            <p style="float: right">
+            </p>
+            <td class="title" colspan="4">
+                带<span class="tip">*</span>为必填项 填写完毕点击“保存”按钮即可。文章摘要(包含样式)不得超过8000个字符。
+            </td>
+        </tr>
+        <tr style=" width:200px;">
+            <td class="left" style="width: 100px;">
+                中文标题：
+            </td>
+            <td class="right">
+                <script id="txtTitle" type="text/plain" style="width: 400px; height: 10px;">@Html.Raw(Model.Title)</script>
+            </td>
+            <td class="left" style="width: 90px;">
+                英文标题：
+            </td>
+            <td class="right">
+                <script id="txtEnTitle" type="text/plain" style="width: 400px; height: 10px;">@Html.Raw(Model.EnTitle)</script>
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 90px;">
+                中文作者：
+            </td>
+            <td class="right">
+                <script id="txtAuthors" type="text/plain" style="width: 400px; height: 10px;">@Html.Raw(Model.Authors)</script>
+            </td>
+            <td class="left" style="width: 90px;">
+                英文作者：
+            </td>
+            <td class="right">
+               <script id="txtEnAuthors" type="text/plain" style="width: 400px; height: 10px;">@Html.Raw(Model.EnAuthors)</script>
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 90px;">
+                中文单位：
+            </td>
+            <td class="right">
+                <script id="txtWorkUnit" type="text/plain"  style="width:400px; height: 10px;">@Html.Raw(Model.WorkUnit)</script>
+            </td>
+            <td class="left" style="width: 90px;">
+                英文单位：
+            </td>
+            <td class="right">
+                <script id="txtEnWorkUnit" type="text/plain"  style="width:400px; height: 10px;">@Html.Raw(Model.EnWorkUnit)</script>
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 90px;">
+                中文关键词：
+            </td>
+            <td class="right">
+                <script id="txtKeywords" type="text/plain" style="width:400px; height: 10px;">@Html.Raw(Model.Keywords)</script>
+            </td>
+            <td class="left" style="width: 90px;">
+                英文关键词：
+            </td>
+            <td class="right">
+                <script id="txtEnKeywords" type="text/plain" style="width:400px; height: 10px;">@Html.Raw(Model.EnKeywords)</script>
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 90px;">
+                年期页码：
+            </td>
+            <td class="right">
+                @Html.Raw(Html.SelectIssueYear("Year", "80px", Model.Year.ToString(), string.Empty, "请选择年"))
+                @Html.Raw(Html.SelectIssueSet("Issue", "70px", Model.Issue.ToString(), string.Empty, "请选择期"))&nbsp;&nbsp;
+                第<input name="StartPageNum" type="text" id="txtStartPageNum" class="txtbox" style="width: 40px; text-align:center;" maxlength="4" onkeyup="value=value.replace(/[^\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" value="@Model.StartPageNum" validate="{required:true,byteMaxLength:10}" />-<input name="EndPageNum" type="text" id="txtEndPageNum" class="txtbox" style="width: 40px; text-align:center;" maxlength="4" onkeyup="value=value.replace(/[^\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" value="@Model.EndPageNum" validate="{required:true,byteMaxLength:10}" />页
+                <span class="tip">*</span>
+            </td>
+            <td class="left" style="width: 90px;">
+                文章栏目：
+            </td>
+            <td class="right">
+                <input name="JChannelID" type="text" id="txtJChannelID" style="width: 150px;" value="@Model.JChannelID" />
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 90px;">
+                中图分类号：
+            </td>
+            <td class="right">
+                <script id="txtCLC" type="text/plain"  style="width:400px; height: 10px;">@Html.Raw(Model.CLC)</script>
+            </td>
+            <td class="left" style="width: 90px;">
+                DOI：
+            </td>
+            <td class="right">
+                <script id="txtDOI" type="text/plain" style="width:400px; height: 10px;">@Html.Raw(Model.DOI)</script>
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 90px;">
+                属性：
+            </td>
+            <td class="right">
+                <input type="checkbox" id="chkIsHot" @Html.Raw(Model.IsHot ? "checked=\"checked\"" : string.Empty) />&nbsp;<label
+                    for="chkIsHot">热门内容</label>
+                <input type="checkbox" id="chkIsCommend" @Html.Raw(Model.IsCommend ? "checked=\"checked\"" : string.Empty) />&nbsp;<label
+                    for="chkIsCommend">推荐内容</label>
+                <input type="checkbox" id="chkIsTop" @Html.Raw(Model.IsTop ? "checked=\"checked\"" : string.Empty) />&nbsp;<label
+                    for="chkIsTop">置顶</label>
+            </td>
+            <td class="left" style="width: 90px;">
+                排序值：
+            </td>
+            <td class="right">
+                <input type="text" name="SortID" id="txtSortID" class="txtbox" style="width: 230px;" value="@Model.SortID" validate="{digits:true}" />
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 90px;">
+                中文摘要：
+            </td>
+            <td class="right">
+                <script id="txtAbstract" type="text/plain" style="width:400px; height: 10px;">@Html.Raw(Model.Abstract)</script>
+            </td>
+            <td class="left" style="width: 90px;">
+                英文摘要：
+            </td>
+            <td class="right" colspan="3">
+                <script id="txtEnAbstract" type="text/plain" style="width:400px; height: 10px;">@Html.Raw(Model.EnAbstract)</script>
+            </td>
+        </tr>
+        <tr style="">
+            <td class="left" style="width: 90px;">
+                参考文献：
+            </td>
+            <td class="right" colspan="3">
+               <script id="txtReference" type="text/plain" style="width:975px; height: 50px;">@Html.Raw(Model.Reference)</script>
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 90px;">
+                基金项目：
+            </td>
+            <td class="right">
+                <script id="txtFunds" type="text/plain" style="width:400px; height: 10px;">@Html.Raw(Model.Funds)</script>
+            </td>
+            <td class="left" style="width: 90px;">
+                查看金额：
+            </td>
+            <td class="right">
+                <input name="ViewMoney" type="text" id="txtViewMoney" class="txtbox" style="width: 230px;" value="@Model.ViewMoney"
+                    validate="{required:true,money:true}" />
+                <span class="tip">*</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 90px;">
+                上传全文：
+            </td>
+            <td class="right">
+                <input type="file" name="FilePath" id="txtFilePath" />&nbsp;支持上传文件格式：@Html.ContributionInfoFileExt(0).Replace(";*.", " | ")
+                <div id="divFile" style="display: none">
+                    <a href="" id="aFile">期刊附件</a></div>
+            </td>
+            <td class="left" style="width: 90px;">
+                Rich HTML：
+            </td>
+            <td class="right">
+                <input type="file" name="HtmlPath" id="htmFilePath" />&nbsp;支持上传文件格式：@Html.ContributionInfoFileExt(4).Replace(";*.", " | ")
+                <div id="divHtmFile" style="display: none">
+                    <a href="" id="htmFile">HTML附件</a></div>
+            </td>
+
+        </tr>
+        <tr>
+            <td class="left" colspan="4">
+                <div id="divBtn" style="padding-left: 15%">
+                    <input type="button" value="保    存" id="btnSave" class="l-button" style="display: inline;" />
+                    <input type="reset" value="重    置" id="btnReset" class="l-button" style="display: inline" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    </form>
+
+    <input type="hidden" id="Y" value="@Model.Year" />
+    <input type="hidden" id="Q" value="@Model.Issue" />  
+</div>
+@section Scripts{
+    <script type="text/javascript" src="@Html.RootPath()/Scripts/Uploadify/jquery.uploadify.js"></script>
+    <script src="@Html.RootPath()/Scripts/validation/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/validation/jquery.metadata.js?111" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/validation/messages_cn.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8" src="@Html.RootPath()/content/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="@Html.RootPath()/content/ueditor/ueditor.all.min.js"> </script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="@Html.RootPath()/content/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.metadata.setType("attr", "validate");
+            validator = $("#form1").validate({
+                debug: false,
+                errorPlacement: function (lable, element) {
+                    element.ligerTip({ content: lable.html(), target: element[0] });
+                },
+                success: function (lable) {
+                    lable.ligerHideTip();
+                    lable.remove();
+                }
+            });
+            $("#txtJChannelID").ligerComboBox({
+                width: 180,
+                selectBoxWidth: 200,
+                selectBoxHeight: 200, textField: 'text', valueField: 'Id', treeLeafOnly: false, initValue: '@Model.JChannelID',
+                tree: { url: '@Html.RootPath()/Issue/GetJournalChannelTree?defaultText=' + encodeURIComponent('请选择所属栏目') + '&v=' + new Date().getMilliseconds(),
+                    checkbox: false,
+                    textFieldName: "text",
+                    idFieldName: "Id"
+                }
+            });
+            $("#btnSave").click(function () {
+                var isvalided = $("#form1").valid();
+                if (isvalided) {
+                    $("#form1").ligerHideTip();
+                    var saveParams = {}, field = '';
+                    $("#tbBody").find("td[class=right]").find("input[type=text],select").each(function () {
+                        field = $(this).attr("name");
+                        if (field == null || field == undefined) return;
+                        saveParams[field] = $.trim($(this).val());
+                    });
+                    var txtTitleLen = UE.getEditor('txtTitle').getContent().replace("<p>", "").replace("</p>", "");
+                    if (!validate(txtTitleLen, "中文标题")) {
+                        return;
+                    }
+                    var txtEnTitleLen = UE.getEditor('txtEnTitle').getContent().replace("<p>", "").replace("</p>", "");
+                    var txtAbstractLen = UE.getEditor('txtAbstract').getContent();
+
+                    var txtAuthors = UE.getEditor('txtAuthors').getContent().replace("<p>", "").replace("</p>", "");
+                    var txtEnAuthors = UE.getEditor('txtEnAuthors').getContent().replace("<p>", "").replace("</p>", "");
+                    var txtWorkUnit = UE.getEditor('txtWorkUnit').getContent().replace("<p>", "").replace("</p>", "");
+                    var txtEnWorkUnit = UE.getEditor('txtEnWorkUnit').getContent().replace("<p>", "").replace("</p>", "");
+                    var txtKeywords = UE.getEditor('txtKeywords').getContent().replace("<p>", "").replace("</p>", "");
+                    var txtEnKeywords = UE.getEditor('txtEnKeywords').getContent().replace("<p>", "").replace("</p>", "");
+
+                    var txtEnAbstractLen = UE.getEditor('txtEnAbstract').getContent();
+                    var txtFundsLen = UE.getEditor('txtFunds').getContent();
+                    var txtReference = UE.getEditor('txtReference').getContent();
+                    //var AuthorIntroLen = UE.getEditor('AuthorIntro').getContent();
+                    var txtCLC = UE.getEditor('txtCLC').getContent().replace("<p>", "").replace("</p>", "");
+                    var txtDOI = UE.getEditor('txtDOI').getContent().replace("<p>", "").replace("</p>", "");
+
+                    saveParams["Title"] = txtTitleLen;
+                    saveParams["Abstract"] = txtAbstractLen;
+                    saveParams["EnTitle"] = txtEnTitleLen;
+                    saveParams["EnAbstract"] = txtEnAbstractLen;
+                    saveParams["Funds"] = txtFundsLen;
+                    //saveParams["AuthorIntro"] = AuthorIntroLen;
+                    saveParams["Authors"] = txtAuthors;
+                    saveParams["EnAuthors"] = txtEnAuthors;
+
+                    saveParams["WorkUnit"] = txtWorkUnit;
+                    saveParams["EnWorkUnit"] = txtEnWorkUnit;
+
+                    saveParams["Keywords"] = txtKeywords;
+                    saveParams["EnKeywords"] = txtEnKeywords;
+
+                    saveParams["CLC"] = txtCLC;
+                    saveParams["DOI"] = txtDOI;
+
+                    saveParams["ContentID"] = '@Model.ContentID';
+                    saveParams["JChannelID"] = $("#txtJChannelID_val").val();
+                    saveParams["IsHot"] = $("#chkIsHot").attr("checked") ? true : false;
+                    saveParams["IsCommend"] = $("#chkIsCommend").attr("checked") ? true : false;
+                    saveParams["IsTop"] = $("#chkIsTop").attr("checked") ? true : false;
+                    saveParams["FilePath"] = fileSrc;
+                    saveParams["FileSize"] = fileSize;
+                    saveParams["FileExt"] = fileExt;
+                    saveParams["HtmlPath"] = htmlSrc;
+                    saveParams["HtmlSize"] = htmlSize;
+                    saveParams["Reference"] = txtReference;
+                    var Volume = 0;
+                    $("#Year option").each(function () {
+                        if ($(this).attr("selected")) {
+                            Volume = $(this).attr("alt");
+                        }
+                    })
+                    saveParams["Volume"] = Volume;
+                    msgdialog = $.ligerDialog.waitting('期刊信息保存中。。。');
+                    
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Html.RootPath()/Issue/SaveIssueContent/',
+                        cache: false,
+                        dataType: "json",
+                        contentType: 'application/json; charset=utf-8',
+                        data: $.toJSON({ model: saveParams }),
+                        complete: function () { msgdialog.close(); },
+                        success: function (data) {
+                            alert(data.msg);
+                            if (data.result == "success") {
+                                window.parent.RemoveAddTab("IssueContentList", "期刊列表", "@Html.RootPath()/Issue/IssueContent/?Year=" + document.getElementById("Y").value + "&Issue=" + document.getElementById("Q").value);
+                                //window.parent.f_addTab('IssueContentList2', '期刊列表2', '@Html.RootPath()/Issue/IssueContent/?Year=2013');
+                            }
+
+                        },
+                        error: function (xhr) {
+                            alert('数据源访问错误' + '\n' + xhr.responseText);
+                        }
+                    });
+                }
+                else {
+                    alert('验证失败，请验证填写的内容是否正确!');
+                }
+            });
+        });
+
+        function validate(txtTitleLen,title) {
+            if (txtTitleLen.length <= 0) {
+                alert(title+"不能为空！");
+                return false ;
+            }
+            if (txtTitleLen.length > 8000) {
+                alert(title+"(包含样式)的字符太长，超过了8000个字符！");
+                return false;
+            }
+            return true;
+        }
+
+
+    </script>
+    <script type="text/javascript">
+        UE.getEditor('txtTitle');
+        UE.getEditor('txtEnTitle');
+        UE.getEditor('txtAuthors');
+        UE.getEditor('txtEnAuthors');
+        UE.getEditor('txtWorkUnit');
+        UE.getEditor('txtEnWorkUnit');
+        UE.getEditor('txtKeywords');
+        UE.getEditor('txtEnKeywords');
+        UE.getEditor('txtAbstract');
+        UE.getEditor('txtEnAbstract');
+        UE.getEditor('txtReference');
+        UE.getEditor('txtFunds');
+        UE.getEditor('txtCLC');
+        UE.getEditor('txtDOI');
+        var ReferenceCount = '@Model.ReferenceList.Count', ReferenceHtml = $("#trReference_1").html()
+          , fileSrc = '@Model.FilePath', fileSize = '@Model.FileSize', fileExt = '@Model.FileExt',htmlSrc = '@Model.HtmlPath', htmlSize = '@Model.HtmlSize';
+        $(function () {
+//            $("#aAddReference").click(function () {
+//                ReferenceCount++;
+//                var html = "<tr id=\"trReference_" + ReferenceCount + "\" alt=\"0\" index=\"" + ReferenceCount + "\" name=\"Reference\">";
+//                html += ReferenceHtml.replace(/_\d+/gi, "_" + ReferenceCount).replace(/DelReference\(\d+\)/gi, "DelReference(" + ReferenceCount + ")");
+//                html += "</tr>";
+//                $("#tb_Reference").append(html);
+//                LoadTipTop();
+//                $("#trReference_" + ReferenceCount).find("input[type=text]").val("");
+//            });
+            $("#txtFilePath").uploadify({
+                postData: { folder: 'Issue' },
+                uploader: '@Html.RootPath()/Upload/SaveDetail/',
+                buttonText: '上传文章全文',
+                fileTypeExts: "@Html.UploadFileExt()",
+                swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',
+                onUploadSuccess: function (obj, data, response) {
+                    var result = eval("(" + data + ")");
+                    if (result.result == "success") {
+                        fileSrc = result.url;
+                        fileSize = result.size;
+                        fileExt = result.ext;
+                        LoadImage(fileSrc);
+                    }
+                    else {
+                        alert(result.msg);
+                        return;
+                    }
+                }
+            });
+            LoadImage(fileSrc);
+
+            $("#htmFilePath").uploadify({
+                postData: { folder: 'RichHTML' },
+                uploader: '@Html.RootPath()/Upload/SaveDetail/',
+                buttonText: '上传HTML附件',
+                fileTypeExts: "@Html.UploadHtmExt()",
+                swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',
+                onUploadSuccess: function (obj, data, response) {
+                    var result = eval("(" + data + ")");
+                    if (result.result == "success") {
+                        htmlSrc = result.url;
+                        htmlSize = result.size;
+                        LoadHtml(htmlSrc);
+                    }
+                    else {
+                        alert(result.msg);
+                        return;
+                    }
+                }
+            });
+            LoadHtml(htmlSrc);
+
+
+        });
+
+        function DelReference(objID) {
+            $("#trReference_" + objID).remove();
+            LoadTipTop();
+        }
+        DelReference(1);
+        function GetReferenceParams() {
+            var arry = new Array(), index = 1;
+            $("tr[name=Reference]").each(function () {
+                index = $(this).attr("index");
+                arry.push({
+                    ReferenceID: $(this).attr("alt"),
+                    Title: $.trim($("#txtTitle_" + index).val()),
+                    RefUrl: $.trim($("#txtRefUrl_" + index).val())
+                });
+            });
+            return arry;
+        }
+
+        function LoadTipTop() {
+            var element;
+            $(".l-verify-tip").each(function () {
+                element = $("input[ligertipid=" + $(this).attr("id") + "]");
+                if (element.attr("id") == null || element.attr("id") == undefined) {
+                    $(this).remove();
+                    return;
+                }
+                $(this).css("top", (element.offset().top - 3) + "px");
+            });
+        }
+
+        function LoadImage(url) {
+            if (url.length < 1)
+                $("#divFile").css("display", "none");
+            else {
+                document.getElementById("aFile").href = url;
+                $("#divFile").css("display", "inline");
+            }
+        }
+
+        function LoadHtml(url) {
+            if (url.length < 1) {
+                $("#divHtmFile").css("display", "none");
+            }
+            else {
+                document.getElementById("htmFile").href = url;
+                document.getElementById("htmFile").target = "_blank";
+                $("#divHtmFile").css("display", "inline");
+            }
+        }
+    </script>
+}

@@ -1,0 +1,27 @@
+
+@charset "utf-8";
+/* CSS Document */
+
+*{ margin:0; padding:0; font-family:"宋体";}
+html,body{ background:#fff;}
+img{ border:none;}
+ul,li{ list-style:none;}
+a{ text-decoration:none; font-size:12px;}
+.clearfix:after {
+visibility: hidden;
+display: block;
+font-size: 0;
+content: " ";
+clear: both;
+height: 0;
+}
+* html .clearfix             { zoom: 1; } /* IE6 */
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */
+#list{width:1816px; }
+#list .top a{display:inline-block;width:170px;height:37px;background:url(../img/top.png) no-repeat;text-align:center;line-height:37px;font-size:20px;margin-left:2px;color:#fff;}
+#list .information a{border:1px solid #53aecf;height:37px;text-align:center;line-height:37px;display:inline-block;width:168px;margin-left:2px;font-size:14px;margin-bottom:1px;color:#000}
+#list .hid a{background:#a7c6d1;color:#fff}
+#list .top .little{display:inline-block;width:85px;background:url(../img/top1.png)  no-repeat;}
+#list .information .little{display:inline-block;width:83px;}
+#list .information .Address{display:inline-block;width:auto;}
+#list .information .hover:hover{display:inline-block;width:168px;background:#000}

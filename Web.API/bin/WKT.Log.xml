@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WKT.Log</name>
+    </assembly>
+    <members>
+        <member name="T:WKT.Log.ILog">
+            <summary>
+            应用程序日志记录
+            </summary>
+        </member>
+        <member name="M:WKT.Log.ILog.Info(System.String)">
+            <summary>
+            信息
+            </summary>
+            <param name="message">要记录的信息</param>
+        </member>
+        <member name="M:WKT.Log.ILog.Warn(System.String)">
+            <summary>
+            警告
+            </summary>
+            <param name="message">要记录的信息</param>
+        </member>
+        <member name="M:WKT.Log.ILog.Debug(System.String)">
+            <summary>
+            调试
+            </summary>
+            <param name="message">要记录的信息</param>
+        </member>
+        <member name="M:WKT.Log.ILog.Error(System.String)">
+            <summary>
+            错误
+            </summary>
+            <param name="message">要记录的信息</param>
+        </member>
+        <member name="M:WKT.Log.ILog.Fatal(System.String)">
+            <summary>
+            致命错误
+            </summary>
+            <param name="message">要记录的信息</param>
+        </member>
+        <member name="T:WKT.Log.LogProvider">
+            <summary>
+            日志提供者
+            </summary>
+        </member>
+        <member name="P:WKT.Log.LogProvider.Instance">
+            <summary>
+            单例
+            </summary>
+        </member>
+        <member name="T:WKT.Log.Log4NetLogger">
+            <summary>
+            日志管理类
+            </summary>
+        </member>
+        <member name="M:WKT.Log.Log4NetLogger.Debug(System.String)">
+            <summary>
+            Debug
+            </summary>
+        </member>
+        <member name="M:WKT.Log.Log4NetLogger.Info(System.String)">
+            <summary>
+            Info
+            </summary>
+        </member>
+        <member name="M:WKT.Log.Log4NetLogger.Warn(System.String)">
+            <summary>
+            Warn
+            </summary>
+        </member>
+        <member name="M:WKT.Log.Log4NetLogger.Error(System.String)">
+            <summary>
+            Error
+            </summary>
+        </member>
+        <member name="M:WKT.Log.Log4NetLogger.Fatal(System.String)">
+            <summary>
+            Fatal
+            </summary>
+        </member>
+        <member name="M:WKT.Log.Log4NetLogger.#ctor">
+            <summary>
+            静态构造函数
+            </summary>
+        </member>
+    </members>
+</doc>

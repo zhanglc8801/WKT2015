@@ -1,0 +1,212 @@
+﻿@model WKT.Model.AuthorDetailEntity
+<link href="@Html.RootPath()/Content/ContributionInfo.css" rel="stylesheet" type="text/css" />
+<div style="width: 99%; padding: 5px;">
+<form name="form1" method="post" id="form1">
+    <div class="top" style="padding-top: 5px;">
+        带<span class="tip">*</span>为必填项，填写完成后点击“保存”按钮即可。
+    </div>
+    <table border="0" class="mainTable" cellpadding="0" cellspacing="1" align="center" width="100%" id="tbBody">
+        <tr>
+            <td class="title" colspan="2">
+                登录信息
+            </td>
+        </tr>
+        <tr>
+            <td class="left">
+                登录帐号：
+            </td>
+            <td class="right">
+                <input type="text" value="@Model.Emial" id="txtEmial" class="txtbox" style="width: 180px;" />
+                <span class="tip">*</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="title" colspan="2">
+                个人信息
+            </td>
+        </tr>
+        @{
+            var field = Model.FieldList.Find(p => p.DBField.Equals("AuthorName"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="AuthorName" type="text" id="txtAuthorName" class="txtbox" style="width: 300px;" value="@Model.AuthorName" validate="{byteMaxLength:50}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="AuthorName">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Gender"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input type="radio" id="Gender1" value="1" name="Gender" @Html.Raw(Model.Gender == "男" ? "checked=\"checked\"" : "") /><label
+                        for="Gender1">男</label>
+                    <input type="radio" id="Gender2" value="2" name="Gender" @Html.Raw(Model.Gender == "" ? "checked=\"checked\"" : "") /><label
+                        for="Gender2">女</label>
+                </td>
+            </tr>
+            }
+            
+            field = Model.FieldList.Find(p => p.DBField.Equals("Mentor"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="Mentor" type="text" id="txtMentor" class="txtbox" style="width: 200px;" value="@Model.Mentor" validate="{byteMaxLength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Mentor">*</span>
+                    }
+                </td>
+            </tr>
+            }
+        }
+        @{
+        <tr>
+            <td class="title" colspan="2">
+                联系方式
+            </td>
+        </tr>
+        field = Model.FieldList.Find(p => p.DBField.Equals("Mobile"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="Mobile" type="text" id="txtMobile" class="txtbox" style="width: 200px;" value="@Model.Mobile" validate="{maxlength:20,mobile:true}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Mobile">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Tel"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="Tel" type="text" id="txtTel" class="txtbox" style="width: 200px;" value="@Model.Tel" validate="{maxlength:12,phone:true}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Tel">*</span>
+                    }
+                    <span>如:010-66947905</span>
+                </td>
+            </tr>
+            }
+        }
+        <tr>
+            <td class="left" colspan="2" style="padding-left: 15%">
+                <input type="button" value="保存个人信息" style="margin-top: 10px; margin-bottom: 10px;
+                    width: 100px;" id="btnSave" class="l-button" />
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/validation/jquery.validate.min.js" type="text/javascript"></script> 
+    <script src="@Html.RootPath()/Scripts/validation/jquery.metadata.js?111" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/validation/messages_cn.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/areaJson.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/json2select.min.js" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+        var validator = null;
+        $(function () {
+            $("span[name='sapnRequire']").each(function () {
+                var field = $(this).attr("alt"), obj = $("[name=" + field + "]");
+                if (obj.attr("validate") == null || obj.attr("validate") == undefined)
+                    return;
+                var attr = obj.attr("validate");
+                if (attr == null || attr == undefined)
+                    obj.attr("validate", "{required:true}");
+                else
+                    obj.attr("validate", "{required:true," + /^{(.+)}$/.exec(attr)[1] + "}");
+            });
+
+            $.metadata.setType("attr", "validate");
+            validator = $("#form1").validate({
+                debug: false,
+                errorPlacement: function (lable, element) {
+                    element.ligerTip({ content: lable.html(), target: element[0] });
+                },
+                success: function (lable) {
+                    lable.ligerHideTip();
+                    lable.remove();
+                }
+            });
+            $("#btnSave").click(function () { Save(); });
+        });
+
+        function Save() {
+            var isvalided = $("#form1").valid();
+            if (isvalided) {
+                $("#form1").ligerHideTip();
+                var saveParams = {}, field = '';
+                $("#tbBody input[type=text],textarea,select").each(function () {
+                    field = $(this).attr("name");
+                    if (field == null || field == undefined) return;
+                    saveParams[field] = $.trim($(this).val());
+                });
+                if ($("input[name='Gender']").length > 0) {
+                    saveParams["Gender"] = $("input[name='Gender']:checked").val();
+                }
+                saveParams["PKID"] = '@Model.PKID';
+                saveParams["AuthorID"] = '@Model.AuthorID';
+                saveParams["AuthorModel"] = {
+                    AuthorID: '@Model.AuthorID',
+                    GroupID:1
+                };
+                msgdialog = $.ligerDialog.waitting('数据保存中。。。');
+                $("#btnSave").attr("disabled", false);
+                $.ajax({
+                    type: 'POST',
+                    beforeSend: function () { $("#btnSave").attr("disabled", true); $("#btnSave").val("正在提交..."); },
+                    complete: function () { $("#btnSave").attr("disabled", false); $("#btnSave").val("保存个人信息"); },
+                    url: '@Html.RootPath()/AuthorDetail/Save/',
+                    cache: false,
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: $.toJSON({ model: saveParams }),
+                    complete: function () { msgdialog.close(); },
+                    success: function (data) {
+                        alert(data.msg);
+                        $("#btnSave").attr("disabled", true);
+                        $("#btnSave").val("保存个人信息");
+                        window.parent.f_removeSelectedTabItem();
+                    },
+                    error: function (xhr) {
+                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                    }
+                });
+            }
+            else {
+                alert('验证失败，请验证填写的内容是否正确!');
+            }
+        }
+
+        
+    </script>
+}

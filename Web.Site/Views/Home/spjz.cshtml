@@ -1,0 +1,41 @@
+﻿@model WKT.Model.SiteModel
+@{
+    ViewBag.Title = ViewBag.ChannelName + "-" + Html.SiteName();
+    ViewBag.Position = ViewBag.ChannelName;
+}
+<div class="C_right" style=" height: auto; min-height:740px;">
+    <h4 class="list_site">您当前的位置：<a href="/">首页</a> &gt;&gt; <a>@ViewBag.ChannelName</a></h4>
+    <ul class="list_con clearfix">
+        <li style="background:0;border-bottom:1px solid #5ec9db;font-weight:900;color:#000;"></li>
+        @foreach (WKT.Model.NewsModel item in Model.ListConentEntity)
+        { 
+            <li style=" margin-left:-10px;">
+                <a>@item.Title</a>
+                <div style="float:right;">
+                    @*<a href="javascript:Player('@item.FJPath')"><img src="/Content/ZHYJY/img/player.png" title="直接播放" width="16px" height="16px"/></a>*@
+                    <a href="@item.LinkUrl" target="_blank"><img src="/Content/ZHYJY/img/yk.png" title="转到优酷播放" width="16px" height="16px"/></a>
+                    @*<a href="@item.FJPath"><img src="/Content/ZHYJY/img/down.png" title="下载" width="16px" height="16px"/></a>*@
+                </div>
+            </li>
+        }
+    </ul>
+    <div class="digg" style="text-align: center; color: #383838">
+        @Html.Raw(ViewBag.PagerInfo)
+    </div>
+    
+    <script>
+        var obj = new Object();
+        obj.name = "Player";
+        function Player(ID) {
+            window.showModalDialog("/Content/ZHYJY/OSPlayer/video.htm?src=" + ID, obj, "dialogWidth=620px;dialogHeight=500px");
+        }
+    </script>
+
+</div>
+
+        <div>&nbsp;</div>       
+        <div id="footer" style=" margin-top:-15px;">
+            <p></p><br/>
+            <p>北京市丰台区东大街8号信息楼 《灾害医学与救援（电子版）》 编辑部<br />
+                电话：（010）66947905，（010）51128591 传真：（010）66947906</p>
+        </div>

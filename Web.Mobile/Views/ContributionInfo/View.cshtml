@@ -1,0 +1,180 @@
+﻿@{
+    ViewBag.Title = "NewStatus";
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/Content/Style/style.css" media="screen" />
+<title>最新稿件状态</title>
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    $(function () {
+        $('#activator').click(function () {
+            $('#box').animate({ 'top': '65px' }, 500);
+        });
+        $('#boxclose').click(function () {
+            $('#box').animate({ 'top': '-400px' }, 500);
+        });
+
+        $('#noPDFactivator').click(function () {
+            $('#noPDF').animate({ 'top': '65px' }, 500);
+        });
+        $('#noPDFclose').click(function () {
+            $('#noPDF').animate({ 'top': '-400px' }, 500);
+        });
+
+        $('#activator_share').click(function () {
+            $('#box_share').animate({ 'top': '65px' }, 500);
+        });
+        $('#boxclose_share').click(function () {
+            $('#box_share').animate({ 'top': '-400px' }, 500);
+        });
+
+    });
+    $(document).ready(function () {
+        $(".toggle_container").hide();
+        $(".trigger").click(function () {
+            $(this).toggleClass("active").next().slideToggle("slow");
+            return false;
+        });
+
+    });
+</script>
+<!-- Hide Mobiles Browser Navigation Bar -->
+<script type="text/javascript">
+    window.addEventListener("load", function () {
+        // Set a timeout...
+        setTimeout(function () {
+            // Hide the address bar!
+            window.scrollTo(0, 1);
+        }, 0);
+    });
+</script>
+</head>
+
+<body style="width: auto;">
+<div id="main_container">
+	<div class="header">
+	    <a href="javascript:history.go(-1);" class="left_bt"><<</a>
+        <span>稿件状态详情</span>
+        <a href="/Home/" class="left_bt" style="float: right;">Home</a>
+        <a href="#" id="noPDFactivator"></a>
+    </div>
+    @{
+        
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies["WKT_SSO.CN"];
+            if (cookie == null)
+            {
+                <script type="text/javascript">
+                    window.location.href = "/User/Login";
+                </script>
+            }
+            else
+            {
+                <div class="content">
+                    <div class="corner_wrap">
+        	            <div id="list" class="date" style=" height: auto; width: auto; line-height: 25px;">
+        	                <span style="font-weight:bold;">正在加载审稿信息...</span>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="shadow_wrap"></div>
+                </div>
+        
+                <script type="text/javascript">
+
+                    function getCookie(objName) {//获取指定名称的cookie的值
+                        var arrStr = document.cookie.split("; ");
+                        for (var i = 0; i < arrStr.length; i++) {
+                            var temp = arrStr[i].split("=");
+                            if (temp[0] == objName) return unescape(temp[1]);
+                        }
+                    }
+                    function GetQueryString(name) {
+                        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                        var r = window.location.search.substr(1).match(reg);
+                        if (r != null) return unescape(r[2]); return null;
+                    }
+
+                    //日期格式化
+                    Date.prototype.pattern = function (fmt) {
+                        var o = {
+                            "M+": this.getMonth() + 1, //月份        
+                            "d+": this.getDate(), //日        
+                            "h+": this.getHours() % 12 == 0 ? 12 : this.getHours() % 12, //小时        
+                            "H+": this.getHours(), //小时        
+                            "m+": this.getMinutes(), //分        
+                            "s+": this.getSeconds(), //秒        
+                            "q+": Math.floor((this.getMonth() + 3) / 3), //季度        
+                            "S": this.getMilliseconds() //毫秒        
+                        };
+                        var week = {
+                            "0": "\u65e5",
+                            "1": "\u4e00",
+                            "2": "\u4e8c",
+                            "3": "\u4e09",
+                            "4": "\u56db",
+                            "5": "\u4e94",
+                            "6": "\u516d"
+                        };
+                        if (/(y+)/.test(fmt)) {
+                            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                        }
+                        if (/(E+)/.test(fmt)) {
+                            fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "\u661f\u671f" : "\u5468") : "") + week[this.getDay() + ""]);
+                        }
+                        for (var k in o) {
+                            if (new RegExp("(" + k + ")").test(fmt)) {
+                                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                            }
+                        }
+                        return fmt;
+                    };
+
+
+                    function GetDate(obj, format) {
+                        if (obj == null || obj.length < 1) return '';
+                        var jsonDate = obj.replace(/\/Date\((\d+)\)\//gi, "$1");
+                        return (new Date(jsonDate * 1)).pattern(format);
+                    }
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Html.RootPath()/ContributionInfo/GetFlowLogList/?rnd=' + Math.random(),
+                        data: { CID: GetQueryString("CID"), AuthorID: GetQueryString("AuthorID"), GroupID: 2 },
+                        success: function (data) {
+                            if (data.length > 0) {
+                                document.getElementById("list").innerHTML = "";
+                                var list = data;
+                                for (var i = 0; i < list.length; i++) {
+                                    document.getElementById("list").innerHTML += "<span style='font-weight:bold;color:green;'>" + GetDate(list[i].AddDate, "yyyy-MM-dd") + "(" + list[i].SendUserGroupName + ")" + list[i].SendUserName + "→" + list[i].StatusName + "→(" + list[i].RecUserGroupName + ")" + list[i].RecUserName + "</span><br />";
+                                    document.getElementById("list").innerHTML += "<span>"+list[i].FormatDealAdvice+"</span><br />";
+                                }
+                            }
+                            else {
+                                document.getElementById("list").innerHTML = "<div class='corner_wrap'><div class='date' style='height: auto; width: auto;'>没有查询到此稿件的审稿信息！</div><div class='clear'></div></div><div class='shadow_wrap'></div>";
+                            }
+
+                        },
+                        error: function (xhr) {
+                            alert('Error' + '\n' + xhr.responseText);
+                        }
+                    });
+                </script>
+        
+            }
+              
+     }
+     <div id="footer">
+        <span>@Html.SiteName()</span>
+        <a onclick="jQuery('html, body').animate( { scrollTop: 0 }, 'slow' );"  href="javascript:void(0);" title="返回顶部" class="right_bt"><img src="/Content/images/top.png" alt="" title="" border="0" /></a>
+     </div>
+    
+    
+</div>
+</body>
+</html>
+
+

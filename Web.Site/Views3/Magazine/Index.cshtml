@@ -1,0 +1,79 @@
+﻿@model WKT.Model.Pager<WKT.Model.IssueContentEntity>
+@{
+    ViewBag.Title = "期刊检索" + "-" + Html.SiteName();
+    ViewBag.Position = "期刊检索";
+}
+<div style="font-size:14px;"> 
+    <div class="wz">
+    <form id="frmMagazine" action="/Magazine/">
+    <table width="100%" border="0" align="center" bgcolor="#ffffff" cellpadding="0" cellspacing="0">
+    <tr>
+        <td width="27"></td>
+        <td>
+            <table width="100%" align="left" border="0" cellpadding="0" cellspacing="2">
+                <tr>
+                    <td width="70">
+                        期刊检索：
+                    </td>
+                    <td align="left">
+                    <select name="Year" id="ddlYear">
+	                    <option selected="selected" value="" style="width:115px;">所有年</option>
+	                    @foreach (WKT.Model.YearVolumeEntity item in Html.GetYearVolumeList())
+                        {
+	                    <option value="@item.Year">@(item.Year)年</option>
+                        }
+                    </select>&nbsp;
+                    <select name="Issue" id="ddlMagazine">
+	                    <option selected="selected" value="" style="width:115px;">所有期</option>
+	                    @foreach (WKT.Model.IssueSetEntity item in Html.GetIssueSetList())
+                        {
+	                    <option value="@item.Issue">No.@item.Issue</option>
+                        }
+                    </select>&nbsp;
+                    <select name="JChannelID" id="ddlMenu">
+	                    <option selected="selected" value="" style="width:115px;">所有栏目</option>
+	                    @foreach (WKT.Model.JournalChannelEntity item in Html.GetJournalChannelList())
+                        {
+	                    <option value="@item.JChannelID">@(item.ChannelName)年</option>
+                        }
+                    </select>
+                </tr>
+                <tr>
+                    <td width="70"></td>
+                    <td>
+                        标题：<input type="text" id="txtTitle" name="Title" class="txtbox" style="width:100px;" />
+                        作者：<input type="text" id="txtAuthor" name="Authors" class="txtbox" style="width:100px;" />
+                        单位：<input type="text" id="txtUnits" name="WorkUnit" class="txtbox" style="width:100px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="right"><input type="submit" name="btnSearch" value="查询" id="btnSearch" class="btnA" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </td>
+    <td width="8"></td>
+</tr>
+</table>
+</form>
+<div class="nr_right_gengduo">
+	<ul>
+    @foreach (WKT.Model.IssueContentEntity item in Model.ItemList)
+    {
+		<li>
+			<div class="wenzhang">
+				<ul style="line-height:22px;">
+					<li class="wenzhang_bt"><a href="/Magazine/Show/?ID=@item.ContentID">@item.Title</a><font><a href="javascript:void(0);">@(item.Hits)人次已浏览</a></font></li>
+					<li class="wenzhang_zuoz"><a>@item.Authors</a></li>
+					<li class="wenzhang_mudi" style="line-height:22px;"><a>@Html.CleanHtmlCutString(item.Abstract,100,"")</a></li>
+					<li class="wenzhang_zhanya"><a href="/Magazine/Show/?ID=@item.ContentID">摘要</a>&nbsp;&nbsp;[ <a href="#">HTML</a> 0KB ] [ <a href="/stat/DownStat?CID=@item.ContentID">PDF</a> @item.FileSize KB ] ( @item.Downloads ) @item.Year ,@item.Volume (@item.Issue):@item.PageNumber</li>
+				</ul>
+			</div>
+		</li>
+    }
+    </ul>
+</div>
+<div id="pageArticleControl" class="Pager">
+@Html.Raw(ViewBag.PagerInfo)
+</div>

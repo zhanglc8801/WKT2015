@@ -1,0 +1,100 @@
+﻿@model SysAccountInfoEntity
+<script type="text/javascript">
+    // 初始化下面的变量
+    Admin.IsIndexPage = true;
+    Admin.IndexStartPage = '/home/welcome';
+    Admin.LogoutUrl = '/login/logout';
+</script>
+<div id="header">
+    <div id="header-logo"></div>
+    <div id="header-title">网刊通总控后台</div>
+    <div id="header-info">
+        <span style="margin-right:50px;color:#fff;">管理员：<b>@(Model == null ? "" : Model.UserName)</b> 您好，欢迎登陆使用！</span>
+        <span style="margin-right:50px;color:#fff;">当前版本：1.0</span>
+        <a href="javascript:Index.Open('welcome.html');" style="margin-right:10px;color:#fff; font-weight:bold;">后台首页</a>
+        <a href="javascript:Index.Open('/account/editpwd');" style="margin-right:10px;color:#fff; font-weight:bold;">修改密码</a>
+        <a href="javascript:Admin.Logout();"><img src="/content/images/out.gif" class="middle" alt="安全退出" width="46" height="20" border="0" /></a>
+    </div>
+</div><!--//#header-->
+
+<div id="main">
+	<div id="left">
+        <div id="menu-container">
+          <div class="menu-tit">编辑部管理</div>
+          <div class="menu-list">
+            <div class="top-line"></div>
+            <ul class="nav-items">
+              <li><a href="/Journal/Add" target="content">新增编辑部</a></li>
+              <li><a href="/Journal" target="content">编辑部管理</a></li>
+            </ul>
+          </div>
+          <div class="menu-tit">作者管理</div>
+          <div class="menu-list hide">
+            <div class="top-line"></div>
+            <ul class="nav-items">
+              <li><a href="/Author" target="content">作者管理</a></li>
+            </ul>
+          </div>
+          <div class="menu-tit">系统设置</div>
+          <div class="menu-list hide">
+            <div class="top-line"></div>
+            <ul class="nav-items">
+              <li><a href="/DBServer" target="content">DBServer管理</a></li>
+              <li><a href="/ApiSite" target="content">API站点管理</a></li>
+            </ul>
+          </div>
+          <div class="menu-tit">账户管理</div>
+          <div class="menu-list hide">
+            <div class="top-line"></div>
+            <ul class="nav-items">
+              <li><a href="/Account/Add" target="content">添加账户</a></li>
+              <li><a href="/Account" target="content">账户管理</a></li>
+            </ul>
+          </div>
+          <div class="menu-tit">系统日志</div>
+          <div class="menu-list hide">
+            <div class="top-line"></div>
+            <ul class="nav-items">
+		      <li><a href="/AccessLog" target="content">访问日志</a></li>
+              <li><a href="/ErrorLog" target="content">异常日志</a></li>
+            </ul>
+          </div>
+        </div>
+        <div id="menu-bottom"></div>
+    </div><!--//#left-->
+    <div id="right">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="index-table-top-left"></td>
+                <td class="index-table-top-center">
+                    <div class="index-table-welcome-left"></div>
+                    <div class="index-table-welcome-center" id="index-title">欢迎登录</div>
+                    <div class="index-table-welcome-right"></div>
+                    <div class="clear"></div>
+                </td>
+                <td class="index-table-top-right"></td>
+            </tr>
+            <tr>
+                <td class="index-table-middle-left"></td>
+                <td class="index-table-middle-center" valign="top" id="content-container">
+                    <div id="loading"><img src="/Content/images/loading.gif" alt="loading" border="0" /></div>
+                    <script type="text/javascript">
+                        Index.OutputIframe();
+                    </script>
+                </td>
+                <td class="index-table-middle-right"></td>
+            </tr>
+            <tr>
+                <td class="index-table-bottom-left"></td><td class="index-table-bottom-center"></td><td class="index-table-bottom-right"></td>
+            </tr>
+        </table>
+    </div><!--//#right-->
+    <div class="clear"></div>
+</div><!--//#main-->
+<div id="footer">
+    <div id="footer-msg">建议使用 IE7 以上版本或其它主流浏览器，分辨率 1024x768 或更高。 | Copyright &copy; 2005-2012 www.wkt.com All Rights Reserved.</div>
+    <div id="footer-lang"><select style="height:19px; line-height:19px; margin-top:3px;"><option value="zh-cn" selected="selected">简体中文</option><option value="zh-tw">繁體中文</option><option value="en-us">English</option></select></div>
+</div>
+@section Scripts{
+
+}

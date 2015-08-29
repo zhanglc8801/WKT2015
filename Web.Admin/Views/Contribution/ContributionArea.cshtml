@@ -1,0 +1,309 @@
+﻿<style type="text/css">
+    img
+    {
+        vertical-align: middle;
+    }
+    body
+    {
+        font: 12px/1.8 arial;
+    }
+    a, a:visited
+    {
+        color: #3366cc;
+        text-decoration: none;
+    }
+    a:hover
+    {
+        color: #f60;
+        text-decoration: underline;
+    }
+    img
+    {
+        border: none;
+    }
+</style>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='@Html.RootPath()/Scripts/page/page.contributionarea.js?" + Math.random() + "'></scr" + "ipt>");
+</script>
+<div style="" id="notice_container" class="notice notice0">
+    <div class="c">
+        稿件编号：<input type="text" name="CNumber" class="txtbox" id="txtCNumber" />&nbsp;&nbsp;
+        稿件标题：<input type="text" name="Title" class="txtbox" id="txtTitle" />&nbsp;&nbsp;
+        @*旗帜范围：*@<select style="margin: 5px; width: 148px;display: none" id="selflag" class="nui-txt-s12 fN">
+                <option class="nui-txt-flag0" value="">不限</option>
+                <option class="nui-txt-flag1" value="redflag">红旗</option>
+                <option class="nui-txt-flag2" value="greenflag">绿旗</option>
+                <option class="nui-txt-flag3" value="orangeflag">橙旗</option>
+                <option class="nui-txt-flag4" value="blueflag">蓝旗</option>
+                <option class="nui-txt-flag5" value="pinkflag">粉旗</option>
+                <option class="nui-txt-flag6" value="cyanflag">青旗</option>
+                <option class="nui-txt-flag7" value="yellowflag">黄旗</option>
+                <option class="nui-txt-flag8" value="purpleflag">紫旗</option>
+                <option class="nui-txt-flag15" value="grayflag">灰旗</option>
+            </select>
+        &nbsp;&nbsp;第一作者：<input type="text" name="Author" class="txtbox" id="txtAuthor" />
+        &nbsp;&nbsp;<input type="button" value="搜索" class="btnsearch" id="btnSearch" />&nbsp;<input type="button" value="重置" class="btnreset" id="btnReset" />
+    </div>
+</div>
+<div class="c" style="margin: 5px; display: none">
+    关&nbsp;键&nbsp;&nbsp;词：<input style="margin: 5px; display: none" type="text" name="Keyword" class="txtbox" id="txtKeyword" />&nbsp;&nbsp;
+    通信作者：<input style="margin: 5px; display: none" type="text" name="InAuthor" class="txtbox" id="txtInAuthor" style="width: 125px;" />
+    <input type="hidden" id="hiddenInAuthor" />&nbsp;<img src="@Html.GetImages("zoom.jpg")" style="cursor:pointer;" id="selAuthor" alt="选择投稿人" title="选择投稿人"/>
+</div>
+<div class="c" style="margin: 5px; display: none">
+    @*投稿日期：*@<input style="margin: 5px; display: none" type="text" name="StartDate" class="txtbox Wdate"
+        id="txtStartDate" />@* -*@
+    <input style="margin: 5px; display: none" type="text" name="EndDate" class="txtbox Wdate"
+        id="txtEndDate" />&nbsp;&nbsp;<span style="margin-left: 50px;">
+</div>
+<div class="clear">
+</div>
+<div id="box" style="min-width:1220px;width:auto; height:100%;">
+    <div id="divTopmenu">
+    </div>
+    <div style="margin: 5px; display: none">
+        <span id="spanWorkStatus" class="bluebold">待处理稿件</span>&nbsp;&nbsp;&nbsp;&nbsp;<span
+            id="spanCurStatus" class="bluebold"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="redtip">(请注意：请先选择“稿件状态查询”，查询到相应状态下的稿件再进行处理.)</span></div>
+    <div id="divContributionGrid">
+    </div>
+    <input type="hidden" id="hiddenStatus" /><input type="hidden" id="hiddenWorkStatus"
+        value="0" />
+</div>
+<form name="action_command" action="" target="_self" method="post">
+</form>
+@section Scripts{
+    <link rel="stylesheet" href="@Html.RootPath()/content/ui/jquery.ui.all.css"/>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.core.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.widget.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.position.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.menu.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.autocomplete.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/page/page.contributionarea.js?v=20131" type="text/javascript"></script>
+    <script type="text/javascript">
+        var RootPath = '@Html.RootPath()';
+        $(function () {
+            var common = new CommonPage();
+            common.AutoAuthor("txtInAuthor", "hiddenInAuthor");
+        });
+
+        var OtherAction = { width: 190, items:
+            [
+            { text: '学术不端检测(中国知网)', click: OtherActionClick, icon: 'search' },
+	        { text: '学术不端检测(万方数据)', click: OtherActionClick, icon: 'search' },
+            { text: '相似文献查询', click: OtherActionClick, icon: 'search2' },
+            { line: true },
+            { text: '邮寄信封打印', click: OtherActionClick, icon: 'print' },
+            { text: '审稿单打印', click: OtherActionClick, icon: 'print' },
+            { text: '稿签打印', click: OtherActionClick, icon: 'print' },
+            { line: true },
+            { text: '导出Excel', click: OtherActionClick, icon: 'excel' },
+            { line: true },
+            { text: '合并稿件状态', click: OtherActionClick, icon: 'communication' },
+            { line: true },
+            { text: '稿件送排', click: OtherActionClick, icon: 'bookpen' },
+            { line: true },
+            { text: '继续送交', click: OtherActionClick, icon: 'customers' },
+            { text: '继续送复审', click: OtherActionClick, icon: 'customers' }
+            ]
+        };
+        var NullAction = { width: 160, items:
+            [
+            { text: '' }
+            ]
+        };
+        var WorkAction = { width: 120, items:
+            [
+            { text: '全部', click: WorkActionClick, icon: 'archives' },
+            { text: '待处理', click: WorkActionClick, icon: 'modify' },
+            { text: '已处理', click: WorkActionClick, icon: 'right' }
+            ]
+        };
+        var TagAction = {
+            width: 120, items:
+            [
+            { text: '红旗', click: TagClick, icon: 'redflag' },
+            { text: '其他旗帜', icon: 'whiteflag', children: [
+                { text: '绿旗', click: TagClick, icon: 'greenflag' },
+                { text: '橙旗', click: TagClick, icon: 'orangeflag' },
+                { text: '蓝旗', click: TagClick, icon: 'blueflag' },
+                { text: '粉旗', click: TagClick, icon: 'pinkflag' },
+                { text: '青旗', click: TagClick, icon: 'cyanflag' },
+                { text: '黄旗', click: TagClick, icon: 'yellowflag' },
+                { text: '紫旗', click: TagClick, icon: 'purpleflag' },
+                { text: '灰旗', click: TagClick, icon: 'grayflag' }
+             ]
+            },
+            { text: '取消旗帜', click: TagClick },
+            { line: true },
+            { text: '加急稿件', click: TagClick, icon: 'up' },
+            { text: '取消加急', click: TagClick, icon: 'busy' }
+            ]
+        };
+        
+
+        var contributiongrid;
+        $(function () {
+            // 菜单
+            $("#divTopmenu").ligerMenuBar({ items: [
+                { text: '今日工作', menu: NullAction },
+                { text: '稿件流程操作', menu: NullAction },
+                { text: '消息通知操作', menu: NullAction },
+                { text: '其他相关操作', menu: OtherAction },
+                { text: '标记为', menu: TagAction },
+                { text: '全部稿件', menu: WorkAction },
+                { text: '<img src="@Html.RootPath()/Content/ligerUI/skins/icons/refresh.gif" alt="刷新" title="刷新"/><b style="margin-top:2px;">刷新</b>', click: Refresh },
+                { text: '<img src="@Html.RootPath()/Content/ligerUI/skins/icons/delete.gif" alt="删除" title="删除"/><b style="margin-top:2px;">删除</b>', click: DelContribution }
+            ]
+            });
+            // 日期选择
+            $("#txtStartDate").bind("click", function () {
+                var d5222 = $dp.$('txtEndDate');
+                WdatePicker({ readOnly: true, onpicked: function () { d5222.focus(); }, maxDate: '#F{$dp.$D(\'txtEndDate\')}' });
+            });
+            $("#txtEndDate").bind("click", function () { WdatePicker({ readOnly: true, minDate: '#F{$dp.$D(\'txtStartDate\')}' }); });
+            // 稿件列表
+            contributiongrid = $("#divContributionGrid").ligerGrid({
+                columns: [
+            { display: '作者ID', name: 'AuthorID', hide: true },
+            { display: '稿件ID', name: 'CID', hide: true },
+            { display: '日志ID', name: 'FlowLogID', hide: true },
+            { display: '标记', name: 'IsRetractions', align: 'center', width: '40', render: function (item) {
+                var title = "";
+                if (item.IsRetractions) {
+                    title = "<a href=\"javascript:void(0);\" onclick=\"ViewRetractions(" + item.CID + ")\"><b>撤稿</b></a>";
+                }
+                return title;
+            }
+            },
+            { display: '稿件编号', name: 'CNumber', width: '85', align: 'center' },
+
+            { display: '稿件标题', name: 'Title', width: '240', align: 'center', render: function (item) {
+                var title = item.Title;
+                title = item.IsQuick == true ? "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/up.gif' alt='加急稿件' title='加急稿件'/>&nbsp;" + title : title;
+                if (item.Flag != "") {
+                    title = "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/" + item.Flag + ".gif' alt='旗帜标记' title='旗帜标记'/>&nbsp;" + title;
+                }
+                title = '<a href="javascript:void(0)" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\',' + $("#hiddenStatus").val() + "," + item.FlowLogID + ')">' + title + '</a>';
+                return title;
+            }
+            },
+            { display: '第一作者', name: 'FirstAuthor', width: '70', align: 'center' },
+            { display: '通讯作者', name: 'CommunicationAuthor', width: '70', align: 'center' },
+            { display: '发送人', name: 'SendUserName', width: '70', align: 'center' },
+            { display: '接收人', name: 'RecUserName', width: '70', align: 'center' },
+            { display: '稿件状态', name: 'AuditStatus', width: '70', align: 'center' },
+            //{ display: '催审时间', name: 'SendDate', width: '80', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm:ss' },
+            {display: '审稿费', name: 'IsPayAuditFee', width: '60', align: 'center', hide: false, render: function (item) {
+                if (item.IsPayAuditFee) {
+                    return "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/ok.gif' alt='已交审稿费' title='已交审稿费'/>"
+                }
+                else {
+                    return "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/delete.gif' alt='未交审稿费' title='未交审稿费'/>"
+                }
+            }
+            },
+            { display: '版面费', name: 'IsPayPageFee', width: '60', align: 'center', hide: false, render: function (item) {
+                if (item.IsPayPageFee) {
+                    return "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/ok.gif' alt='已交版面费' title='已交版面费'/>"
+                }
+                else {
+                    return "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/delete.gif' alt='未交版面费' title='未交版面费'/>"
+                }
+            }
+            },
+            { display: '介绍信', name: 'IntroLetterPath', width: '60', align: 'center', hide: true, render: function (item) {
+                if (item.IntroLetterPath == "") {
+                    return "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/delete.gif' style='cursor:pointer;' onclick=\"ConfirmIntro(" + item.CID + ",1)\" alt='未提交介绍信' title='未提交介绍信'/>"
+                }
+                else {
+                    return "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/ok.gif' style='cursor:pointer;' onclick=\"ConfirmIntro(" + item.CID + ",0)\" alt='已提交介绍信' title='已提交介绍信'/>"
+                }
+            }
+            },
+            { display: '处理时间', name: 'HandTime', width: '130', align: 'center', render: function (item) {
+                var date = eval('new ' + item.HandTime.substr(1, item.HandTime.length - 2));
+                return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "(距今<span style='color:blue;'>" + item.HandDays + "</span>天)"
+            }
+            },
+            { display: '投稿时间', name: 'AddDate', width: '130', align: 'center', render: function (item) {
+                var date = eval('new ' + item.AddDate.substr(1, item.AddDate.length - 2));
+                return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "(距今<span style='color:blue;'>" + item.Days + "</span>天)"
+            }
+            },
+            { display: '备注', name: 'Remark', width: '100', align: 'center', render: function (item) {
+                if (item.Remark != "") {
+                    return "<a href=\"#\"   title=\"" + item.Remark + "\">" + item.Remark + "</a>";
+                }
+            }
+            },
+            { display: '其他标记', name: 'IsRetractions', width: '70', align: 'center', render: function (item) {
+                var title = "";
+                if (item.IsRetractions) {
+                    title = "<a href=\"javascript:void(0);\" onclick=\"ViewRetractions(" + item.CID + ")\"><b>撤</b></a>";
+                }
+                return title;
+            }
+            },
+            { display: '学科分类', name: 'SubjectCatName', width: '80', align: 'center' },
+            { display: '部分审回', name: 'IsPart', width: '60', align: 'center', render: function (item) {
+                if (item.IsPart) {
+                    return "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/ok.gif' alt='部分审稿' title='部分审稿'/>";
+                }
+            }
+            }
+            ], delayLoad: true, width: '99.5%', height: 'auto', rownumbers: false, usePager: true, checkbox: true,
+                url: '@Html.RootPath()/Contribution/GetContributionListAjax?isPersonal_Order=' + "@Html.isPersonal_Order()" + '&rnd=' + Math.random(), pageSize: 20, parms: { 'ActionID': $("#selActionStatus").val(), 'IsHandled': $("#hiddenWorkStatus").val() }
+            });
+        });
+
+        // 刷新
+        function Refresh() {
+            if ($("#hiddenStatus").val() == "") {
+                alert("请选择稿件状态查询中的稿件状态后再刷新")
+                return false;
+            }
+            else {
+                contributiongrid.loadData();
+            }
+        }
+
+        function out(obj) {
+            alert(obj);
+        }
+
+    </script>
+    <script type="text/javascript">
+        //alert("@Html.isPersonal_Order()");
+        var tip = { $: function (ele) {
+            if (typeof (ele) == "object")
+                return ele;
+            else if (typeof (ele) == "string" || typeof (ele) == "number")
+                return document.getElementById(ele.toString());
+            return null;
+        },
+            mousePos: function (e) {
+                var x, y;
+                var e = e || window.event;
+                return { x: e.clientX  ,
+                    y: e.clientY
+                };
+            },
+            start: function (obj) {
+                var self = this;
+                var t = self.$("mjs:tip");
+                obj.onmousemove = function (e) {
+                    var mouse = self.mousePos(e);
+                    t.style.left = mouse.x-100+ 'px';
+                    t.style.top = mouse.y-100+ 'px';
+                    t.innerHTML = obj.getAttribute("tips");
+                    t.style.display = '';
+                };
+                obj.onmouseout = function () {
+                    t.style.display = 'none';
+                };
+            }
+        } 
+    </script>
+}

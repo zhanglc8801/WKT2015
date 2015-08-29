@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="/Content/ZHYJY/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/Content/ZHYJY/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="/Content/ZHYJY/js/jquery.js"></script>
+    <script type="text/javascript" src="/Content/ZHYJY/js/js.js"></script>
+    <script type="text/javascript" src="/Content/ZHYJY/js/Search.js"></script>
+</head>
+<body>
+    <div id="main" style=" height:auto;">
+	<!--banner-->
+    <div id="banner"><EMBED src="/Content/ZHYJY/flash/anaclock.swf"  WIDTH="1000" HEIGHT="176" wmode="transparent" ALIGN="" TYPE="application/x-shockwave-flash"  menu="false"></EMBED></div>
+	<!--nav-->
+    <ul id="nav"> 
+    	<li style="background:0;"><a href="/">网站首页</a></li>
+        <li><a href="/channel/qkjs">杂志简介</a></li>
+        <li><a href="/channel/zbjy">主编寄语</a></li>
+        <li><a href="/zjjy/zjjy">专家寄语</a></li>
+        <li><a href="/channel/bwjj">编委会</a></li>
+        <li><a href="/spjz/264">视频讲座</a></li>
+        <li><a href="/channel/zxdy">在线订阅</a></li>
+        <li><a href="/Magazine/?Year=&Issue=&JChannelID=&Title=&Authors=&WorkUnit=">专业文章</a></li>
+        <li><a href="/channel/zztg">杂志投稿</a></li>
+        <li><a href="/channel/lxwm">联系我们</a></li>
+    </ul> 
+	<!--center-->
+    <div id="center" style="">
+        <div class="C_left">
+            <div class="office">
+                <h4><img src="/Content/ZHYJY/img/biao.png" /> 在线办公</h4>
+                <div class="content">
+                    <a href="@Html.AdminUrl()/user/login?group=author" target="_blank"><img src="/Content/ZHYJY/img/niu1.png" /></a>
+                    <a href="@Html.AdminUrl()/user/login?group=author" target="_blank"><img src="/Content/ZHYJY/img/niu2.png" /></a>
+                    <a href="@Html.AdminUrl()/user/login?group=expert" target="_blank"><img src="/Content/ZHYJY/img/niu3.png" /></a>
+                    <a href="@Html.AdminUrl()/user/login?group=admin" target="_blank"><img src="/Content/ZHYJY/img/niu4.png" /></a>
+                </div>
+            </div>
+            
+            <div class="office author journal">
+                <h4><img src="/Content/ZHYJY/img/biao.png" /> 期刊检索</h4>
+                <div class="content list">
+                    <form action="" method="post" name="form1">
+                        <select id="Year" style="width:80px;margin-top:8px;">
+                            <option value="">全部年</option>
+                            @foreach (WKT.Model.YearVolumeEntity item in Html.GetYearVolumeList())
+                            { 
+                                <option value="@item.Year">@(item.Year)年</option>
+                            }
+                        </select>
+                        <select id="Issue" style="width:80px;margin-left:10px;margin-top:8px;;">
+                            <option value="">全部期</option>
+                            @foreach (WKT.Model.IssueSetEntity item in Html.GetIssueSetList())
+                            { 
+                                <option value="@item.Issue">No.@item.Issue</option>
+                            }
+                        </select>
+                        <select id="MenuTree" style="width:170px;margin-top:8px;">
+                            <option value="">请选择栏目</option>
+                            @foreach (WKT.Model.JournalChannelEntity item in Html.GetJournalChannelList())
+                            {
+                                if (item.JChannelID != 20)
+                                {
+                                    <option value="@item.JChannelID">@item.ChannelName</option>
+                                }
+
+                            }
+                        </select>
+                        <input id="Title" value="标题" type="text" onfocus="TitleA()" onblur="TitleB()" />
+                        <input id="Authors" value="作者姓名" type="text" onfocus="AuthorsA()" onblur="AuthorsB()" />
+                        <input id="WorkUnit" value="作者单位" type="text" onfocus="WorkUnitA()" onblur="WorkUnitB()" />
+                        <input id="Key" style="width:85px;" value="关键词" type="text" onfocus="KeyA()" onblur="KeyC()" />
+                        <input style="width:73px;height:19px;cursor:pointer; margin-left:10px;background:url(../../Content/ZHYJY/img/login.jpg) no-repeat;border:0;" class="but" value="搜索" type="button" onclick="Search(3)" />
+                    </form>
+                </div>
+            </div>
+            <div class="office author link">
+                <h4><img src="/Content/ZHYJY/img/biao.png" /> 关于本刊 </h4>
+                <dl class="content">
+                    <dt>
+                        <p><b>主 管</b> 总后勤部卫生部<br />
+                            <b>主 办</b> 人民军医出版社<br />
+                            <b>承 办</b> 解放军第307医院<br />
+                            <b>编 辑</b> <br /></p>
+                        <p class="ming">灾害医学与救援（电子版）<br />
+                            编辑委员会<br />
+                            100071,北京市丰台区东大街8号<br />      
+                            信息楼<br />
+                            《灾害医学与救援(电子版)》<br />
+                            编辑部<br />
+                            电话：（010）66947905<br />
+                            &nbsp; &nbsp; &nbsp;  （010）51128591<br />
+                            传真：（010）66947906<br /></p>
+                    </dt>
+                    <dd></dd>
+                </dl>
+            </div>
+        </div>
+
+        @RenderBody()
+    </div>
+ 
+
+
+
+</div>
+
+<script type="text/javascript">
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)
+            return unescape(r[2]);
+        return null;
+    }
+
+    document.getElementById("Year").value = getQueryString("Year") == null ? "" : getQueryString("Year");
+    document.getElementById("Issue").value = getQueryString("Issue") == null ? "" : getQueryString("Issue");
+    document.getElementById("MenuTree").value = getQueryString("JChannelID") == null ? "" : getQueryString("JChannelID");
+
+    document.getElementById("Title").value = getQueryString("Title") == null ? "标题" : getQueryString("Title");
+    document.getElementById("Authors").value = getQueryString("Authors") == null ? "作者姓名" : getQueryString("Authors");
+    document.getElementById("WorkUnit").value = getQueryString("WorkUnit") == null ? "作者单位" : getQueryString("WorkUnit");
+
+</script>
+
+</body>
+</html>
+
+
+
+ 

@@ -1,0 +1,43 @@
+2012-08-05 20:11:05,019[6] ERROR [Web.SiteConsole.Controllers.LoginController] - 系统出现异常，请稍后再试：System.InvalidOperationException: The type name or alias IApiServerInfoService could not be resolved. Please check your configuration file and verify this type name.
+   在 Microsoft.Practices.Unity.Configuration.ConfigurationHelpers.TypeResolverImpl.ResolveType(String typeNameOrAlias, Boolean throwIfResolveFails)
+   在 Microsoft.Practices.Unity.Configuration.ConfigurationHelpers.TypeResolver.ResolveType(String typeNameOrAlias)
+   在 Microsoft.Practices.Unity.Configuration.RegisterElement.GetRegisteringType()
+   在 Microsoft.Practices.Unity.Configuration.RegisterElement.ConfigureContainer(IUnityContainer container)
+   在 Microsoft.Practices.Unity.Configuration.ContainerConfiguringElement.ConfigureContainerInternal(IUnityContainer container)
+   在 Microsoft.Practices.Unity.Configuration.ContainerElement.<>c__DisplayClass1.<ConfigureContainer>b__0(ContainerConfiguringElement element)
+   在 Microsoft.Practices.ObjectBuilder2.EnumerableExtensions.ForEach[TItem](IEnumerable`1 sequence, Action`1 action)
+   在 Microsoft.Practices.Unity.Configuration.ContainerElement.ConfigureContainer(IUnityContainer container)
+   在 Microsoft.Practices.Unity.Configuration.UnityConfigurationSection.Configure(IUnityContainer container, String configuredContainerName)
+   在 WKT.Service.Wrapper.ServiceContainer.get_Container() 位置 D:\workspace\Fangwei\WKT2012\WKT.InfoBus\ServiceContainer.cs:行号 72
+   在 Web.SiteConsole.Controllers.LoginController.LoginAjax(String LoginName, String Password, String VerifyCode) 位置 D:\workspace\Fangwei\WKT2012\Web.SiteConsole\Controllers\LoginController.cs:行号 85
+2012-08-05 20:14:57,453[11] ERROR [Web.SiteConsole.Controllers.LoginController] - 系统出现异常，请稍后再试：System.InvalidOperationException: The type name or alias IApiServerInfoService could not be resolved. Please check your configuration file and verify this type name.
+   在 Microsoft.Practices.Unity.Configuration.ConfigurationHelpers.TypeResolverImpl.ResolveType(String typeNameOrAlias, Boolean throwIfResolveFails)
+   在 Microsoft.Practices.Unity.Configuration.RegisterElement.GetRegisteringType()
+   在 Microsoft.Practices.Unity.Configuration.RegisterElement.ConfigureContainer(IUnityContainer container)
+   在 Microsoft.Practices.Unity.Configuration.ContainerElement.<>c__DisplayClass1.<ConfigureContainer>b__0(ContainerConfiguringElement element)
+   在 Microsoft.Practices.ObjectBuilder2.EnumerableExtensions.ForEach[TItem](IEnumerable`1 sequence, Action`1 action)
+   在 Microsoft.Practices.Unity.Configuration.ContainerElement.ConfigureContainer(IUnityContainer container)
+   在 Microsoft.Practices.Unity.Configuration.UnityConfigurationSection.Configure(IUnityContainer container, String configuredContainerName)
+   在 WKT.Service.Wrapper.ServiceContainer.get_Container() 位置 D:\workspace\Fangwei\WKT2012\WKT.InfoBus\ServiceContainer.cs:行号 72
+   在 Web.SiteConsole.Controllers.LoginController.LoginAjax(String LoginName, String Password, String VerifyCode) 位置 D:\workspace\Fangwei\WKT2012\Web.SiteConsole\Controllers\LoginController.cs:行号 85
+2012-08-05 20:16:47,658[9] ERROR [Web.SiteConsole.Controllers.LoginController] - 系统出现异常，请稍后再试：System.InvalidOperationException: The type name or alias IApiServerInfoService could not be resolved. Please check your configuration file and verify this type name.
+   在 Microsoft.Practices.Unity.Configuration.ConfigurationHelpers.TypeResolverImpl.ResolveType(String typeNameOrAlias, Boolean throwIfResolveFails)
+   在 Microsoft.Practices.Unity.Configuration.RegisterElement.GetRegisteringType()
+   在 Microsoft.Practices.Unity.Configuration.RegisterElement.ConfigureContainer(IUnityContainer container)
+   在 Microsoft.Practices.Unity.Configuration.ContainerElement.<>c__DisplayClass1.<ConfigureContainer>b__0(ContainerConfiguringElement element)
+   在 Microsoft.Practices.ObjectBuilder2.EnumerableExtensions.ForEach[TItem](IEnumerable`1 sequence, Action`1 action)
+   在 Microsoft.Practices.Unity.Configuration.ContainerElement.ConfigureContainer(IUnityContainer container)
+   在 Microsoft.Practices.Unity.Configuration.UnityConfigurationSection.Configure(IUnityContainer container, String configuredContainerName)
+   在 WKT.Service.Wrapper.ServiceContainer.get_Container() 位置 D:\workspace\Fangwei\WKT2012\WKT.InfoBus\ServiceContainer.cs:行号 72
+   在 Web.SiteConsole.Controllers.LoginController.LoginAjax(String LoginName, String Password, String VerifyCode) 位置 D:\workspace\Fangwei\WKT2012\Web.SiteConsole\Controllers\LoginController.cs:行号 85
+2012-08-05 20:23:12,653[6] ERROR [Web.SiteConsole.Controllers.LoginController] - 系统出现异常，请稍后再试：System.InvalidOperationException: The type name or alias IApiServerInfoService could not be resolved. Please check your configuration file and verify this type name.
+   在 Microsoft.Practices.Unity.Configuration.ConfigurationHelpers.TypeResolverImpl.ResolveType(String typeNameOrAlias, Boolean throwIfResolveFails)
+   在 Microsoft.Practices.Unity.Configuration.RegisterElement.GetRegisteringType()
+   在 Microsoft.Practices.Unity.Configuration.RegisterElement.ConfigureContainer(IUnityContainer container)
+   在 Microsoft.Practices.Unity.Configuration.ContainerElement.<>c__DisplayClass1.<ConfigureContainer>b__0(ContainerConfiguringElement element)
+   在 Microsoft.Practices.ObjectBuilder2.EnumerableExtensions.ForEach[TItem](IEnumerable`1 sequence, Action`1 action)
+   在 Microsoft.Practices.Unity.Configuration.ContainerElement.ConfigureContainer(IUnityContainer container)
+   在 Microsoft.Practices.Unity.Configuration.UnityConfigurationSection.Configure(IUnityContainer container, String configuredContainerName)
+   在 WKT.Service.Wrapper.ServiceContainer.get_Container() 位置 D:\workspace\Fangwei\WKT2012\WKT.InfoBus\ServiceContainer.cs:行号 72
+   在 Web.SiteConsole.Controllers.LoginController.LoginAjax(String LoginName, String Password, String VerifyCode) 位置 D:\workspace\Fangwei\WKT2012\Web.SiteConsole\Controllers\LoginController.cs:行号 85
+2012-08-05 21:21:04,618[18] ERROR [Web.SiteConsole.Controllers.DBServerController] - 新增DB Server失败:当 IDENTITY_INSERT 设置为 OFF 时，不能为表 'DBServerInfo' 中的标识列插入显式值。

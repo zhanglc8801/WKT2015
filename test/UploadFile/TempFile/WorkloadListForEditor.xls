@@ -1,0 +1,101 @@
+﻿<?xml version='1.0'?>
+<?mso-application progid='Excel.Sheet'?>
+<s:Workbook xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:s="urn:schemas-microsoft-com:office:spreadsheet">
+  <s:Styles>
+    <s:Style s:ID="titleStyle">
+      <s:Alignment s:Horizontal="Center" s:Vertical="Center" />
+      <s:Font s:Bold="1" />
+      <s:Interior s:Color="#999999" s:Pattern="Solid" />
+    </s:Style>
+    <s:Style s:ID="dataStyle1">
+      <s:Font s:Color="Red" />
+    </s:Style>
+    <s:Style s:ID="dataStyle2">
+      <s:Font s:Color="Green" />
+    </s:Style>
+  </s:Styles>
+  <s:Worksheet s:Name="编辑(粟晓黎)工作量统计">
+    <s:Table>
+      <s:Column s:Width="80" />
+      <s:Column s:Width="80" />
+      <s:Column s:Width="80" />
+      <s:Row>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">编辑姓名</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">稿件状态</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">数量</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">粟晓黎</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">转组长</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">219</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">粟晓黎</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">转编辑</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">60</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">粟晓黎</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">从主任撤稿</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">6</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">已处理总计：</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">285</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">粟晓黎</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">送交主任</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">9</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">待处理总计：</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">9</s:Data>
+        </s:Cell>
+      </s:Row>
+    </s:Table>
+  </s:Worksheet>
+</s:Workbook>

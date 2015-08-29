@@ -1,0 +1,58 @@
+﻿<style type="text/css">
+    img
+    {
+        vertical-align: middle;
+    }
+</style>
+<div style="" id="notice_container" class="notice notice0">
+    <div class="c">
+        期刊标题：<input type="text" name="Title" class="txtbox" id="txtTitle" />&nbsp;&nbsp;
+        作者姓名：<input type="text" name="Name" class="txtbox" id="txtName" />
+        <span style="margin-left: 50px;">
+           <input type="button" value="搜索" class="btnsearch" id="btnSearch" />&nbsp;
+           <input type="button" value="重置" class="btnreset" id="btnReset" /></span>
+    </div>
+</div>
+<div class="clear">
+</div>
+<div id="box">
+    <div id="divList">
+    </div>
+</div>
+@section Scripts{
+<script type="text/javascript">
+    var manager, DataQuery;
+    $(function () {
+        manager = $("#divList").ligerGrid({
+            columns: [
+            { display: '编号', name: 'DownLogID', hide: true },            
+            { display: '下载者', name: 'RealName', width: '15%', align: 'center' },
+            { display: '登录名', name: 'LoginName', width: '15%', align: 'center' },
+            { display: '手机', name: 'Mobile', width: '15%', align: 'center' },
+            { display: '下载者客户端IP', name: 'IP', width: '15%', align: 'center' },
+            { display: '下载时间', name: 'AddDate', width: '20%', align: 'center',type: 'date', format: 'yyyy-MM-dd hh:mm' }
+            ], width: '99.5%', height: '98%', rownumbers: true, usePager: true, checkbox: false, enabledSort: false,
+            url: '@Html.RootPath()/Issue/GetIssueDownLogDetailPageList', pageSize: 20,parms: [{ name: 'ContentID', value: '@ViewBag.ContentID'}]
+        });
+        $("#btnReset").click(function () {
+            $("#txtTitle").val("");
+            $("#txtName").val("");
+        });
+        $("#btnSearch").click(function () {
+            var params = GetParams();
+            DataQuery = params;
+            manager.setOptions({ parms: params });
+            manager.loadData();
+        });
+    });
+
+    function GetParams() {
+        var params = {
+            ContentID:'@ViewBag.ContentID',
+            Title: $.trim($("#txtTitle").val()),
+            RealName: $.trim($("#txtName").val())
+        }
+        return params;
+    }
+</script>
+}

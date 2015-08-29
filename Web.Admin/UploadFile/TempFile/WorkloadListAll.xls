@@ -1,0 +1,145 @@
+﻿<?xml version='1.0'?>
+<?mso-application progid='Excel.Sheet'?>
+<s:Workbook xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:s="urn:schemas-microsoft-com:office:spreadsheet">
+  <s:Styles>
+    <s:Style s:ID="titleStyle">
+      <s:Alignment s:Horizontal="Center" s:Vertical="Center" />
+      <s:Font s:Bold="1" />
+      <s:Interior s:Color="#999999" s:Pattern="Solid" />
+    </s:Style>
+    <s:Style s:ID="dataStyle1">
+      <s:Font s:Color="Red" />
+    </s:Style>
+    <s:Style s:ID="dataStyle2">
+      <s:Font s:Color="Green" />
+    </s:Style>
+  </s:Styles>
+  <s:Worksheet s:Name="编辑部工作量统计">
+    <s:Table>
+      <s:Column s:Width="80" />
+      <s:Column s:Width="80" />
+      <s:Column s:Width="80" />
+      <s:Row>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">编辑姓名</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">已处理</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">待处理</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">陈立亚</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">1727</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">76</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">粟晓黎</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">285</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">9</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">赵慧芳</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">930</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">86</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">张宏梁</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">186</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">于宝珠</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">687</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">100</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">陈唯真</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">819</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">68</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">杨腊虎</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">1</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">金少鸿</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">44</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">李佳萍</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">43</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">倪明月</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">40</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">15</s:Data>
+        </s:Cell>
+      </s:Row>
+    </s:Table>
+  </s:Worksheet>
+</s:Workbook>

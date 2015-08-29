@@ -1,0 +1,111 @@
+﻿@model WKT.Model.DictEntity
+@{
+    ViewBag.Title = "Create";
+}
+<style type="text/css">
+    body
+    {
+        font-size: 12px;
+    }
+    .l-table-edit
+    {
+        border: 1px solid #bed5f3;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    .l-table-edit-td-left
+    {
+        padding: 4px;
+        text-align: right;
+        width: 90px;
+    }
+    .l-table-edit-td
+    {
+        padding: 4px;
+    }
+    .l-button-submit, .l-button-test
+    {
+        width: 80px;
+        float: left;
+        margin-left: 10px;
+        padding-bottom: 2px;
+    }
+</style>
+<div style="width: 98%; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    <input type="hidden" id="hdDictID" value="@Model.DictID" />
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>公告名称：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtKey" type="text" value="@Model.Note" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                公告内容：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <textarea id="fckContent" cols="500" rows="600" name="fckContent">@Model.NoticeContent</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+              <input name="btn"  type="button" value="确定" onclick="Save()" />
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="@Html.RootPath()/content/ckeditor/ckeditor.js"></script>
+    <script language="javascript" type="text/javascript">
+        $(function () {
+            $("form").ligerForm({ inputWidth: 150 });
+            CKEDITOR.replace('fckContent', {
+                toolbar: 'basic',
+                height: 250,
+                toolbarCanCollapse: false
+            });
+            CKEDITOR.instances.fckContent.setData($("#fckContent").val());
+        });
+
+        function Save() {
+            var objNode = $("#txtKey"), node = $.trim(objNode.val());
+            if (node.length < 1) {
+                alert("请输入公告名称！");
+                objNode.focus();
+                return;
+            }
+            if (node.length > 100) {
+                alert("描述必须小于100个字符！");
+                objNode.focus();
+                return;
+            }
+
+            var saveParams = {
+                DictID: $("#hdDictID").val(),
+                Note: node,
+                NoticeContent: CKEDITOR.instances.fckContent.getData()
+            };
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/MaintenanceNotice/Save/',
+                data: saveParams,
+                cache: false,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        window.parent.f_removeSelectedTabItem();
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+    </script>
+}

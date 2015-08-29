@@ -1,0 +1,189 @@
+﻿<style type="text/css">
+    img
+    {
+        vertical-align: middle;
+    }
+</style>
+<div style="" id="notice_container" class="notice notice0">
+    <div class="c">
+        稿件编号：<input type="text" name="CNumber" class="txtbox" id="txtCNumber" />&nbsp;&nbsp;稿件标题：<input
+            type="text" name="Title" class="txtbox" id="txtTitle" />&nbsp;&nbsp;
+        <select id="Year" class="nui-txt-s12 fN" style="width: 148px;">
+            <option class="nui-txt-flag0" value="-1">全部年</option>
+            @if (ViewBag.listYearVolume != null)
+            {
+                foreach (WKT.Model.YearVolumeEntity item in ViewBag.listYearVolume as IEnumerable<WKT.Model.YearVolumeEntity>)
+                {
+                <option class="nui-txt-flag0" value="@item.Year">@(item.Year)年</option>
+                }
+            }
+        </select>
+        <select id="Issue" class="nui-txt-s12 fN" style="width: 148px;">
+            <option class="nui-txt-flag0" value="-1">全部期</option>
+            @if (ViewBag.listIssue != null)
+            {
+
+                foreach (WKT.Model.IssueSetEntity item in ViewBag.listIssue as IEnumerable<WKT.Model.IssueSetEntity>)
+                {
+                <option class="nui-txt-flag0" value="@item.Issue">No.@item.Issue</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="c">
+        投稿日期：<input type="text" name="StartDate" class="txtbox Wdate" id="txtStartDate" />
+        -
+        <input type="text" name="EndDate" class="txtbox Wdate" id="txtEndDate" />
+        &nbsp;&nbsp; 稿费计算百分比：
+        <input type="text" name="txtDigit" id="txtDigit" class="txtbox" style="width: 40px;"
+            value="10" />%
+        <input type="button" value="设置" class="btnreset" id="btnSetPer" />&nbsp;&nbsp;<span
+            style="margin-left: 50px;"><input type="button" value="搜索" class="btnsearch" id="btnSearch" />&nbsp;<input
+                type="button" value="重置" class="btnreset" id="btnReset" /></span>
+    </div>
+</div>
+<div class="clear">
+</div>
+<div id="box">
+    <div id="divList">
+    </div>
+</div>
+<div style="display: none">
+    <form name="action_command" action="" target="_self" method="post">
+    </form>
+</div>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="@Html.RootPath()/content/ui/jquery.ui.all.css"/>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.core.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.widget.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.position.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.menu.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.autocomplete.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var manager;
+        var DataQuery;
+        $(function () {
+            var common = new CommonPage();
+            common.AutoAuthor("txtInAuthor", "hiddenInAuthor");
+
+            $("#txtStartDate").bind("click", function () {
+                var d5222 = $dp.$('txtEndDate');
+                WdatePicker({ readOnly: true, onpicked: function () { d5222.focus(); }, maxDate: '#F{$dp.$D(\'txtEndDate\')}' });
+            });
+            $("#txtEndDate").bind("click", function () { WdatePicker({ readOnly: true, minDate: '#F{$dp.$D(\'txtStartDate\')}' }); });
+            $("#selAuthor").click(function () {
+                var common = new CommonPage();
+                common.SelAuthor("txtInAuthor", "hiddenInAuthor");
+            });
+            manager = $("#divList").ligerGrid({
+                columns: [
+            { display: '稿件编号 ', name: 'CNumber', width: '10%', align: 'center' },
+            { display: '稿费', name: 'LayoutFee', width: '8%', align: 'center', render: function (item) {
+                var per = $("#txtDigit").val();
+
+                return Math.round(per * item.LayoutFee / 100)+" 元";
+            }
+
+            },
+            { display: '稿件标题', name: 'Title', width: '20%', align: 'left', render: function (item) {
+                return '<a href="javascript:void(0)" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\')">' + item.Title + '</a>';
+            }
+            },
+            { display: '年', name: 'Year', width: '4%', align: 'center' },
+            { display: '期', name: 'Issue', width: '3%', align: 'center' },
+            { display: '第一作者', name: 'AuthorName', width: '8%', align: 'center' },
+            { display: '作者电话', name: 'Tel', width: '8%', align: 'center' },
+            { display: '作者手机', name: 'Mobile', width: '8%', align: 'center' },
+            { display: '作者地址', name: 'Address', width: '30%', align: 'center' },
+            { display: '发票抬头', name: 'InvoiceUnit', width: '8%', align: 'center' }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true, enabledSort: false,
+                url: '@Html.RootPath()/Finance/GetFinanceOutAccountPageList', pageSize: 20,
+                toolbar: { items: [
+                { text: '导  出', click: Report, icon: 'excel' }
+                ]
+                }
+            });
+            $("#btnReset").click(function () {
+                $("#txtCNumber").val("");
+                $("#txtTitle").val("");
+                $("#txtStartDate").val("");
+                $("#txtEndDate").val("");
+            });
+            $("#btnSearch").click(function () {
+                var params = GetParams();
+                DataQuery = params;
+                manager.setOptions({ parms: params });
+                manager.loadData();
+            });
+            $("#btnSetPer").click(function () {
+                var params = GetParams();
+                DataQuery = params;
+                manager.setOptions({ parms: params });
+                manager.loadData();
+            });
+        });
+
+        function GetParams() {
+            var params = {
+                CNumber: $("#txtCNumber").val(),
+                Title: $("#txtTitle").val(),
+                Year: $("#Year").val(),
+                Issue: $("#Issue").val(),
+                StartDate: $("#txtStartDate").val(),
+                EndDate: $("#txtEndDate").val(),
+                Percent: $("#txtDigit").val()
+            }
+            return params;
+        }
+
+        function ViewDetail(cID, cNumber) {
+            if (cID.text != undefined) {
+                var rows = manager.getSelectedRows();
+                if (rows == "") { alert('请选择需要查看的稿件！'); return; }
+                cID = rows[0].CID;
+                cNumber = rows[0].cNumber;
+            }
+            window.parent.f_addTab('View' + cNumber, '稿件信息[' + cNumber + ']', '@Html.RootPath()/ContributionInfo/SearchViewDetail?CID=' + cID);
+        }
+
+        function setPer() {
+            var params = GetParams();
+            DataQuery = params;
+            manager.setOptions({ parms: params });
+            manager.loadData();
+        }
+
+
+        function Report() {
+            if ($(".l-grid-row").length < 1) {
+                alert('没有数据不能导出，请先进行查询！')
+                return;
+            }
+            $.ligerDialog.open({
+                height: 420,
+                width: 600,
+                url: '@Html.RootPath()/Report/Index?type=FinanceOutAccount',
+                title: '导出入款登记与通知',
+                slide: false,
+                buttons: [{ text: '导出', onclick: function (item, dialog) {
+                    
+                    var fields = dialog.frame.GetFileds();
+                    if (fields.length < 1) return;
+                    if (confirm("您确认导出吗？")) {
+                        html = "";
+                        var key = DataQuery;
+                        if (key == null) key = GetParams();
+                        for (var item in key) {
+                            html += '<input type="hidden" name="' + item + '" value="' + key[item] + '"/>';
+                        }
+                        html += '<input type="hidden" name="strDict" value="' + encodeURIComponent(fields) + '"/>';
+                        $('form[name="action_command"]').html(html).attr("action", '@Html.RootPath()/Finance/FinanceOutAccountRenderToExcel').attr("method", "post").submit();
+                    }
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+    </script>
+}

@@ -1,0 +1,374 @@
+﻿@{
+    ViewBag.Title = Html.SiteName();
+    WKT.Model.IssueSiteEntity CurIssueInfo = Html.GetCurIssueInfo();
+}
+<div class="C_right">
+    <div class="top">
+        <div class="picture"><img src="/Content/ZHYJY/img/zazhi.jpg" /></div>
+        <div class="scroll">
+            <div class="area">
+                <div id=js class="js">
+                    <div class="box01">
+                        <div class="all" style="width:566px;height:266px;">
+                            <h4><img src="/Content/ZHYJY/img/red.png" /> 特色栏目</h4>
+                            @foreach (WKT.Model.JournalChannelEntity item in Html.GetJournalChannelList())
+                            {
+                                if (item.JChannelID == 9)
+                                { 
+                                   <div class="wen wens">
+                                    <p class="p1"><a>@item.ChannelName</a><a href="/Magazine/Album/?Year=0&Issue=0&Title=0&ContentID=0&JChannelID=9" style="float:right; padding-right:10px;"><img src="../../Content/ZHYJY/img/more.png" /></a></p>
+                                       @foreach (WKT.Model.IssueContentEntity item2 in Html.GeIssueContentList(9, 4))
+                                       {
+                                           <p><a href="/Magazine/Show?ID=@item2.ContentID" style="line-height:23px;">@Html.Raw(item2.Title)</a></p>
+                                       }
+                                   </div>
+                                }
+                                if (item.JChannelID == 16)
+                                {
+                                   <div class="wen wens lol">
+                                    <p class="p1" style=""><a>@item.ChannelName</a><a href="/Magazine/Album/?Year=0&Issue=0&Title=0&ContentID=0&JChannelID=16" style="float:right; padding-right:10px;"><img src="../../Content/ZHYJY/img/more.png" /></a></p>
+                                       @foreach (WKT.Model.IssueContentEntity item2 in Html.GeIssueContentList(16, 4))
+                                       {
+                                           <p><a href="/Magazine/Show?ID=@item2.ContentID" style="line-height:27px;"> @Html.Raw(item2.Title)</a></p>
+                                       }
+                                   </div>
+                                }
+                            }
+                        </div>
+                        
+                    </div>
+                    <div class="bg"></div>
+                  
+                </div>
+            </div>      
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $(".area").hover(function () {
+                        $(this).find(".qq").show(100);
+                    }
+                        , function () {
+                            $(this).find(".qq").hide(100);
+                        });
+                });
+            </script>
+                
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="B_left">
+            <div class="tabMenu">
+                <ul class="menu">
+                    <li class="hover" style="border-left:0;width:140px;height:28px;">当期目录</li>
+                    <li>过刊浏览</li>
+                    <li>点击排行</li>
+                    <li>下载排行</li>
+                </ul>
+                <div class="tabContent">
+                    <p style="font-size:12px;line-height:20px;" id="dq">灾害医学与救援--@Html.GetCurIssueInfo().Year,@Html.GetCurIssueInfo().Volume（@Html.GetCurIssueInfo().Issue）</p>
+                    <p class="issue"><a href="javascript:PreIssue();"><img src="../../Content/ZHYJY/img/zuo.png" /> 上一期</a> <a href="javascript:NextIssue();">下一期 <img src="../../Content/ZHYJY/img/you.png" /></a>  <span><a href="javascript:selectAll();" id="selectAll">选择全部文章</a>|<a href="javascript:Marger();">合并摘要</a></span></p>
+                    <input type="hidden" id="iYear" value="@Html.GetCurIssueInfo().Year" />
+                    <input type="hidden" id="iIsue" value="@Html.GetCurIssueInfo().Issue" />
+                    <input type="hidden" id="iVolume" value="@Html.GetCurIssueInfo().Volume" />
+                    <div id="IssueList">
+                        @foreach (WKT.Model.JournalChannelEntity i in Html.GetJournalChannelList())
+                        {
+                            IList<WKT.Model.IssueContentEntity> list = Html.GeIssueContentList(Convert.ToInt32(i.JChannelID), Html.GetCurIssueInfo().Year, Html.GetCurIssueInfo().Issue, 50);
+                            if (list.Count > 0)
+                            {
+                                <span style="font-weight:bold;color:#413020;font-size: 14px; ">@i.ChannelName</span>
+                                foreach (WKT.Model.IssueContentEntity item in list)
+                                {
+                                     <div class="article" id="issue @item.ContentID">
+                                        <p class="green"><input type="checkbox" name="booklist" id="chk @item.ContentID" value="@item.ContentID" /><a id="a @item.ContentID" href="/Magazine/Show?id=@item.ContentID" style="margin-left:5px;font-size: 12px;">@Html.Raw(item.Title)</a></p>
+                                        <p class="green hod "><a href="/Magazine/Show?id=@item.ContentID" style="font-size: 10px;">@Html.CleanHtmlNbsp(item.EnTitle)</a></p>
+                                        <p class="hod pop dod"><a style="font-size: 12px;">@Html.CleanHtmlNbsp(item.Authors)</a></p>
+                                        <p class="hod pop">@item.Year Vol.@item.Volume (@item.Issue): @item.StartPageNum-@item.EndPageNum <img src="../../Content/ZHYJY/img/attibutes.png" width="16px" height="16px" /><a href="/Magazine/Show?id=@item.ContentID">[摘要]</a>(@item.Hits) <img src="../../Content/ZHYJY/img/html.png" width="16px" height="16px" /><a href="/stat/ShowHtml?ContentID=@item.ContentID" target="_blank">RICH HTML<sup><img src="../../Content/ZHYJY/img/htmlnew.gif" /></sup></a>(@item.HtmlHits) <img src="../../Content/ZHYJY/img/pdf.jpg" /><a href="/Stat/FileDownload?ContentID=@item.ContentID&fileName=@Html.CleanHtmlNbsp(item.Title)">[PDF @item.FileSize KB]</a>(@item.Downloads)</p>
+                                    </div>
+                                     
+                                }
+                            }  
+
+                        }
+                        
+
+                        
+                    </div>
+                    <script type="text/javascript">
+                            //选择/取消选择
+                        function selectAll() {
+                            var s = document.getElementsByName("booklist");
+                            if (document.getElementById("selectAll").innerHTML == "选择全部文章") {
+                                for (var i = 0; i < s.length; i++) {
+                                    s.item(i).checked = true;
+                                }
+                                document.getElementById("selectAll").innerHTML = "取消全部选择";
+                            }
+                            else if (document.getElementById("selectAll").innerHTML == "取消全部选择") {
+
+                                for (var i = 0; i < s.length; i++) {
+                                    s.item(i).checked = false;
+                                }
+                                document.getElementById("selectAll").innerHTML = "选择全部文章";
+                            }
+                        }
+                        //合并摘要
+                        function Marger() {
+                            var s = document.getElementsByName("booklist");
+                            var newStr = "";
+                            for (var i = 0; i < s.length; i++) {
+                                if (s.item(i).checked == true) {
+                                    newStr += s.item(i).value + ",";
+                                    //alert(s.item(i).value);
+                                    //window.open("/Magazine/hbzy/?Year=0&Issue=0&Title=0&JChannelID=268");
+                                }
+                            }
+                            var ContentIDs = newStr.substring(0, newStr.length - 1);
+                            //alert(ContentIDs);
+                            if (ContentIDs.length == 0) {
+                                alert("请您至少选择一篇文章！");
+                                return;
+                            }
+                            else {
+                                window.open("/Magazine/hbzy/?Year=0&Issue=0&Title=0&JChannelID=-1&ContentID=" + ContentIDs);
+                            }
+
+                        }
+
+                        //文章专辑
+                        function Zhuanji() {
+                            window.open("/Magazine/ChannelList/?Year=0&Issue=0&Title=0&ContentID=0&JChannelID=2");
+                        }
+                        //上一期
+                        function PreIssue() {
+                            var Pre = document.getElementById("iIsue").value;
+                            var newPre = parseInt(Pre) - 1;
+                            var Year = parseInt(document.getElementById("iYear").value);
+                            if (Pre == 1) {
+                                var newYear = parseInt(Year) - 1;
+                                var newIssue = 4;
+                                document.getElementById("IssueList").innerHTML = "<div id=\"loading\" style=\"text-align:center;\"><img src=\"../../Content/ZHYJY/img/loading.gif\" /></div>";
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/Magazine/GetIssueContentList/',
+                                    data: { "Year": newYear, "Issue": newIssue },
+                                    cache: false,
+                                    traditional: true,
+                                    success: function (data) {
+                                        if (data.list.length > 0) {
+                                            document.getElementById("IssueList").innerHTML = "";
+                                            
+                                            for (var i = 0; i < data.list.length; i++) {
+                                                document.getElementById("IssueList").innerHTML += "<div class=\"article\" id='issue " + data.list[i].ContentID + "'" + "><p class=\"green\"><input type=\"checkbox\" name=\"booklist\" id=\"chk " + data.list[i].ContentID + "\" value=\"" + data.list[i].ContentID + "\"><a href=\"/Magazine/Show?id=" + data.list[i].ContentID + "\" style=\"font-weight:900;font-size:15px;color:#413020;line-height:20px;padding-left:5px;\">" + data.list[i].Title.replace(/<[^>]+>/g, '') + "</a></p><p class=\"green hod \"><a href=\"/Magazine/Show?id=" + data.list[i].ContentID + "\">" + data.list[i].EnTitle.replace(/<[^>]+>/g, '') + "</a></p><p class=\"hod pop dod\"><a>" + data.list[i].Authors.replace(/<[^>]+>/g, '') + "</a></p><p class=\"hod pop\">" + data.list[i].Year + " Vol." + data.list[i].Volume + "(" + data.list[i].Issue + "):" + data.list[i].StartPageNum + "-" + data.list[i].EndPageNum + "<img src=\"../../Content/ZHYJY/img/attibutes.png\" width=\"16px\" height=\"16px\" /><a href=\"/Magazine/Show?id=" + data.list[i].ContentID + "\">[摘要]</a> (" + data.list[i].Hits + ") <img src=\"../../Content/ZHYJY/img/html.png\" width=\"16px\" height=\"16px\" /><a href=\"/stat/ShowHtml?ContentID=" + data.list[i].ContentID + "\" target=\"_blank\">RICH HTML<sup><img src=\"../../Content/ZHYJY/img/htmlnew.gif\" /></sup></a>(" + data.list[i].HtmlHits + ")<img src=\"../../Content/ZHYJY/img/pdf.jpg\" /><a href=\"" + data.list[i].FilePath + "\"> [PDF " + data.list[i].FileSize + "KB]</a> ( " + data.list[i].Downloads + "）</p></div>";
+                                            }
+                                            document.getElementById("dq").innerHTML = "灾害医学与救援--" + document.getElementById("iYear").value + " Vol." + data.list[0].Volume + "（" + document.getElementById("iIsue").value + "）";
+                                        }
+                                        else {
+                                            document.getElementById("IssueList").innerHTML = "无更早数据！";
+                                        }
+                                    },
+                                    error: function (xhr) {
+                                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                                    }
+
+                                });
+                                document.getElementById("iIsue").value = newIssue;
+                                document.getElementById("iYear").value = parseInt(Year) - 1;
+
+                            }
+                            else {
+                                document.getElementById("IssueList").innerHTML = "<div id=\"loading\" style=\"text-align:center;\"><img src=\"../../Content/ZHYJY/img/loading.gif\" /></div>";
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/Magazine/GetIssueContentList/',
+                                    data: { "Year": Year, "Issue": newPre },
+                                    //data: { "Year": 2013, "Issue": 6 },
+                                    cache: false,
+                                    traditional: true,
+                                    success: function (data) {
+                                        if (data.list.length > 0) {
+                                            document.getElementById("IssueList").innerHTML = "";
+                                            for (var i = 0; i < data.list.length; i++) {
+                                                document.getElementById("IssueList").innerHTML += "<div class=\"article\" id='issue " + data.list[i].ContentID + "'" + "><p class=\"green\"><input type=\"checkbox\" name=\"booklist\" id=\"chk " + data.list[i].ContentID + "\" value=\"" + data.list[i].ContentID + "\"><a href=\"/Magazine/Show?id=" + data.list[i].ContentID + "\" style=\"font-weight:900;font-size:15px;color:#413020;line-height:20px;padding-left:5px;\" target=\"_blank\">" + data.list[i].Title.replace(/<[^>]+>/g, '') + "</a></p><p class=\"green hod \"><a href=\"/Magazine/Show?id=" + data.list[i].ContentID + "\">" + data.list[i].EnTitle.replace(/<[^>]+>/g, '') + "</a></p><p class=\"hod pop dod\"><a>" + data.list[i].Authors.replace(/<[^>]+>/g, '') + "</a></p><p class=\"hod pop\">" + data.list[i].Year + " Vol." + data.list[i].Volume + "(" + data.list[i].Issue + "):" + data.list[i].StartPageNum + "-" + data.list[i].EndPageNum + " <img src=\"../../Content/ZHYJY/img/attibutes.png\" width=\"16px\" height=\"16px\" /><a href=\"/Magazine/Show?id=" + data.list[i].ContentID + "\">[摘要]</a> (" + data.list[i].Hits + ") <img src=\"../../Content/ZHYJY/img/html.png\" width=\"16px\" height=\"16px\" /><a href=\"/stat/ShowHtml?ContentID=" + data.list[i].ContentID + "\" target=\"_blank\">RICH HTML<sup><img src=\"../../Content/ZHYJY/img/htmlnew.gif\" /></sup></a>(" + data.list[i].HtmlHits + ")<img src=\"../../Content/ZHYJY/img/pdf.jpg\" /><a href=\"" + data.list[i].FilePath + "\"> [PDF " + data.list[i].FileSize + "KB]</a> ( " + data.list[i].Downloads + "）</p></div>";
+                                            }
+                                            document.getElementById("dq").innerHTML = "灾害医学与救援--" + document.getElementById("iYear").value + " Vol." + data.list[0].Volume + "（" + document.getElementById("iIsue").value + "）";
+                                        }
+                                        else {
+                                            document.getElementById("IssueList").innerHTML = "无更早数据！";
+                                        }
+
+                                    },
+                                    error: function (xhr) {
+                                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                                    }
+                                });
+                                document.getElementById("iIsue").value = newPre;
+
+                            }
+
+                        }
+                        //下一期
+                        function NextIssue() {
+                            var Pre = document.getElementById("iIsue").value;
+                            var newPre = parseInt(Pre) + 1;
+                            var Year = parseInt(document.getElementById("iYear").value);
+                            if (Pre > 3) {
+                                var newYear = parseInt(Year) + 1;
+                                var newIssue = 1;
+                                document.getElementById("IssueList").innerHTML = "<div id=\"loading\" style=\"text-align:center;\"><img src=\"../../Content/ZHYJY/img/loading.gif\" /></div>";
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/Magazine/GetIssueContentList/',
+                                    data: { "Year": newYear, "Issue": newIssue },
+                                    cache: false,
+                                    traditional: true,
+                                    success: function (data) {
+                                        if (data.list.length > 0) {
+                                            document.getElementById("IssueList").innerHTML = "";
+                                            for (var i = 0; i < data.list.length; i++) {
+                                                document.getElementById("IssueList").innerHTML += "<div class=\"article\" id='issue " + data.list[i].ContentID + "'" + "><p class=\"green\"><input type=\"checkbox\" name=\"booklist\" id=\"chk " + data.list[i].ContentID + "\" value=\"" + data.list[i].ContentID + "\"><a href=\"/Magazine/Show?id=" + data.list[i].ContentID + "\" style=\"font-weight:900;font-size:15px;color:#413020;line-height:20px;padding-left:5px;\" target=\"_blank\">" + data.list[i].Title.replace(/<[^>]+>/g, '') + "</a></p><p class=\"green hod \"><a href=\"/Magazine/Show?id=" + data.list[i].ContentID + "\">" + data.list[i].EnTitle.replace(/<[^>]+>/g, '') + "</a></p><p class=\"hod pop dod\"><a>" + data.list[i].Authors.replace(/<[^>]+>/g, '') + "</a></p><p class=\"hod pop\">" + data.list[i].Year + " Vol." + data.list[i].Volume + "(" + data.list[i].Issue + "):" + data.list[i].StartPageNum + "-" + data.list[i].EndPageNum + "<img src=\"../../Content/ZHYJY/img/attibutes.png\" width=\"16px\" height=\"16px\" /><a href=\"/Magazine/Show?id=" + data.list[i].ContentID + "\">[摘要]</a> (" + data.list[i].Hits + ") <img src=\"../../Content/ZHYJY/img/html.png\" width=\"16px\" height=\"16px\" /><a href=\"/stat/ShowHtml?ContentID=" + data.list[i].ContentID + "\" target=\"_blank\">RICH HTML<sup><img src=\"../../Content/ZHYJY/img/htmlnew.gif\" /></sup></a>(" + data.list[i].HtmlHits + ")<img src=\"../../Content/ZHYJY/img/pdf.jpg\" /><a href=\"" + data.list[i].FilePath + "\"> [PDF " + data.list[i].FileSize + "KB]</a> ( " + data.list[i].Downloads + "）</p></div>";
+                                            }
+                                            document.getElementById("dq").innerHTML = "灾害医学与救援--" + document.getElementById("iYear").value + " Vol." + data.list[0].Volume + "（" + document.getElementById("iIsue").value + "）";
+                                        }
+                                        else {
+                                            document.getElementById("IssueList").innerHTML = "无更新数据！";
+                                        }
+                                    },
+                                    error: function (xhr) {
+                                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                                    }
+                                });
+                                document.getElementById("iIsue").value = 1;
+                                document.getElementById("iYear").value = parseInt(Year) + 1;
+                            }
+                            else {
+                                document.getElementById("IssueList").innerHTML = "<div id=\"loading\" style=\"text-align:center;\"><img src=\"../../Content/ZHYJY/img/loading.gif\" /></div>";
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/Magazine/GetIssueContentList/',
+                                    data: { "Year": Year, "Issue": newPre },
+                                    //data: { "Year": 2013, "Issue": 6 },
+                                    cache: false,
+                                    traditional: true,
+                                    success: function (data) {
+                                        if (data.list.length > 0) {
+                                            document.getElementById("IssueList").innerHTML = "";
+                                            for (var i = 0; i < data.list.length; i++) {
+                                                document.getElementById("IssueList").innerHTML += "<div class=\"article\" id='issue " + data.list[i].ContentID + "'" + "><p class=\"green\"><input type=\"checkbox\" name=\"booklist\" id=\"chk " + data.list[i].ContentID + "\" value=\"" + data.list[i].ContentID + "\"><a href=\"/Magazine/Show?id=" + data.list[i].ContentID + "\" style=\"font-weight:900;font-size:15px;color:#413020;line-height:20px;padding-left:5px;\" target=\"_blank\">" + data.list[i].Title.replace(/<[^>]+>/g, '') + "</a></p><p class=\"green hod \"><a href=\"/Magazine/Show?id=" + data.list[i].ContentID + "\">" + data.list[i].EnTitle.replace(/<[^>]+>/g, '') + "</a></p><p class=\"hod pop dod\"><a>" + data.list[i].Authors.replace(/<[^>]+>/g, '') + "</a></p><p class=\"hod pop\">" + data.list[i].Year + " Vol." + data.list[i].Volume + "(" + data.list[i].Issue + "):" + data.list[i].StartPageNum + "-" + data.list[i].EndPageNum + "<img src=\"../../Content/ZHYJY/img/attibutes.png\" width=\"16px\" height=\"16px\" /><a href=\"/Magazine/Show?id=" + data.list[i].ContentID + "\">[摘要]</a> (" + data.list[i].Hits + ") <img src=\"../../Content/ZHYJY/img/html.png\" width=\"16px\" height=\"16px\" /><a href=\"/stat/ShowHtml?ContentID=" + data.list[i].ContentID + "\" target=\"_blank\">RICH HTML<sup><img src=\"../../Content/ZHYJY/img/htmlnew.gif\" /></sup></a>(" + data.list[i].HtmlHits + ")<img src=\"../../Content/ZHYJY/img/pdf.jpg\" /><a href=\"" + data.list[i].FilePath + "\"> [PDF " + data.list[i].FileSize + "KB]</a> ( " + data.list[i].Downloads + "）</p></div>";
+                                            }
+                                            document.getElementById("dq").innerHTML = "灾害医学与救援--" + document.getElementById("iYear").value + " Vol." + data.list[0].Volume + "（" + document.getElementById("iIsue").value + "）";
+                                        }
+                                        else {
+                                            document.getElementById("IssueList").innerHTML = "无更新数据！";
+                                        }
+
+                                    },
+                                    error: function (xhr) {
+                                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                                    }
+                                });
+                                document.getElementById("iIsue").value = newPre;
+                            }
+
+                        }   
+
+                    </script>
+                </div>
+                   
+                    
+                <div class="tabContent hid browse">
+                    @foreach (WKT.Model.YearVolumeEntity item in Html.GetYearVolumeList())
+                    { 
+                        <table class="pur-table-s"  style="margin-top:10px;">
+                            <tr  align="left">
+                                <td width="60"><a href="/Magazine/?Year=@item.Year&Issue=&JChannelID=&Title=&Authors=&WorkUnit="><b>@item.Year 年</b><p>第 @item.Volume 卷</p></a></td>
+                                <td width="125" height="46"><p><a href="/Magazine/?Year=@item.Year&Issue=1" id="@item.Year-1">@item.Year 年 第 1 期</a></p></td>
+                                <td width="125" height="46"><p><a href="/Magazine/?Year=@item.Year&Issue=2" id="@item.Year-2">@item.Year 年 第 2 期</a></p></td>
+                                <td width="125" height="46"><p><a href="/Magazine/?Year=@item.Year&Issue=3" id="@item.Year-3">@item.Year 年 第 3 期</a></p></td>
+                                <td width="125" height="46"><p><a href="/Magazine/?Year=@item.Year&Issue=4" id="@item.Year-4">@item.Year 年 第 4 期</a></p></td>
+                            </tr>
+                        </table>
+                    }
+                </div>
+                <div class="tabContent hid employed">
+                    <p>点击排行</p>
+                    @foreach (WKT.Model.IssueContentEntity item in Html.GeCurIssueHitsOrderList(500))
+                    {
+                             
+                        <div class="lu">
+                            <p class="doi"><a href="/Magazine/Show?id=@item.ContentID">@Html.CleanHtmlCutString(item.Title, 30, "...")</a></p>
+                            <p><a>@Html.Raw(item.Authors)</a></p>
+                            <p>@item.Year Vol.@item.Volume (@item.Issue): @item.StartPageNum-@item.EndPageNum <a href="/Magazine/Show?id=@item.ContentID">[摘要]</a>(@item.Hits)&nbsp;<a href="/stat/ShowHtml?ContentID=@item.ContentID">RICH HTML(@item.HtmlHits)</a><sup><img src="../../Content/ZHYJY/img/htmlnew.gif" /></sup>&nbsp;<a href="/Stat/FileDownload?ContentID=@item.ContentID&fileName=@Html.CleanHtmlNbsp(item.Title)">[PDF @item.FileSize KB]</a>(@item.Downloads)</p>
+                        </div>
+                        <div class="lu">
+                            <p class="doi"><a href="/Magazine/Show?id=@item.ContentID">@Html.CleanHtmlCutString(item.Title, 30, "...")</a></p>
+                            <p><a>@Html.Raw(item.Authors)</a></p>
+                            <p>录用时间：@item.AddDate.ToString("yyyy-MM-dd")</p>
+                        </div>
+                            
+                    }
+                </div>
+                <div class="tabContent hid employed">
+                    <p>下载排行</p>
+                    @foreach (WKT.Model.IssueContentEntity item in Html.GeCurIssueDownloadsOrderList(50))
+                    {  
+                        <div class="lu">
+                            <p class="doi"><a href="/Magazine/Show?id=@item.ContentID">@Html.CleanHtmlCutString(item.Title, 30, "...")</a></p>
+                            <p><a>@Html.Raw(item.Authors)</a></p>
+                            <p>录用时间：@item.AddDate.ToString("yyyy-MM-dd")</p>
+                        </div>
+                    }
+                </div>
+                   
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $(".menu li").each(function(nn) {
+                        $(this).click(function() {
+                            $(".tabContent").addClass("hid");
+                            $(".tabContent:eq(" + nn + ")").removeClass("hid");
+
+                            $(".menu li").removeClass("hover");
+                            $(this).addClass("hover");
+
+                        });
+
+                    });
+
+                })//end		
+					</script>
+        </div>
+        <div class="B_right">
+            <div class="office author link announcement"  style="height:256px;">
+                <h4><img src="/Content/ZHYJY/img/biao.png" /> 主编 <a href="/channel/wzg">更多》</a></h4>
+                <dl class="content">
+                    <dt><img src="/Content/ZHYJY/img/zhubian.jpg" /></dt>
+                    <dd style="line-height: 22px;">王正国，男，汉族，1935年12月生，中国工程院医药卫生工程学部首批院士，研究员，博士生导师，野战外科学带头人，第三军医大学野战外科研究所一级教授、中国人民解放军交通医学研究所/重庆市交通研究所名誉所长。国际交通医学会副主席（候任主席），国际...</dd>
+                </dl>
+            </div>
+            <div class="office author link"  style="height:75px;">
+                <h4><img src="/Content/ZHYJY/img/biao.png" /> 消息·广告</h4>
+                <ul class="content">
+                    <li><a href="/list/269">本期消息</a></li>
+                    <li><a href="/list/270">过刊消息</a></li>
+                </ul>
+            </div>
+            <div class="office author link"  style="height:104px;">
+                <h4><img src="/Content/ZHYJY/img/biao.png" /> 友情链接</h4>
+                <ul class="content">
+                    @foreach (WKT.Model.FriendlyLinkEntity item in Html.GetFriendLinkList(271, 4))
+                    { 
+                        <li><a href="@item.SiteUrl" target="_blank">@item.SiteName</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+</div>
+        <div>&nbsp;</div>       
+        <div id="footer" style=" margin-top:-15px;">
+            <p>您是第 @Html.GetAllHits() 位访问者</p> 
+            <p>北京市丰台区东大街8号信息楼 《灾害医学与救援（电子版）》 编辑部<br />
+                电话：（010）66947905，（010）51128591 传真：（010）66947906</p>
+        </div>
+

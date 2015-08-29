@@ -1,0 +1,100 @@
+﻿<link href="@Html.RootPath()/Content/style.css" rel="stylesheet" type="text/css" />
+<div id="box">
+	<div class="act-bar" id="divFlowPerationToolbar"></div>
+	<div id="divFlowPerationList"></div>
+</div>
+@section Scripts{
+<script language="javascript" type="text/javascript">
+    var operationgrid;
+    $(function () {
+        $("#divFlowPerationToolbar").ligerToolBar({ items: [
+            { text: '添加审稿操作', click: MenuClick, icon: 'add' },
+            { line: true },
+            { text: '编辑审稿操作', click: MenuClick, icon: 'modify' },
+            { line: true },
+            { text: '删除审稿操作', click: MenuClick, icon: 'delete' }
+        ]
+        });
+        operationgrid = $("#divFlowPerationList").ligerGrid({
+            columns: [
+            { display: '编号', name: 'OperationID', width: '5%', align: 'center' },
+            { display: '操作名称', name: 'OperName', width: '12%', align: 'left' },
+            { display: '显示名称', name: 'DisplayName', width: '10%', align: 'center' },
+            { display: '状态', name: 'Status', width: '5%', align: 'center', render: function (item) {
+                return item.Status == 1 ? "<img src='@Html.RootPath()/Content/icons/ok.png' alt='启用' title='启用'/>" : "<img src='@Html.RootPath()/Content/icons/stop.png' alt='禁用' title='禁用'/>";
+            } 
+            },
+            { display: '添加时间', name: 'AddDate', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm:ss' }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+            url: '@Html.RootPath()/member/GetMemberList?rnd=' + Math.random(), pageSize: 15
+        });
+    });
+
+    var windows = [];
+    function MenuClick(item) {
+        switch (item.text) {
+            case "添加审稿操作":
+                windows['adddialog'] = $.ligerDialog.open({ height: 420, url: '@Html.RootPath()/FlowOperationSet/AddOperationSet', title: '添加审稿操作', width: 480, slide: false, buttons: [
+                    { text: '确定', onclick: function (item, dialog) {
+                        dialog.frame.Save(operationgrid, dialog);
+                    }
+                    },
+                    { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+                    ]
+                });
+                break;
+            case "编辑审稿操作":
+                var rows = operationgrid.getSelectedRows();
+                if (rows == "") { alert('请选择要编辑的审稿操作'); return; }
+                windows['editdialog'] = $.ligerDialog.open({ height: 420, url: '@Html.RootPath()/FlowOperationSet/AddOperationSet?OperationID=' + rows[0].AuthorID, title: '编辑审稿操作', width: 480, slide: false, buttons: [
+                    { text: '确定', onclick: function (item, dialog) {
+                        dialog.frame.Save(operationgrid, dialog);
+                    }
+                    },
+                    { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+                    ]
+                });
+                break;
+            case "删除审稿操作":
+                var rows = operationgrid.getSelectedRows();
+                if (rows == "") { alert('请选择要删除的审稿操作'); return; }
+                var data = [];
+                for (i = 0; i < rows.length; i++) {
+                    data.push(rows[i].AuthorID);
+                }
+                delmemeber(data);
+                break;
+        }
+    }
+    // 删除审稿操作
+    function delmemeber(IDArray) {
+        if (confirm('您确认要删除选中的审稿操作吗？')) {
+            $.ajax({
+                beforeSend: function () {
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/FlowOperationSet/DelOperationSetAjax/?rnd=' + Math.random(),
+                data: { "IDAarry": IDArray },
+                cache: false,
+                traditional: true,
+                success: function (data) {
+                    var e = eval("(" + data + ")");
+                    if (e.result == 'success') {
+                        alert('删除成功');
+                        operationgrid.loadData();
+                    }
+                    else if (e.result == 'failure') {
+                        alert(e.msg);
+                    }
+                    else if (e.result == 'error') {
+                        alert(e.msg);
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+    }
+</script>
+}

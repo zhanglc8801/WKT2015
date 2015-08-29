@@ -1,0 +1,110 @@
+﻿<style type="text/css">   
+    .l-table-edit-td-left{ padding:4px;width:60px;}
+    .l-table-edit-td{ padding:4px;}  
+    .l-button-search{width:80px; margin-left:10px; padding-bottom:2px;display:inline;}    
+</style>
+
+<div style="min-width:1000px;" tabid="IssueDoiRegQuery" id="notice_container" class="notice notice0">
+	<div class="c">
+        @Html.Raw(Html.SelectIssueYear("Year", "100px", string.Empty, string.Empty, "请选择年"))                 
+        @Html.Raw(Html.SelectIssueSet("Issue", "100px", string.Empty, string.Empty, "请选择期"))  
+        <input type="text" id="txtTitle" ltype="text" />      
+        <input type="button" value="搜索" class="btnsearch" id="btnSearch" />&nbsp;
+    </div>
+
+</div>
+
+<div id="divList">
+
+</div>
+@section Scripts{
+    <script type="text/javascript">
+
+        var manager;
+        $(function () {
+            $("form").ligerForm({ inputWidth: 150 });
+            manager = $("#divList").ligerGrid({
+                columns: [
+            { display: 'ID', name: 'PKID', hide: true },
+            { display: '中文DOI系统返回文件名', name: 'DoiFileName', width: '200', align: 'center' },
+            { display: '状态', name: 'State', width: '100', align: 'center' },
+            { display: '年', name: 'Year', width: '60', align: 'center' },
+            { display: '期', name: 'Issue', width: '60', align: 'center' },
+            { display: '提交人', name: 'AdminID', width: '80', align: 'center'},
+            { display: '提交日期', name: 'AddDate', width: '120', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm' },
+            { display: '选择操作', name: 'State', width: '100', align: 'center', render: function (item) {
+                var title = "";
+                if (item.State=="已完成") {
+                    title = "<a href=\"javascript:void(0);\" onclick=\"UpdateLocalData(" + item.PKID + ")\"><b>更新本地数据</b></a>";
+                }
+                if (item.State == "未审核" || item.State == "正在处理") {
+                    title = "<a href=\"javascript:void(0);\" onclick=\"ReCheck('" + item.PKID + "')\"><b>重新检测</b></a>";
+                }
+                return title;
+            }
+            }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,url: '@Html.RootPath()/Issue/GetDoiRegLogPageList', pageSize: 30, enabledSort: false
+                
+            });
+            $("#btnSearch").click(function () {
+                manager.setOptions({ parms: {
+                    Year: $("#Year").val(),
+                    Issue: $("#Issue").val()
+                }
+                });
+                manager.loadData();
+            });
+
+        });
+
+        function ReCheck(PKID)
+        {
+            $.ajax({
+                beforeSend: function () {
+
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/issue/ReCheckDoiStateAjax/?rnd=' + Math.random(),
+                data: { PKID: PKID },
+                success: function (data) {
+                    if (data.flag == 1) {
+                        manager.loadData();
+                    }
+                    else if (data.flag == -1) {
+                        alert("正在审核中,请稍候再试!");
+                    }
+                    else {
+                        alert("重新检测DOI注册状态失败!");
+                    }
+                },
+                error: function (xhr) {
+                    alert('Error:' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+        function UpdateLocalData(PKID) {
+            $.ajax({
+                beforeSend: function () {
+
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/issue/UpdateLocalDataAjax/?rnd=' + Math.random(),
+                data: { PKID: PKID },
+                success: function (data) {
+                    if (data.flag == 1) {
+                        manager.loadData();
+                    }
+                    else {
+                        alert("重新检测DOI注册状态失败!");
+                    }
+                },
+                error: function (xhr) {
+                    alert('Error:' + '\n' + xhr.responseText);
+                }
+            });
+        } 
+    </script>
+}
+
+

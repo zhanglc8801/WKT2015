@@ -1,0 +1,223 @@
+﻿<style type="text/css">   
+    .l-table-edit-td-left{ padding:4px;width:90px;}
+    .l-table-edit-td{ padding:4px;}  
+    .l-button-search{width:80px; margin-left:10px; padding-bottom:2px;display:inline;}    
+</style>
+<div id="divSearch">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="right" class="l-table-edit-td-left" id="td">
+                <select id="ddlType" style="width: 100px">
+                    <option value="0">登录名</option>
+                    <option value="1">姓名</option>
+                    <option value="2">单位</option>
+                    <option value="4">地址</option>
+                    <option value="5">邮编</option>
+                    <option value="3">手机</option>
+                </select>
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtKey" ltype="text" />
+            </td>
+            <td align="right" class="l-table-edit-td-left" style="width:60px;">
+                状态：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <select id="ddlStatus" ltype="select">
+                    <option value="">全部</option>
+                    <option value="1">启用</option>
+                    <option value="0">禁用</option>
+                </select>
+            </td>
+            <td colspan="2" style="text-align: center">
+                <input type="button" id="btnSearch" value="搜索" class="l-button l-button-search" />
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+<div id="divList" style="margin-top: 5px;">
+</div>
+<div style="display: none">
+        <form name="action_command" action="" target="_self" method="post">
+        </form>
+    </div>
+@section Scripts{    
+    <script type="text/javascript">
+        var manager, DataQuery;
+        $(function () {
+            $("form").ligerForm({ inputWidth: 150 });
+            manager = $("#divList").ligerGrid({
+                columns: [
+            { display: '编号', name: 'AuthorID', hide: true },
+            { display: '登录名', name: 'LoginName', width: '130', align: 'center', render: function (item) {
+                return '<a href="javascript:wait(' + item.AuthorID + ')" title="' + item.AuthorModel.LoginName + '">' + item.AuthorModel.LoginName + '</a>';
+            }
+            },
+            { display: '状态', name: 'Status', width: '50', align: 'center', render: function (item) {
+                return item.AuthorModel.Status == 1 ? "<img src='@Html.RootPath()/Content/icons/ok.png' alt='启用' title='启用'/>" : "<img src='@Html.RootPath()/Content/icons/stop.png' alt='禁用' title='禁用'/>";
+            }
+            },
+            { display: '姓名', name: 'RealName', width: '80', align: 'center', render: function (item) {
+                return item.AuthorModel.RealName;
+            }
+            },
+            { display: '研究方向', name: 'ResearchTopics', width: '150', align: 'center' },
+            { display: '单位', name: 'WorkUnit', width: '160', align: 'center' },
+            { display: '地址', name: 'Address', width: '200', align: 'center' },
+            { display: '邮编', name: 'ZipCode', width: '60', align: 'center' },
+            { display: '手机', name: 'Mobile', width: '100', align: 'center', render: function (item) {
+                return item.AuthorModel.Mobile; 
+            }
+            },
+            { display: '注册日期', name: 'AddDate', width: '100', align: 'center', type: 'date', format: 'yyyy-MM-dd' },
+            { display: '备注', name: 'Remark', width: '100', align: 'center', render: function (item) {
+                if (item.Remark != "") {
+                    return "<a href='javascript:alert(\"" + item.Remark + "\")' title=\"" + item.Remark + "\">" + item.Remark + "</a>";
+                }
+            }
+            }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+                url: '@Html.RootPath()/AuthorDetail/GetExpertPageList/?GroupID=4', pageSize: 20, enabledSort: false,
+                toolbar: { items: [
+            { text: '新增', click: Add, icon: 'add' },
+            { line: true },
+            { text: '编辑', click: Update, icon: 'modify' },
+            { line: true },
+            { text: '删除', click: Del, icon: 'delete' },
+            { line: true },
+            { text: '导出', click: Report, icon: 'excel' },
+            { line: true },
+            { text: '取消专家', click: CancelExpert, icon: 'settings' }
+            ]
+                }
+            });
+            $("#btnSearch").click(function () {
+                var params = GetParams();
+                DataQuery = params;
+                manager.setOptions({ parms: params });
+                manager.loadData();
+            });
+            $("#ddlType").change(function () { $("#txtKey").val(''); });
+            var style = ''
+            $("#td div,input").each(function () {
+                style = $(this).attr("style");
+                if (style == null || style == undefined) return;
+                $(this).attr("style", "width:80px;");
+            });
+        });
+
+        function GetParams() {
+            var params = { Status: $("#ddlStatus").val() }
+                    , val = $.trim($("#txtKey").val());
+            switch ($("#ddlType").val()) {
+                case '0': params["LoginName"] = val; break;
+                case '1': params["RealName"] = val; break;
+                case '2': params["WorkUnit"] = val; break;
+                case '3': params["Mobile"] = val; break;
+                case '4': params["Address"] = val; break;
+                case '5': params["ZipCode"] = val; break;
+            }
+            return params;
+        }
+
+        function Add() {
+            window.parent.f_addTab('AuthorIndexAdd', '添加专家信息', '@Html.RootPath()/AuthorDetail/Create?AuthorID=0&GroupID=4');
+        }
+
+        function Update() {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择需要修改的作者！'); return; }
+            window.parent.f_addTab('AuthorIndexUpdate', '编辑专家信息', '@Html.RootPath()/AuthorDetail/Create?AuthorID=' + rows[0].AuthorID + '&GroupID=4');
+        }
+
+        function Del() {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择需要删除的专家！'); return; }
+            var data = [];
+            for (i = 0; i < rows.length; i++) {
+                data.push(rows[i].AuthorID);
+            }
+            if (!confirm("确定删除所选的专家吗？删除后将不可登录")) return;
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/AuthorDetail/Delete/',
+                data: { "AuthorIDs": data },
+                cache: false,
+                traditional: true,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        manager.loadData();
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+        function Report() {
+            if ($(".l-grid-row").length < 1) {
+                alert('没有数据不能导出，请先进行查询！')
+                return;
+            }
+            $.ligerDialog.open({
+                height: 420,
+                width: 600,
+                url: '@Html.RootPath()/Report/Index?type=Author',
+                title: '导出专家信息',
+                slide: false,
+                buttons: [{ text: '导出', onclick: function (item, dialog) {
+                    var fields = dialog.frame.GetFileds();
+                    if (fields.length < 1) return;
+                    if (confirm("您确认导出吗？")) {
+                        html = "";
+                        var key = DataQuery;
+                        if (key == null) key = GetParams();
+                        for (var item in key) {
+                            html += '<input type="hidden" name="' + item + '" value="' + key[item] + '"/>';
+                        }
+                        html += '<input type="hidden" name="strDict" value="' + encodeURIComponent(fields) + '"/>';
+                        $('form[name="action_command"]').html(html).attr("action", '@Html.RootPath()/AuthorDetail/ExpertRenderToExcel').attr("method", "post").submit();
+                    }
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        //编辑为专家审稿
+        function wait(obj) {
+            window.parent.f_addTab('EditorWait', '专家审稿', '@Html.RootPath()/Expert/EditorWait?AuthorID=' + obj + "&rdm=" + Math.random());
+        }
+
+
+        // 取消为专家
+        function CancelExpert() {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择要取消的专家！'); return; }
+            var data = [];
+            for (i = 0; i < rows.length; i++) {
+                data.push(rows[i].AuthorID);
+            }
+            if (!confirm("确定要把选择的专家设置为普通作者吗？")) return;
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/AuthorDetail/CancelExpert/',
+                data: { "AuthorIDs": data },
+                cache: false,
+                traditional: true,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        manager.loadData();
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,267 @@
+﻿@{
+    ViewBag.Title = "Send";
+}
+<style type="text/css">
+    body{ font-size:12px;}
+    .l-table-edit {border:1px solid #bed5f3;border-collapse: collapse;width:100%}
+    .l-table-edit-td-left{ padding:4px;text-align:right;width:90px;}
+    .l-table-edit-td{ padding:4px;}
+    .l-button-submit,.l-button-test{width:80px; float:left; margin-left:10px; padding-bottom:2px;}   
+</style>
+<div style="width: 98%; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                接收人类型：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="radio" id="ReciveType1" value="1" name="ReciveType" checked="checked" /><label for="ReciveType1">选择</label>
+                <input type="radio" id="ReciveType2" value="2" name="ReciveType" /><label for="ReciveType2">输入邮件地址</label>
+            </td>           
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span><span id="spanTitle">接收人编号</span>：
+            </td>
+            <td align="left" class="l-table-edit-td">
+               <span id="spanSelect"><input type="button" value="选择作者"  id="btnSelect"/>&nbsp;<input type="button" value="选择专家"  id="btnSelectExpert"/>&nbsp;<input type="button" value="选择成员"  id="btnSelectMember"/></span>
+               <span id="spanMsg" style="color: Red;display:none">使用英文逗号(,)隔开<br /></span>
+            </td>           
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+            </td>
+            <td><textarea cols="100" rows="4" class="l-textarea" id="txtUser" disabled="disabled" style="width: 400px"></textarea></td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                发件人名：
+            </td>
+            <td align="left" class="l-table-edit-td">
+               <input type="text" id="txtSend" ltype="text" maxlength="50"/>
+            </td>           
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>发件主题：
+            </td>
+            <td align="left" class="l-table-edit-td">
+               <input type="text" id="txtTitle" ltype="text" maxlength="50"/>
+            </td>           
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>邮件内容：
+            </td>
+            <td align="left" class="l-table-edit-td" colspan="3">
+                <textarea cols="100" rows="4" class="l-textarea" id="txtContent" style="width: 520px; height:200px;"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                附件：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <div style="margin-bottom:5px;"><span style="color:red;">附件最大不得超过10MB</span>文件格式支持：@Html.UploadFileExt().Replace(";*.", " | ")</div>
+                <input type="file" name="uploadify" id="uploadify" />
+                <div id="divFile" style="display:none"><a href="javascript:void(0)" id="aFile">附件</a></div>
+            </td>           
+        </tr>
+        <tr>
+          <td colspan="2" style="padding-left:15%">           
+             <input type="button" value="发送(Send)" style="margin-top:10px;margin-bottom:10px;width:100px;" id="btnSend" class="l-button l-button-submit" />
+          </td>
+        </tr>
+    </table>
+    </form>
+</div>
+@section Scripts{
+    <script type="text/javascript" src="@Html.RootPath()/Scripts/Uploadify/jquery.uploadify.js"></script>
+    <script type="text/javascript" charset="utf-8" src="@Html.RootPath()/content/ueditor/ueditor.config4.js"></script>
+    <script type="text/javascript" charset="utf-8" src="@Html.RootPath()/content/ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="@Html.RootPath()/content/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script language="javascript" type="text/javascript">
+        UE.getEditor('txtContent');
+        var fileSrc = '';
+        $(function () {
+            $("#uploadify").uploadify({
+                postData: { folder: 'SendEmail' },
+                uploader: '@Html.RootPath()/Upload/Save/',
+                buttonText: '上传附件',
+                fileTypeExts: "@Html.UploadFileExt()",
+                swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',                
+                onUploadSuccess: function (obj, data, response) {
+                    var result = eval("(" + data + ")");
+                    if (result.result == "success") {
+                        fileSrc = result.url;
+                        LoadImage(fileSrc);
+                    }
+                    else {
+                        alert(result.msg);
+                        return;
+                    }
+                }
+            });
+            $("form").ligerForm({ inputWidth: 300 });
+            var objUser = $("#txtUser");
+            $("#btnSelect").bind("click", function () { SelectAuthor(); });
+            $("#btnSelectExpert").bind("click", function () { SelectExpert(); });
+            $("#btnSelectMember").bind("click", function () { SelectMember(); });
+            $("#btnSend").click(function () { SendEmail(); });
+            $("#ReciveType1").change(function () {
+                if (!this.checked) return;
+                objUser.val('');
+                objUser.attr("disabled", "disabled");
+                objUser.unbind("change");              
+                $("#spanSelect").css("display", "");
+                $("#spanMsg").css("display", "none");
+                $("#spanTitle").html('接收人编号');
+            });
+            $("#ReciveType2").change(function () {
+                if (!this.checked) return;
+                objUser.val('');
+                objUser.removeAttr("disabled");
+                objUser.bind("change", function () {
+                    var val = $.trim($(this).val()), arry = val.split(','), str = '';
+                    for (var i = 0; i < arry.length; i++) {
+                        if (ValiEmial(arry[i]))
+                            str += arry[i] + ',';
+                    }
+                    if (str.length > 0)
+                        str = str.substring(0, str.length - 1);
+                    objUser.val(str);
+                });
+                $("#spanSelect").css("display", "none");
+                $("#spanMsg").css("display", "");
+                $("#spanTitle").html('接收邮件');
+            });
+        });
+
+        function LoadImage(url) {
+            if (url.length < 1)
+                $("#divFile").css("display", "none");
+            else {
+                //$("#aFile").attr("href", "@Html.UploadPath()" + url);
+                $("#aFile").unbind("click");
+                $("#aFile").click(function () { DownLoad('@Html.RootPath()', url, '邮件附件'); return false; });
+                $("#divFile").css("display", "inline");
+            }
+        }
+
+        function SelectAuthor() {
+            $.ligerDialog.open({ height: 400, url: '@Html.RootPath()/member/SelDialog?isAll=1', title: '选择作者', width: 600, slide: false, buttons: [
+                    { text: '确定', onclick: function (item, dialog) {
+                        rows = dialog.frame.checkedExpert;
+                        if (rows == "") { alert('请选择要添加的作者！'); return; }
+                        var str = "," + $("#txtUser").val() + ",", appendStr = '';
+                        for (i = 0; i < rows.length; i++) {
+                            if (ValiEmial(rows[i].LoginName) && str.indexOf("," + rows[i].AuthorID + ",") == -1) {
+                                appendStr += rows[i].AuthorID + ',';
+                            }
+                        }
+                        $("#txtUser").append(appendStr);
+                        dialog.close();
+                    }
+                    },
+                    { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+                    ]
+            });
+        }
+
+        function SelectExpert() {
+            $.ligerDialog.open({ height: 400, url: '@Html.RootPath()/Expert/SelDialog?isAll=1', title: '选择专家', width: 600, slide: false, buttons: [
+                    { text: '确定', onclick: function (item, dialog) {
+                        rows = dialog.frame.checkedExpert;
+                        if (rows == "") { alert('请选择要添加的专家！'); return; }
+                        var str = "," + $("#txtUser").val() + ",", appendStr = '';
+                        for (i = 0; i < rows.length; i++) {
+                            if (ValiEmial(rows[i].LoginName) && str.indexOf("," + rows[i].AuthorID + ",") == -1) {
+                                appendStr += rows[i].AuthorID + ',';
+                            }
+                        }
+                        $("#txtUser").append(appendStr);
+                        dialog.close();
+                    }
+                    },
+                    { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+                    ]
+            });
+        }
+
+        function SelectMember() {
+            $.ligerDialog.open({ height: 400, url: '@Html.RootPath()/member/SelDialog', title: '选择成员', width: 600, slide: false, buttons: [
+                    { text: '确定', onclick: function (item, dialog) {
+                        rows = dialog.frame.checkedExpert;
+                        if (rows == "") { alert('请选择要添加的成员！'); return; }
+                        var str = "," + $("#txtUser").val() + ",", appendStr = '';
+                        for (i = 0; i < rows.length; i++) {
+                            if (ValiEmial(rows[i].LoginName) && str.indexOf("," + rows[i].AuthorID + ",") == -1) {
+                                appendStr += rows[i].AuthorID + ',';
+                            }
+                        }
+                        $("#txtUser").append(appendStr);
+                        dialog.close();
+                    }
+                    },
+                    { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+                    ]
+            });
+        }
+
+        function SendEmail() {          
+            var objUser = $("#txtUser"), user = $.trim(objUser.val());
+            if (user.length < 1) {
+                alert("请选择收件作者或者输入收件Emial！");
+                objUser.focus();
+                return;
+            }
+            var objTitle = $("#txtTitle"), title = $.trim(objTitle.val());
+            if (title.length < 1) {
+                alert("请输入邮件主题！");
+                objTitle.focus();
+                return;
+            }
+            if ($.trim(UE.getEditor('txtContent').getContent()).length < 1) {
+                alert("请输入邮件内容！");
+                $("#txtContent").focus();
+                return;
+            }
+            if (!confirm("确认发送此邮件吗？")) return;
+            var saveParams = {
+                MsgTitle: title,
+                sendMailName: $.trim($("#txtSend").val()),
+                MsgContent: encodeURIComponent($.trim(UE.getEditor('txtContent').getContent())),                
+                IsAuthor: $("input[name='ReciveType']:checked").val()=="1",
+                ReciveUserStr: $.trim($("#txtUser").val()),
+                file: fileSrc
+            };
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/EmailTemp/SendEmail/',
+                data: saveParams,
+                cache: false,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+        function ValiEmial(value) {
+            var txt = $.trim(value);
+            if (value.length == 0)
+                return true;
+            if (!/^([\.a-zA-Z0-9_-])+@@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/.test(txt))
+                return false;
+            return true;
+        }
+    </script>
+}
+
+

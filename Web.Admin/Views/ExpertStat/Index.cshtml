@@ -1,0 +1,172 @@
+﻿<style type="text/css">
+    img
+    {
+        vertical-align: middle;
+    }
+</style>
+<div style="min-width:1200px;" id="notice_container" class="notice notice0">
+    <div class="c">
+        审稿费/篇：<input type="text" name="CPay" class="txtbox" id="txtCPay" style="width:50px;" value="@Html.ExpertReviewFee()" />&nbsp;
+        <input type="button" value="设置" class="btnsave" id="btnSave" />&nbsp;
+        专家姓名：<input type="text" name="EName" class="txtbox" id="txtEName" style="width:100px;" />&nbsp;
+        开始日期：<input type="text" name="StartDate" class="txtbox Wdate" id="txtStartDate" style="width:110px;" />&nbsp;
+        结束日期：<input type="text" name="EndDate" class="txtbox Wdate" id="txtEndDate" style="width:110px;" />&nbsp;
+        <input type="button" value="搜索" class="btnsearch" id="btnSearch" />&nbsp;
+        <input type="button" value="导出" class="btnexcel" id="btnExportExcel" />&nbsp;
+        <span><a id="ReportLink" style="display:inherit;"></a></span>
+        <input type="checkbox" id="isIgnoreNoWork" value="1" />忽略审稿数为0的专家&nbsp;
+    </div>
+</div>
+<div class="clear"></div>
+<div id="box">
+    <div id="divList">
+        <img src="@Html.RootPath()/Content/images/checkreg.gif" style="vertical-align:middle;" /><span style="font-size:14px;color:#333;">正在获取专家信息...</span>
+    </div>
+</div>
+<div style="display: none">
+    <form name="action_command" action="" target="_self" method="post"></form>
+</div>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var manager, DataQuery;
+        $(function () {
+            $("#txtStartDate").bind("click", function () {
+                var d5222 = $dp.$('txtEndDate');
+                WdatePicker({ readOnly: true, onpicked: function () { d5222.focus(); }, maxDate: '#F{$dp.$D(\'txtEndDate\')}' });
+            });
+            $("#txtEndDate").bind("click", function () { WdatePicker({ readOnly: true, minDate: '#F{$dp.$D(\'txtStartDate\')}' }); });
+            $("#selAuthor").click(function () {
+                var common = new CommonPage();
+                common.SelAuthor("txtInAuthor", "hiddenInAuthor");
+            });
+            manager = $("#divList").ligerGrid({
+                columns: [
+            { display: '编号', name: 'PKID', hide: true, width: '10%' },
+            { display: '专家姓名', name: 'RealName', width: '85', align: 'center' },
+            { display: '登录名', name: 'LoginName', width: '150', align: 'left' },
+            { display: '待审稿件', name: 'WaitCount', width: '70', align: 'center', render: function (item) {
+                return "<a href='javascript:void(0);' onclick='ViewDetail(0," + item.AuthorID + ")'>" + item.WaitCount + "</a>";
+            }
+            },
+            { display: '已审稿件', name: 'AlreadyCount', width: '70', align: 'center', render: function (item) {
+                return "<a href='javascript:void(0);' onclick='ViewDetail(1," + item.AuthorID + ")'>" + item.AlreadyCount + "</a>";
+            }
+            },
+            { display: '审稿费', name: 'ExpertReviewFee', width: '80', align: 'center', render: function (item) {
+                return "<span style=\"color:red;\">" + item.ExpertReviewFee + "</span>";
+            }
+            },
+            { display: '发票抬头', name: 'InvoiceUnit', width: '150', align: 'center' },
+            { display: '户名', name: 'ReserveField1', width: '60', align: 'center' },
+            { display: '帐号', name: 'ReserveField2', width: '120', align: 'center' },
+            { display: '开户行', name: 'ReserveField3', width: '120', align: 'center' },
+            { display: '专家单位', name: 'WorkUnit', width: '150', align: 'center' },
+            { display: '专家地址', name: 'Address', width: '220', align: 'center' },
+            { display: '邮编', name: 'ZipCode', width: '60', align: 'center' },
+            { display: '联系电话', name: 'Tel', width: '100', align: 'center' },
+            { display: '手机', name: 'Mobile', width: '90', align: 'center' }
+            
+            
+            ], width: '99.5%', height: 'auto', rownumbers: false, usePager: true, checkbox: true, enabledSort: false,
+                url: '@Html.RootPath()/ExpertStat/GetExpertWorkloadList?GroupID=3', pageSize: 30, totalRender: f_totalRender
+            });
+            //搜索
+            $("#btnSearch").click(function () {
+                var params = GetParams();
+                DataQuery = params;
+                manager.setOptions({ parms: params });
+                manager.loadData();
+            });
+
+            $("#isIgnoreNoWork").change(function () {
+                var params = GetParams();
+                DataQuery = params;
+                manager.setOptions({ parms: params });
+                manager.loadData();              
+            });
+
+            //保存计费设置
+            $("#btnSave").click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Html.RootPath()/ExpertStat/SaveConfig/',
+                    data: { ExpertReviewFee: $("#txtCPay").val() },
+                    cache: false,
+                    beforeSend: function () { },
+                    complete: function () { },
+                    success: function (data) {
+                        alert(data.Msg);
+                        manager.loadData();
+                    },
+                    error: function (xhr) {
+                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                    }
+                });
+            });
+
+        });
+
+        function f_totalRender(data, currentPageData) {
+            return "<span style=\"color:red;\">审稿费合计：" + (data.TotalMoney == undefined ? "￥0.00" : data.TotalMoney) + "<span>";
+        }
+
+        function GetParams() {
+            var IgnoreNoWork = false;
+            if ($("#isIgnoreNoWork").attr("checked") == "checked") {
+                IgnoreNoWork = true;
+            }
+            var params = {
+                RealName: $("#txtEName").val(),
+                StartDate: $("#txtStartDate").val(),
+                EndDate: $("#txtEndDate").val(),
+                isIgnoreNoWork: IgnoreNoWork
+            }
+            return params;
+        }
+
+        function ViewDetail(IsHandled, AuthorID) {
+            var url = '@Html.RootPath()/expertstat/StatDetail?IsHandled=' + IsHandled + "&StatusID=0&AuthorID=" + AuthorID;
+            var StartDate = $("#txtStartDate").val();
+            var EndDate = $("#txtEndDate").val();
+            if ($.trim(StartDate) != "") {
+                url += '&StartDate=' + StartDate;
+            }
+            if ($.trim(EndDate) != "") {
+                url += '&EndDate=' + EndDate;
+            }
+            url += '&rnd=' + Math.random();
+            $.ligerDialog.open({ height: 490, url: url, title: '查看审稿明细', width: 700, slide: false, buttons: [
+                { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }
+                ]
+            });
+
+        }
+        $("#btnExportExcel").click(function () {
+            var FileName = "专家信息导出.xls";
+            $.ajax({
+                beforeSend: function () {
+                    $("#ReportLink").removeAttr("href");
+                    document.getElementById("ReportLink").style.color = "#000000";
+                    $("#ReportLink").html("正在生成下载链接...");
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/ExpertStat/ExpertWorkloadListToExcel/?rnd=' + Math.random(),
+                data: { GroupID: 3, RealName: $("#txtEName").val(), StartDate: $('#txtStartDate').val(), EndDate: $('#txtEndDate').val(), isIgnoreNoWork: $("#isIgnoreNoWork").attr("checked") == "checked" ? true : false, Money: $('#txtCPay').val() },
+                cache: false,
+                success: function (data) {
+                    if (data.flag == 1) {
+                        $("#ReportLink").attr("href", "@Html.RootPath()/Upload/DownLoadFile?path=" + data.ExcelPath + "&fileName=" + FileName + "");
+                        document.getElementById("ReportLink").style.color = "Green";
+                        $("#ReportLink").html(FileName + "&nbsp;&nbsp;");
+                    }
+
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        });
+    </script>
+}

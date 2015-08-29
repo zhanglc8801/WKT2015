@@ -1,0 +1,9 @@
+F:\workplace\trunk\WKT.Data.MongoDB\bin\Release\WKT.Data.MongoDB.dll
+F:\workplace\trunk\WKT.Data.MongoDB\bin\Release\WKT.Data.MongoDB.pdb
+F:\workplace\trunk\WKT.Data.MongoDB\bin\Release\MongoDB.Bson.dll
+F:\workplace\trunk\WKT.Data.MongoDB\bin\Release\MongoDB.Driver.dll
+F:\workplace\trunk\WKT.Data.MongoDB\bin\Release\WKT.Model.dll
+F:\workplace\trunk\WKT.Data.MongoDB\bin\Release\WKT.Model.pdb
+F:\workplace\trunk\WKT.Data.MongoDB\obj\Release\ResolveAssemblyReference.cache
+F:\workplace\trunk\WKT.Data.MongoDB\obj\Release\WKT.Data.MongoDB.dll
+F:\workplace\trunk\WKT.Data.MongoDB\obj\Release\WKT.Data.MongoDB.pdb

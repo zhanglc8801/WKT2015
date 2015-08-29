@@ -1,0 +1,151 @@
+﻿@model WKT.Model.FriendlyLinkEntity
+
+@{
+    ViewBag.Title = "Create";
+}
+<style type="text/css">
+    body{ font-size:12px;}
+    .l-table-edit {border:1px solid #bed5f3;border-collapse: collapse;width:100%}
+    .l-table-edit-td-left{ padding:4px;text-align:right;width:90px;}
+    .l-table-edit-td{ padding:4px;}
+    .l-button-submit,.l-button-test{width:80px; float:left; margin-left:10px; padding-bottom:2px;}    
+</style>
+<div style="width: 98%; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>站点名称：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtSiteName" ltype="text" maxlength="25" value="@Model.SiteName" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>站点URL：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtSiteUrl" ltype="text" maxlength="50" value="@Model.SiteUrl" />
+            </td>
+        </tr>        
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>链接类型：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <select name="ddlLinkType" id="ddlLinkType" ltype="select">                 
+                    <option value="0">文字链接</option>
+                    <option value="1">图片链接</option>                   
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                上传LOG：
+            </td>
+            <td align="left" class="l-table-edit-td">                
+                <input type="file" name="uploadify" id="uploadify" />
+                <div id="divFile" style="display:none"><a href="javascript:void(0)" id="aFile">站点log</a></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                排序号：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtSort" ltype="text" maxlength="10" value="@Model.SortID" />                
+            </td>
+        </tr>       
+    </table>   
+    </form>
+</div>
+@section Scripts{
+    <script type="text/javascript" src="@Html.RootPath()/Scripts/Uploadify/jquery.uploadify.js"></script>
+    <script language="javascript" type="text/javascript">
+        var imgSrc = '@Model.LogoUrl', regex = /^(-|\+)?\d+$/;
+        $(function () {
+            $("#ddlLinkType").val('@Model.LinkType');
+            $("#txtSort").bind("change", function () {
+                var val = $.trim(this.value);
+                if (val.length > 0) {
+                    if (!regex.test(val))
+                        this.value = 0;
+                }
+            });
+            $("#uploadify").uploadify({
+                postData: { folder: 'FriendlyLink' },
+                uploader: '@Html.RootPath()/Upload/Save/',
+                buttonText: '上传站点LOG',
+                fileTypeDesc: 'Image Files',
+                fileTypeExts: "@Html.UploadImgExt()",
+                swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',  
+                onUploadSuccess: function (obj, data, response) {
+                    var result = eval("(" + data + ")");
+                    if (result.result == "success") {
+                        imgSrc = result.url;
+                        LoadImage(imgSrc);
+                    }
+                    else {
+                        alert(result.msg);
+                        return;
+                    }
+                }
+            });
+            $("form").ligerForm({ inputWidth: 240 });
+            LoadImage(imgSrc);
+        });
+
+        function LoadImage(url) {
+            if (url.length < 1)
+                $("#divFile").css("display", "none");
+            else {
+                //$("#aFile").attr("href", "@Html.UploadPath()" + url);
+                $("#aFile").unbind("click");
+                $("#aFile").click(function () { DownLoad('@Html.RootPath()', url, '站点LOG'); return false; });
+                $("#divFile").css("display", "inline");
+            }
+        }
+
+        function Save(manager, dialog, ChannelID) {
+            var objTitle = $("#txtSiteName"), title = $.trim(objTitle.val());
+            if (title.length < 1) {
+                alert("请输入站点名称！");
+                objTitle.focus();
+                return;
+            }
+            var objUrl = $("#txtSiteUrl"), url = $.trim(objUrl.val());
+            if (url.length < 1) {
+                alert("请输入站点URL！");
+                objUrl.focus();
+                return;
+            }            
+            var saveParams = {
+                LinkID: '@Model.LinkID',
+                ChannelID:ChannelID,
+                SiteName: title,
+                SiteUrl: url,
+                LogoUrl: imgSrc,
+                LinkType: $("#ddlLinkType").val(),
+                SortID: $("#txtSort").val()
+            };
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/FriendlyLink/Save/',
+                data: saveParams,
+                cache: false,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        dialog.close();
+                        manager.loadData();
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+    </script>
+}

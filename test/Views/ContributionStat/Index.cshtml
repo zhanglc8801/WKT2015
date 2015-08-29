@@ -1,0 +1,149 @@
+﻿@model DotNet.Highcharts.Highcharts
+<form name="form1" method="post" id="form1">
+<div style="" id="notice_container" class="notice notice0">
+    <div class="c">
+        收稿量统计维度：
+        <select id="selStatType" name="StatType">
+            <option value="0">时间</option>
+            <option value="1">基金</option>
+            <option value="2">作者</option>
+            <option value="3">退稿</option>
+            <option value="4">过程稿</option>
+        </select>
+        @Html.Raw(Html.SelectYear("Year", "80px", DateTime.Now.Year.ToString(), string.Empty, string.Empty))
+        <span style="margin-left: 50px;">
+            <input type="button" value="导出" class="btnsearch" id="btnReport" onclick="Report()" /></span>
+    </div>
+</div>
+</form>
+<div id="divList" style="display: none">
+</div>
+<div id="divChart">
+    @(Model)
+</div>
+<div style="display: none">
+    <form name="action_command" action="" target="_self" method="post">
+    </form>
+</div>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/highcharts/highcharts.js" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+        var StatType = '@ViewBag.StatType';
+        $(function () {
+            $("#selStatType").change(function () {
+                switch ($(this).val()) {
+                    case '4'://过程稿
+                        $("#Year").css("display", 'none');
+                        $("#divList").css("display", "");
+                        $("#divChart").css("display", "none");
+                        InitDealing();
+                        break;
+                    case '3'://退稿
+                        $("#Year").css("display", 'none');
+                        $("#divList").css("display", "");
+                        $("#divChart").css("display", "none");
+                        InitReturn();
+                        break;
+                    case '2'://作者
+                        $("#Year").css("display", 'none');
+                        $("#divList").css("display", "");
+                        $("#divChart").css("display", "none");
+                        InitAuthor();
+                        break;
+                    case '1':// 基金
+                        $("#divList").css("display", "none");
+                        $("#divChart").css("display", "");
+                        $("#form1").submit();
+                        break;
+                    default:// 时间
+                        $("#divList").css("display", "none");
+                        $("#divChart").css("display", "");
+                        $("#form1").submit();
+                        break;
+                }
+            });
+            $("#Year").change(function () {
+                $("#form1").submit();
+            });
+            $("#Year").css("display", StatType == '0' ? '' : 'none');
+            $("#Year").val('@ViewBag.Year');
+            $("#selStatType").val(StatType);
+        });
+
+        function InitAuthor() {
+            manager = $("#divList").ligerGrid({
+                columns: [
+                { display: '作者', name: 'AuthorName', width: '40%', align: 'center' },
+                { display: '投稿量', name: 'Account', width: '50%', align: 'center' }
+                ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: false, enabledSort: false,
+                url: '@Html.RootPath()/ContributionStat/GetContributionAccountListByAuhor', pageSize: 20, totalRender: f_totalRender,
+            });
+        }
+
+        // 过程稿
+        function InitDealing() {
+            manager = $("#divList").ligerGrid({
+                columns: [
+                { display: '状态名称', name: 'StatusName', width: '50%', align: 'center' , render: function (item) {
+                    return "<a href=\"javascript:void(0);\" onclick=\"ViewDetail(" + item.StatusID + ",'" + item.StatusName + "')\">" + item.StatusName + "</a>";
+                  }
+                },
+                { display: '稿件数量', name: 'ContributionCount', width: '20%', align: 'center' }
+                ], width: '99.5%', height: '98%', rownumbers: false, usePager: false, checkbox: false, enabledSort: false,
+                url: '@Html.RootPath()/Contribution/GetFlowStatusStat/?rnd=' + Math.random(),
+            });
+        }
+
+        // 退稿
+        function InitReturn() {
+            manager = $("#divList").ligerGrid({
+                columns: [
+                { display: '稿件标题', name: 'Title', width: '40%', align: 'center' },
+                { display: '作者', name: 'AuthorName', width: '20%', align: 'center' },
+                { display: '处理人', name: 'SendUserName', width: '20%', align: 'center' },
+                { display: '处理时间', name: 'AddDate', align: 'center', type: 'date' , format: 'yyyy-MM-dd hh:mm:ss'}
+                ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: false, enabledSort: false,
+                url: '@Html.RootPath()/Contribution/GetReturnContributionListAjax/?rnd=' + Math.random(), pageSize: 20,
+            });
+        }
+
+         function f_totalRender(data, currentPageData) {
+            return "合计:" + data.Account;
+        }
+
+        function Report() {
+            var StatType = $("#selStatType").val(), kindStr = '', msg = '';
+            switch (StatType) {
+                case '4': kindStr = 'contributionaccountbygochenggao', msg = '导出过程稿信息'; break;
+                case '3': kindStr = 'contributionaccountbytuigao', msg = '导出退稿处理信息'; break;
+                case '2': kindStr = 'contributionaccountbyauhor', msg = '导出按作者统计收稿量信息'; break;
+                case '1': kindStr = 'contributionaccountbyfund', msg = '导出按基金统计收稿量信息'; break;
+                default: kindStr = 'contributionaccountbyyear', msg = '导出按时间统计收稿量信息'; break;
+            }
+            $.ligerDialog.open({
+                height: 420,
+                width: 600,
+                url: '@Html.RootPath()/Report/Index?type=' + kindStr,
+                title: msg,
+                slide: false,
+                buttons: [{ text: '导出', onclick: function (item, dialog) {
+                    var fields = dialog.frame.GetFileds();
+                    if (fields.length < 1) return;
+                    if (confirm("您确认导出吗？")) {
+                        html = "";
+                        html += '<input type="hidden" name="Kind" value="' + StatType + '"/>';
+                        html += '<input type="hidden" name="Year" value="' + $("#Year").val() + '"/>';
+                        html += '<input type="hidden" name="strDict" value="' + encodeURIComponent(fields) + '"/>';
+                        $('form[name="action_command"]').html(html).attr("action", '@Html.RootPath()/ContributionStat/ContributionAccountToExcel').attr("method", "post").submit();
+                    }
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function ViewDetail(StatusID,StatusName)
+        {
+           $.ligerDialog.open({ height: 500, url: '@Html.RootPath()/Contribution/ContributionDialog?StatusID=' + StatusID + '&rnd=' + Math.random(), title: StatusName + '：稿件明细', width: 700, slide: true, buttons: []});
+        }
+    </script>
+}

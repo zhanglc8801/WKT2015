@@ -1,0 +1,98 @@
+﻿@model WKT.Model.Pager<WKT.Model.IssueContentEntity>
+@{
+    ViewBag.Title = "期刊目录" + "-" + Html.SiteName();
+    ViewBag.Position = "期刊目录";
+}
+
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    $(function () {
+        $('#activator').click(function () {
+            $('#box').animate({ 'top': '65px' }, 500);
+        });
+        $('#boxclose').click(function () {
+            $('#box').animate({ 'top': '-400px' }, 500);
+        });
+        $('#activator_share').click(function () {
+            $('#box_share').animate({ 'top': '65px' }, 500);
+        });
+        $('#boxclose_share').click(function () {
+            $('#box_share').animate({ 'top': '-400px' }, 500);
+        });
+
+    });
+    $(document).ready(function () {
+        $(".toggle_container").hide();
+        $(".trigger").click(function () {
+            $(this).toggleClass("active").next().slideToggle("slow");
+            return false;
+        });
+
+    });
+</script>
+<!-- Hide Mobiles Browser Navigation Bar -->
+<script type="text/javascript">
+    window.addEventListener("load", function () {
+        // Set a timeout...
+        setTimeout(function () {
+            // Hide the address bar!
+            window.scrollTo(0, 1);
+        }, 0);
+    });
+</script>
+
+<div id="main_container">
+	<div class="header">
+        <a href="/Home/" class="left_bt">Home</a>
+        <span>期刊目录</span>
+        <a href="#" class="right_bt" id="activator"><img src="/Content/images/search.png" alt="" title="" border="0" /></a>
+    </div>
+    
+    <div class="box" id="box">
+        <div class="box_content">
+            <div class="box_content_tab">文章检索</div>
+            <div class="box_content_center">
+                <div class="form_content">
+                    <form action="/Magazine/SearchList" method="post">
+                        <label>您要查询哪一年的文章:</label>
+                        <input type="text" class="form_input" id="Year" name="Year" value="" />
+                        <label>您要查询哪一期的文章:</label>
+                        <input type="text" class="form_input" id="Issue" name="Issue" value="" />
+                        <label>您要查询的文章标题(支持模糊查询):</label>
+                        <input type="text" class="form_input" id="Title" name="Title" value="" />
+                        <input type="hidden" name="PageIndex" value="1"/>
+                        <a class="boxclose" id="boxclose">关闭</a>
+                        <input type="submit" class="form_submit" value="提交" />
+                    </form>
+                </div> 
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    
+	<div class="content">       
+        
+            @foreach (WKT.Model.YearVolumeEntity item in Html.GetYearVolumeList())
+            { 
+                <div class="toogle_wrap">
+                <div class="trigger"><a href="#">@item.Year 年 &nbsp;Vol.@item.Volume</a></div>
+                <div class="toggle_container">
+                    <ul>
+                        @foreach (WKT.Model.IssueSetEntity Issue in Html.GetIssueSetList())
+                        { 
+                            <a href="/Magazine/List/?Year=@item.Year&Issue=@Issue.Issue" style="color: #fff; font-weight:bold;"><li><span style="margin-left: 5px;">第 @Issue.Issue 期</span></li></a>
+                        }                      
+                    </ul>
+                </div>
+                </div>
+                <div class="shadow_wrap"></div>
+            }  
+        <div class="shadow_wrap"></div>
+    </div>
+    <div id="footer">
+        <span>@Html.SiteName()</span>
+        <a onclick="jQuery('html, body').animate( { scrollTop: 0 }, 'slow' );"  href="javascript:void(0);" title="回到顶部" class="right_bt"><img src="/Content/images/top.png" alt="" title="" border="0" /></a>
+    </div>
+</div>
+
+

@@ -1,0 +1,88 @@
+﻿<div style="" id="notice_container" class="notice notice0">
+	<div class="c">
+        编辑姓名：<input type="text" name="RealName" class="txtbox" id="txtRealName" /> &nbsp;开始日期：<input type="text" name="StartDate" class="txtbox" id="txtStartDate" /> &nbsp;结束日期：<input type="text" name="EndDate" class="txtbox" id="txtEndDate" /> &nbsp;<input type="button" value="搜索" class="btnsearch" id="btnSearch" />
+    </div>
+</div>
+<div id="box">
+	<div id="divWorkloadList"></div>
+</div>
+@section Scripts{
+<script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+    var grid;
+    $(function () {
+
+        $("#btnSearch").click(function () {
+            grid.setOptions({ parms: {
+                StartDate: $("#txtStartDate").val(),
+                EndDate: $("#txtEndDate").val(),
+                RealName: $("#txtRealName").val()
+            }
+            });
+            grid.loadData();
+        });
+
+        // 日期选择
+        $("#txtStartDate").bind("click", function () {
+            var d5222 = $dp.$('txtEndDate');
+            WdatePicker({ readOnly: true, onpicked: function () { d5222.focus(); }, maxDate: '#F{$dp.$D(\'txtEndDate\')}' });
+        });
+        $("#txtEndDate").bind("click", function () { WdatePicker({ readOnly: true, minDate: '#F{$dp.$D(\'txtStartDate\')}' }); });
+
+        grid = $("#divWorkloadList").ligerGrid({
+            columns: [
+            { display: '编号', name: 'AuthorID', width: '5%', align: 'center' },
+            { display: '登录名', name: 'LoginName', width: '12%', align: 'left' },
+            { display: '真实姓名', name: 'RealName', width: '8%', align: 'center' },
+            { display: '新稿件数量', name: 'NewCount', width: '10%', align: 'center', render: function (item) {
+                return "<a href='javascript:void(0);' onclick='ViewDetail(35," + item.AuthorID + ")'>" + item.NewCount + "</a>";
+                }
+            },
+            { display: '已修改数量', name: 'ModifiedCount', width: '10%', align: 'center', render: function (item) {
+                return "<a href='javascript:void(0);' onclick='ViewDetail(37," + item.AuthorID + ")'>" + item.ModifiedCount + "</a>";
+            }
+            },
+            { display: '已退稿数量', name: 'RejectionCount', width: '10%', align: 'center', render: function (item) {
+                return "<a href='javascript:void(0);' onclick='ViewDetail(36," + item.AuthorID + ")'>" + item.RejectionCount + "</a>";
+                }
+            }
+            ,
+            { display: '退修中数量', name: 'ModifyingCount', width: '10%', align: 'center', render: function (item) {
+                return "<a href='javascript:void(0);' onclick='ViewDetail(40," + item.AuthorID + ")'>" + item.ModifyingCount + "</a>";
+            }
+             }
+            ,
+            { display: '编辑之间转交数量', name: 'TransCount', width: '10%', align: 'center', render: function (item) {
+                return "<a href='javascript:void(0);' onclick='ViewDetail(43," + item.AuthorID + ")'>" + item.TransCount + "</a>";
+            }
+            },
+            { display: '确定年期数量', name: 'DetermineCount', width: '10%', align: 'center', render: function (item) {
+                return "<a href='javascript:void(0);' onclick='ViewDetail(42," + item.AuthorID + ")'>" + item.DetermineCount + "</a>";
+            }
+            }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+        url: '@Html.RootPath()/expertstat/GetEditorWorkloadList?GroupID=1&rnd=' + Math.random(), pageSize: 50
+        });
+    });
+    function ViewDetail(Status,AuthorID) {
+        var url = '@Html.RootPath()/expertstat/EditorDetail?Status=' + Status + "&AuthorID=" + AuthorID;
+        var StartDate = $("#txtStartDate").val();
+        var EndDate = $("#txtEndDate").val();
+        if ($.trim(StartDate) != "") {
+            url += '&StartDate=' + StartDate;
+        }
+        if ($.trim(EndDate) != "") {
+            url += '&EndDate=' + EndDate;
+        }
+        url += '&rnd=' + Math.random();
+        $.ligerDialog.open({ height: 320, url: url, title: '查看审稿明细', width: 480, slide: false, buttons: [
+        { text: '确定', onclick: function (item, dialog) {
+            dialog.close();
+        }
+        },
+        { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+        ]
+        });
+    }
+</script>
+}

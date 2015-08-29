@@ -1,0 +1,144 @@
+﻿@model WKT.Model.PayNoticeEntity
+<link href="@Html.RootPath()/Content/ContributionInfo.css" rel="stylesheet" type="text/css" />
+<form name="form1" method="post" id="form1">
+<table border="0" class="mainTable" cellpadding="0" cellspacing="1" align="center"
+    width="100%">
+    <tr>
+        <td colspan="2" class="title">
+            ※交费通知单 带<span class="tip">*</span>为必填项
+        </td>
+    </tr>
+    <tr>
+        <td class="left" style="width: 80px;">
+            交费类型：
+        </td>
+        <td class="right">
+            <select name="FeeType" id="ddlFeeType">
+                @if ((int)ViewBag.payType == 1)
+                {
+                    <option value="1" selected="selected">审稿费</option>
+                }
+                @if ((int)ViewBag.payType == 2)
+                {
+                    <option value="2">版面费</option>
+                }
+                else
+                {
+                    <option value="3">加急费</option> 
+                }
+            </select>
+            <input name="Amount" type="text" id="txtAmount" class="txtbox" value="" validate="{required:true,positivemoney:true}" />
+            <span class="tip">*</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="left" style="width: 80px;">
+            邮件标题：
+        </td>
+        <td class="right">
+            <input name="Title" type="text" id="txtTitle" style="width: 215px;" class="txtbox"
+                value="@((int)ViewBag.payType==1?"通知交审稿费":"通知交版面费")" />
+        </td>
+    </tr>
+    <tr>
+        <td class="left" style="width: 80px;">
+            邮件内容：
+        </td>
+        <td class="right">
+            <textarea cols="100" rows="4" class="l-textarea" id="txtBody" style="width:570px">@ViewBag.body</textarea>
+        </td>
+    </tr>
+    <tr>
+        <td class="left" style="width: 80px;">
+            发送短信：
+        </td>
+        <td class="right">
+            <input type="checkbox" id="chkIsSms" />
+                <label for="chkIsSms">&nbsp;发送短信？</label>
+                </label>
+            <div style="margin-top: 5px; display: none; vertical-align: top" id="divSms">
+                <textarea rows="2" cols="20" id="txtSms" class="txtbox" style="height: 60px; width: 500px;" validate="{byteMaxLength:70}"></textarea>
+            </div>
+        </td>
+    </tr>
+</table>
+</form>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/validation/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/validation/jquery.metadata.js?111" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/validation/messages_cn.js" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8" src="@Html.RootPath()/content/ueditor/ueditor.config4.js"></script>
+    <script type="text/javascript" charset="utf-8" src="@Html.RootPath()/content/ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="@Html.RootPath()/content/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#ddlFeeType").attr("disabled", "disabled");
+            $("#chkIsSms").click(function () {
+                $("#divSms").slideToggle('medium');
+            });
+
+            //自动填充审稿费
+            if ('@ViewBag.payType'=='1'){
+                $("#txtAmount").val("@Html.ReviewFeeText()");
+            }
+
+            UE.getEditor('txtBody');
+            $("#txtAmount").change(function () {
+                var str = $.trim(UE.getEditor('txtBody').getContent());
+                str = str.replace(/\$\{金额\}\$/gi, $(this).val());
+                UE.getEditor('txtBody').setContent(str,false);
+            });
+            $.metadata.setType("attr", "validate");
+            validator = $("#form1").validate({
+                debug: false,
+                errorPlacement: function (lable, element) {
+                    element.ligerTip({ content: lable.html(), target: element[0] });
+                },
+                success: function (lable) {
+                    lable.ligerHideTip();
+                    lable.remove();
+                }
+            });
+        });
+
+        function BatchSave(manager, dialog, users) {
+            var isvalided = $("#form1").valid();
+            if (isvalided) {
+                $("#form1").ligerHideTip();
+                if (UE.getEditor('txtBody').getContentTxt().length < 1) {
+                    alert("请输入邮件内容！");
+                    $("#txtBody").focus();
+                    return;
+                }
+                var saveParams = {
+                    PayType: $("#ddlFeeType").val(),
+                    Amount: $.trim($("#txtAmount").val()),
+                    Title: $.trim($("#txtTitle").val()),
+                    Body: encodeURIComponent(UE.getEditor('txtBody').getContent()),
+                    IsSms: document.getElementById("chkIsSms").checked,
+                    SmsContent: $.trim($("#txtSms").val())
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: '@Html.RootPath()/Finance/BatchSavePayNotice',
+                    data: saveParams,
+                    cache: false,
+                    success: function (data) {
+                        alert(data.msg);
+                        if (data.result == "success") {
+                            dialog.close();
+                            if (flag)
+                                manager.loadData();
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                    }
+                });
+            }
+            else {
+                alert('验证失败，请验证填写的内容是否正确!');
+            }
+        }
+    </script>
+}

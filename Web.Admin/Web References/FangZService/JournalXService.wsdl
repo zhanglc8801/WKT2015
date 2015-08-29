@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="MessageNotification">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strSafetyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MsgType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MessageParameter" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MessageNotificationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MessageNotificationResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddSchema">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="zipFilePah" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddSchemaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddSchemaResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateSchema">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="zipFilePath" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateSchemaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateSchemaResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteSchema">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteSchemaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteSchemaResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFFXTemplate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="markId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFFXTemplateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetFFXTemplateResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUser">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+      <s:element name="int" type="s:int" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="MessageNotificationSoapIn">
+    <wsdl:part name="parameters" element="tns:MessageNotification" />
+  </wsdl:message>
+  <wsdl:message name="MessageNotificationSoapOut">
+    <wsdl:part name="parameters" element="tns:MessageNotificationResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddSchemaSoapIn">
+    <wsdl:part name="parameters" element="tns:AddSchema" />
+  </wsdl:message>
+  <wsdl:message name="AddSchemaSoapOut">
+    <wsdl:part name="parameters" element="tns:AddSchemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateSchemaSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateSchema" />
+  </wsdl:message>
+  <wsdl:message name="UpdateSchemaSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateSchemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteSchemaSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteSchema" />
+  </wsdl:message>
+  <wsdl:message name="DeleteSchemaSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteSchemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFFXTemplateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFFXTemplate" />
+  </wsdl:message>
+  <wsdl:message name="GetFFXTemplateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFFXTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUser" />
+  </wsdl:message>
+  <wsdl:message name="GetUserSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="MessageNotificationHttpGetIn">
+    <wsdl:part name="strSafetyCode" type="s:string" />
+    <wsdl:part name="MsgType" type="s:string" />
+    <wsdl:part name="MessageParameter" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="MessageNotificationHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="AddSchemaHttpGetIn">
+    <wsdl:part name="zipFilePah" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddSchemaHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="UpdateSchemaHttpGetIn">
+    <wsdl:part name="id" type="s:string" />
+    <wsdl:part name="zipFilePath" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateSchemaHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="DeleteSchemaHttpGetIn">
+    <wsdl:part name="id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteSchemaHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetFFXTemplateHttpGetIn">
+    <wsdl:part name="markId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFFXTemplateHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetUserHttpGetIn" />
+  <wsdl:message name="GetUserHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="MessageNotificationHttpPostIn">
+    <wsdl:part name="strSafetyCode" type="s:string" />
+    <wsdl:part name="MsgType" type="s:string" />
+    <wsdl:part name="MessageParameter" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="MessageNotificationHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="AddSchemaHttpPostIn">
+    <wsdl:part name="zipFilePah" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddSchemaHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="UpdateSchemaHttpPostIn">
+    <wsdl:part name="id" type="s:string" />
+    <wsdl:part name="zipFilePath" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateSchemaHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="DeleteSchemaHttpPostIn">
+    <wsdl:part name="id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteSchemaHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetFFXTemplateHttpPostIn">
+    <wsdl:part name="markId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFFXTemplateHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetUserHttpPostIn" />
+  <wsdl:message name="GetUserHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="JournalXServiceSoap">
+    <wsdl:operation name="MessageNotification">
+      <wsdl:input message="tns:MessageNotificationSoapIn" />
+      <wsdl:output message="tns:MessageNotificationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSchema">
+      <wsdl:input message="tns:AddSchemaSoapIn" />
+      <wsdl:output message="tns:AddSchemaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSchema">
+      <wsdl:input message="tns:UpdateSchemaSoapIn" />
+      <wsdl:output message="tns:UpdateSchemaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSchema">
+      <wsdl:input message="tns:DeleteSchemaSoapIn" />
+      <wsdl:output message="tns:DeleteSchemaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFFXTemplate">
+      <wsdl:input message="tns:GetFFXTemplateSoapIn" />
+      <wsdl:output message="tns:GetFFXTemplateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <wsdl:input message="tns:GetUserSoapIn" />
+      <wsdl:output message="tns:GetUserSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="JournalXServiceHttpGet">
+    <wsdl:operation name="MessageNotification">
+      <wsdl:input message="tns:MessageNotificationHttpGetIn" />
+      <wsdl:output message="tns:MessageNotificationHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSchema">
+      <wsdl:input message="tns:AddSchemaHttpGetIn" />
+      <wsdl:output message="tns:AddSchemaHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSchema">
+      <wsdl:input message="tns:UpdateSchemaHttpGetIn" />
+      <wsdl:output message="tns:UpdateSchemaHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSchema">
+      <wsdl:input message="tns:DeleteSchemaHttpGetIn" />
+      <wsdl:output message="tns:DeleteSchemaHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFFXTemplate">
+      <wsdl:input message="tns:GetFFXTemplateHttpGetIn" />
+      <wsdl:output message="tns:GetFFXTemplateHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <wsdl:input message="tns:GetUserHttpGetIn" />
+      <wsdl:output message="tns:GetUserHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="JournalXServiceHttpPost">
+    <wsdl:operation name="MessageNotification">
+      <wsdl:input message="tns:MessageNotificationHttpPostIn" />
+      <wsdl:output message="tns:MessageNotificationHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSchema">
+      <wsdl:input message="tns:AddSchemaHttpPostIn" />
+      <wsdl:output message="tns:AddSchemaHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSchema">
+      <wsdl:input message="tns:UpdateSchemaHttpPostIn" />
+      <wsdl:output message="tns:UpdateSchemaHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSchema">
+      <wsdl:input message="tns:DeleteSchemaHttpPostIn" />
+      <wsdl:output message="tns:DeleteSchemaHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFFXTemplate">
+      <wsdl:input message="tns:GetFFXTemplateHttpPostIn" />
+      <wsdl:output message="tns:GetFFXTemplateHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <wsdl:input message="tns:GetUserHttpPostIn" />
+      <wsdl:output message="tns:GetUserHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="JournalXServiceSoap" type="tns:JournalXServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="MessageNotification">
+      <soap:operation soapAction="http://tempuri.org/MessageNotification" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSchema">
+      <soap:operation soapAction="http://tempuri.org/AddSchema" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSchema">
+      <soap:operation soapAction="http://tempuri.org/UpdateSchema" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSchema">
+      <soap:operation soapAction="http://tempuri.org/DeleteSchema" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFFXTemplate">
+      <soap:operation soapAction="http://tempuri.org/GetFFXTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <soap:operation soapAction="http://tempuri.org/GetUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="JournalXServiceSoap12" type="tns:JournalXServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="MessageNotification">
+      <soap12:operation soapAction="http://tempuri.org/MessageNotification" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSchema">
+      <soap12:operation soapAction="http://tempuri.org/AddSchema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSchema">
+      <soap12:operation soapAction="http://tempuri.org/UpdateSchema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSchema">
+      <soap12:operation soapAction="http://tempuri.org/DeleteSchema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFFXTemplate">
+      <soap12:operation soapAction="http://tempuri.org/GetFFXTemplate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <soap12:operation soapAction="http://tempuri.org/GetUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="JournalXServiceHttpGet" type="tns:JournalXServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="MessageNotification">
+      <http:operation location="/MessageNotification" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSchema">
+      <http:operation location="/AddSchema" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSchema">
+      <http:operation location="/UpdateSchema" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSchema">
+      <http:operation location="/DeleteSchema" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFFXTemplate">
+      <http:operation location="/GetFFXTemplate" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <http:operation location="/GetUser" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="JournalXServiceHttpPost" type="tns:JournalXServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="MessageNotification">
+      <http:operation location="/MessageNotification" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSchema">
+      <http:operation location="/AddSchema" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSchema">
+      <http:operation location="/UpdateSchema" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSchema">
+      <http:operation location="/DeleteSchema" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFFXTemplate">
+      <http:operation location="/GetFFXTemplate" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <http:operation location="/GetUser" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="JournalXService">
+    <wsdl:port name="JournalXServiceSoap" binding="tns:JournalXServiceSoap">
+      <soap:address location="http://219.141.190.71/service/JournalXService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="JournalXServiceSoap12" binding="tns:JournalXServiceSoap12">
+      <soap12:address location="http://219.141.190.71/service/JournalXService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="JournalXServiceHttpGet" binding="tns:JournalXServiceHttpGet">
+      <http:address location="http://219.141.190.71/service/JournalXService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="JournalXServiceHttpPost" binding="tns:JournalXServiceHttpPost">
+      <http:address location="http://219.141.190.71/service/JournalXService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

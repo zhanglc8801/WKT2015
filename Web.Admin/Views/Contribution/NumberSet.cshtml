@@ -1,0 +1,149 @@
+﻿@model WKT.Model.ContributeSetEntity
+<div style="" id="notice_container" class="notice notice0">
+    <div class="c">
+        <a href="javascript:void(0)" id="noticeTip" style="line-height: 21px;">系统提示：稿件编号设置用来设置稿件编号的组成形式，可以按照“日期格式”、“自定义格式”和年份格式来确定稿件编号的组成形式。<br />
+            1.日期格式分四种情况：yyyymmdd；yymmdd；yyyymm；yymm 如：2010年2月25日投来的稿件那么对应的稿件前缀分别是：20100225；100225；201002；1002
+            <br />
+            2.自定义格式：是可以自己随意输入任何字母或数字来作为稿件的前缀。<br />
+            3.年份格式：是自动把当前年份作为稿件编号的前缀，例如：今年是2012年,分隔符为"-",设定的位数为3，那么第一篇投稿的编号就是2012-001<br />
+            4.分隔符：设定的前缀和自增位数之间链接的符号，默认为"-"，可为空。<br />
+            5.自增位数：稿件前缀之后保留几位自增的数字位，如：稿件前缀是2010，位数为3；那么生成的稿件编号就是：2010-001，2010-002···根据投稿的顺序进行自增。</a>
+    </div>
+</div>
+<div style="margin: 8px;">
+    <input type="radio" id="radioDateFormat" value="1" name="NumberFormat" /><label for="EBankType1">日期格式</label>
+    <input type="radio" id="radioCustomFormat" value="2" name="NumberFormat" /><label
+        for="EBankType2">自定义格式</label>
+    <input type="radio" id="radioYearFormat" value="3" name="NumberFormat" /><label for="EBankType3">年份格式</label>
+    <input type="checkbox" id="checkboxMonthFormat" name="checkboxMonthFormat" /><label
+        for="EBankType3">每月编号重置</label>
+</div>
+<div style="margin: 8px;" id="divFormat">
+    <span id="spanDate" style="display: none;">
+        <select id="selDateFormat" name="selDateFormat">
+            <option value="yyyMMdd">yyyMMdd</option>
+            <option value="yyMMdd">yyMMdd</option>
+            <option value="yyyyMM">yyyyMM</option>
+            <option value="yyMM">yyMM</option>
+        </select></span> <span id="spanPrefix" style="display: none;">稿件编号前缀：<input type="text"
+            name="txtPrefix" id="txtPrefix" class="txtbox" style="width: 100px;" /></span>
+    <span id="spanYear">
+        <input type="text" readonly name="txtYear" id="txtYear" class="txtbox" style="width:100px;" value="@DateTime.Now.Year" /></span>
+    分隔符：<input type="text" name="Separator" id="txtSeparator" class="txtbox" style="width: 33px;
+        text-align: center;" value="-" />
+    自增位数：<input type="text" name="txtDigit" id="txtDigit" class="txtbox" style="width: 80px;"
+        value="4" />
+    <input type="button" id="btnSet" class="btnset" value="设置" name="btnSet" />
+</div>
+@section Scripts{
+    <script type="text/javascript" language="javascript">
+    var CCodeType = @Model.CCodeType;
+    var CCodeFormat = '@Model.CCodeFormat';
+    var Separator = '@Model.Separator';
+    var RandomDigit = @Model.RandomDigit;
+
+    $(function () {
+        if(Separator!="")
+        {
+            var paras=Separator.split(',');
+            if(paras!="" && paras.length>0){ 
+                $("#txtSeparator").val(Separator.split(',')[0]);
+                if(Separator.split(',')[1]=="1")
+                {
+                   $("input[name='checkboxMonthFormat']").attr("checked","checked")
+                }
+            }
+            else{
+                $("#txtSeparator").val(Separator);
+            }
+        }
+
+
+        $("#txtDigit").val(RandomDigit);
+        switch(CCodeType)
+        {
+            case 1://日期格式
+                $("#selDateFormat").val(CCodeFormat);
+                $("#spanDate").show();
+                $("#spanPrefix").hide();
+                $("#spanYear").hide();
+                break;
+            case 2://自定义格式
+                $("#txtPrefix").val(CCodeFormat);
+                $("#spanDate").hide();
+                $("#spanPrefix").show();
+                $("#spanYear").hide();
+                break;
+            case 3://年份格式
+                $("#spanDate").hide();
+                $("#spanPrefix").hide();
+                $("#spanYear").show();
+                break;
+        }
+        // 初始化
+        $("input[name=NumberFormat][value=" + CCodeType + "]").attr("checked",true);
+        // RadioButton 点击切换
+        $("input:[name=NumberFormat]").click(function () {
+            var selFormat = parseInt($("input:[name=NumberFormat]:radio:checked").val());
+            switch (selFormat) {
+                case 1:
+                    $("#spanDate").show();
+                    $("#spanPrefix").hide();
+                    $("#spanYear").hide();
+                    break;
+                case 2:
+                    $("#spanDate").hide();
+                    $("#spanPrefix").show();
+                    $("#spanYear").hide();
+                    break;
+                case 3:
+                    $("#spanDate").hide();
+                    $("#spanPrefix").hide();
+                    $("#spanYear").show();
+                    break;
+            }
+        });
+        $("#btnSet").click(function () {
+            var selFormat = parseInt($("input:[name=NumberFormat]:radio:checked").val());
+            var SetFormatPrefix = "";
+            switch (selFormat) {
+                case 1:
+                    SetFormatPrefix = $("#selDateFormat").val();
+                    break;
+                case 2:
+                    SetFormatPrefix = $("#txtPrefix").val();
+                    break;
+                case 3:
+                    SetFormatPrefix = "";
+                    break;
+            }
+            $.ajax({
+                beforeSend: function () {
+                    $(this).attr("disabled", true);
+                },
+                complete: function () { $(this).attr("disabled", false); },
+                type: 'POST',
+                url: '@Html.RootPath()/Contribution/SetNumberFormatAjax/?rnd=' + Math.random(),
+                data: { "CCodeType": selFormat,"CCodeFormat": SetFormatPrefix,"Separator":($("#checkboxMonthFormat").attr("checked")?$("#txtSeparator").val()+','+1:$("#txtSeparator").val()),"RandomDigit":$("#txtDigit").val()},
+                cache: false,
+                traditional: true,
+                success: function (data) {
+                    var e = eval("(" + data + ")");
+                    if (e.result == 'success') {
+                        alert('设置成功');
+                    }
+                    else if (e.result == 'failure') {
+                        alert(e.msg);
+                    }
+                    else if (e.result == 'error') {
+                        alert(e.msg);
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        });
+    });
+    </script>
+}

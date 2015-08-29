@@ -1,0 +1,98 @@
+﻿<div id="divToolbar"></div>
+<div id="divDictList"></div>
+@section Scripts{
+<script type="text/javascript">
+    var manager;
+    $(function () {   
+        manager = $("#divDictList").ligerGrid({
+            columns: [
+            { display: '编号', name: 'DictID', width: '10%', align: 'center' },
+            { display: '名称', name: 'DictKey', width: '20%', align: 'left', render: function (item) {              
+                return '<a href="javascript:void(0)" onclick="ViewDetail(' + item.DictID + ',this)">' + item.DictKey + '</a>';
+            }
+            },
+            { display: '描述', name: 'Note', width: '40%', align: 'left' },
+            { display: '创建人', name: 'InUserName', width: '10%', align: 'center' },
+            { display: '创建时间', name: 'AddDate', width: '20%', align: 'center', type: 'date', format: 'yyyy-MM-dd' }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+            url: '@Html.RootPath()/Dict/GetDictPageList', pageSize: 20, enabledSort: false, 
+            toolbar: { items: [
+            { text: '新增', click: AddDict, icon: 'add' },
+            { line: true },
+            { text: '修改', click: UpdateDict, icon: 'modify' },
+            { line: true },
+            { text: '删除', click: DelDict, icon: 'delete' }
+            ]
+            }
+        });
+    });
+
+    function AddDict() {
+        $.ligerDialog.open({
+            height: 270,
+            width: 450,
+            url: '@Html.RootPath()/Dict/Create',
+            title: '新增数据字典',          
+            slide:false,
+            buttons: [{ text: '确认', onclick: function (item, dialog) {                
+                dialog.frame.Save(manager, dialog);
+            }
+            }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+        });
+    }
+
+    function UpdateDict() {
+        var rows = manager.getSelectedRows();
+        if (rows == "") { alert('请选择需要编辑的数据！'); return; }
+        $.ligerDialog.open({
+            height: 270,
+            width: 450,
+            url: '@Html.RootPath()/Dict/Create?dictId=' + rows[0].DictID,
+            title: '编辑数据字典',          
+            isResize: true,
+            buttons: [{ text: '确认', onclick: function (item, dialog) {
+                dialog.frame.Save(manager, dialog);               
+            } 
+            }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+        }); 
+    }
+
+    function DelDict() {
+        var rows = manager.getSelectedRows();
+        if (rows == "") { alert('请选择需要删除的数据！'); return; }
+        var data = [];
+        for (i = 0; i < rows.length; i++) {
+            data.push(rows[i].DictID);
+        }
+        if (!confirm("确定删除所选的数据吗？")) return;
+        $.ajax({
+            type: 'POST',
+            url: '@Html.RootPath()/Dict/Delete/',
+            data: { "dictIDs": data },
+            cache: false,
+            traditional: true,
+            success: function (data) {
+                alert(data.msg);
+                if (data.result == "success") {                    
+                    manager.loadData();
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+
+    function ViewDetail(id, obj) {       
+        var key = $(obj).html()
+        $.ligerDialog.open({
+            height: 400,
+            width: 700,
+            url: '@Html.RootPath()/Dict/DictValue?dictId=' + id + '&dictKey='+encodeURIComponent(key),
+            title: '字典值管理【'+key+'】',
+            isResize: true
+        }); 
+    }
+</script>
+}
+

@@ -1,0 +1,8 @@
+F:\workplace\trunk\WKT.Facade.Service.Interface\bin\Release\WKT.Facade.Service.Interface.dll
+F:\workplace\trunk\WKT.Facade.Service.Interface\bin\Release\WKT.Facade.Service.Interface.pdb
+F:\workplace\trunk\WKT.Facade.Service.Interface\bin\Release\WKT.Model.dll
+F:\workplace\trunk\WKT.Facade.Service.Interface\bin\Release\MongoDB.Bson.dll
+F:\workplace\trunk\WKT.Facade.Service.Interface\bin\Release\WKT.Model.pdb
+F:\workplace\trunk\WKT.Facade.Service.Interface\obj\Release\ResolveAssemblyReference.cache
+F:\workplace\trunk\WKT.Facade.Service.Interface\obj\Release\WKT.Facade.Service.Interface.dll
+F:\workplace\trunk\WKT.Facade.Service.Interface\obj\Release\WKT.Facade.Service.Interface.pdb

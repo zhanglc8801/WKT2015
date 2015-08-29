@@ -1,0 +1,176 @@
+﻿@model WKT.Model.ContributionInfoEntity
+<style type="text/css">   
+    body{ font-size:12px;}
+    .l-table-edit {border:1px solid #bed5f3;border-collapse: collapse;width:100%}
+    .l-table-edit-td-left{ padding:4px;text-align:right;width:90px;}
+    .l-table-edit-td{ padding:4px;}
+    .l-button-submit,.l-button-test{width:80px; float:left; margin-left:10px; padding-bottom:2px;}  
+</style>
+<div style="width: 98%; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    <div class="data-tab">
+        <ul>
+            <li class="on" id="liEmail"><a href="javascript:void(0);">发送邮件</a></li>
+            <li class="next" id="liSms"><a href="javascript:void(0);">发送短信</a></li>
+            <li class="next" id="liMessage"><a href="javascript:void(0);">发送站内消息</a></li>
+        </ul>
+    </div>
+    <div id="divEmail" style="margin: 5px;">
+        <table cellpadding="0" cellspacing="0" class="l-table-edit">
+            <tr>
+                <td align="right" class="l-table-edit-td-left">
+                    <span style="color: Red">*</span>邮件主题：
+                </td>
+                <td align="left" class="l-table-edit-td">
+                    <input type="text" id="txtETitle" ltype="text" maxlength="50" />
+                </td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td-left">
+                    <span style="color: Red">*</span>邮件内容：
+                </td>
+                <td align="left" class="l-table-edit-td" colspan="3">
+                    <textarea cols="100" rows="4" class="l-textarea" id="txtEmail" style="width: 400px">编号：@Model.CNumber 标题：@Model.Title</textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="divSms" style="margin: 5px; display: none;">
+        <table cellpadding="0" cellspacing="0" class="l-table-edit">
+            <tr>
+                <td align="right" class="l-table-edit-td-left">
+                    <span style="color: Red">*</span>短信内容：
+                </td>
+                <td align="left" class="l-table-edit-td" colspan="3">
+                    短信内容不得超过70个字，已输入<span id="inputCount" style="color: red;">0</span>个字符<br />
+                    <textarea cols="100" rows="4" class="l-textarea" id="txtSms" maxlength="70" style="width: 400px"
+                        onkeydown="return Ismaxlength('txtSms')" onkeyup="return Ismaxlength('txtSms')"
+                        onchange="Ismaxlength('txtSms')"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="divMessage" style="margin: 5px; display: none;">
+        <table cellpadding="0" cellspacing="0" class="l-table-edit">
+            <tr>
+                <td align="right" class="l-table-edit-td-left">
+                    <span style="color: Red">*</span>稿件编号：
+                </td>
+                <td align="left" class="l-table-edit-td">
+                    <input type="text" id="txtMTitle"  maxlength="50" value="@Model.CNumber" />
+                </td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td-left">
+                    <span style="color: Red">*</span>消息内容：
+                </td>
+                <td align="left" class="l-table-edit-td" colspan="3">
+                    <textarea cols="100" rows="4" class="l-textarea" id="txtMessage" style="width: 400px">编号：@Model.CNumber 标题：@Model.Title</textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    </form>
+</div>
+@section Scripts{
+<script type="text/javascript" src="@Html.RootPath()/Scripts/jquery.tabgroup.js"></script>
+<script type="text/javascript" src="@Html.RootPath()/content/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var tArtist2 = new TabClickGroup("next", "on", ["liEmail", "liSms", "liMessage"], ["divEmail", "divSms", "divMessage"]);
+        CKEDITOR.replace('txtEmail');
+        CKEDITOR.replace('txtMessage');
+        $("form").ligerForm({ inputWidth: 200 });
+    });
+
+    function Ismaxlength(id) {
+        var obj = $("#" + id);
+        var mlength = parseInt(obj.attr("maxlength"));
+        if (obj.val().length > mlength)
+            obj.val(obj.val().substring(0, mlength));
+        $("#inputCount").html(obj.val().length);
+    }
+
+    function Save(manager, dialog, CID) {
+        var tempid = $(".on").attr("id"), url = '', msg = '';
+        var saveParams = { CID: CID, Status: '@ViewBag.Status' };
+        switch (tempid) {
+            case "liEmail": msg = GetEmailParams(saveParams); url = '@Html.RootPath()/EmailTemp/AuthorSendEmail/'; break;
+            case "liSms": msg = GetSmsParams(saveParams); url = '@Html.RootPath()/SmsTemp/AuthorSendSms/'; break;
+            case "liMessage": msg = GetMessageParams(saveParams); url = '@Html.RootPath()/SiteMessage/AuthorSendMessage/'; break;
+        }
+        if (msg.length>0) {
+            alert(msg);
+            return false;
+        }
+        if (!confirm("您确认发送吗？")) return;
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: saveParams,
+            cache: false,
+            success: function (data) {
+                alert(data.msg);
+                if (data.result == "success") {
+                    dialog.close();
+                    //manager.loadData();
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+
+    function GetEmailParams(saveParams) {
+        var objTitle = $("#txtETitle"), title = $.trim(objTitle.val()), msg = '';
+        if (title.length < 1) {
+            msg = '请输入邮件标题';
+            objTitle.focus();
+            return msg;
+        }
+        if ($.trim(CKEDITOR.instances.txtEmail.document.getBody().getText()).length < 1) {
+            msg="请输入邮件内容！";
+            $("#txtEmail").focus();
+            return msg;
+        }
+        saveParams.MsgTitle = title;
+        saveParams.MsgContent = encodeURIComponent($.trim(CKEDITOR.instances.txtEmail.getData()));
+        saveParams.MsgType = 1;
+        saveParams.SendType = 0;
+        return msg;
+    }
+
+    function GetSmsParams(saveParams) {
+        var objContent = $("#txtSms"); content = $.trim(objContent.val()), msg = '';
+        if (content.length < 1) {
+            msg = '请输入短信内容';
+            objContent.focus();
+            return msg;
+        }
+        saveParams.MsgTitle = '';
+        saveParams.MsgContent = content;
+        saveParams.MsgType = 2;
+        saveParams.SendType = 0;
+        return msg;
+    }
+
+    function GetMessageParams(saveParams) {
+        var objTitle = $("#txtMTitle"), title = $.trim(objTitle.val()), msg = '';
+        if (title.length < 1) {
+            msg = '请输入消息标题';
+            objTitle.focus();
+            return msg;
+        }
+        if ($.trim(CKEDITOR.instances.txtMessage.document.getBody().getText()).length < 1) {
+            msg = "请输入消息内容！";
+            $("#txtMessage").focus();
+            return msg;
+        }
+        saveParams.Title = title;
+        saveParams.Content = encodeURIComponent($.trim(CKEDITOR.instances.txtMessage.getData()));       
+        return msg;
+    }
+</script>
+}
+

@@ -1,0 +1,152 @@
+﻿@model WKT.Model.IssueSetEntity
+<style type="text/css">
+    body
+    {
+        font-size: 12px;
+    }
+    .l-table-edit
+    {
+        border: 1px solid #bed5f3;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    .l-table-edit-td-left
+    {
+        padding: 4px;
+        text-align: right;
+        width: 90px;
+    }
+    .l-table-edit-td
+    {
+        padding: 4px;
+    }
+    .l-button-submit, .l-button-test
+    {
+        width: 80px;
+        float: left;
+        margin-left: 10px;
+        padding-bottom: 2px;
+    }
+</style>
+<div style="width: 98%; padding: 5px; border-width:1px; border-color:Black" >
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>期：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtIssue" ltype="text" maxlength="25" value="@Model.Issue" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+               印刷费：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtPrintExpenses" type="text" maxlength="25" value="@Model.PrintExpenses" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                期刊封面：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="file" name="uploadify" id="uploadify" />
+                <div id="divFile" style="display: none">
+                    <a href="javascript:void(0)" id="aFile">期刊封面</a></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>状态：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="checkbox" id="chkStatus" @Html.Raw(Model.Status == 1 ? "checked=\"checked\"" : string.Empty) /><label
+                    for="chkStatus">启用</label>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+@section Scripts{
+    <script type="text/javascript" src="@Html.RootPath()/Scripts/Uploadify/jquery.uploadify.js"></script>
+    <script language="javascript" type="text/javascript">
+        var imgSrc = '@Model.TitlePhoto';
+        $(function () {
+            $("#txtIssue").bind("keypress", function (evt) {
+                var k = window.event ? evt.keyCode : evt.which;
+                if ((k <= 57 && k >= 48) || k == 8) {
+                    return true;
+                }
+                return false;
+            });
+            $("#uploadify").uploadify({
+                postData: { folder: 'Issue' },
+                uploader: '@Html.RootPath()/Upload/Save/',
+                buttonText: '上传封面',
+                fileTypeDesc: 'Image Files',
+                fileTypeExts: "@Html.UploadImgExt()",
+                swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',
+                onUploadSuccess: function (obj, data, response) {
+                    var result = eval("(" + data + ")");
+                    if (result.result == "success") {
+                        imgSrc = result.url;
+                        LoadImage(imgSrc);
+                    }
+                    else {
+                        alert(result.msg);
+                        return;
+                    }
+                }
+            });
+            $("form").ligerForm({ inputWidth: 150 });
+            LoadImage(imgSrc);
+        });
+
+        function LoadImage(url) {
+            if (url.length < 1)
+                $("#divFile").css("display", "none");
+            else {
+                //$("#aFile").attr("href", "@Html.UploadPath()" + url);
+                $("#aFile").unbind("click");
+                $("#aFile").click(function () { DownLoad('@Html.RootPath()', url, '期刊封面'); return false; });
+                $("#divFile").css("display", "inline");
+            }
+        }
+
+        function Save(manager, dialog) {
+            var objIssue = $("#txtIssue"), issue = $.trim(objIssue.val());
+            if (issue.length < 1) {
+                alert("请输入期！");
+                objYear.focus();
+                return;
+            }
+            var saveParams = {
+                IssueSetID: '@Model.IssueSetID',
+                Issue: issue,
+                TitlePhoto: imgSrc,
+                PrintExpenses: $.trim($("#txtPrintExpenses").val()),
+                Type:0,
+                Year: @ViewBag.year,
+                Status: $("#chkStatus").attr("checked") ? 1 : 0
+            };
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/Issue/SaveIssueSet/',
+                data: saveParams,
+                cache: false,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        manager.loadData();
+                        dialog.close();
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+    </script>
+}

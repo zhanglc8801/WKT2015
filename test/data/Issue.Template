@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div style="text-align:center; font-family:微软雅黑; height:auto;">
+        <div style="background-color:#1e497d; width:800px; height:24px;color:White; font-weight:bold; line-height:25px; margin:auto;">邮件推送</div>
+        <div style="width:800px; margin:auto; line-height:25px; height:100px;">
+            <span style="float:left;">尊敬的 %Name% 老师：</span><br />
+            <span style="float:left; margin-left:30px;">您好！</span><br />
+            <span style="float:left; margin-left:30px; text-align:left;">我们很高兴为您呈送《%SiteName%》最新一期文献内容。现在，该刊第%Vol%卷第%Issue%期在 %SiteURL% 上已经有更新，欢迎您查阅浏览！ </span><br />           
+        </div>
+        <div style="width:800px; height:24px; margin:auto; background-color:#1e497d;color:White; font-weight:bold; line-height:25px;">
+            <span style="float:left; margin-left:80px;">%SiteName%</span>
+            <span style="margin-left:-80px;">%Year%年%Vol%卷第%Issue%期目次</span>
+            <span style="float:right;">过刊浏览</span>
+        </div>
+        <table style="margin:aoto;" width="800px" align="center">
+        <tbody>
+			%Content%            
+        </tbody>
+        </table>
+    </div>
+</body>
+</html>

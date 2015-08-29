@@ -1,0 +1,95 @@
+@model WKT.Model.IssueContentEntity
+@{
+    ViewBag.Title = Model.Title + "_" +  Html.SiteName();
+    ViewBag.Position = Model.Title;
+}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td height="26" class="next_zi1">&nbsp;
+                        
+        </td>
+        <td class="next_zi2">
+            您当前的位置：<a href="/">首页</a> &gt;&gt; <a>正文</a>
+        </td>
+    </tr>
+</table>
+<div style="">
+    <h4>
+        @Model.Title
+        <a href="#" style="font-size: 12px; font-weight: normal; color: #ff0000; padding-left: 30px;" target="_blank">[中文引用]</a>
+        <a href="#" style="font-size: 12px; font-weight: normal; color: #ff0000; padding-left: 30px;" target="_blank">[英文引用]</a></h4>
+    <h2>
+        <div>@Model.EnTitle</div>
+    </h2>
+</div>
+<div class="xiazai">
+    <a href="htmlShow.aspx?ID=132686">[HTML下载]</a> <a href="/stat/DownStat?CID=@Model.ContentID">[PDF下载]</a> <a href="#">[发表评论]</a> <a href="#">[查看评论]</a> <a href="javascript:window.external.AddFavorite(''+document.location.href+'',''+document.title+'');">
+            [加入收藏]</a> <a href="javascript:void(0);">[@(Model.Hits)人次已阅读该文]</a>
+</div>
+<div class="zuozhe">
+    <font>作者：</font><span id="HAuthor">@Model.Authors</span>
+</div>
+<div class="zuozhe">
+    <font>作者(英文)：</font>@Model.EnAuthors</span>
+</div>
+<div class="zuozhe">
+    <font>单位：</font><span id="HUnit">@Model.WorkUnit</span>
+</div>
+<div class="zuozhe">
+    <font>单位(英文)：</font><span id="HUnit_en">@Model.EnWorkUnit</span>
+</div>
+<div class="zuozhe">
+    <font>关键词：</font><span id="HKey">@Model.Keywords</span>
+</div>
+<div class="zuozhe">
+    <font>关键词(英文)：</font><span id="HKey_en">@Model.EnKeywords</span>
+</div>
+<div class="zuozhe">
+    <font>分类号：</font>@Model.CLC
+</div>
+<div class="zuozhe">
+    <font>出版年·卷·期（页码）：</font>@Model.Year·@Model.Volume·第@(Model.Issue)期（@Model.PageNumber）
+</div>
+<div class="zuozhe">
+    <font style="color: #ff0000;">DOI:</font>
+    @Model.DOI
+</div>
+<div class="xian">
+    -----<font>摘要：</font>-------------------------------------------------------------------------------------------</div>
+<div class="zaiyao" style="font-size: 14px;">
+    <p>
+        @Model.Abstract
+    </p>
+</div>
+<div class="xian">
+    -----<font>英文摘要：</font>---------------------------------------------------------------------------------------</div>
+<div class="zaiyao" style="font-size: 14px;">
+    <p>
+        @Model.EnAbstract
+    </p>
+</div>
+<div class="xian" style="font-size: 14px;">
+    -----<font>参考文献：</font>---------------------------------------------------------------------------------------</div>
+<div class="zaiyao" style="font-size: 14px;">
+    @Model.Reference        
+</div>
+<h3 style="font-size: 14px;">
+    欢迎阅读《@Html.SiteName()》！您是该文第 <font>@Model.Hits</font>位读者！</h3>
+<div class="h3" style="font-size: 14px;">
+    若需在您的论文中引用此文，请按以下格式著录参考文献：</div>
+<div class="zuozhe">
+    <font>中文著录格式:</font>
+    @(Model.Authors).@(Model.Title).@(Html.SiteName()).@(Model.Year);@(Model.Volume)(@(Model.Issue)):@(Model.PageNumber).
+</div>
+<div class="zuozhe">
+    <font>英文著录格式:</font>
+    @(Model.EnAuthors).@(Model.EnTitle).@(Html.SiteName()).@(Model.Volume)(@(Model.Issue)):@(Model.PageNumber).
+</div>
+<h4><font style="font-size: 14px;">与该文相关的文章（<span>仅限于本刊内</span>）</font></h4>
+<ul style="font-size: 14px;">       
+    <!--<a style="color: #003366;" href="/Magazine/Show.aspx?ID=27849"
+        target="_blank">
+        <strong>银黄颗粒的HPLC特征指纹图谱分析</strong>   
+    </a>
+    <br /> -->   
+</ul>

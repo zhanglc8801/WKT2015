@@ -1,0 +1,61 @@
+﻿<link href="@Html.RootPath()/Content/ContributionInfo.css" rel="stylesheet" type="text/css" />
+<div style="padding-left: 15%; margin-top: 10px; margin-bottom: 10px;">
+    @*<input type="button" value="打印" style="width: 100px; display: inline;" id="btnPrint2" class="l-button" />
+    <input type="button" value="保存" style="width: 100px; display: inline;" id="btnSave2" class="l-button" />*@
+    <div style=" float:right; margin-right:20px;">
+        <a style="font-size:14px; color:Blue;" id="btnPrint" href="javascript:void(0);">打印</a>
+        <a style="font-size:14px; color:Blue;" id="btnSave" href="javascript:void(0);">保存</a>
+    </div>
+    
+</div>
+<div>
+    <form name="form1" id="form1" action="" target="_self" method="post">
+    <div style="width: 99%; padding: 0px 5px 5px 5px">
+        @Html.Raw(ViewBag.html)
+    </div>
+    </form>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#btnPrint").click(function () {
+                if (!confirm("您确定打印该审稿单吗？")) return;
+                var html = '<input type="hidden" name="CID" value="@ViewBag.CID"/><input type="hidden" name="ExpertID" value="@ViewBag.ExpertID"/>';
+                preview();
+                window.close();
+            }); //http://localhost:2901/FlowSet/SaveViewReviewBill?htmlUrl=http://localhost:2901/FlowSet/ViewReviewBillContent?CID=44547&ExpertID=85909&rnd=0.7279297191614349&fileName=222
+        });
+        $(function () {
+            $("#btnSave").click(function () {
+                window.open("@Html.RootPath()/FlowSet/ReviewBillContentToReport?CID=@ViewBag.CID&FlowLogID=@ViewBag.FlowLogID&EditorID=@ViewBag.EditorID&ExpertID=@ViewBag.ExpertID");
+            });
+        });
+
+    </script>
+    <script type="text/javascript">
+        var HKEY_Root, HKEY_Path, HKEY_Key;
+        HKEY_Root = "HKEY_CURRENT_USER";
+        HKEY_Path = "\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+        //设置网页打印的页眉页脚为空 
+        function PageSetup_Null() {
+            try {
+                var Wsh = new ActiveXObject("WScript.Shell");
+                HKEY_Key = "header";
+                Wsh.RegWrite(HKEY_Root + HKEY_Path + HKEY_Key, "");
+                HKEY_Key = "footer";
+                Wsh.RegWrite(HKEY_Root + HKEY_Path + HKEY_Key, "");
+            }
+            catch (e) {
+            }
+        }
+
+        function preview() {
+            PageSetup_Null();
+            var bdhtml = window.document.getElementById("form1").innerHTML;
+            window.document.body.innerHTML = bdhtml;
+            window.print();
+            window.close();
+        }
+    </script>
+}

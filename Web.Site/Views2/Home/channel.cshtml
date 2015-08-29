@@ -1,0 +1,8 @@
+﻿@model WKT.Model.SiteModel
+@{
+    ViewBag.Position = ViewBag.Title;
+    ViewBag.Title = ViewBag.Title + "_" +  Html.SiteName();
+}
+<div id="center2">
+@Html.Raw(Model.ConentEntity.Content)
+</div>

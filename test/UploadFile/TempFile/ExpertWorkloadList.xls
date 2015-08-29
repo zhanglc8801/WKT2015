@@ -1,0 +1,343 @@
+﻿<?xml version='1.0'?>
+<?mso-application progid='Excel.Sheet'?>
+<s:Workbook xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:s="urn:schemas-microsoft-com:office:spreadsheet">
+  <s:Styles>
+    <s:Style s:ID="titleStyle">
+      <s:Alignment s:Horizontal="Center" s:Vertical="Center" />
+      <s:Font s:Bold="1" />
+      <s:Interior s:Color="#999999" s:Pattern="Solid" />
+    </s:Style>
+    <s:Style s:ID="dataStyle1">
+      <s:Font s:Color="Red" />
+    </s:Style>
+    <s:Style s:ID="dataStyle2">
+      <s:Font s:Color="Green" />
+    </s:Style>
+  </s:Styles>
+  <s:Worksheet s:Name="专家信息列表_审稿费每篇50元,总计_100元">
+    <s:Table>
+      <s:Column s:Width="50" />
+      <s:Column s:Width="100" />
+      <s:Column s:Width="50" />
+      <s:Column s:Width="50" />
+      <s:Column s:Width="80" />
+      <s:Column s:Width="100" />
+      <s:Column s:Width="50" />
+      <s:Column s:Width="100" />
+      <s:Column s:Width="100" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="150" />
+      <s:Column s:Width="50" />
+      <s:Column s:Width="100" />
+      <s:Column s:Width="80" />
+      <s:Row>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">专家姓名</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">登录名</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">待审稿件</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">已审稿件</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">审稿费</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">发票抬头</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">户名</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">帐号</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">开户行</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">专家单位</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">专家地址</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">邮编</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">联系电话</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="titleStyle">
+          <s:Data s:Type="String">手机</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">专家1</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">wktzj1@126.com</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥0.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">111111</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">1</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">专家2</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">wktzj2@126.com</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥0.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">222222</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">2</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">粟晓黎(专家)</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">suxiaoli@nicpbp.org.cn</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥0.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">中国食品药品检定研究院</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">北京天坛西里2号中国食品药品检定研究院</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">100050</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">010-67095698</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13651367617</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">测试刘小龙专家</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">liuxiaolong0326@163.com</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥0.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">123456</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">NULL</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">专家_测试</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">zqzhuanjia@163.com</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">1</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥50.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">111</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">222</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">333</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">010-60213869</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13800138000</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell>
+          <s:Data s:Type="String">专家2</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">zqzhuanjia2@163.com</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">0</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">1</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">¥50.00</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">111</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">222</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">333</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">010-60213898</s:Data>
+        </s:Cell>
+        <s:Cell>
+          <s:Data s:Type="String">13800138000</s:Data>
+        </s:Cell>
+      </s:Row>
+    </s:Table>
+  </s:Worksheet>
+</s:Workbook>

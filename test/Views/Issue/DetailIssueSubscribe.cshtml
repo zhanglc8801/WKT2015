@@ -1,0 +1,105 @@
+﻿@model WKT.Model.IssueSubscribeEntity
+<link href="@Html.RootPath()/Content/ContributionInfo.css" rel="stylesheet" type="text/css" />
+<div style="width: 99%; padding: 5px;">
+    <table border="0" class="mainTable" cellpadding="0" cellspacing="1" align="center"
+        width="100%" id="tbBody">
+        <tr>
+            <td class="left" style="width: 80px;">
+                单位/个人：
+            </td>
+            <td class="right" colspan="3">
+                @Model.Subscriber
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 80px;">
+                订阅详情：
+            </td>
+            <td class="right" style="width: 38%;">
+                @Model.SubscribeInfo
+            </td>
+            <td class="left" style="width: 80px;">
+                订阅日期：
+            </td>
+            <td class="right">
+                @Model.SubscribeDate.ToString("yyyy年MM月dd日")
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 80px;">
+                联系人：
+            </td>
+            <td class="right">
+                @Model.ContactUser
+            </td>
+            <td class="left" style="width: 80px;">
+                手机：
+            </td>
+            <td class="right">
+                @Model.Mobile
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 80px;">
+                电话：
+            </td>
+            <td class="right">
+                @Model.Tel
+            </td>
+            <td class="left" style="width: 80px;">
+                传真：
+            </td>
+            <td class="right">
+                @Model.Fax
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 80px;">
+                Email：
+            </td>
+            <td class="right">
+                @Model.Email
+            </td>
+            <td class="left" style="width: 80px;">
+                邮编：
+            </td>
+            <td class="right">
+                @Model.ZipCode
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 80px;">
+                是否开票：
+            </td>
+            <td class="right">
+                @Html.Raw(Model.IsInvoice ? "√ " : string.Empty)
+            </td>
+            <td class="left" style="width: 80px;">
+                发票抬头：
+            </td>
+            <td class="right">
+                @Model.InvoiceHead
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 80px;">
+                投递地址：
+            </td>
+            <td class="right" colspan="3">
+                @Model.Address
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 80px;">
+                备注：
+            </td>
+            <td class="right" colspan="3">
+                @Model.Note
+            </td>
+        </tr>
+    </table>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+    </script>
+}

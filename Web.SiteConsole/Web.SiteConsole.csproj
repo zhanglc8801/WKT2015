@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7CB09497-418C-4FFC-B4BB-3FEE4630377C}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Web.SiteConsole</RootNamespace>
+    <AssemblyName>Web.SiteConsole</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\EntLib5\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\EntLib5\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\EntLib5\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\EntLib5\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\AccessLogController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApiSiteController.cs" />
+    <Compile Include="Controllers\AuthorController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DBServerController.cs" />
+    <Compile Include="Controllers\ErrorLogController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JournalController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\VerifyCodeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\css\admin.content.css" />
+    <Content Include="Content\css\admin.global.css" />
+    <Content Include="Content\css\admin.index.css" />
+    <Content Include="Content\css\admin.login.css" />
+    <Content Include="Content\images\block-corner.png" />
+    <Content Include="Content\images\block-h.gif" />
+    <Content Include="Content\images\box-title.gif" />
+    <Content Include="Content\images\button-green-lit.png" />
+    <Content Include="Content\images\button-green.png" />
+    <Content Include="Content\images\button-white.gif" />
+    <Content Include="Content\images\close.gif" />
+    <Content Include="Content\images\data-table-th.gif" />
+    <Content Include="Content\images\icon-mail.gif" />
+    <Content Include="Content\images\icon-phone.gif" />
+    <Content Include="Content\images\icons.png" />
+    <Content Include="Content\images\index-footer.gif" />
+    <Content Include="Content\images\index-header.gif" />
+    <Content Include="Content\images\index-table-bottom-center.gif" />
+    <Content Include="Content\images\index-table-bottom-left.gif" />
+    <Content Include="Content\images\index-table-bottom-right.gif" />
+    <Content Include="Content\images\index-table-middle-left.gif" />
+    <Content Include="Content\images\index-table-middle-right.gif" />
+    <Content Include="Content\images\index-table-top-center.gif" />
+    <Content Include="Content\images\index-table-top-left.gif" />
+    <Content Include="Content\images\index-table-top-right.gif" />
+    <Content Include="Content\images\index-table-welcome-01.gif" />
+    <Content Include="Content\images\index-table-welcome-02.gif" />
+    <Content Include="Content\images\index-table-welcome-03.gif" />
+    <Content Include="Content\images\index_menu_bg.gif" />
+    <Content Include="Content\images\index_menu_bottom.gif" />
+    <Content Include="Content\images\index_menu_line.gif" />
+    <Content Include="Content\images\index_menu_off.gif" />
+    <Content Include="Content\images\index_menu_on.gif" />
+    <Content Include="Content\images\index_menu_tit.gif" />
+    <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\loading_16x16.gif" />
+    <Content Include="Content\images\lock.gif" />
+    <Content Include="Content\images\login-bottom.gif" />
+    <Content Include="Content\images\login-top.gif" />
+    <Content Include="Content\images\login-welcome.gif" />
+    <Content Include="Content\images\login_middle_1.gif" />
+    <Content Include="Content\images\login_middle_3.gif" />
+    <Content Include="Content\images\logo.gif" />
+    <Content Include="Content\images\next_logo.jpg" />
+    <Content Include="Content\images\out.gif" />
+    <Content Include="Content\images\title.gif" />
+    <Content Include="Content\images\tree\server.png" />
+    <Content Include="Content\images\tree\server_group_close.png" />
+    <Content Include="Content\images\tree\server_group_open.png" />
+    <Content Include="Content\images\ts.gif" />
+    <Content Include="Global.asax" />
+    <Content Include="HTMLPage1.htm" />
+    <Content Include="Scripts\admin.js" />
+    <Content Include="Scripts\jquery.dateformat.js" />
+    <Content Include="Scripts\Validator\formValidator-4.1.1.js" />
+    <Content Include="Scripts\Validator\formValidatorRegex.js" />
+    <Content Include="Scripts\jBox\jquery.jBox-2.3.min.js" />
+    <Content Include="Scripts\jBox\Skins\Green\images\jbox-button1.png" />
+    <Content Include="Scripts\jBox\Skins\Green\images\jbox-button2.png" />
+    <Content Include="Scripts\jBox\Skins\Green\images\jbox-close.gif" />
+    <Content Include="Scripts\jBox\Skins\Green\images\jbox-content-loading.gif" />
+    <Content Include="Scripts\jBox\Skins\Green\images\jbox-icons-ie6.gif" />
+    <Content Include="Scripts\jBox\Skins\Green\images\jbox-icons.png" />
+    <Content Include="Scripts\jBox\Skins\Green\images\jbox-loading1.gif" />
+    <Content Include="Scripts\jBox\Skins\Green\images\jbox-loading2.gif" />
+    <Content Include="Scripts\jBox\Skins\Green\images\jbox-loading3.gif" />
+    <Content Include="Scripts\jBox\Skins\Green\images\jbox-title-icon.gif" />
+    <Content Include="Scripts\jBox\Skins\Green\jbox.css" />
+    <Content Include="Scripts\jquery-1.7.2.min.js" />
+    <Content Include="Scripts\jquery.form.js" />
+    <Content Include="Scripts\jquery.pagination.js" />
+    <Content Include="Scripts\jquery.tmpl.min.js" />
+    <Content Include="Scripts\jquery.utils.js" />
+    <Content Include="Scripts\My97DatePicker\calendar.js" />
+    <Content Include="Scripts\My97DatePicker\lang\en.js" />
+    <Content Include="Scripts\My97DatePicker\lang\zh-cn.js" />
+    <Content Include="Scripts\My97DatePicker\lang\zh-tw.js" />
+    <Content Include="Scripts\My97DatePicker\skin\datePicker.gif" />
+    <Content Include="Scripts\My97DatePicker\skin\default\datepicker.css" />
+    <Content Include="Scripts\My97DatePicker\skin\default\img.gif" />
+    <Content Include="Scripts\My97DatePicker\skin\WdatePicker.css" />
+    <Content Include="Scripts\My97DatePicker\skin\whyGreen\bg.jpg" />
+    <Content Include="Scripts\My97DatePicker\skin\whyGreen\datepicker.css" />
+    <Content Include="Scripts\My97DatePicker\skin\whyGreen\img.gif" />
+    <Content Include="Scripts\My97DatePicker\WdatePicker.js" />
+    <Content Include="Scripts\Validator\themes\126\Author.txt" />
+    <Content Include="Scripts\Validator\themes\126\images\bgx.png" />
+    <Content Include="Scripts\Validator\themes\126\images\global2.png" />
+    <Content Include="Scripts\Validator\themes\126\js\theme.js" />
+    <Content Include="Scripts\Validator\themes\126\Preview.jpg" />
+    <Content Include="Scripts\Validator\themes\126\style\style.css" />
+    <Content Include="Scripts\Validator\themes\ArrowSolidBox\Author.txt" />
+    <Content Include="Scripts\Validator\themes\ArrowSolidBox\images\background.gif" />
+    <Content Include="Scripts\Validator\themes\ArrowSolidBox\images\bt.gif" />
+    <Content Include="Scripts\Validator\themes\ArrowSolidBox\images\onLoad.gif" />
+    <Content Include="Scripts\Validator\themes\ArrowSolidBox\images\reg-menu.gif" />
+    <Content Include="Scripts\Validator\themes\ArrowSolidBox\images\verification-ui6.gif" />
+    <Content Include="Scripts\Validator\themes\ArrowSolidBox\js\theme.js" />
+    <Content Include="Scripts\Validator\themes\ArrowSolidBox\Preview.jpg" />
+    <Content Include="Scripts\Validator\themes\ArrowSolidBox\style\style.css" />
+    <Content Include="Scripts\Validator\themes\Default\images\bt.gif" />
+    <Content Include="Scripts\Validator\themes\Default\images\onCorrect.gif" />
+    <Content Include="Scripts\Validator\themes\Default\images\onError.gif" />
+    <Content Include="Scripts\Validator\themes\Default\images\onFocus.gif" />
+    <Content Include="Scripts\Validator\themes\Default\images\onLoad.gif" />
+    <Content Include="Scripts\Validator\themes\Default\images\onShow.gif" />
+    <Content Include="Scripts\Validator\themes\Default\images\onSuccess.gif" />
+    <Content Include="Scripts\Validator\themes\Default\js\theme.js" />
+    <Content Include="Scripts\Validator\themes\Default\Preview.jpg" />
+    <Content Include="Scripts\Validator\themes\Default\style\style.css" />
+    <Content Include="Scripts\Validator\themes\Default\作者.txt" />
+    <Content Include="Scripts\Validator\themes\SolidBox\Author.txt" />
+    <Content Include="Scripts\Validator\themes\SolidBox\images\onCorrect.gif" />
+    <Content Include="Scripts\Validator\themes\SolidBox\images\onError.gif" />
+    <Content Include="Scripts\Validator\themes\SolidBox\images\onFocus.gif" />
+    <Content Include="Scripts\Validator\themes\SolidBox\images\onLoad.gif" />
+    <Content Include="Scripts\Validator\themes\SolidBox\images\onShow.gif" />
+    <Content Include="Scripts\Validator\themes\SolidBox\images\onSuccess.gif" />
+    <Content Include="Scripts\Validator\themes\SolidBox\js\theme.js" />
+    <Content Include="Scripts\Validator\themes\SolidBox\Preview.jpg" />
+    <Content Include="Scripts\Validator\themes\SolidBox\style\style.css" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WKT.Common\WKT.Common.csproj">
+      <Project>{E1A15C95-A5CA-45B9-A850-9341DE2B416F}</Project>
+      <Name>WKT.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Log\WKT.Log.csproj">
+      <Project>{BA831EA9-2B69-4D05-BF93-A1A4618D408C}</Project>
+      <Name>WKT.Log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Model\WKT.Model.csproj">
+      <Project>{73BD5439-9F9A-4DCB-A80E-6E3DCD0A0181}</Project>
+      <Name>WKT.Model %28WKT.Model\WKT.Model%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Service.Interface\WKT.Service.Interface.csproj">
+      <Project>{CE1D4327-9DFE-44D9-87F3-816D7C4BEB47}</Project>
+      <Name>WKT.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Service.Wrapper\WKT.Service.Wrapper.csproj">
+      <Project>{56661C46-84AC-4810-ACDE-C91275560059}</Project>
+      <Name>WKT.Service.Wrapper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config\cache.config" />
+    <Content Include="config\wkt.config" />
+    <Content Include="config\unity.service.config" />
+    <None Include="Content\images\icons.psd" />
+    <None Include="Content\images\Thumbs.db" />
+    <Content Include="log4net.config" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <None Include="Scripts\jBox\Skins\Green\images\Thumbs.db" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Welcome.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\Add.cshtml" />
+    <Content Include="Views\AccessLog\Index.cshtml" />
+    <Content Include="Views\ErrorLog\Index.cshtml" />
+    <Content Include="Views\Journal\Index.cshtml" />
+    <Content Include="Views\Journal\Add.cshtml" />
+    <Content Include="Views\Author\Index.cshtml" />
+    <Content Include="Views\DBServer\Index.cshtml" />
+    <Content Include="Views\ApiSite\Index.cshtml" />
+    <Content Include="Views\ApiSite\Add.cshtml" />
+    <Content Include="Views\DBServer\Add.cshtml" />
+    <Content Include="Views\Account\EditPwd.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>3903</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

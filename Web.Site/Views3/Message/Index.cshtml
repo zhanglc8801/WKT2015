@@ -1,0 +1,64 @@
+﻿@model  WKT.Model.Pager<WKT.Model.GuestbookEntity>
+@{
+    ViewBag.Title = "在线留言" + "-" + Html.SiteName();
+}
+<link href="/Content/divDialog.css" rel="stylesheet" type="text/css" />
+<!--cont1-->
+<div id="center2"> 
+    <div class="wz">
+        <div class="fonts" id="HText">
+            <table width="98%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td height="36" align="left">
+                        <span id="spanLiveMessage" style="cursor:pointer;">--<b>发布留言</b>--</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <table border="0" cellpadding="0" cellspacing="0" align="center" width="98%">
+       @foreach(WKT.Model.GuestbookEntity item in Model.ItemList){ 
+        <tr>
+            <td>
+            <table border="0" background="/content/skin1/images/index/FAQLISTBG.jpg" cellpadding="0" cellspacing="0" align="center" width="100%">
+                <tr>
+                    <td class="HOther">
+                        <img src="/content/skin1//images/01.gif" alt=""/>&nbsp; 发布日期：@item.AddDate.ToString("yyyy-MM-dd HH:mm:ss") &nbsp;&nbsp;IP地址：@item.IP
+                        <hr class="hrMessage">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MessageText">
+                        内容：@item.MessageContent
+                    </td>
+                </tr>
+                @if(!string.IsNullOrEmpty(item.ReplyContent)){
+                <tr>
+                    <td class="MessageReply">
+                        @item.ReplyContent
+                    </td>
+                </tr>
+                }
+                <tr>
+                    <td height="15">
+                    </td>
+                </tr>
+            </table>
+            </td>
+            </tr>}
+        </table>
+</div>
+<script src="/Scripts/zDialog.js" type="text/javascript"></script>
+<script src="/Scripts/zDrag.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+    $(function () {
+        // 收取人助选
+        $("#spanLiveMessage").click(function () {
+            var d = new Dialog();
+            d.URL = "/Message/Add?rnd=" + Math.random();
+            d.Height = 280;
+            d.Width = 380;
+            d.show();
+        });
+    });
+</script>

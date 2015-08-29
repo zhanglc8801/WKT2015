@@ -1,0 +1,37 @@
+﻿<div id="divList" style="margin-top: 5px;">
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        var manager;
+        $(function () {
+            manager = $("#divList").ligerGrid({
+                columns: [
+            { display: '作者ID', name: 'AuthorID', hide: true },
+            { display: '稿件ID', name: 'CID', width: '6%', align: 'center', hide: true },
+            { display: '稿件编号', name: 'CNumber', width: '10%', align: 'center' },
+            { display: '稿件标题', name: 'Title', width: '25%', align: 'left', render: function (item) {
+                var title = item.Title;
+                if (!item.IsView) {
+                    title = "<span class=\"bluebold\">" + title + "</span>";
+                }
+                title = item.IsQuick == true ? "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/up.gif' alt='加急稿件' title='加急稿件'/>&nbsp;" + title : title;
+                if (item.Flag != "") {
+                    title = "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/" + item.Flag + ".gif' alt='旗帜标记' title='旗帜标记'/>&nbsp;" + title;
+                }
+                title = '<a href="javascript:void(0)" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\')">' + title + '</a>';
+                return title;
+            }
+            },
+            { display: '审稿人', name: 'RecUserName', width: '10%', align: 'center' },
+            { display: '稿件状态', name: 'AuditStatus', width: '10%', align: 'center' },
+            { display: '投稿时间', name: 'AddDate', width: '15%', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm:ss' }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true, enabledSort: false,
+            url: '@Html.RootPath()/Expert/GetDeleditPageList?', pageSize: 15
+            });
+        });
+
+        function ViewDetail(cID, cNumber) {
+            window.parent.f_addTab('View' + cNumber, '拒审稿件[' + cNumber + ']', '@Html.RootPath()/ContributionInfo/ViewExpert?CID=' + cID);
+        }
+    </script>
+}

@@ -1,0 +1,31 @@
+﻿@model WKT.Model.SiteResourceEntity
+@{
+    ViewBag.Position = ViewBag.Title;
+    ViewBag.Title = ViewBag.Title + "_" +  Html.SiteName();
+}
+<style>
+table{font-size:12px;border:1px solid #ccc;}
+td{font-size:12px;border:1px solid #ccc;}
+</style>
+<table cellpadding="2" cellspacing="2" width="98%">
+<tr>
+    <td align="right" width="100">文件名：</td>
+    <td align="left">@Model.Name</td>
+</tr>
+<tr>
+    <td align="right" width="100">文件类型：</td>
+    <td align="left">@Model.FileEx</td>
+</tr>
+<tr>
+    <td align="right" width="100">文件大小：</td>
+    <td align="left">@Model.FileSize KB</td>
+</tr>
+<tr>
+    <td align="right" width="100">文件简介：</td>
+    <td align="left">@Model.FileIntro</td>
+</tr>
+<tr>
+    <td align="right" width="100">下载链接：</td>
+    <td align="left"><a href="/Stat/DownResource?ID=@Model.ResourceID">点击下载</a></td>
+</tr>
+</table>

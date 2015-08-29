@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AC73F963-6CC5-4370-AADF-CC68E12F72FC}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Web.Site</RootNamespace>
+    <AssemblyName>Web.Site</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
+      <HintPath>..\lib\EntLib5\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\lib\EntLib5\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
+      <HintPath>..\lib\EntLib5\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging">
+      <HintPath>..\lib\EntLib5\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\lib\EntLib5\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\lib\EntLib5\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\lib\EntLib5\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ScrapySharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ScrapySharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SQLite, Version=1.0.96.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.96.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Data\GetSiteSetCfg.cs" />
+    <Compile Include="App_Data\SiteGlobalSettings.cs" />
+    <Compile Include="App_Data\SitePersonalSettings.cs" />
+    <Compile Include="App_Data\SiteVisitLog.cs" />
+    <Compile Include="App_Data\SQLiteHelper.cs" />
+    <Compile Include="Controllers\AjaxRequestAttribute.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HtmlHelperExtensions.cs" />
+    <Compile Include="Controllers\MagazineController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
+    <Compile Include="Controllers\StatController.cs" />
+    <Compile Include="Controllers\SubscriptionController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\ZHYJY\css\style.css" />
+    <Content Include="Content\ZHYJY\flash\anaclock.swf" />
+    <Content Include="Content\ZHYJY\flash\lensflaremouse.swf" />
+    <Content Include="Content\ZHYJY\img\attibutes.png" />
+    <Content Include="Content\ZHYJY\img\banner.jpg" />
+    <Content Include="Content\ZHYJY\img\bg-01.png" />
+    <Content Include="Content\ZHYJY\img\bg.jpg" />
+    <Content Include="Content\ZHYJY\img\bg01.gif" />
+    <Content Include="Content\ZHYJY\img\bg01.png" />
+    <Content Include="Content\ZHYJY\img\biao.png" />
+    <Content Include="Content\ZHYJY\img\btn01.jpg" />
+    <Content Include="Content\ZHYJY\img\btn02.jpg" />
+    <Content Include="Content\ZHYJY\img\h4_bg.jpg" />
+    <Content Include="Content\ZHYJY\img\html.png" />
+    <Content Include="Content\ZHYJY\img\htmlnew.gif" />
+    <Content Include="Content\ZHYJY\img\H_bg.jpg" />
+    <Content Include="Content\ZHYJY\img\h_four.jpg" />
+    <Content Include="Content\ZHYJY\img\jian.png" />
+    <Content Include="Content\ZHYJY\img\jian_y.png" />
+    <Content Include="Content\ZHYJY\img\left.png" />
+    <Content Include="Content\ZHYJY\img\login.jpg" />
+    <Content Include="Content\ZHYJY\img\more.png" />
+    <Content Include="Content\ZHYJY\img\nav_bg.jpg" />
+    <Content Include="Content\ZHYJY\img\nav_bg2.jpg" />
+    <Content Include="Content\ZHYJY\img\niu1.png" />
+    <Content Include="Content\ZHYJY\img\niu2.png" />
+    <Content Include="Content\ZHYJY\img\niu3.png" />
+    <Content Include="Content\ZHYJY\img\niu4.png" />
+    <Content Include="Content\ZHYJY\img\pdf.jpg" />
+    <Content Include="Content\ZHYJY\img\red.png" />
+    <Content Include="Content\ZHYJY\img\right.png" />
+    <Content Include="Content\ZHYJY\img\tb_3.jpg" />
+    <Content Include="Content\ZHYJY\img\tb_3.png" />
+    <Content Include="Content\ZHYJY\img\tops.jpg" />
+    <Content Include="Content\ZHYJY\img\you.png" />
+    <Content Include="Content\ZHYJY\img\zazhi.jpg" />
+    <Content Include="Content\ZHYJY\img\zhubian.jpg" />
+    <Content Include="Content\ZHYJY\img\zuo.png" />
+    <Content Include="Content\ZHYJY\js\jquery-1.7.2.min.js" />
+    <Content Include="Content\ZHYJY\js\jquery.js" />
+    <Content Include="Content\ZHYJY\js\js.js" />
+    <Content Include="Content\ZHYJY\js\Search.js" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\expressInstall.swf" />
+    <Content Include="Scripts\flash_view.js" />
+    <Content Include="Scripts\float.js" />
+    <Content Include="Scripts\jquery-1.7.2.min.js" />
+    <Content Include="Scripts\jquery.imagechange.min.js" />
+    <Content Include="Scripts\msclass.js" />
+    <Content Include="Scripts\swfobject_modified.js" />
+    <Content Include="Scripts\validation\jquery.metadata.js" />
+    <Content Include="Scripts\validation\jquery.validate.min.js" />
+    <Content Include="Scripts\validation\messages_cn.js" />
+    <Content Include="Scripts\zDialog.js" />
+    <Content Include="Scripts\zDrag.js" />
+    <Content Include="Start.htm" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="log4net.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config\cache.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config\wkt.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WKT.Cache\WKT.Cache.csproj">
+      <Project>{7DDED5E4-AA70-4CE5-B823-632ECBD6B61B}</Project>
+      <Name>WKT.Cache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Common\WKT.Common.csproj">
+      <Project>{E1A15C95-A5CA-45B9-A850-9341DE2B416F}</Project>
+      <Name>WKT.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Config\WKT.Config.csproj">
+      <Project>{7D766DEF-62FA-48D2-8896-07976FDF1656}</Project>
+      <Name>WKT.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Facade.Service.Interface\WKT.Facade.Service.Interface.csproj">
+      <Project>{2FF205FB-22AC-40B5-9607-FF1E86DBF685}</Project>
+      <Name>WKT.Facade.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Facade.Service.Wrapper\WKT.Facade.Service.Wrapper.csproj">
+      <Project>{44AD1F3A-A9DF-457E-B358-A0243184D775}</Project>
+      <Name>WKT.Facade.Service.Wrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Log\WKT.Log.csproj">
+      <Project>{BA831EA9-2B69-4D05-BF93-A1A4618D408C}</Project>
+      <Name>WKT.Log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Model\WKT.Model.csproj">
+      <Project>{73BD5439-9F9A-4DCB-A80E-6E3DCD0A0181}</Project>
+      <Name>WKT.Model %28WKT.Model\WKT.Model%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config\siteconfig.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config\unity.facade.service.config" />
+    <Content Include="App_Browsers\BrowserFile.browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\AuthorFieldSet.config" />
+    <Content Include="data\AuthorFieldSet_bak.config" />
+    <Content Include="data\ContributionFieldSet.config" />
+    <Content Include="data\ContributionFieldSet_bak.config" />
+    <Content Include="data\envelopetemplate.config" />
+    <Content Include="data\reviewtemplate.config" />
+    <Content Include="data\signtemplate.config" />
+    <Content Include="Views\Home\channel.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\List.cshtml" />
+    <Content Include="Views\Home\resource.cshtml" />
+    <Content Include="Views\Home\Show.cshtml" />
+    <Content Include="Views\Index.cshtml" />
+    <Content Include="Views\Magazine\Index.cshtml" />
+    <Content Include="Views\Magazine\Search.cshtml" />
+    <Content Include="Views\Magazine\Show.cshtml" />
+    <Content Include="Views\Message\Add.cshtml" />
+    <Content Include="Views\Message\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Subscription\Index.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Magazine\OrderList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Magazine\Album.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Magazine\hbzy.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>3902</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

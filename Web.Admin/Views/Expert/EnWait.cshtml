@@ -1,0 +1,113 @@
+﻿<div id="divList" style="margin-top: 5px;">
+</div>
+<div style="display: none">
+        <form name="action_command" action="" target="_blank" method="post">
+        </form>
+        <form id="action_download" action="@Html.RootPath()/Upload/DownProcess" method="post" target="_blank">
+            <input type="hidden" name="CID" id="hiddenDownCID" value="0"/>
+        </form>
+    </div>
+@section Scripts{
+    <script type="text/javascript">
+        var manager;
+        $(function () {
+            manager = $("#divList").ligerGrid({
+                columns: [
+            { display: '作者ID', name: 'AuthorID', hide: true },
+            { display: '附件', name: 'ContributePath', hide: true },
+            { display: '稿件ID', name: 'CID', width: '6%', align: 'center', hide: true },
+            { display: '稿件编号', name: 'CNumber', width: '20%', align: 'center' },
+            { display: '稿件标题', name: 'Title', width: '25%', align: 'left', render: function (item) {
+                var title = item.Title;
+                if (!item.IsView) {
+                    title = "<span class=\"bluebold\">" + title + "</span>";
+                }
+                title = item.IsQuick == true ? "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/up.gif' alt='加急稿件' title='加急稿件'/>&nbsp;" + title : title;
+                if (item.Flag != "") {
+                    title = "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/" + item.Flag + ".gif' alt='旗帜标记' title='旗帜标记'/>&nbsp;" + title;
+                }
+                title = '<a href="javascript:void(0)" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\',' + item.RecUserID + ')">' + title + '</a>';
+                return title;
+            }
+            },
+            { display: '审稿人', name: 'RecUserName', width: '10%', align: 'center' },
+            { display: '稿件状态', name: 'AuditStatus', width: '10%', align: 'center' },
+            { display: '投稿时间', name: 'AddDate', width: '15%', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm:ss' }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true, enabledSort: false,
+                url: '@Html.RootPath()/Expert/GetEnWaitPageList?', pageSize: 15,
+                toolbar: { items: [
+                    //{ text: '在线审稿', click: Online, icon: 'modify' },
+                    //{ line: true },
+            {text: '填写审稿单', click: ReviewBill, icon: 'ok' },
+            { line: true },
+                    //            { text: '下载稿件', click: FileDownLoad, icon: 'ok' },
+                    //            { line: true },
+            {text: '拒   审', click: Cancel, icon: 'delete' }
+            ]
+                }
+            });
+        });
+
+        function ViewDetail(cID, cNumber, RecUserID) {
+            window.parent.f_addTab('WaitViewDetail', '待审稿件[' + cNumber + ']', '@Html.RootPath()/ContributionInfo/ViewExpert?CID=' + cID + '&ExpertID=' + RecUserID + '&GroupID=4&IsWait=1');
+        }
+
+        function Online() {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择需要在线编辑的稿件！'); return; }
+            $('form[name="action_command"]').attr("action", "@Html.RootPath()/Plugins/WordOnline.aspx?CID=" + rows[0].CID).attr("method", "post").submit();
+        }
+
+        function ReviewBill() {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择需要审核的稿件！'); return; }
+            window.parent.f_removeTabItem('ReviewBill');
+            window.parent.f_addTab('ReviewBill', '填写审稿单[' + rows[0].CNumber + ']', '@Html.RootPath()/FlowSet/CreateReviewBillContent?CID=' + rows[0].CID + '&IsEnExpert=true');
+        }
+
+        function FileDownLoad() {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择需要下载附件的稿件！'); return; }
+            DownProcess(rows[0].CID);
+        }
+
+        function Cancel() {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择需要拒审的稿件！'); return; }
+            $.ligerDialog.open({
+                height: 240,
+                width: 400,
+                content: '<textarea id="txtReason" class="l-dialog-textarea" style="width:370px;height:170px;"></textarea>',
+                title: '拒审[' + rows[0].CNumber + ']',
+                slide: false,
+                buttons: [{ text: '确定', onclick: function (item, dialog) {
+                    if (!confirm("您确定拒绝审核该稿件吗？")) return;
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Html.RootPath()/Expert/ExpertDeledit/',
+                        data: {
+                            CID: rows[0].CID,
+                            DealAdvice: $.trim($("#txtReason").val())
+                        },
+                        cache: false,
+                        success: function (data) {
+                            alert(data.msg);
+                            if (data.result == "success") {
+                                dialog.close();
+                                manager.loadData();
+                            }
+                        },
+                        error: function (xhr) {
+                            alert('数据源访问错误' + '\n' + xhr.responseText);
+                        }
+                    });
+                }
+                }, { text: '取消', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+        function DownProcess(CID) {
+            $("#hiddenDownCID").val(CID);
+            $('#action_download').submit();
+        }
+    </script>
+}

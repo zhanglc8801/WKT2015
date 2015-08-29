@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "设置年卷期";
+}
+<style type="text/css">
+    body
+    {
+        font-size: 12px;
+    }
+    .l-table-edit
+    {
+        border: 1px solid #bed5f3;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    .l-table-edit-td-left
+    {
+        padding: 4px;
+        text-align: right;
+        width: 90px;
+    }
+    .l-table-edit-td
+    {
+        padding: 4px;
+    }
+    .l-button-submit, .l-button-test
+    {
+        width: 80px;
+        float: left;
+        margin-left: 10px;
+        padding-bottom: 2px;
+    }
+</style>
+<div style="width: 98%; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>年：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                @Html.Raw(Html.SelectIssueYear("selYear", "200px", "", "", "-请选择-"))
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color: Red">*</span>期：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                @Html.Raw(Html.SelectIssueSet("selIssue", "200px", "", "", "-请选择-"))
+
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                栏目：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                @Html.Raw(Html.SelectJChannel("selJChannel", "200px", "", "", "-请选择-"))
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+@section Scripts{
+    <script language="javascript" type="text/javascript">
+        var Year = 0;
+        var Volume = 0;
+        var Issue = 0;
+        var JChannelID = 0;
+        $(function () {
+            $("#selYear").change(function () {
+                if ($(this).val() != "") {
+                    Year = parseInt($(this).val());
+                    $("#selYear option").each(function () {
+                        if ($(this).attr("selected")) {
+                            Volume = parseInt($(this).attr("alt"));
+                            return false;
+                        }
+                    })
+                }
+                else {
+                    Year = 0;
+                    Volume = 0;
+                }
+            });
+            $("#selIssue").change(function () {
+                if ($(this).val() != "") {
+                    Issue = parseInt($(this).val());
+                }
+                else {
+                    Issue = 0;
+                }
+            });
+            $("#selJChannel").change(function () {
+                if ($(this).val() != "") {
+                    JChannelID = parseInt($(this).val());
+                }
+                else {
+                    JChannelID = 0;
+                }
+            });
+        });
+    </script>
+}

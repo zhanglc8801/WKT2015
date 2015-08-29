@@ -1,0 +1,22 @@
+﻿@model WKT.Model.SiteModel
+@{
+    ViewBag.Position = ViewBag.Title;
+    ViewBag.Title = ViewBag.Title + "_" +  Html.SiteName();
+}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td height="26" class="next_zi1">&nbsp;
+                        
+        </td>
+        <td class="next_zi2">
+            您当前的位置：<a href="/">首页</a> &gt;&gt; <a>正文</a>
+        </td>
+    </tr>
+</table>
+<div style="">
+    <h4>@Html.Raw(Model.ConentEntity.Title)</h4>
+</div>
+<div class="zaiyao" style="font-size: 14px;">
+    @Html.Raw(Model.ConentEntity.Content)
+</div>
+    

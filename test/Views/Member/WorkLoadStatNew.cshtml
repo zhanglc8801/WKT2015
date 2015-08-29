@@ -1,0 +1,68 @@
+﻿@model  IList<WKT.Model.WorkloadEntity>
+<link href="@Html.RootPath()/Content/Editor/css/style.css" rel="stylesheet" type="text/css" />
+<div id="container">
+</div>
+@section Scripts {
+    <script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        document.onreadystatechange = dataLoad();
+
+        function ViewDetail(Status, AuthorID) {
+            var url = '@Html.RootPath()/expertstat/StatDetail?StatusID=' + Status + "&AuthorID=" + AuthorID;
+            url += '&rnd=' + Math.random();
+            $.ligerDialog.open({ height: 500, url: url, title: '查看审稿明细', width: 600, slide: false, buttons: [
+        { text: '确定', onclick: function (item, dialog) {
+            dialog.close();
+        }
+        },
+        { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+        ]
+            });
+        }
+
+        function dataLoad() {
+            var str = "@Html.RootPath()/expertstat/GetNewEditorWorkloadList?rnd=" + Math.random();
+            $.ajax({
+                type: "POST",
+                url: str,
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var div = document.getElementById("container");
+                    var index = 1;
+                    if (div != null) {
+                        for (var key in data) {
+                            if (index % 4 == 0) {
+                                var tr1 = "<div class=\"list\"><div class=\"top\">" + key.split('-')[0] + "(" + key.split('-')[3] + ")</div>";
+                                tr1 += "<div class=\"content\">";
+                                for (var i = 0; i < data[key].length; i++) {
+
+                                    tr1 += "<div><a onclick=\"ViewDetail(" + data[key][i].StatusID + "," + key.split('-')[1] +") \" target=\"_blank\">" + data[key][i].StatusName + "(" + data[key][i].ContributionCount + ")</a></div>";
+                                }
+                                tr1 += "</div><div class=\"but\"><img src=\"@Html.RootPath()/Content/Editor/img/button.png\" /></div>";
+                                tr1 += "</div>";
+                                div.innerHTML += tr1;
+                            }
+                            else {
+                                var tr1 = "<div class=\"list\"><div class=\"top\">" + key.split('-')[0] + "(" + key.split('-')[3] + ")</div>";
+                                tr1 += "<div class=\"content\">";
+                                for (var i = 0; i < data[key].length; i++) {
+
+                                    tr1 += "<div><a onclick=\"ViewDetail(" + data[key][i].StatusID + "," + key.split('-')[1] +") \" target=\"_blank\">" + data[key][i].StatusName + "(" + data[key][i].ContributionCount + ")</a></div>";
+                                }
+                                tr1 += "</div><div class=\"but\"><img src=\"@Html.RootPath()/Content/Editor/img/button.png\" /></div>";
+                                tr1 += "</div>";
+                                div.innerHTML += tr1;
+                            }
+                            index++;
+                        }
+                    }
+                },
+                error: function (data) {
+                    alert(data);
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,179 @@
+﻿@{
+    ViewBag.Title = "在线订阅" + "-" + Html.SiteName();
+}
+<script src="@Url.Content("~/Scripts/jquery-1.7.2.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/swfobject_modified.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/common.js")" type="text/javascript"></script>
+<form id="formSubscription" action="">
+<div style="font-size:14px;" id="HText">
+    <table border="0" cellpadding="0" cellspacing="1" align="center" width="100%">
+    <tr>
+        <td>
+            单位/个人：
+        </td>
+        <td>
+            <input name="Subscriber" type="text" id="txtSubscriber" class="txtbox" style="width:200px;" validate="{required:true,minlength:2,byteMaxLength:100}" />
+            <span class="tip">*</span>
+        </td>
+        <td>
+            联系电话：
+        </td>
+        <td>
+            <input name="txtTel" type="text" id="txtTel" class="txtbox" style="width:200px;" validate="{maxlength:50,phone:true}" />
+            <span class="tip">*</span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            投递地址：
+        </td>
+        <td>
+            <input name="txtAddress" type="text" id="txtAddress" class="txtbox" style="width:200px;" validate="{required:true,minlength:5,byteMaxLength:200}"  />
+            <span class="tip">*</span>
+        </td>
+        <td>
+            邮编：
+        </td>
+        <td>
+            <input name="txtZipCode" type="text" id="txtZipCode" class="txtbox" style="width:200px;" validate="{required:true,maxlength:10,zipCode:true}" />
+            <span class="tip">*</span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            联系人：
+        </td>
+        <td>
+            <input name="txtContactName" type="text" id="txtContactName" class="txtbox" style="width:200px;" validate="{required:true,minlength:2,byteMaxLength:50}" />
+            <span class="tip">*</span>
+        </td>
+        <td>
+            传真：
+        </td>
+        <td>
+            <input name="txtFax" type="text" id="txtFax" class="txtbox" style="width:200px;" validate="{maxlength:20,phone:true}" /></td>
+    </tr>
+    <tr>
+        <td>
+            期刊订阅：
+        </td>
+        <td colspan="3">
+            <input name="txtOrderInfo" type="text" id="txtOrderInfo" class="txtbox" style="width:360px;" validate="{required:true,minlength:5,byteMaxLength:500}" />
+            <span class="tip">*</span> (请注明订阅年份和册数)
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style="border-bottom: dashed 1px #999999;">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td>
+            是否开发票：
+        </td>
+        <td colspan="3">
+            <table id="rblBtInvoice" border="0">
+	            <tr>
+		            <td><input id="rblBtInvoice_0" type="radio" name="rblBtInvoice" value="1" /><label for="rblBtInvoice_0">是</label></td><td><input id="rblBtInvoice_1" type="radio" name="rblBtInvoice" value="0" checked="checked" /><label for="rblBtInvoice_1">否</label></td>
+	            </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            发票抬头：
+        </td>
+        <td colspan="3">
+            <input name="txtInvoiceHead" type="text" id="txtInvoiceHead" class="txtbox" style="width:360px;" validate="{byteMaxLength:100}" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            备注：
+        </td>
+        <td colspan="3">
+            <textarea name="txtRemark" rows="2" cols="20" id="txtRemark" class="txtbox" style="height:40px;width:357px;" validate="{byteMaxLength:500}"></textarea>
+        </td>
+    </tr>
+</table>
+<div class="bottom" style="text-align: center;">
+    <input type="button" name="btnOrder" value="订阅" id="btnOrder" class="btnA" />
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="reset" class="btnA" value="重置" />
+</div>
+</div>
+</form>
+<script src="/Scripts/validation/jquery.validate.min.js" type="text/javascript"></script>
+<script src="/Scripts/validation/jquery.metadata.js?111" type="text/javascript"></script>
+<script src="/Scripts/validation/messages_cn.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+    var validator = null;
+    $(function () {
+        $.metadata.setType("attr", "validate");
+        validator = $("#formSubscription").validate({
+            debug: false,
+            showErrors: function (errorMap, errorList) {
+                var msg = "";
+                $.each(errorList, function (i, v) {
+                    msg += (v.message + "\r\n");
+                });
+                if (msg != "") alert(msg);
+            }
+        });
+
+        $("#btnOrder").click(function () {
+            var isvalided = $("#formSubscription").valid();
+            if (isvalided) {
+                var Subscriber = $("#txtSubscriber").val();
+                var Tel = $("#txtTel").val();
+                var Address = $("#txtAddress").val();
+                var ZipCode = $("#txtZipCode").val();
+                var ContactUser = $("#txtContactName").val();
+                var Fax = $("#txtFax").val();
+                var SubscribeInfo = $("#txtOrderInfo").val();
+                var IsInvoice = false;
+                if ($("#rblBtInvoice_0").attr("checked") == "checked") {
+                    IsInvoice = true;
+                }
+                var InvoiceHead = $("#txtInvoiceHead").val();
+                var Note = $("#txtRemark").val();
+                $.ajax({
+                    beforeSend: function () {
+
+                    },
+                    type: 'POST',
+                    url: '/Subscription/AddSubscriptionInfo/?rnd=' + Math.random(),
+                    data: { Subscriber: Subscriber, Tel: Tel, Address: Address, ZipCode: ZipCode, ContactUser: ContactUser, Fax: Fax, SubscribeInfo: SubscribeInfo, IsInvoice: IsInvoice, InvoiceHead: InvoiceHead, Note: Note },
+                    cache: false,
+                    success: function (data) {
+                        var e = eval("(" + data + ")");
+                        if (e.result == 'success') {
+                            $("#txtSubscriber").val("");
+                            $("#txtTel").val("");
+                            $("#txtZipCode").val("");
+                            $("#txtAddress").val("");
+                            $("#txtContactName").val("");
+                            $("#txtFax").val("");
+                            $("#txtOrderInfo").val("");
+                            $("#txtInvoiceHead").val("");
+                            $("#txtRemark").val("");
+                            alert("订阅成功:我们会在1-2个工作日内与您联系");
+                        }
+                        else if (e.result == 'failure') {
+                            alert(e.msg);
+                        }
+                        else if (e.result == 'error') {
+                            alert(e.msg);
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                    }
+                });
+            }
+            else {
+                alert('验证失败，请验证填写的内容是否正确!');
+            }
+        });
+    });
+</script>

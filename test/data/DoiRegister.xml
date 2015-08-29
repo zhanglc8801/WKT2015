@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doi_batch version="1.0.0">
+  <!-->1.头标区<-->
+  <head>
+    <doi_batch_id>20110002</doi_batch_id>
+    <timestamp>20110712090302656</timestamp>
+    <depositor>
+      <name>dzxb</name>
+      <email_address>dzxb2013@126.com</email_address>
+    </depositor>
+    <registrant>dzxb</registrant>
+  </head>
+  <!-->2.主体<-->
+  <body>
+
+    <journal>
+      
+      
+      
+    </journal>
+  </body>
+</doi_batch>

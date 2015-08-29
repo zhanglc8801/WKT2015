@@ -1,0 +1,16 @@
+﻿<div id="divRole"></div>
+@section Scripts{
+<script type="text/javascript">
+    var RootPath = '@Html.RootPath()';
+    var SelDialog;
+    $(function () {    
+        // 角色列表
+        SelDialog = $("#divRole").ligerGrid({
+            columns: [
+            { display: '角色ID', name: 'RoleID', align: 'center', width: 70 },
+            { display: '角色名称', name: 'RoleName', width: 160 }
+            ], url: RootPath + '/role/GetRoleListAjax?rnd=' + Math.random(), width: '99%', height: '100%', pageSize: 100, usePager: false, rownumbers: false,checkbox: true
+        });
+    })
+</script>
+}

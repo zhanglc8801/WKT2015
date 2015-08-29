@@ -1,0 +1,132 @@
+﻿@{
+    Layout = null;
+}
+@model WKT.Model.SiteConfigEntity
+@{
+    
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>新系统入口</title>
+    <link href="@Html.RootPath()/Content/homeStyle/css/focustop_dae105ca.css" rel="stylesheet" />
+    <script src="@Html.RootPath()/Content/homeStyle/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <link href="@Html.RootPath()/Content/Editor/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="main">
+        @{
+            //编辑
+            if (ViewBag.Group == 1)
+            {
+                <div style="border:0px dashed  #111; float:left; width:auto; min-width:450px; height:auto;">
+                    @*待处理稿件*@
+                    <div class="list">
+                        <div class="top" style="cursor:pointer;">待处理稿件</div>
+                        <div class="content" style=" line-height:25px;">
+                            <a href="" style="text-decoration:none;color:#ac7305;font-size:14px;">新稿件（12）</a><br />
+                            <a href="" style="text-decoration:none;color:#ac7305;font-size:14px;">专家已审（10）</a><br />
+                            <a href="" style="text-decoration:none;color:#ac7305;font-size:14px;">作者已修（25）</a><br />
+                            <a href="" style="text-decoration:none;color:#ac7305;font-size:14px;">专家已审（7）</a><br />
+                            <div style="color:Green;font-weight:bold;">总计113</div>
+                        </div>
+                        <div><img src="@Html.RootPath()/Content/Editor/img/button.png" /></div>
+                    </div>
+                    
+                    @*收到消息*@
+                    <div class="list">
+                        <div class="top" style="cursor:pointer;">收到消息</div>
+                        <div class="content" style=" line-height:25px;">
+                            <a href="" style="text-decoration:none;color:#ac7305;font-size:14px;">新稿件（12）</a><br />
+                            <a href="" style="text-decoration:none;color:#ac7305;font-size:14px;">专家已审（10）</a><br />
+                            <a href="" style="text-decoration:none;color:#ac7305;font-size:14px;">作者已修（25）</a><br />
+                            <a href="" style="text-decoration:none;color:#ac7305;font-size:14px;">专家已审（7）</a><br />
+                            <div style="color:Green;font-weight:bold;">总计113</div>
+                        </div>
+                        <div><img src="@Html.RootPath()/Content/Editor/img/button.png" /></div>
+                    </div>
+
+                    
+                </div>
+                <div style="width:auto; min-width:300px; height:100px; float:right;">
+                    <iframe allowtransparency="true" frameborder="0" width="385" height="96" scrolling="no" src="http://tianqi.2345.com/plugin/widget/index.htm?s=2&z=1&t=0&v=0&d=3&bd=0&k=&f=&q=1&e=1&a=1&c=54511&w=385&h=96&align=center"></iframe>
+                </div>   
+           
+            }
+            //作者
+            if (ViewBag.Group == 2)
+            {
+                <div style="margin-left:10px; margin-top:20px; text-align:left; line-height:30px;">
+                    <span style="font-weight:bold;">使用说明：</span><br />
+                    <span style="font-weight:bold;">1.查询稿件状态</span><br />
+                    <span style="margin-left:50px;">●请在网站首页点击【作者在线投稿】按钮登录后在左侧菜单栏点击【最新状态】查询，该状态根据编辑部处理情况实时更新。</span><br />
+                    <span style="margin-left:50px;">●退修状态：请点击[退修稿件]上传修改稿后提交。退修意见请点击稿件标题在流程记录中查看。</span><br />
+                    <span style="margin-left:50px;">●待交审稿费/版面费状态：暂不支持在线支付.请邮局汇款(附言栏请注明稿件编号及标题)到编辑部。</span><br />
+                    <span style="margin-left:50px;">●其他：审稿周期大约为3个月，如超期或需加急处理请咨询本刊编辑部。</span><br />
+                    <span style="margin-left:50px;">●编辑部联系方式：可在网站首页底部或导航栏中的[联系我们]中进行查找。</span><br />
+
+                    <span style="font-weight:bold;">2.常见问题：</span><br />
+                    <span style="margin-left:50px;">●无法上传稿件：请点击<a href="http://www.yywkt.cn/Content/Tools/InstallFlashPlayer.exe">下载Flash组件</a>安装后重启浏览器再次尝试上传。</span><br />
+                    <span style="margin-left:50px;">●无法上传修改稿：请核对您填写的信息是否符合规范、必填项是否填写，特别注意联系方式一栏，要求只能填写一个联系方式。</span><br />
+                    <span style="margin-left:50px;">●关于单位介绍信(新投稿可不写稿件编号)：请在新投稿时在第三个上传按钮处进行上传，如已投稿可联系编辑部给您退修稿件您在上传修改稿时将介绍信一块上传即可。</span><br />
+                    <span style="margin-left:50px;">●关于撤稿操作：如您需转投他刊或修改关键性内容需要撤稿，可点击菜单【新投稿】，然后选择稿件进行撤稿操作。</span>
+                    <span style="margin-left:172px;">申请撤稿后如需重新投稿请在稿件标题后标注"(新)"。撤稿需编辑部同意才可生效，如稿件已开始处理则无法撤稿。</span><br />  
+
+                    <span style="font-weight:bold;">3.技术支持</span><br />
+                    <span style="margin-left:50px;">如果以上说明无法解决您的问题，请拨打技术支持电话：010-60213898或加QQ:2718811287详细咨询。</span><br />          
+                </div>
+            }
+            if (ViewBag.Group == 3)
+            {
+                <div style="margin-left:10px; margin-top:20px; text-align:left; line-height:30px;">
+                    <span style="font-weight:bold;">使用说明：</span><br />
+                    <span style="font-weight:bold;">常见问题：</span><br />
+                    <span style="margin-left:50px;">●无法上传附件：请点击<a href="http://www.yywkt.cn/Content/Tools/InstallFlashPlayer.exe">下载Flash组件</a>安装后重启浏览器再次尝试上传。</span><br />
+                    <span style="margin-left:50px;">●如看不到待审稿件或无法填写审稿单：请拨打技术支持电话：010-60213898</span><br />
+                </div>
+            }
+            
+        }
+    </div>
+    <script type="text/javascript">
+        var ___lis___ = $(".hotwords li"), ___images___ = $('.hotwords img'), ___words___ = $('.hotwords_li_a');
+        $.each(___images___, function (i, item) {
+            var $item = $(item),
+        src = $item.attr('m_m_src'),
+        _img = new Image();
+            _img.onload = function () {
+
+                $item.attr('src', src);
+                if (_img.width > _img.height) {
+                    if ($item.parents('li').width() > 63) {
+                        $item.css('width', '134px');
+                    } else {
+                        $item.css('height', '63px');
+
+                    }
+                } else {
+                    $item.css('width', $item.parents('li').width());
+                }
+                _img.onload = null;
+            }
+            _img.src = src;
+        });
+        $.each(___lis___, function (i, item) {
+            $(item).mouseenter(function (e) {
+                $('.detail', this).animate({ top: '0px' }, 200, function () { });
+
+            });
+            $(item).mouseleave(function (e) {
+                $('.detail', this).animate({ top: '199px' }, 200, function () { });
+            });
+        });
+        $.each(___words___, function (i, item) {
+            $(item).find('img').length == 0 && $(item).css({ "padding-top": (63 - item.offsetHeight) / 2 + "px" }) || $(item).css({ "padding": 0, 'width': $(item).width() + 4 + 'px' });
+            $(item).css({
+                "visibility": "visible"
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+﻿<div id="divList">
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        var manager, PayType = '@ViewBag.PayType';
+        $(function () {
+            manager = $("#divList").ligerGrid({
+                columns: [
+            { display: '编号', name: 'CID', hide: true },
+            { display: '编号', name: 'NoticeID', hide: true },
+            { display: '状态', name: 'Status', hide: true },
+            { display: '稿件编号', name: 'CNumber', width: '14%', align: 'center' },
+            { display: '稿件标题', name: 'CTitle', width: '25%', align: 'left', render: function (item) {
+                return '<a href="javascript:void(0)" onclick="ViewContribution(' + item.CID + ',\'' + item.CNumber + '\')">' + item.CTitle + '</a>';
+            }
+            },
+            { display: '通知单', name: 'NoticeID', width: '11%', align: 'center', render: function (item) {
+                return '<a href="javascript:void(0)" onclick="ViewNotice(' + item.NoticeID + ',' + item.CID + ')">通知单</a>';
+            }
+            },
+            { display: '交费金额', name: 'Amount', width: '15%', align: 'right', render: function (item) {
+                return item.Status == 1 ? item.Amount : ('<span style="color:red">' + item.Amount + '</span>');
+            }
+            },
+            { display: '通知日期', name: 'SendDate', width: '20%', align: 'center', type: 'date', format: 'yyyy-MM-dd' },
+            { display: '状态', name: 'StatusName', width: '13%', align: 'center' }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true, parms: [{ name: 'PayType', value: PayType}],
+                url: '@Html.RootPath()/AuthorFinance/GetToMakeMoneyPageList', pageSize: 20, enabledSort: false,
+                toolbar: { items: [
+            { text: '查看详情', click: ViewContribution, icon: 'search2' },
+            { line: true },
+            { text: '在线支付', click: Online, icon: 'add' },
+            { line: true },
+            { text: '邮局汇款', click: PostOffice, icon: 'add' }
+            ]
+                }
+            });
+        });
+
+        function ViewContribution(cID, cNumber) {
+            if (cID.text != undefined) {
+                var rows = manager.getSelectedRows();
+                if (rows == "") { alert('请选择需要查看的稿件！'); return; }
+                cID = rows[0].CID;
+                cNumber = rows[0].CNumber;
+            }           
+            window.parent.f_addTab('View' + cNumber, '稿件信息[' + cNumber + ']', '@Html.RootPath()/ContributionInfo/View?CID=' + cID);
+        }
+
+        function ViewNotice(noticeID,cID) {
+            $.ligerDialog.open({
+                height: 450,
+                width: 600,
+                url: '@Html.RootPath()/Finance/PayNotice?PayType=' + PayType + '&NoticeID=' + noticeID + '&CID=' + cID,
+                title: '查看通知单',
+                slide: false,
+                buttons: [{ text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function Online() {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择需要支付的稿件！'); return; }
+            var status = rows[0].Status;
+            if (status == 2) {
+                alert('已经支付，正等待编辑确认！');
+                return;
+            }
+            else if (status == 1) {
+                alert('已经支付！');
+                return;
+            }
+            $.ligerDialog.open({
+                height: 400,
+                width: 600,
+                url: '@Html.RootPath()/AuthorFinance/GoServiceRecharge?NoticeID=' + rows[0].NoticeID,
+                title: '在线支付',
+                slide: false,
+                buttons: [{ text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function PostOffice() {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择需要支付的稿件！'); return; }
+            var status = rows[0].Status;
+            if (status == 2) {
+                alert('已经支付，正等待编辑确认！');
+                return;
+            }
+            else if (status == 1) {
+                alert('已经支付！');
+                return;
+            }
+            $.ligerDialog.open({
+                height: 450,
+                width: 600,
+                url: '@Html.RootPath()/Finance/FContributeCreate?FeeType=' + PayType,
+                title: '邮局汇款',
+                slide: false,
+                buttons: [{ text: '确认', onclick: function (item, dialog) {
+                    dialog.frame.Save(manager, dialog, rows[0].CID, rows[0].NoticeID);
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+    </script>
+}

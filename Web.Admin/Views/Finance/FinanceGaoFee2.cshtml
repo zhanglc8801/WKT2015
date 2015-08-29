@@ -1,0 +1,203 @@
+﻿<style type="text/css">
+    img
+    {
+        vertical-align: middle;
+    }
+</style>
+<div style="min-width:1000px;" id="notice_container" class="notice notice0">
+    <div class="c">
+        @Html.Raw(Html.SelectIssueYear("Year", "80px", string.Empty, string.Empty, "请选择年"))  
+        @Html.Raw(Html.SelectIssueSet("Issue", "80px", string.Empty, string.Empty, "请选择期"))&nbsp;
+        <input type="button" value="导出Excel" class="btnexcel" id="btnExportExcel" />&nbsp;
+        <span><a id="ReportLink" style="display:inherit;"></a></span>
+        计费方式：
+        ￥<input type="text" class="txtbox" id="txtGaoFee1" style="width: 50px;" value="@Html.GaoFeeText1()" />/篇&nbsp;
+        ￥<input type="text" class="txtbox" id="txtGaoFee2" style="width: 50px;" value="@Html.GaoFeeText2()" />/页
+         <input type="button" value="保存设置" class="btnsave" id="btnSave" />&nbsp;
+        
+    </div>
+</div>
+
+<div class="clear"></div>
+<div id="box">
+    <div id="divList"></div>
+</div>
+<div style="display: none">
+    <form name="action_command" action="" target="_self" method="post">
+    </form>
+</div>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="@Html.RootPath()/content/ui/jquery.ui.all.css"/>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.core.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.widget.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.position.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.menu.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.autocomplete.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var manager;
+        var DataQuery;
+        $(function () {
+            var common = new CommonPage();
+            common.AutoAuthor("txtInAuthor", "hiddenInAuthor");
+
+            $("#txtStartDate").bind("click", function () {
+                var d5222 = $dp.$('txtEndDate');
+                WdatePicker({ readOnly: true, onpicked: function () { d5222.focus(); }, maxDate: '#F{$dp.$D(\'txtEndDate\')}' });
+            });
+            $("#txtEndDate").bind("click", function () { WdatePicker({ readOnly: true, minDate: '#F{$dp.$D(\'txtStartDate\')}' }); });
+            $("#selAuthor").click(function () {
+                var common = new CommonPage();
+                common.SelAuthor("txtInAuthor", "hiddenInAuthor");
+            });
+            manager = $("#divList").ligerGrid({
+                columns: [
+                        { display: '编号', name: 'CID', hide: true, width: '10%', align: 'center' },
+                        { display: '稿件编号 ', name: 'CNumber', width: '85', align: 'center' },
+                        { display: '稿件标题', name: 'Title', width: '20%', align: 'left', render: function (item) {
+                            return '<a href="javascript:void(0)" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\')">' + item.Title + '</a>';
+                        }
+                        },
+                        { display: '审稿费<lable color="#fff">（通知）<\lable>', name: 'ReadingFeeNotice', width: '100', align: 'center', render: function (item) {
+                            var id = item.ReadingFeeNotice;
+                            return '<a href="javascript:void(0)" onclick="ReadingFee(' + id + ',' + item.CID + ',' + item.UserID + ',' + item.EditAuthorID + ')">' + (id == 0 ? "通知审稿费" : "已通知") + '</a>';
+                        }
+                        },
+                        { display: '版面费<lable color="#fff">（通知）<\lable>', name: 'LayoutFeeNotice', width: '100', align: 'center', render: function (item) {
+                            var id = item.LayoutFeeNotice;
+                            return '<a href="javascript:void(0)" onclick="LayoutFee(' + id + ',' + item.CID + ',' + item.UserID + ',' + item.EditAuthorID + ')">' + (id == 0 ? "通知版面费" : "已通知") + '</a>';
+                        }
+                        },
+                        { display: '审稿费<lable color="Green"><\lable>', name: 'ReadingFeeStr', width: '80', align: 'center' },
+                        { display: '版面费<lable color="Green"><\lable>', name: 'LayoutFeeStr', width: '80', align: 'center' },
+                        { display: '入款', name: 'CID', width: '120', align: 'center', render: function (item) {
+                            return '<a href="javascript:void(0)" onclick="AddPayArticle(' + item.CID + ',' + item.ArticlePaymentID + ',' + item.LayoutFeeNotice + "," + item.EditAuthorID + ')">稿费</a>'
+                        }
+                        },
+                        { display: '第一作者', name: 'FirstAuthor', width: '60', align: 'center', render: function (item) {
+                            return '<a href="javascript:void(0)" onclick="ViewAuthor(' + item.FirstAuthorID + ')">' + item.FirstAuthor + '</a>';
+                        }
+                        },
+                        { display: '通讯作者', name: 'CommunicationAuthor', width: '60', align: 'center', render: function (item) {
+                            return '<a href="javascript:void(0)" onclick="ViewAuthor(' + item.CommunicationAuthorID + ')">' + item.CommunicationAuthor + '</a>';
+                        }
+                        },
+                        { display: '发票抬头', name: 'InvoiceUnit', width: '150', align: 'center' },
+                        { display: '投稿日期', name: 'AddDate', width: '85', align: 'center', type: 'date', format: 'yyyy-MM-dd' }
+
+                    ], width: '99.5%', height: 'auto', rownumbers: false, usePager: true, checkbox: true, enabledSort: true,
+                url: '@Html.RootPath()/Finance/GetFinanceAccountPageList', pageSize: 30
+
+            });
+
+            //====================================== 
+        });
+
+        //查找
+        $("#btnSearch").click(function () {
+            var params = GetParams();
+            DataQuery = params;
+            manager.setOptions({ parms: params });
+            manager.loadData();
+        });
+
+
+
+        //保存计费设置
+        $("#btnSave").click(function () {
+            var gaoFeeText1 = $("#txtGaoFee1").val();
+            var gaoFeeText2 = $("#txtGaoFee2").val();
+            if (gaoFeeText1 > 0 && gaoFeeText2 > 0) {
+                alert("稿费设置不正确:\r\n按篇计费/按页计费 仅能为其中一个设置值.");
+                $("#txtGaoFee1").val(0);
+                $("#txtGaoFee2").val(0);
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/Finance/SaveConfigForGaoFee/',
+                data: { GaoFeeText1: gaoFeeText1, GaoFeeText2: gaoFeeText2 },
+                cache: false,
+                beforeSend: function () { },
+                complete: function () { },
+                success: function (data) {
+                    alert(data.Msg);
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        });
+
+        function GetParams() {
+            var params = {
+                Year: $("#Year").val(),
+                Issue: $("#Issue").val()
+            }
+            return params;
+        }
+
+        function ViewDetail(cID, cNumber) {
+            if (cID.text != undefined) {
+                var rows = manager.getSelectedRows();
+                if (rows == "") { alert('请选择需要查看的稿件！'); return; }
+                cID = rows[0].CID;
+                cNumber = rows[0].cNumber;
+            }
+            window.parent.f_addTab('View' + cNumber, '稿件信息[' + cNumber + ']', '@Html.RootPath()/ContributionInfo/SearchViewDetail?CID=' + cID);
+        }
+
+        //稿费入款
+        function AddPayArticle(CID, ID, NoticeID, EditAuthorID) {
+            $.ligerDialog.open({
+                height: 450,
+                width: 620,
+                url: '@Html.RootPath()/Finance/FinanceArticleCreate?FeeType=4&PKID=' + ID,
+                title: '稿费',
+                slide: false,
+                buttons: [{ text: '确认', onclick: function (item, dialog) {
+                    dialog.frame.Save(manager, dialog, CID, NoticeID, EditAuthorID);
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+        //查看作者信息
+        function ViewAuthor(CAuthorID) {
+            $.ligerDialog.open({
+                height: 450,
+                width: 600,
+                url: '@Html.RootPath()/ContributionInfo/ViewContributionAuthor?CAuthorID=' + CAuthorID,
+                title: '查看作者信息',
+                slide: false,
+                buttons: [{ text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        $("#btnExportExcel").click(function () {
+            var FileName = "入款登记与通知.xls";
+            $.ajax({
+                beforeSend: function () {
+                    $("#ReportLink").removeAttr("href");
+                    $("#ReportLink").html("正在生成下载链接...");
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/Finance/FinanceAccountToExcel/?rnd=' + Math.random(),
+                data: { Year: $('#Year').val(), Issue: $('#Issue').val() },
+                cache: false,
+                success: function (data) {
+                    if (data.flag == 1) {
+                        $("#ReportLink").attr("href", "@Html.RootPath()/Upload/DownLoadFile?path=" + data.ExcelPath + "&fileName=" + FileName + "");
+                        //$("#ReportLink").attr("style", "color:red;");
+                        document.getElementById("ReportLink").style.color = "Red";
+                        $("#ReportLink").html(FileName);
+                    }
+
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,66 @@
+﻿<style type="text/css">   
+    .l-table-edit-td-left{ padding:4px;width:90px;}
+    .l-table-edit-td{ padding:4px;}  
+    .l-button-search{width:80px; margin-left:10px; padding-bottom:2px;display:inline;}    
+</style>
+<div id="divSearch">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="right" class="l-table-edit-td-left" id="td">
+                年：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtYear" ltype="text" />
+            </td>
+            <td align="right" class="l-table-edit-td-left" style="width:60px;">
+                期：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtIssue" ltype="text" />
+            </td>
+            <td colspan="2" style="text-align: center">
+                <input type="button" id="btnSearch" value="搜索" class="l-button l-button-search" />
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+<div id="box">
+	<div id="divWorkloadList"></div>
+</div>
+@section Scripts{    
+   <script language="javascript" type="text/javascript">
+       var grid;
+       $(function () {
+
+           $("#btnSearch").click(function () {
+               grid.setOptions({ parms: {
+                   Year: $("#txtYear").val(),
+                   Issue: $("#txtIssue").val()
+               }
+               });
+               grid.loadData();
+           });
+
+           
+           grid = $("#divWorkloadList").ligerGrid({
+               columns: [
+            { display: '稿件编号', name: 'CNumber', width: '80', align: 'center' },
+            { display: '稿件标题', name: 'Title', width: '250', align: 'left' },
+            { display: '作者姓名', name: 'AuthorName', width: '80', align: 'center' },
+            { display: '年', name: 'Year', width: '50', align: 'center' },
+            
+            { display: '期', name: 'Issue', width: '50', align: 'center'},
+            { display: '作者单位', name: 'WorkUnit', width: '150', align: 'center' },
+            { display: '电话', name: 'Tel', width: '100', align: 'center' },
+            { display: '地址', name: 'Address', width: '250', align: 'center' },
+            { display: '邮编', name: 'ZipCode', width: '80', align: 'center' }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+               url: '@Html.RootPath()/ContributionInfo/GetPublishedPageList', pageSize: 20
+            });
+       });
+
+      
+</script>
+}

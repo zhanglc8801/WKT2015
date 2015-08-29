@@ -1,0 +1,1301 @@
+﻿@model WKT.Model.ContributionInfoEntity
+<link href="@Html.RootPath()/Content/ContributionInfo.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    var i_flash_ie = false;
+    var i_flash_fire = false;
+    // Netscape 
+    if (navigator.plugins) {
+        for (var i = 0; i < navigator.plugins.length; i++) {
+            if (navigator.plugins[i].name.toLowerCase().indexOf("shockwave flash") >= 0) {
+                i_flash_ie = true;
+                i_flash_fire = true;
+            }
+        }
+    }
+</script>
+<script type="text/vbscript">
+//IE
+on error resume next
+set f = CreateObject("ShockwaveFlash.ShockwaveFlash")
+if IsObject(f) then
+i_flash_ie = true
+end if
+</script>
+<script type="text/javascript">
+    if (window.navigator.userAgent.indexOf("Firefox") != -1 && i_flash_fire == false) {
+        $.ligerDialog.confirm("您需要安装Adobe Flash Player\n插件后才能继续投稿操作。", function (yes) {
+            if (yes) {
+                window.open("http://www.yywkt.cn/Content/Tools/install_flash_player_firefox.exe");
+            }
+            else {
+                window.parent.f_removeSelectedTabItem();
+            }
+        });
+    }
+    else {
+        if (i_flash_ie == false) {
+            $.ligerDialog.confirm('您需要安装Adobe Flash Player\n插件后才能继续投稿操作。', function (yes) {
+                if (yes) {
+                    window.open("http://www.yywkt.cn/Content/Tools/install_flash_player_ie.exe");
+                }
+                else {
+                    window.parent.f_removeSelectedTabItem();
+                }
+            });
+        }
+    }
+   
+</script>
+<div style="width:1050px; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    <div style="padding: 5px">
+        带<span class="tip">*</span>为必填项，填写完成后点击[发送]按钮即可完成投稿。
+    </div>
+    <div id="divAuthor" style="width:1000px;">
+        @{
+            int i = 1;
+            foreach (var item in Model.AuthorList)
+            {
+            <div id="@Html.Raw("divAuthor_" + i)" style="margin-bottom:2px;" index="@i"  alt="@item.CAuthorID" name="Author">
+                <table border="0" class="mainTable" id="@Html.Raw("tbAuthor_" + i)" cellpadding="0" cellspacing="1" align="left">
+                    <tr>
+                        <td class="title" colspan="4">
+                            @if (i == 1)
+                            {
+                                @Html.Raw("第" + i + "作者")
+                            }
+                            else
+                            {
+                                <div style="float: left;">@Html.Raw("第" + i + "作者")</div>
+                                <div style="float: right">
+                                    <a href="javascript:DelAuthors(@i);">删除</a></div>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            <b>通讯作者?</b>
+                        </td>
+                        <td class="right" colspan="3">
+                            <input type="radio" id="@Html.Raw("rblLetterYes_" + i)" name="@Html.Raw("IsCommunication_" + i)" alt="IsCommunication" @Html.Raw(item.IsCommunication ? "checked=\"checked\"" : "") value="1" /><label for="@Html.Raw("rblLetterYes_" + i)">是</label>
+                            <input type="radio" id="@Html.Raw("rblLetterNo_" + i)" name="@Html.Raw("IsCommunication_" + i)" alt="IsCommunicationNo" @Html.Raw(item.IsCommunication ? "" : "checked=\"checked\"") value="0" /><label for="@Html.Raw("rblLetterNo_" + i)">否</label>
+                            <span class="tip">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            姓名：
+                        </td>
+                        <td class="right" style="width: 400px;">
+                            <input type="text" id="@Html.Raw("txtAuthorName_" + i)" name="AuthorName" class="txtbox" value="@item.AuthorName" validate="{required:true,byteMaxLength:50}" />
+                            <span class="tip">*</span>
+                        </td>
+                        <td class="left" style="width: 80px;">
+                            性别：
+                        </td>
+                        <td class="right">
+                            <input type="radio" id="@Html.Raw("rblMale_" + i)" name="@Html.Raw("Gender_" + i)" @Html.Raw(item.Gender == "男" ? "checked=\"checked\"" : "") value="1" /><label for="@Html.Raw("rblMale_" + i)">男</label>
+                            <input type="radio" id="@Html.Raw("rblFemale_" + i)" name="@Html.Raw("Gender_" + i)" @Html.Raw(item.Gender == "" ? "checked=\"checked\"" : "") value="2" /><label for="@Html.Raw("rblFemale_" + i)">女</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            出生年月：
+                        </td>
+                        <td class="right">
+                            <input type="text" id="@Html.Raw("txtBirthday_" + i)" name="Birthday" class="txtbox Wdate" validate="{byteMaxLength:50}" value="@Html.Raw(item.Birthday == null ? string.Empty : item.Birthday.Value.ToString("yyyy-MM-dd"))" onclick="WdatePicker({ readOnly: true});" />
+                            @{
+                                var authorField = Model.ContributeAuthorFieldList.Find(p => p.DBField.Equals("Birthday"));
+                                if (authorField.IsRequire)
+                                {
+                                    <span class="tip" name="sapnRequire" alt="Birthday">*</span>
+                                }
+                             }
+                        </td>
+                        <td class="left" style="width: 80px;">
+                            电子邮箱：
+                        </td>
+                        <td class="right">
+                            <input type="text" id="@Html.Raw("txtEmail_" + i)" name="Email" class="txtbox" value="@(string.IsNullOrEmpty(item.Email) ? Html.CurUserLoginName() : item.Email)"  validate="{maxlength:100,email:true}" />
+                            @{
+                                authorField = Model.ContributeAuthorFieldList.Find(p => p.DBField.Equals("Email"));
+                                if (authorField.IsRequire)
+                                {
+                                    <span class="tip" name="sapnRequire" alt="Email">*</span>
+                                }
+                             }
+                        </td>
+                    </tr>
+                    <tr id="@Html.Raw("TelMobile_" + i)">
+                        <td class="left" style="width: 80px;">
+                            联系电话：
+                        </td>
+                        <td class="right">
+                            <input type="text" id="@Html.Raw("txtTel_" + i)" name="Tel" class="txtbox" value="@item.Tel" validate="{maxlength:13,phone:true}" />
+                            &nbsp;如：010-12345678
+                            @{
+                                authorField = Model.ContributeAuthorFieldList.Find(p => p.DBField.Equals("Tel"));
+                                if (authorField.IsRequire)
+                                {
+                                    <span class="tip" name="sapnRequire" alt="Tel">*</span>
+                                }
+                             }
+                        </td>
+
+                        <td class="left" style="width: 80px;">
+                            手机：
+                        </td>
+                        <td class="right">
+                            <input type="text" id="@Html.Raw("txtMobile_" + i)" name="Mobile" class="txtbox" value="@item.Mobile" validate="{maxlength:12}" />
+                            @{
+                                authorField = Model.ContributeAuthorFieldList.Find(p => p.DBField.Equals("Mobile"));
+                                if (authorField.IsRequire)
+                                {
+                                    <span class="tip" name="sapnRequire" alt="Mobile">*</span>
+                                }
+                             }
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            民族：
+                        </td>
+                        <td class="right">
+                            <input type="text" id="@Html.Raw("txtNation_" + i)" name="Nation" class="txtbox" value="@item.Nation" validate="{maxlength:5}" />
+                            @{
+                                authorField = Model.ContributeAuthorFieldList.Find(p => p.DBField.Equals("Nation"));
+                                if (authorField.IsRequire)
+                                {
+                                    <span class="tip" name="sapnRequire" alt="Nation">*</span>
+                                }
+                             }
+                        </td>
+                         <td class="left" style="width: 80px;">
+                            籍贯：
+                        </td>
+                        <td class="right">
+                            <input type="text" id="@Html.Raw("txtNativePlace_" + i)" name="NativePlace" class="txtbox" value="@item.NativePlace" validate="{maxlength:25}" />
+                            @{
+                                authorField = Model.ContributeAuthorFieldList.Find(p => p.DBField.Equals("NativePlace"));
+                                if (authorField.IsRequire)
+                                {
+                                    <span class="tip" name="sapnRequire" alt="NativePlace">*</span>
+                                }
+                             }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            单位：
+                        </td>
+                        <td class="right">
+                            <input type="text" id="@Html.Raw("txtWorkUnit_" + i)" name="WorkUnit" class="txtbox" value="@item.WorkUnit" validate="{byteMaxLength:500}" style="width: 400px;" />
+                             @{
+                                authorField = Model.ContributeAuthorFieldList.Find(p => p.DBField.Equals("WorkUnit"));
+                                if (authorField.IsRequire)
+                                {
+                                    <span class="tip" name="sapnRequire" alt="WorkUnit">*</span>
+                                }
+                             }
+                        </td>
+                        <td class="left" style="width: 80px;">
+                            科室：
+                        </td>
+                        <td class="right">
+                            <input type="text" id="@Html.Raw("txtSectionOffice_" + i)" name="SectionOffice" class="txtbox" value="@item.SectionOffice" validate="{maxlength:10}" />
+                            @{
+                                authorField = Model.ContributeAuthorFieldList.Find(p => p.DBField.Equals("SectionOffice"));
+                                if (authorField.IsRequire)
+                                {
+                                    <span class="tip" name="sapnRequire" alt="ZipCode">*</span>
+                                }
+                             }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            联系地址：
+                        </td>
+                        <td class="right">
+                            <input type="text" id="@Html.Raw("txtAddress_" + i)" name="Address" class="txtbox" value="@item.Address" validate="{byteMaxLength:500}" style="width: 400px;" />
+                            @{
+                                authorField = Model.ContributeAuthorFieldList.Find(p => p.DBField.Equals("Address"));
+                                if (authorField.IsRequire)
+                                {
+                                    <span class="tip" name="sapnRequire" alt="Address">*</span>
+                                }
+                             }
+                        </td>
+                        <td class="left">
+                            邮编：
+                        </td>
+                        <td class="right">
+                            <input type="text" id="@Html.Raw("txtZipCode_" + i)" name="ZipCode" class="txtbox" value="@item.ZipCode" validate="{zipCode:true}" />
+                            @{
+                                authorField = Model.ContributeAuthorFieldList.Find(p => p.DBField.Equals("ZipCode"));
+                                if (authorField.IsRequire)
+                                {
+                                    <span class="tip" name="sapnRequire" alt="ZipCode">*</span>
+                                }
+                             }
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+            i++;
+            }
+        }
+    </div>
+    <table border="0"  cellpadding="0" cellspacing="0" width="1000px" style="padding: 5px 0px 10px 0px;">
+        <tr>
+            <td>＋<a href="javascript:void(0);" id="aAddAuthor">添加更多作者</a></td>
+        </tr>
+    </table>
+    <table border="0" class="mainTable" cellpadding="0" cellspacing="1" id="tbBody" style="width:1000px;">
+        <tr>
+            <td class="title" colspan="2">
+                稿件信息：
+            </td>
+        </tr>
+        <tr id="UpFile">
+            <td class="right" colspan="2">
+                <span id="spanUpload"><img src="@Html.RootPath()/content/images/wkt_upload.jpg" alt="上传稿件" id="imgUpload" style="cursor:pointer;" /></span><span class="tip" id="CPathMsg">*&nbsp;请选择Word文件.支持上传文件格式：@Html.ContributionInfoFileExt(0).Replace(";*.", " | "),大小不超过40MB.</span>
+                <div id="divContributePath" style="display: none">
+                    <a id="aContributePath">上传成功!请补充剩余信息后点击【发送】按钮提交。</a></div>
+            </td>
+        </tr>
+        <tr id="UpMsgTr" style="display:none;">
+            <td class="title" colspan="5">
+            <span id="UpMsg"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 80px;">
+                中文标题：
+            </td>
+            <td class="right">
+                <input name="Title" type="text" id="txtTitle" class="txtbox" style="width: 300px;" value="@Model.Title" validate="{required:true,byteMaxLength:200}" />
+                <span class="tip">*</span>
+            </td>
+        </tr>
+        @{
+            var field = Model.FieldList.Find(p => p.DBField.Equals("EnTitle"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="EnTitle" type="text" id="txtEnTitle" class="txtbox" style="width: 300px;" value="@Model.EnTitle" validate="{byteMaxLength:200}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="EnTitle">*</span>
+                    }
+                </td>
+            </tr>
+            }
+        }
+        <tr>
+            <td class="left" style="width: 80px;">
+                学科分类：
+            </td>
+            <td class="right">
+                @Html.Raw(@Html.SelectDcitValue("SubjectCat", "200px;\" validate=\"{required:true}", "SubjectCat", Model.SubjectCat.ToString(), string.Empty, "请选择学科分类"))
+                <span class="tip">*</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 80px;">
+                拟投栏目：
+            </td>
+            <td class="right" id="tdChannel">                
+                <input name="txtJChannelID" type="text" id="txtJChannelID" style="width: 150px;" value="@Model.JChannelID" />
+                <span class="tip" style="margin-left:9px;">*</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 80px;">
+                投稿类型：
+            </td>
+            <td class="right">
+                @Html.Raw(Html.SelectDcitValue("ContributionType", "200px;\" validate=\"{required:true}", "ContributionType", Model.ContributionType.ToString(), string.Empty, "请选择投稿类型"))
+                <span class="tip">*</span>
+            </td>
+        </tr>
+        <tr id="SelSpecial" style="display:none;">
+            <td class="left" style="width: 80px;">
+                选择约稿人：
+            </td>
+            <td class="right">
+                @Html.Raw(Html.SelectDcitValue("Special", "200px;\" validate=\"{required:false}", "Special", Model.Special.ToString(), "0", "请选择约稿人"))
+            </td>
+        </tr>
+        <tr>
+            <td class="left" style="width: 80px;">
+                中文关键词：
+            </td>
+            <td class="right">
+                <input name="Keywords" type="text" id="txtKeywords" class="txtbox" style="width:300px;" value="@Model.Keywords" validate="{required:true,byteMaxLength:500}" />
+                <span class="tip">*</span>多个关键词请用半角分号(;)或空格分隔
+            </td>
+        </tr>
+        @{
+            field = Model.FieldList.Find(p => p.DBField.Equals("EnKey"));
+            if (field != null && field.IsShow)
+            {      
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="EnKeywords" type="text" id="txtEnKeywords" class="txtbox" style="width:300px;" value="@Model.EnKeywords" validate="{byteMaxLength:500}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="EnKeywords">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Abstract"));
+            if (field != null && field.IsShow)
+            {
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <textarea name="Abstract" rows="2" cols="20" id="txtAbstract" class="txtbox" style="min-height: 60px; width: 652px;">@Model.AttModel.Abstract</textarea>
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Abstract">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("EnAbstract"));
+            if (field != null && field.IsShow)
+            {
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <textarea name="EnAbstract" rows="2" cols="20" id="txtEnAbstract" class="txtbox" style="min-height: 60px; width: 652px;">@Model.AttModel.EnAbstract</textarea>
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="EnAbstract">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Reference"));
+            if (field != null && field.IsShow)
+            {
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    &nbsp; <a href="javascript:void(0);" id="aAddReference">添 加 </a>
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip">*</span>
+                    }
+                    <input type="hidden" id="hdReferenceRequire" value="@Html.Raw(field.IsRequire ? "1" : "0")" />
+                    <table class="mainTable" id="tb_Reference" cellpadding="0" cellspacing="center">
+                        @{
+                    int j = 1;
+                    foreach (var item in Model.ReferenceList)
+                    {
+                            <tr id="@Html.Raw("trReference_" + j)" alt="@item.ReferenceID" index="@j" name="Reference">
+                                <td class="left">
+                                    文献格式：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="text" id="@Html.Raw("txtTitle_" + j)" name="ReferenceTitle" class="txtbox" value="@item.Title" style="width:400px;" validate="{required:true,byteMaxLength:500}" />
+                                    <span class="tip">*</span>
+                                    <div style="height: 2px;">
+                                    </div>
+                                    文献来源(URL)：
+                                    <input type="text" id="@Html.Raw("txtRefUrl_" + j)" name="RefUrl" class="txtbox" value="@item.RefUrl" style="width:400px;" validate="{byteMaxLength:200}" />
+                                    &nbsp;无参考文献请点 <a href="javascript:DelReference(@j);">删除</a>
+                                </td>
+                            </tr>
+                        j++;
+                    }
+                        }
+                    </table>
+                    <span style="color: Red;">中文格式如下:&nbsp;作者、作者、作者(2009)：《文章标题》，《杂志名称》，第5期。</span><br />
+                    <span style="color: Red;">英文格式如下:&nbsp;Guo-LI，Qi-hao(1958).EnglishArticleTitle.Journal
+                        Name.48(4)：pp.102-107.</span>
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Fund"));
+            if (field != null && field.IsShow)
+            {
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input type="radio" id="IsFund1" value="1" name="IsFund" @Html.Raw(Model.IsFund ? "checked=\"checked\"" : "") /><label
+                        for="IsFund1">有</label>
+                    <input type="radio" id="IsFund0" value="0" name="IsFund" @Html.Raw(Model.IsFund ? "" : "checked=\"checked\"") /><label
+                        for="IsFund0">无</label>
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip">*</span>
+                    }
+                    <input type="hidden" id="hdFundRequire" value="@Html.Raw(field.IsRequire ? "1" : "0")" />
+                    <table border="0" id="tb_Funds" class="SecTable" cellpadding="0" cellspacing="1" style="display:@Html.Raw(Model.IsFund ? "" : "none")">
+                        <tr style="text-align: center">
+                            <td class="left">
+                                序号
+                            </td>
+                            <td class="left">
+                                基金级别
+                            </td>
+                            <td class="left">
+                                基金号
+                            </td>
+                            <td class="left">
+                                基金名称
+                            </td>
+                            <td class="left">
+                                备注
+                            </td>
+                            <td class="left">
+                                操作
+                            </td>
+                        </tr>
+                        @{
+                    int k = 1;
+                    foreach (var item in Model.FundList)
+                    {
+                            <tr id="@Html.Raw("trFund_" + k)" alt="@item.FundID" index="@k" name="Fund">
+                                <td align="center" class="left">@k
+                                </td>
+                                <td align="center" class="left">
+                                    @Html.Raw(Html.SelectDcitValue("FundLevel_" + k, "100px", "FundLevel", item.FundLevel.ToString(), string.Empty, string.Empty))
+                                </td>
+                                <td class="left">
+                                    <input type="text" id="@Html.Raw("txtFundCode_" + k)" name="FundCode" class="txtbox" value="@item.FundCode" validate="{required:@Html.Raw(Model.IsFund ? "true" : "false"),byteMaxLength:50}" /><span
+                                        class="tip">*</span>
+                                </td>
+                                <td class="left">
+                                    <input type="text" id="@Html.Raw("txtFundName_" + k)" name="FundName" class="txtbox" value="@item.FundName" validate="{required:@Html.Raw(Model.IsFund ? "true" : "false"),byteMaxLength:100}" /><span
+                                        class="tip">*</span>
+                                </td>
+                                <td class="left">
+                                    <input type="text" id="@Html.Raw("txtFundNote_" + k)" name="FundNote" class="txtbox" value="@item.Note" validate="{byteMaxLength:100}" />
+                                </td>
+                                <td align="center" class="left">
+                                    @if (k == 1)
+                                    {
+                                        <a href="javascript:AddFunds();">添加更多</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="javascript:delFunds(@k);">删除</a>
+                                    }
+                                </td>
+                            </tr>                            
+                                    k++;
+                    }
+                        }
+                    </table>
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("InvoiceTitle"));
+            if (field != null && field.IsShow)
+            {
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="InvoiceTitle" type="text" id="txtInvoiceTitle" class="txtbox" value="@Model.InvoiceTitle" style="width:300px;" validate="{byteMaxLength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="InvoiceTitle">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("CLC"));
+            if (field != null && field.IsShow)
+            {
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="CLC" type="text" id="txtCLC" class="txtbox" value="@Model.CLC" style="width:300px;" validate="{byteMaxLength:50}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="CLC">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("CommendExpert"));
+            if (field != null && field.IsShow)
+            {
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <textarea name="CommendExpert" rows="2" cols="20" id="txtCommendExpert" class="txtbox" style="height: 60px; width: 652px;" validate="{byteMaxLength:200}">@Model.CommendExpert</textarea>
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="CommendExpert">*</span>
+                    }
+                    <br />
+                    <span>请填写所推荐专家的姓名、Email、电话、工作单位、邮编等信息，以方便送审。</span>
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField"));
+            if (field != null && field.IsShow)
+            {
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="ReserveField" type="text" id="txtReserveField" class="txtbox" value="@Model.ReserveField" style="width:300px;" validate="{byteMaxLength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="ReserveField">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField1"));
+            if (field != null && field.IsShow)
+            {
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="ReserveField1" type="text" id="txtReserveField1" class="txtbox" value="@Model.ReserveField1" style="width:300px;" validate="{byteMaxLength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="ReserveField1">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField2"));
+            if (field != null && field.IsShow)
+            {
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="ReserveField2" type="text" id="txtReserveField2" class="txtbox" value="@Model.ReserveField2" style="width:300px;" validate="{byteMaxLength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="ReserveField2">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField3"));
+            if (field != null && field.IsShow)
+            {
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="ReserveField3" type="text" id="txtReserveField3" class="txtbox" value="@Model.ReserveField3" style="width:300px;" validate="{byteMaxLength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="ReserveField3">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField4"));
+            if (field != null && field.IsShow)
+            {
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="ReserveField4" type="text" id="txtReserveField4" class="txtbox" value="@Model.ReserveField4" style="width:300px;" validate="{byteMaxLength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="ReserveField4">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField5"));
+            if (field != null && field.IsShow)
+            {
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="ReserveField5" type="text" id="txtReserveField5" class="txtbox" value="@Model.ReserveField5" style="width:300px;" validate="{byteMaxLength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="ReserveField5">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Remark"));
+            if (field != null && field.IsShow)
+            {
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <textarea name="Remark" rows="2" cols="20" id="txtRemark" class="txtbox" style="height: 60px; width: 652px;" validate="{byteMaxLength:200}">@Model.AttModel.Remark</textarea>
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Remark">*</span>
+                    }
+                    <br />
+                    <span>如有其他要求可以在备注中写明，如希望发表的日期等信息 </span>
+                </td>
+            </tr>
+            }
+        }
+        <tr>
+            <td class="right" colspan="2">
+                <input type="file" name="FigurePath" id="txtFigurePath" />
+                <span>&nbsp;支持上传文件格式：@Html.ContributionInfoFileExt(1).Replace(";*.", " | "),大小不超过30MB.</span>
+                <div id="divFigurePath" style="display: none">
+                    <a id="aFigurePath">附件</a></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="right" colspan="2">
+                <input type="file" name="IntroLetterPath" id="txtIntroLetterPath" /><span>&nbsp;支持上传文件格式：@Html.ContributionInfoFileExt(3).Replace(";*.", " | "),大小不超过30MB.</span>
+                <div id="divIntroLetterPath" style="display: none">
+                    <a id="aIntroLetterPath">图表/介绍信</a></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="left" colspan="2">
+                <div id="divBtn" style="padding-left: 15%"><input type="hidden" value="@Model.CNumber" id="hiddenCNumber" name="CNumber" />
+                    @{
+                        if (Model.CID == 0 || Model.Status == -1 || Model.Status == -2 || Model.Status == -3)
+                        {
+                        <input type="button" value="发    送" id="btnSend" class="l-button" style="display: inline;" />
+                        }
+@*                      if (Model.CID == 0)
+                        { 
+                        <input type="button" value="存 草 稿" id="btnDraft" class="l-button" style="display: inline" />
+                        <input type="button" value="格式修改" id="btnFormat" class="l-button" style="display: inline" />                  
+                        }  *@    
+                        else
+                        {
+                       <input type="button" value="保    存" id="btnSave" class="l-button" style="display: inline;" />
+                        }
+                    }
+                    <input type="button" value="预    览" id="btnView" class="l-button" style="display: none;" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    </form>   
+</div>
+
+@* <script language="javascript" type="text/javascript">
+     var pb_strConfirmCloseMessage;
+     var pb_blnCloseWindow = false;
+     pb_strConfirmCloseMessage = "投稿尚未完成，刷新或离开此页将会丢失已填写的投稿信息。";
+     function ConfirmClose() {
+         window.event.returnValue = pb_strConfirmCloseMessage;
+         pb_blnCloseWindow = true;
+     }
+     document.body.onbeforeunload = ConfirmClose;
+ </script>*@
+
+@section Scripts{
+    <script type="text/javascript" src="@Html.RootPath()/Scripts/Uploadify/jquery.uploadify.js"></script>
+    <script src="@Html.RootPath()/Scripts/validation/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/validation/jquery.metadata.js?111" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/validation/messages_cn.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var CID = '@Model.CID';
+        $(function () {
+            $("span[name='sapnRequire']").each(function () {
+                var authorField = $(this).attr("alt"), AuthorObj = $("[name=" + authorField + "]");
+                if (AuthorObj.attr("validate") == null || AuthorObj.attr("validate") == undefined)
+                    return;
+                var AuthorAttr = AuthorObj.attr("validate");
+                if (AuthorAttr == null || AuthorAttr == undefined)
+                    AuthorObj.attr("validate", "{required:true}");
+                else
+                    AuthorObj.attr("validate", "{required:true," + /^{(.+)}$/.exec(AuthorAttr)[1] + "}");
+                
+                
+                var field = $(this).attr("alt"), obj = $("[name=" + field + "]");
+                if (obj.attr("validate") == null || obj.attr("validate") == undefined)
+                    return;
+                var attr = obj.attr("validate");
+                if (attr == null || attr == undefined)
+                    obj.attr("validate", "{required:true}");
+                else
+                    obj.attr("validate", "{required:true," + /^{(.+)}$/.exec(attr)[1] + "}");
+            });
+            $.metadata.setType("attr", "validate");
+            validator = $("#form1").validate({
+                debug: false,
+                errorPlacement: function (lable, element) {
+                    element.ligerTip({ content: lable.html(), target: element[0] });
+                },
+                success: function (lable) {
+                    lable.ligerHideTip();
+                    lable.remove();
+                }
+            });
+            $("#txtJChannelID").ligerComboBox({
+                width: 180,
+                selectBoxWidth: 200,
+                selectBoxHeight: 200, textField: 'text', valueField: 'Id', treeLeafOnly: false, initValue: '@Model.JChannelID',
+                tree: { url: '@Html.RootPath()/Issue/GetJournalChannelTree?defaultText=' + encodeURIComponent('请选择拟投栏目') + '&v=' + new Date().getMilliseconds(),
+                    checkbox: false,
+                    textFieldName: "text",
+                    idFieldName: "Id"
+                }
+            });
+
+            $("#ContributionType").change(function () {
+                if (this.value == 2) {
+
+                    $("#SelSpecial").removeAttr("style");
+                }
+                else {
+                    $("#SelSpecial").attr({ style: "display:none" });
+                }
+            });
+
+            var style = ''
+            $("#tdChannel div").each(function () {
+                style = $(this).attr("style");
+                if (style == null || style == undefined) return;
+                $(this).attr("style", "width:198px;float:left");
+            });
+            $("#btnSend").click(function () {
+                Save(0, '您确定投稿吗？', function (data) {
+                    window.parent.RemoveSelectedAndRedirect('NewArticles', '新投稿', '@Html.RootPath()/ContributionInfo/NewArticles');
+                });
+            });
+            $("#btnDraft").click(function () {
+                Save(-1, '您确定保存为草稿吗？', function (data) {
+                    window.parent.RemoveSelectedAndRedirect('DraftIndex', '暂存草稿', '@Html.RootPath()/ContributionInfo/DraftIndex');
+                });
+            });
+            $("#btnView").click(function () {
+                if (CID == 0) {
+                    Save(-1, '', function (data) {
+                        CID = data.CID;
+                        ViewDetail(CID);
+                    });
+                }
+                else {
+                    ViewDetail(CID);
+                }
+            });
+            $("#btnSave").click(function () {
+                Save('@Model.Status', '您确定修改该稿件吗？', function (data) {
+                    window.parent.f_removeSelectedTabItem();
+                });
+            });
+            $("#btnFormat").click(function () {
+                $.ligerDialog.open({
+                    height: 200,
+                    width: 300,
+                    content: '<div style="padding:4px;font-size:14px;">如果您对您的文章格式满意，并能达到本刊要求的文章格式，请继续您的投稿，直到提交信息完成，并提示投稿成功。稿件会自动进入稿件状态查询的新稿件中，请等待编辑部审核。如果您没有时间或希望他人协助修改格式，请点击“请求帮助”</div>',
+                    title: '提示',
+                    slide: false,
+                    buttons: [{ text: '请求帮助', onclick: function (item, dialog) {
+                        Save(-2, '稿件信息将进入稿件查询中的待修格式中，确定继续吗？', function (data) {
+                            CID = data.CID;
+                            $("#divBtn").attr("display", "none");
+                            window.location.href = 'http://wpa.qq.com/msgrd?v=3&uin=@ViewBag.QQ&site=qq&menu=yes';
+                        });
+                        dialog.close();
+                    }
+                    }, { text: '取消', onclick: function (item, dialog) { dialog.close(); } }]
+                });
+            });
+        });
+
+        function LoadTipTop() {
+            var element;
+            $(".l-verify-tip").each(function () {
+                element = $("input[ligertipid=" + $(this).attr("id") + "]");
+                if (element.attr("id") == null || element.attr("id") == undefined) {
+                    $(this).remove();
+                    return;
+                }
+                $(this).css("top", (element.offset().top - 3) + "px");
+            });
+        }
+
+        function Save(status, msg, callBack) {
+            var isvalided = $("#form1").valid();
+            if ($("#SelSpecial").css("display")!="none" && $("#Special").val() == "0") {
+                alert("请选择约稿人！");
+                location.href = "#SelSpecial";
+                return;
+            }
+            if (isvalided) {
+                $("#form1").ligerHideTip();                             
+                var AuthorList = GetAuthorParams(), IsCommunication = false;
+                for (var i = 0; i < AuthorList.length; i++) {
+                    if (AuthorList[i].Tel == "" && AuthorList[i].Mobile == "") {
+                        alert("通讯作者的联系电话与手机不能全部为空！");
+                        document.getElementById("txtTel_" + (i + 1)).style.borderColor = "#e2ab04";
+                        document.getElementById("txtMobile_" + (i + 1)).style.borderColor = "#e2ab04";
+                        location.href = "#TelMobile_"+(i+1);
+                        return;
+                    }
+                    else {
+                        IsCommunication = true;
+                        break;
+                    }
+                }
+                if (!IsCommunication) {
+                    alert("请设定一个通讯作者！");
+                    return;
+                }
+
+                if (contributePath=="") {
+                    alert("请上传您的稿件！");
+                    location.href = "#UpFile";
+                    return;
+                }
+
+                var SubjectCat = $("#SubjectCat").val();
+                if (SubjectCat.length < 1) {
+                    alert("请选择学科分类！");
+                    return;
+                }
+                var ContributionType = $("#ContributionType").val();
+                if (ContributionType.length < 1) {
+                    alert("请选择投稿类型！");
+                    return;
+                }
+
+                //约稿人
+                var Special = $("#Special").val();
+                var JChannelID = $("#txtJChannelID_val").val();
+                if (JChannelID.length < 1 || JChannelID == 0) {
+                    alert("请选择拟投栏目！");
+                    return;
+                } 
+
+                if (contributePath.length < 1 && $("#txtTitle").val() == "") {
+                    alert("请上传稿件附件！");
+                    return;
+                }                
+                var referenceList = new Array();
+                if (("a[id=aAddReference]").length > 0) {
+                    var flag = $("#hdReferenceRequire").val();
+                    referenceList = GetReferenceParams();
+                    if (flag == "1" && referenceList.length < 1) {
+                        alert("请添加参考文献！");
+                        return;
+                    }
+                }
+                var fundList = new Array(), isFund = $("input[name='IsFund']:checked").val() == "1";
+                if (("input[name=Fund]").length > 0 && isFund) {
+                    var flag = $("#hdFundRequire").val();
+                    fundList = GetFundParams();
+                    if (flag == "1" && fundList.length < 1) {
+                        alert("请添加项目基金！");
+                        return;
+                    }
+                }               
+                if (msg.length > 0) {
+                    if (!confirm(msg)) return;
+                }
+                var saveParams = {}, field = '';
+                $("#tbBody").find("td[class=right]").find("input[type=text],select").each(function () {
+                    field = $(this).attr("name");
+                    if (field == null || field == undefined) return;
+                    saveParams[field] = $.trim($(this).val());
+                });
+                
+                saveParams["CID"] = CID;
+                saveParams["CNumber"] = $("#hiddenCNumber").val();
+                saveParams["Status"] = status;
+                saveParams["OldStatus"] = '@Model.Status';
+                saveParams["Year"] = '@Model.Year';
+                saveParams["Volumn"] = '@Model.Volumn';
+                saveParams["Issue"] = '@Model.Issue';
+                saveParams["CommendExpert"] = $.trim($("#txtCommendExpert").val());
+                saveParams["SubjectCat"] = SubjectCat;//学科分类
+                saveParams["ContributionType"] = ContributionType; //投稿类型
+                saveParams["Special"] = Special; //约稿人
+                saveParams["JChannelID"] = JChannelID; //拟投栏目
+                //saveParams["JChannelID"] = 0; //拟投栏目
+                saveParams["ContributePath"] = contributePath;
+                saveParams["FigurePath"] = figurePath;
+                saveParams["IntroLetterPath"] = introLetterPath;
+                saveParams["IsFund"] = isFund;
+                saveParams["IsRetractions"] = false;
+                saveParams["AuthorList"] = AuthorList;
+                saveParams["ReferenceList"] = referenceList;
+                saveParams["FundList"] = fundList;
+                saveParams["AttModel"] = GetAttParams();
+                msgdialog = $.ligerDialog.waitting('稿件信息保存中。。。');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Html.RootPath()/ContributionInfo/Save/',
+                    cache: false,
+                    async: false,
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: $.toJSON({ model: saveParams }),
+                    complete: function () { msgdialog.close(); },
+                    success: function (data) {
+                        alert(data.msg);
+                        if (data.result == "success") {
+                            callBack(data);
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                    }
+                });
+            }
+            else {
+                alert('验证失败，请根据输入框后的黄色提示验证填写的内容是否正确!');
+                location.href = "#divAuthor";
+            }
+        }
+
+        function ViewDetail(cID) {
+            window.parent.f_removeTabItem('NewContributionInfo');
+            window.parent.RemoveSelectedAndRedirect('NewContributionInfo', '查看稿件详情', '@Html.RootPath()/ContributionInfo/View?CID=' + cID);
+        }
+    </script>
+    <script type="text/javascript">
+        var AuthorCount = '@Model.AuthorList.Count', AuthorHtml = $("#divAuthor_1").html()
+           , ReferenceCount = '@Model.ReferenceList.Count', ReferenceHtml = $("#trReference_1").html()
+           , FundCount = '@Model.FundList.Count', FundHtml = $("#trFund_1").html();
+        $(function () {
+            if (CID == 0) {
+                $("#rblLetterYes_1").attr("checked", 'checked');
+                $("#rblLetterNo__1").attr("checked", '');
+            }
+            InitIsCommunication();
+            $("#aAddAuthor").click(function () {
+                AuthorCount++;
+                var html = "<div id=\"divAuthor_" + AuthorCount + "\" style=\"margin-bottom:2px;\" alt=\"0\" name=\"Author\" index=\"" + AuthorCount + "\">";
+                html += AuthorHtml.replace(/_\d+/gi, "_" + AuthorCount).replace("第1作者", '<div style="float:left;">第' + ($("div[name=Author]").length + 1) + '作者：</div><div style="float:right"><a href="javascript:DelAuthors(' + AuthorCount + ');">删除</a></div>');
+                html += "</div>";
+                $("#divAuthor").append(html);
+                LoadTipTop();
+                InitIsCommunication();
+                $("#divAuthor_" + AuthorCount).find("input[type=text]").val("");
+                $("#txtNation_" + AuthorCount).val("汉");
+                $("#rblLetterNo_" + AuthorCount).attr("checked", "checked");
+            });
+            $("#aAddReference").click(function () {
+                ReferenceCount++;
+                var html = "<tr id=\"trReference_" + ReferenceCount + "\" alt=\"0\" index=\"" + ReferenceCount + "\" name=\"Reference\">";
+                html += ReferenceHtml.replace(/_\d+/gi, "_" + ReferenceCount).replace(/DelReference\(\d+\)/gi, "DelReference(" + ReferenceCount + ")");
+                html += "</tr>";
+                $("#tb_Reference").append(html);
+                LoadTipTop();
+                $("#trReference_" + ReferenceCount).find("input[type=text]").val("");
+            });
+            $("#IsFund1").change(function () {
+                if (!this.checked) return;
+                $("input[name=FundCode]").attr("validate", "{required:true,byteMaxLength:50}");
+                $("input[name=FundName]").attr("validate", "{required:true,byteMaxLength:100}");
+                $("#tb_Funds").slideToggle('medium');
+            });
+            $("#IsFund0").change(function () {
+                if (!this.checked) return;
+                $("input[name=FundCode]").attr("validate", "{required:false,byteMaxLength:50}");
+                $("input[name=FundName]").attr("validate", "{required:false,byteMaxLength:100}");
+                $("#tb_Funds").slideToggle('medium');
+            });
+        });
+
+        function InitIsCommunication() {;
+            $("input[alt=IsCommunication]").click(function () {
+                var thisid = $(this).attr("id");
+                var thisvalue = $(this).val();
+                if (thisvalue = "1") {
+                    $("input[alt=IsCommunication]").each(function () {
+                        if ($(this).attr("id") != thisid && $(this).val() == "1") {
+                            $(this).attr("checked", "");
+                            $("#" + $(this).attr("id").replace("Yes", "No")).attr("checked", "true");
+                        }
+                    });
+                }
+            });
+        }
+
+        function AddFunds() {
+            FundCount++;
+            var html = "<tr id=\"trFund_" + FundCount + "\" alt=\"0\" index=\"" + FundCount + "\" name=\"Fund\">";
+            html += FundHtml.replace(/_\d+/gi, "_" + FundCount).replace(/AddFunds\(\)/gi, "DelFunds(" + FundCount + ")").replace("添加更多", "删除").replace("<td align=\"center\">1", "<td align=\"center\">" + FundCount);
+            html += "</tr>";
+            $("#tb_Funds").append(html);
+            LoadTipTop();
+            $("#trFund_" + FundCount).find("input[type=text]").val("");
+            $("#FundLevel_" + FundCount)[0].selectedIndex = 0;
+        }
+
+        function DelAuthors(objID) {
+            $("#divAuthor_" + objID).remove();
+            InitIsCommunication();
+            $("div[name=Author]").each(function (i) {
+                if (i > 0)
+                    $(this).find("div").eq(0).html("第" + (i + 1) + "作者");
+            });
+            LoadTipTop();
+        }
+
+        function DelReference(objID) {
+            $("#trReference_" + objID).remove();
+            LoadTipTop();
+        }
+
+        function DelFunds(objID) {
+            $("#trFund_" + objID).remove();
+            LoadTipTop();
+        }
+
+        function GetAuthorParams() {
+            var arry = new Array(), index = 1;
+            $("div[name=Author]").each(function () {
+                index = $(this).attr("index");
+                arry.push({
+                    CAuthorID: $(this).attr("alt"),
+                    AuthorName: $.trim($("#txtAuthorName_" + index).val()),
+                    Gender: $("input[name='Gender_" + index + "']:checked").val(),
+                    Birthday: $.trim($("#txtBirthday_" + index).val()),
+                    Tel: $.trim($("#txtTel_" + index).val()),
+                    Mobile: $.trim($("#txtMobile_" + index).val()),
+                    Email: $.trim($("#txtEmail_" + index).val()),
+                    Nation: $.trim($("#txtNation_" + index).val()),
+                    NativePlace: $.trim($("#txtNativePlace_" + index).val()),
+                    WorkUnit: $.trim($("#txtWorkUnit_" + index).val()),
+                    SectionOffice: $.trim($("#txtSectionOffice_" + index).val()),
+                    Address: $.trim($("#txtAddress_" + index).val()),
+                    ZipCode: $.trim($("#txtZipCode_" + index).val()),
+                    IsFirst: index == "1",
+                    IsCommunication: $("input[name='IsCommunication_" + index + "']:checked").val() == "1"
+                });
+            });
+            return arry;
+        }
+
+        function GetReferenceParams() {
+            var arry = new Array(), index = 1;
+            $("tr[name=Reference]").each(function () {
+                index = $(this).attr("index");
+                arry.push({
+                    ReferenceID: $(this).attr("alt"),
+                    Title: $.trim($("#txtTitle_" + index).val()),
+                    RefUrl: $.trim($("#txtRefUrl_" + index).val())
+                });
+            });
+            return arry;
+        }
+
+        function GetFundParams() {
+            var arry = new Array(), index = 1;
+            if ($("input[name='IsFund']:checked").val() == "1") {
+                $("tr[name=Fund]").each(function () {
+                    index = $(this).attr("index");
+                    arry.push({
+                        FundID: $(this).attr("alt"),
+                        FundLevel: $("#FundLevel_" + index).val(),
+                        FundCode: $.trim($("#txtFundCode_" + index).val()),
+                        FundName: $.trim($("#txtFundName_" + index).val()),
+                        Note: $.trim($("#txtFundNote_" + index).val())
+                    });
+                });
+            }
+            return arry;
+        }
+
+        function GetAttParams() {
+            return {
+                Abstract: $.trim($("#txtAbstract").val()),
+                EnAbstract: $.trim($("#txtEnAbstract").val()),
+                Remark: $.trim($("#txtRemark").val())
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        var contributePath = '', figurePath = '', introLetterPath = '';
+        var windows = [];
+        //设置上传文件夹(按双月设置)
+        var UpFolder = '';
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        if (month % 2 == 0) {
+            UpFolder = year + "/" + month;
+        }
+        else {
+            UpFolder = year + "/" + (month + 1);
+        }     
+        $(function () {
+            setTimeout(function () {
+                $("#imgUpload").uploadify({
+                    postData: { folder: 'ContributeInfo/ContributePath/' + UpFolder },
+                    uploader: '@Html.RootPath()/Upload/Save/',
+                    buttonText: '上传稿件',
+                    fileTypeExts: "@Html.ContributionInfoFileExt(0)",
+                    swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',
+                    onUploadSuccess: function (obj, data, response) {
+                        var result = eval("(" + data + ")");
+                        if (result.result == "success") {
+                            contributePath = result.url;
+                            LoadFile(contributePath, "divContributePath", "aContributePath");
+                            AutoFilling(contributePath);
+                        }
+                        else {
+                            alert(result.msg);
+                            return;
+                        }
+                    }
+                });
+            }, 10);
+
+            setTimeout(function () {
+                $("#txtFigurePath").uploadify({
+                    postData: { folder: 'ContributeInfo/FigurePath/' + UpFolder },
+                    uploader: '@Html.RootPath()/Upload/Save/',
+                    buttonText: '上传附件',
+                    fileTypeExts: "@Html.ContributionInfoFileExt(1)",
+                    swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',
+                    onUploadSuccess: function (obj, data, response) {
+                        var result = eval("(" + data + ")");
+                        if (result.result == "success") {
+                            figurePath = result.url;
+                            LoadFile(figurePath, "divFigurePath", "aFigurePath");
+                        }
+                        else {
+                            alert(result.msg);
+                            return;
+                        }
+                    }
+                });
+            }, 10);
+            setTimeout(function () {
+                $("#txtIntroLetterPath").uploadify({
+                    postData: { folder: 'ContributeInfo/IntroLetterPath/' + UpFolder },
+                    uploader: '@Html.RootPath()/Upload/Save/',
+                    buttonText: '图表/介绍信',
+                    fileTypeExts: "@Html.ContributionInfoFileExt(3)",
+                    swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',
+                    onUploadSuccess: function (obj, data, response) {
+                        var result = eval("(" + data + ")");
+                        if (result.result == "success") {
+                            introLetterPath = result.url;
+                            LoadFile(introLetterPath, "divIntroLetterPath", "aIntroLetterPath");
+                        }
+                        else {
+                            alert(result.msg);
+                            return;
+                        }
+                    }
+                });
+                });
+            }, 10);
+
+        function LoadFile(url, divId, aId) {
+            if (url.length < 1)
+                $("#" + divId).css("display", "none");
+            else {                
+                $("#" + aId).attr("href",url); ;
+                $("#" + divId).css("display", "inline");
+            }
+        }
+
+        function AutoFilling(CPath)
+        {
+            $.ajax({
+                beforeSend: function () {
+                    //document.getElementById("btnLogin").value = "";
+                    //document.getElementById("btnLogin").className = "BtnLoginLoading";
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/Upload/GetDocContentAjax/?rnd=' + Math.random(),
+                data: { filePath: CPath },
+                cache: false,
+                success: function (data) {
+                    if (data.flag == "1") {
+                        if (data.Title.length > 1 && $("#txtTitle").val()=="") {
+                            $("#UpMsg").html("提示：以下部分内容由系统根据您上传的稿件自动完成，请您核对、修改并完善剩余信息后点击[发送]按钮。");
+                            $("#UpMsgTr").removeAttr("style");
+                            $("#txtTitle").val(data.Title);
+                            $("#txtKeywords").val(data.Keywords);
+                            $("#txtAbstract").val(data.Abstract);
+                            $("#txtEnAbstract").val(data.AbstractEn);
+                       }
+                        
+                    }
+                    if (data.flag == "0") {
+                         $("#UpMsg").html("您上传的稿件看起来不是Word文件,您需要手动完善投稿内容.");
+                    }
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+
+    </script>
+
+    <script type="text/javascript">
+        if ('@Model.CID' != '0') {
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/ContributionInfo/GetFlowLogList/',
+                data: {
+                    CID: '@Model.CID',
+                    isViewMoreFlow: 0
+                },
+                cache: false,
+                success: function (data) {
+                    var list = data;
+                    for (var i = 0; i < list.length; i++) {
+                        if (list[i].CPath != '' && list[i].SendUserID == '@Model.AuthorID' && list[i].IsDown==true) {
+                            //                            $("#imgUpload").attr("disabled", "disabled");
+                            $("#CPathMsg").html("不允许上传");
+                            $("#spanUpload").html("xxx");
+                            //document.getElementByIdx("spanUpload").style.display = "none"; 
+                            
+                        }
+                    }
+
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+    </script>
+
+}

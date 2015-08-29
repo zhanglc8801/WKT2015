@@ -1,0 +1,94 @@
+﻿<div id="divList">
+</div>
+<div style="display: none">
+        <form name="action_command" action="" target="_self" method="post">
+        </form>
+    </div>
+@section Scripts{
+    <script type="text/javascript">
+        var manager;
+        $(function () {
+            manager = $("#divList").ligerGrid({
+                columns: [
+            { display: '编号', name: 'SubscribeID', hide: true },
+            { display: '单位/个人', name: 'Subscriber', width: '20%', align: 'left' },
+            { display: '订阅详情', name: 'SubscribeInfo', width: '15%', align: 'left' },
+            { display: '联系人', name: 'ContactUser', width: '10%', align: 'center' },
+            { display: '联系电话', name: 'Mobile', width: '10%', align: 'center' },            
+            { display: '订阅日期', name: 'SubscribeDate', width: '15%', align: 'center', type: 'date', format: 'yyyy-MM-dd' }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+                url: '@Html.RootPath()/Issue/GetIssueSubscribePageList', pageSize: 20, enabledSort: false, 
+                toolbar: { items: [
+            { text: '查看', click: ViewDetail, icon: 'search2' },
+            { line: true },
+            { text: '导出', click: Report, icon: 'plus' },
+            { line: true },
+            { text: '删除', click: Del, icon: 'delete' }
+            ]
+                }
+            });
+        });
+
+        function ViewDetail() {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择需要查看的订阅期刊！'); return; }
+            $.ligerDialog.open({
+                height: 400,
+                width: 600,
+                url: '@Html.RootPath()/Issue/DetailIssueSubscribe?SubscribeID=' + rows[0].SubscribeID,
+                title: '查看订阅期刊',
+                slide: false,
+                buttons: [{ text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function Del() {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择需要删除的订阅期刊！'); return; }
+            var data = [];
+            for (i = 0; i < rows.length; i++) {
+                data.push(rows[i].SubscribeID);
+            }
+            if (!confirm("确定删除所选的订阅期刊吗？")) return;
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/Issue/DelIssueSubscribe/',
+                data: { "SubscribeIDs": data },
+                cache: false,
+                traditional: true,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        manager.loadData();
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+        function Report() {
+            if ($(".l-grid-row").length < 1) {
+                alert('没有数据不能导出，请先进行查询！')
+                return;
+            }
+            $.ligerDialog.open({
+                height: 420,
+                width: 600,
+                url: '@Html.RootPath()/Report/Index?type=IssueSubscribe',
+                title: '导出期刊订阅信息',
+                slide: false,
+                buttons: [{ text: '导出', onclick: function (item, dialog) {
+                    var fields = dialog.frame.GetFileds();
+                    if (fields.length < 1) return;
+                    if (confirm("您确认导出吗？")) {
+                        html = '<input type="hidden" name="strDict" value="' + encodeURIComponent(fields) + '"/>';
+                        $('form[name="action_command"]').html(html).attr("action", '@Html.RootPath()/Issue/IssueSubscribeToExcel').attr("method", "post").submit();
+                    }
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+    </script>
+}

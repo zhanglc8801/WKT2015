@@ -1,0 +1,200 @@
+﻿<style type="text/css">   
+    .l-table-edit-td-left{ padding:4px;width:60px;}
+    .l-table-edit-td{ padding:4px;}  
+    .l-button-search{width:80px; margin-left:10px; padding-bottom:2px;display:inline;}    
+</style>
+<div id="divSearch">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                年期：
+            </td>
+            <td align="left" class="l-table-edit-td" id="td">
+                @Html.Raw(Html.SelectIssueYear("Year", "100px", string.Empty, string.Empty, "请选择年"))                 
+                @Html.Raw(Html.SelectIssueSet("Issue", "100px", string.Empty, string.Empty, "请选择期"))             
+            </td>
+            <td align="right" class="l-table-edit-td-left">
+                栏目：
+            </td>
+            <td align="left" class="l-table-edit-td" id="td">    
+                @Html.Raw(Html.SelectJChannel("ChannelName", "100px", string.Empty, string.Empty, "请选择栏目"))         
+            </td>                 
+            <td align="right" class="l-table-edit-td-left">
+                标题：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtTitle" ltype="text" />
+            </td>
+            <td style="text-align: center">
+                <input type="button" id="btnSearch" value="搜索" class="l-button l-button-search" />
+            </td>
+            <td style="text-align: center">
+                <input type="button" id="btnExcel" value="导出" class="l-button l-button-search" />
+                <a style="margin:10px;" id="PDFLink"></a>
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" id="Year2" value="0" />
+    </form>
+</div>
+<div id="divList">
+
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        //获取URL参数
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null)
+                return unescape(r[2]);
+            return null;
+        }
+
+        //alert(GetQueryString("Year"));
+        var manager;
+        $(function () {
+            $("form").ligerForm({ inputWidth: 150 });
+            manager = $("#divList").ligerGrid({
+                columns: [
+            { display: '编号', name: 'ContentID', hide: true },
+            { display: '年', name: 'Year', width: '5%', align: 'center' },
+            { display: '期', name: 'Issue', width: '3%', align: 'center' },
+            { display: '文章标题', name: 'Title', width: '25%', align: 'center' },
+            { display: '所属分类', name: 'ChannelName', width: '12%', align: 'center' },
+            { display: '是否注册DOI', name: 'isRegDoi', width: '12%', align: 'center', render: function (item) {
+                if (item.isRegDoi) {
+                    return "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/ok.gif' alt='已注册DOI' title='已注册DOI'/>"
+                }
+                else {
+                    return "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/delete.gif' alt='未注册DOI' title='未注册DOI'/>"
+                }
+            } 
+            },
+            { display: '是否置顶', name: 'IsTop', width: '5%', align: 'center', render: function (item) {
+                if (item.IsTop == 1)
+                    return "<span style='color:red'>√ </span>";
+                return '';
+            }
+            },
+            { display: '是否推荐', name: 'IsCommend', width: '5%', align: 'center', render: function (item) {
+                if (item.IsCommend == 1)
+                    return "<span style='color:red'>√ </span>";
+                return '';
+            }
+            },
+            { display: '点击次数', name: 'Hits', width: '5%', align: 'center' },
+            { display: '下载次数', name: 'Downloads', width: '5%', align: 'center' },
+            { display: '创建时间', name: 'AddDate', width: '10%', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm' },
+            { display: '最后修改', name: 'EditDate', width: '10%', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm' }
+            ], width: '99.5%', height: 'auto', rownumbers: false, usePager: true, checkbox: true,
+                url: '@Html.RootPath()/Issue/GetIssueContentPageList', pageSize: 20, enabledSort: true,
+                toolbar: { items: [
+            { text: '新增', click: Add, icon: 'add' },
+            { line: true },
+            { text: '修改', click: Update, icon: 'modify' },
+            { line: true },
+            { text: '删除', click: Del, icon: 'delete' }
+            ]
+                }
+            });
+            $("#btnSearch").click(function () {
+                manager.setOptions({ parms: {
+                    Title: $.trim($("#txtTitle").val()),
+                    Year: $("#Year").val(),
+                    Issue: $("#Issue").val(),
+                    JChannelID: $("#ChannelName").val()
+                }
+                });
+                manager.loadData();
+            });
+            var style = ''
+            $("#td div,input").each(function () {
+                style = $(this).attr("style");
+                if (style == null || style == undefined) return;
+                $(this).attr("style", "width:100px;float:left");
+            });
+            if (GetQueryString("Year") != null) {
+                manager.setOptions({ parms: {
+                    Year: GetQueryString("Year"),
+                    Issue: GetQueryString("Issue")
+                }
+                });
+                manager.loadData();
+            }
+
+
+        });
+
+        $("#btnExcel").click(function () {
+            var FileName = "期刊列表导出";
+            if ($('#Year').val().length > 0)
+                FileName += "_" + $('#Year').val();
+            if ($('#Issue').val().length > 0)
+                FileName += "_" + $('#Issue').val();
+            if ($('#ChannelName').val().length > 0)
+                FileName += "_" + $('#ChannelName').find("option:selected").text();
+            FileName += ".xls";
+            $.ajax({
+                beforeSend: function () {
+                    $("#PDFLink").removeAttr("href");
+                    $("#PDFLink").html("正在生成下载链接...");
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/Issue/IssueListToExcel/?rnd=' + Math.random(),
+                data: { Year: $('#Year').val(), Issue: $('#Issue').val(), JChannelID: $('#ChannelName').val() },
+                cache: false,
+                success: function (data) {
+                    if (data.flag == 1) {
+                        $("#PDFLink").attr("href", "@Html.RootPath()/Upload/DownLoadFile?path=" + data.ExcelPath + "&fileName=" + FileName + "");
+                        $("#PDFLink").html("下载");
+                    }
+
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+
+
+        });
+
+        function Add() {
+            window.parent.f_addTab('CreateIssueContent', '添加期刊', '@Html.RootPath()/Issue/CreateIssueContent');
+        }
+
+        function Update() {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择需要修改的期刊！'); return; }
+            window.parent.f_addTab('UpdateIssueContent', '编辑期刊', '@Html.RootPath()/Issue/CreateIssueContent?contentID=' + rows[0].ContentID);
+        }
+
+        function Del() {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择需要删除的期刊！'); return; }
+            var data = [];
+            for (i = 0; i < rows.length; i++) {
+                data.push(rows[i].ContentID);
+            }
+            if (!confirm("确定删除所选的期刊吗？")) return;
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/Issue/DelIssueContent/',
+                data: { "ContentIDs": data },
+                cache: false,
+                traditional: true,
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.result == "success") {
+                        manager.loadData();
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+        
+    </script>
+}

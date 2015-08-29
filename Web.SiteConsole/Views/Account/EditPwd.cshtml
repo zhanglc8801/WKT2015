@@ -1,0 +1,68 @@
+﻿<script type="text/javascript">
+    // 设置标题
+    Index.SetTitle('修改密码');
+</script>
+<div class="container">
+    <div class="location">当前位置：账户管理 -&gt; 修改密码</div>
+    <div class="blank10"></div>
+    <div class="block">
+        <div class="h">
+            <span class="icon-sprite icon-list"></span>
+            <h3>修改密码</h3>
+            <div class="bar">
+                <a class="btn-lit" href="javascript:Index.Open('/Account');"><span>返回</span></a>
+            </div>
+        </div>
+        <div class="tl corner"></div><div class="tr corner"></div><div class="bl corner"></div><div class="br corner"></div>
+        <div class="cnt-wp">
+            <div class="cnt form">
+                <form method="post" id="frmAccountAdd" name="AccountAdd">
+                <table class="data-form" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <th scope="row">旧&nbsp;密&nbsp;码：</th>
+                            <td><input value="" type="password" name="OldPwd" id="txtOldPwd" class="input-normal" /></td>
+                            <td align="left"><div id="txtOldPwdTip" style="line-height:13px;"></div></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">新&nbsp;密&nbsp;码：</th>
+                            <td><input value="" type="password" name="NewPwd" id="txtNewPwd" class="input-normal" /></td>
+                            <td align="left"><div id="txtNewPwdTip" style="line-height:13px;"></div></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">确认密码：</th>
+                            <td><input value="" type="password" name="PwdConfirm" id="txtPwdConfirm" class="input-normal" /></td>
+                            <td align="left"><div id="txtPwdConfirmTip" style="line-height:13px;"></div></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">&nbsp;</th>
+                            <td>
+                                <a class="btn-lit" id="btnSubmit" href="javascript:void(0)"><span>确定</span></a>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script src="/Scripts/Validator/formValidator-4.1.1.js" type="text/javascript"></script>
+<script src="/Scripts/Validator/formValidatorRegex.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $.formValidator.initConfig({ formID: "frmAccountAdd", theme: "ArrowSolidBox", submitOnce: true });
+        $("#txtOldPwd").formValidator({ onShowText: "", onShow: "请输入旧密码", onFocus: "至少3个字符,最多20个字符", onCorrect: "ok" }).inputValidator({ min:3, max: 20, onError: "你输入的用户名非法,请确认" })
+        $("#txtNewPwd").formValidator({ onShow: "", onFocus: "至少3个长度,最多20个字符", onCorrect: "ok" }).inputValidator({ min: 3, max: 20, empty: { leftEmpty: false, rightEmpty: false, emptyError: "密码两边不能有空符号" }, onError: "密码不能为空,请确认" });
+        $("#txtPwdConfirm").formValidator({ onShow: "", onFocus: "至少3个长度,最多20个字符", onCorrect: "ok" }).inputValidator({ min: 3, max: 20, empty: { leftEmpty: false, rightEmpty: false, emptyError: "重复密码两边不能有空符号" }, onError: "重复密码不能为空,请确认" }).compareValidator({ desID: "txtNewPwd", operateor: "=", onError: "2次密码不一致,请确认" });
+
+        $("#btnSubmit").click(
+        function () {
+            var objParam = { "OldPwd": $("#txtOldPwd").val(), "NewPwd": $("#txtNewPwd").val() };
+            var url = "/Account/EditPwdAjax";
+            Admin.SubmitForm(url, objParam, '/Login/Logout',"top");
+        })
+    });
+</script>
+}

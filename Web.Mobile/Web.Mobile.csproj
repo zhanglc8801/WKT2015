@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3B890357-A8A9-4775-ABEA-5BC432654F10}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Web.Mobile</RootNamespace>
+    <AssemblyName>Web.Mobile</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.96.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages" />
+    <Reference Include="System.Web.Helpers" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Data\GetSiteSetCfg.cs" />
+    <Compile Include="App_Data\SiteGlobalSettings.cs" />
+    <Compile Include="App_Data\SitePersonalSettings.cs" />
+    <Compile Include="App_Data\SQLiteHelper.cs" />
+    <Compile Include="Controllers\AjaxRequestAttribute.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ContributionInfoController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HtmlHelperExtensions.cs" />
+    <Compile Include="Controllers\MagazineController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\images\1.jpg" />
+    <Content Include="Content\images\bg.jpg" />
+    <Content Include="Content\images\box_top_bg.jpg" />
+    <Content Include="Content\images\box_wrap_bottom.jpg" />
+    <Content Include="Content\images\box_wrap_shadow.png" />
+    <Content Include="Content\images\bullet.gif" />
+    <Content Include="Content\images\close_bt.png" />
+    <Content Include="Content\images\date\aug.gif" />
+    <Content Include="Content\images\date\feb.gif" />
+    <Content Include="Content\images\date\jul.gif" />
+    <Content Include="Content\images\date\mar.gif" />
+    <Content Include="Content\images\footer_bg.jpg" />
+    <Content Include="Content\images\gallery\1.jpg" />
+    <Content Include="Content\images\gallery\2.jpg" />
+    <Content Include="Content\images\gallery\3.jpg" />
+    <Content Include="Content\images\gallery\4.jpg" />
+    <Content Include="Content\images\gallery\5.jpg" />
+    <Content Include="Content\images\gallery\6.jpg" />
+    <Content Include="Content\images\gallery\7.jpg" />
+    <Content Include="Content\images\gallery\thumbs\1.jpg" />
+    <Content Include="Content\images\gallery\thumbs\2.jpg" />
+    <Content Include="Content\images\gallery\thumbs\3.jpg" />
+    <Content Include="Content\images\gallery\thumbs\4.jpg" />
+    <Content Include="Content\images\gallery\thumbs\5.jpg" />
+    <Content Include="Content\images\gallery\thumbs\6.jpg" />
+    <Content Include="Content\images\gallery\thumbs\7.jpg" />
+    <Content Include="Content\images\header_bg.png" />
+    <Content Include="Content\images\icon1.png" />
+    <Content Include="Content\images\icon2.png" />
+    <Content Include="Content\images\icon3.png" />
+    <Content Include="Content\images\icon4.png" />
+    <Content Include="Content\images\icon5.png" />
+    <Content Include="Content\images\icon6.png" />
+    <Content Include="Content\images\icon_bg.png" />
+    <Content Include="Content\images\left_bt.png" />
+    <Content Include="Content\images\left_nav_a.png" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\pdf.png" />
+    <Content Include="Content\images\pic.jpg" />
+    <Content Include="Content\images\right_nav_a.png" />
+    <Content Include="Content\images\search.png" />
+    <Content Include="Content\images\social\delicious.png" />
+    <Content Include="Content\images\social\digg.png" />
+    <Content Include="Content\images\social\facebook.png" />
+    <Content Include="Content\images\social\flickr.png" />
+    <Content Include="Content\images\social\google.png" />
+    <Content Include="Content\images\social\linkedin.png" />
+    <Content Include="Content\images\social\myspace.png" />
+    <Content Include="Content\images\social\reddit.png" />
+    <Content Include="Content\images\social\rss.png" />
+    <Content Include="Content\images\social\stumbleupon.png" />
+    <Content Include="Content\images\social\technorati.png" />
+    <Content Include="Content\images\social\twitter.png" />
+    <Content Include="Content\images\toggle_close.gif" />
+    <Content Include="Content\images\toggle_open.gif" />
+    <Content Include="Content\images\top.png" />
+    <Content Include="Content\images\top_bg.jpg" />
+    <Content Include="Content\images\top_bg.png" />
+    <Content Include="Content\Scripts\jquery-1.7.2.min.js" />
+    <Content Include="Content\Scripts\jquery.min.js" />
+    <Content Include="Content\Scripts\photoslide.js" />
+    <Content Include="Content\Style\style.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Start.htm" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-1.4.4.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
+    <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WKT.BLL.Interface\WKT.BLL.Interface.csproj">
+      <Project>{B1ABD199-DBEE-49A9-9C5D-9E50147BCCA9}</Project>
+      <Name>WKT.BLL.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.BLL\WKT.BLL.csproj">
+      <Project>{0BF0173B-F0C7-42F1-B5F7-41957D042E2C}</Project>
+      <Name>WKT.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Cache\WKT.Cache.csproj">
+      <Project>{7DDED5E4-AA70-4CE5-B823-632ECBD6B61B}</Project>
+      <Name>WKT.Cache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Common\WKT.Common.csproj">
+      <Project>{E1A15C95-A5CA-45B9-A850-9341DE2B416F}</Project>
+      <Name>WKT.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Config\WKT.Config.csproj">
+      <Project>{7D766DEF-62FA-48D2-8896-07976FDF1656}</Project>
+      <Name>WKT.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Data.SQL\WKT.Data.SQL.csproj">
+      <Project>{67C8E497-C98C-40DE-9E3F-26146E2499B3}</Project>
+      <Name>WKT.Data.SQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.DataAccess\WKT.DataAccess.csproj">
+      <Project>{6841607A-746C-42B4-94CC-98EC7C7AE08E}</Project>
+      <Name>WKT.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Facade.Service.Interface\WKT.Facade.Service.Interface.csproj">
+      <Project>{2FF205FB-22AC-40B5-9607-FF1E86DBF685}</Project>
+      <Name>WKT.Facade.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Facade.Service.Wrapper\WKT.Facade.Service.Wrapper.csproj">
+      <Project>{44AD1F3A-A9DF-457E-B358-A0243184D775}</Project>
+      <Name>WKT.Facade.Service.Wrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Facade.Service\WKT.Facade.Service.csproj">
+      <Project>{133D3557-E5F8-4E85-825B-40E80EB67120}</Project>
+      <Name>WKT.Facade.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Log\WKT.Log.csproj">
+      <Project>{BA831EA9-2B69-4D05-BF93-A1A4618D408C}</Project>
+      <Name>WKT.Log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WKT.Model\WKT.Model.csproj">
+      <Project>{73BD5439-9F9A-4DCB-A80E-6E3DCD0A0181}</Project>
+      <Name>WKT.Model %28WKT.Model\WKT.Model%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="log4net.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config\cache.config" />
+    <Content Include="config\siteconfig.config" />
+    <Content Include="config\unity.facade.service.config" />
+    <Content Include="config\wkt.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Magazine\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Magazine\Show.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Magazine\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Magazine\SearchList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Magazine\curList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Magazine\curDown.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Magazine\oldList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Magazine\oldDown.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ContributionInfo\NewStatus.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ContributionInfo\View.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Login.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>33764</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

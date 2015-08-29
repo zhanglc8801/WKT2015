@@ -1,0 +1,838 @@
+﻿@model WKT.Model.ContributionInfoEntity
+<link href="@Html.RootPath()/Content/ContributionInfo.css" rel="stylesheet" type="text/css" />
+<div style="width: 99%; padding: 2px;">
+    <div style="margin: 5px; padding: 5px;">
+        <div id="divTopmenu" style="margin-bottom: 10px;">
+        </div>
+        <h2 style="margin-bottom: 5px;">
+            《@Model.Title》(稿件编号：@Model.CNumber)</h2>
+        <p style="margin-top: 10px;">
+            发送人：<span id="spanSendUser"></span> <<span id="spanSendMail"></span>> <input type="hidden" id="HExpertID" /></p>
+        <p style="margin-top: 10px;">
+            发送时间：<span id="spanSendDate"></span> ( 星期<span id="spanWeek"></span> )</p>
+        <p style="margin-top: 10px;">
+            接收人：<span id="spanRecUser"></span> <<span id="spanRecMail"></span>></p>
+        <p style="margin-top: 10px;" id="pAtt">
+            稿件下载：<span id="oldFile1"></span>&nbsp;<span id="oldFile2"><a href="@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》&downType1=1&downType2=1&isDown=false">[原始稿]</a></span>&nbsp;<span id="oldFile3"></span>&nbsp;<span id="oldFile4"></span>&nbsp;由编辑部发送：<span id="newFile1"></span>&nbsp;<span id="newFile2"></span><br/>
+        </p>
+        <p style="margin-top: 10px; cursor: pointer; color: Blue" id="aRemark">
+            点击此处添加备注
+        </p>
+        <div style="margin-top: 10px; display: none; vertical-align: top" id="divRemark">
+            <table cellpadding="2">
+                <tr>
+                    <td valign="top">
+                        备注：
+                    </td>
+                    <td>
+                        <textarea rows="2" cols="20" id="txtCRemark" class="txtbox" style="height: 60px;
+                            width: 300px;">@Model.CRemarkInfo.Remark</textarea>
+                    </td>
+                </tr>
+                <tr style="margin-top: 2px;">
+                    <td>
+                    </td>
+                    <td>
+                        <input type="button" id="btnSave" value="保存" class="btnadd" />
+                        <input type="button" id="btnCancel" value="取消" class="btndelete" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="dragLayer" style="height: auto;" id="OtherFlowDiv">
+        <div class="dragHeader" id="ShowOtherFlow" style="cursor: pointer;" onclick="OpenTags('aFlowLogOther','divFlowLogOther')">
+            <div style="float: left;">
+                其他专家处理意见(<span id="spanFlowOther">请点击查看</span>)
+            </div>
+            <div style="float: right; width: 70%; text-align: right; cursor: pointer;" id="aFlowLogOther">
+                >> 展开
+            </div>
+        </div>
+        <div id="divFlowLogOther" style="display: none; padding: 10px; color: Green;">
+            <img src="@Html.RootPath()/Content/images/checkreg.gif" style="vertical-align:middle;" /><span style="font-size:14px;color:#333;">请稍候...</span>
+        </div>
+    </div>
+
+    <div class="dragLayer" style="height: auto">
+        <div class="dragHeader" style="cursor: pointer;" onclick="OpenTags('aFlowLog','divFlowLog')">
+            <div style="float: left;">
+                流程记录(<span id="spanFlow">0</span>条)
+            </div>
+            <div style="float: right; width: 70%; text-align: right; cursor: pointer;" id="aFlowLog">
+                >> 展开
+            </div>
+        </div>
+        <div id="divFlowLog" style="display: none; padding: 10px; color: Green;">
+            <img src="@Html.RootPath()/Content/images/checkreg.gif" style="vertical-align:middle;" /><span style="font-size:14px;color:#333;">请稍候...</span>
+        </div>
+    </div>
+    <div class="dragLayer">
+        <div class="dragHeader" style="cursor: pointer;" onclick="OpenTags('aMsg','divMsg')">
+            <div style="float: left;">
+                消息记录(<span id="spanMsg">0</span>条)
+            </div>
+            <div style="float: right; width: 70%; text-align: right; cursor: pointer;" id="aMsg">
+                >> 展开
+            </div>
+        </div>
+        <div id="divMsg" style="display: none">
+            <table border="0" class="mainTable" cellpadding="0" cellspacing="1" style="width: 100%">
+                <tr>
+                    <td style="width: 40px;" class="listTitle">
+                        序号
+                    </td>
+                    <td style="width: 100px;" class="listTitle">
+                        消息类型
+                    </td>
+                    <td style="width: 100px;" class="listTitle">
+                        发送人
+                    </td>
+                    <td style="width: 100px;" class="listTitle">
+                        接收人
+                    </td>
+                    <td style="width: 100px;" class="listTitle">
+                        发送时间
+                    </td>
+                    <td class="listTitle" style="width: 200px;">
+                        标题
+                    </td>
+                    <td class="listTitle">
+                        内容
+                    </td>
+                </tr>
+                <tbody id="tbMsg">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="dragLayer">
+        <div class="dragHeader" style="cursor: pointer;" onclick="OpenTags('aContribution','divContribution')">
+            <div style="float: left">
+                稿件信息
+            </div>
+            <div style="float: right; width: 70%; text-align: right" id="aContribution">
+                >> 展开
+            </div>
+        </div>
+        <div id="divContribution" style="display: none">
+            <table border="0" class="mainTable" cellpadding="0" cellspacing="1" align="center"
+                width="100%">
+                <tr>
+                    <td class="left" style="width: 80px;">
+                        中文标题：
+                    </td>
+                    <td class="right">
+                        @Model.Title
+                    </td>
+                </tr>
+                @{
+                    var field = Model.FieldList.Find(p => p.DBField.Equals("EnTitle"));
+                    if (field != null && field.IsShow)
+                    {        
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.EnTitle
+                        </td>
+                    </tr>
+                    }
+                }
+                <tr>
+                    <td class="left" style="width: 80px;">
+                        学科分类：
+                    </td>
+                    <td class="right">
+                        @Html.Raw(@Html.SelectDcitValue("SubjectCat", "200px;\" disabled=\"disabled\"", "SubjectCat", Model.SubjectCat.ToString(), string.Empty, string.Empty))
+                    </td>
+                </tr>
+                <tr>
+                    <td class="left" style="width: 80px;">
+                        拟投栏目：
+                    </td>
+                    <td class="right">
+                        @Html.Raw(@Html.SelectJChannel("JChannelID", "200px;\" disabled=\"disabled\"", Model.JChannelID.ToString(), string.Empty, string.Empty))
+                    </td>
+                </tr>
+                <tr>
+                    <td class="left" style="width: 80px;">
+                        投稿类型：
+                    </td>
+                    <td class="right">
+                        @Html.Raw(@Html.SelectDcitValue("ContributionType", "200px;\" disabled=\"disabled\"", "ContributionType", Model.ContributionType.ToString(), string.Empty, string.Empty))
+                    </td>
+                </tr>
+                <tr>
+                    <td class="left" style="width: 80px;">
+                        中文关键词：
+                    </td>
+                    <td class="right">
+                        @Model.Keywords
+                    </td>
+                </tr>
+                @{
+                    field = Model.FieldList.Find(p => p.DBField.Equals("EnKey"));
+                    if (field != null && field.IsShow)
+                    {      
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.EnKeywords
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("Abstract"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.AttModel.Abstract
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("EnAbstract"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.AttModel.EnAbstract
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("Reference"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            <table border="0" class="mainTable" cellpadding="0" cellspacing="1" style="width: 98%">
+                                <tr>
+                                    <td style="width: 40px;" class="listTitle">
+                                        序号
+                                    </td>
+                                    <td class="listTitle">
+                                        文献格式
+                                    </td>
+                                    <td class="listTitle">
+                                        文献来源
+                                    </td>
+                                </tr>
+                                @{
+                        int j = 1;
+                        foreach (var item in Model.ReferenceList)
+                        {
+                                    <tr>
+                                        <td style="width: 40px;" class="left">
+                                            @j
+                                        </td>
+                                        <td class="left">
+                                            @item.Title
+                                        </td>
+                                        <td class="left">
+                                            @item.RefUrl
+                                        </td>
+                                    </tr>                       
+                        }
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("Fund"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @if (Model.IsFund)
+                            {
+                                <table border="0" class="mainTable" cellpadding="0" cellspacing="1" style="width: 98%">
+                                    <tr>
+                                        <td style="width: 40px;" class="listTitle">
+                                            序号
+                                        </td>
+                                        <td style="width: 120px;" class="listTitle">
+                                            基金级别
+                                        </td>
+                                        <td class="listTitle">
+                                            基金号
+                                        </td>
+                                        <td class="listTitle">
+                                            基金名称
+                                        </td>
+                                        <td class="listTitle">
+                                            备注
+                                        </td>
+                                    </tr>
+                                    @{
+                                int k = 1;
+                                foreach (var item in Model.FundList)
+                                {
+                                        <tr>
+                                            <td class="left">@k
+                                            </td>
+                                            <td class="left">
+                                                @Html.Raw(Html.SelectDcitValue("FundLevel_" + k, "100px;\" disabled=\"disabled\"", "FundLevel", item.FundLevel.ToString(), string.Empty, string.Empty))
+                                            </td>
+                                            <td class="left">
+                                                @item.FundCode
+                                            </td>
+                                            <td class="left">
+                                                @item.FundName
+                                            </td>
+                                            <td class="left">
+                                                @item.Note
+                                            </td>
+                                        </tr>                            
+                                    k++;
+                                }
+                                    }
+                                </table>
+                            }
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("InvoiceTitle"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.InvoiceTitle
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("CLC"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.CLC
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("CommendExpert"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.CommendExpert
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.ReserveField
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField1"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                        @Model.ReserveField1
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField2"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.ReserveField2
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField3"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.ReserveField3
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField4"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.ReserveField4
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField5"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.ReserveField5
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("Remark"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.AttModel.Remark
+                        </td>
+                    </tr>
+                    }                   
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<div style="display: none">
+    <form name="action_command" action="" target="_blank" method="post">
+    </form>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        
+        if('@Html.isViewHistoryFlow()'=="False"){
+            document.getElementById("OtherFlowDiv").style.display="none";
+        }
+
+        //设置顶部显示 下载作者稿件
+        $.ajax({
+            type: 'POST',
+            url: '@Html.RootPath()/Upload/CheckAuthorFileAjax/?rnd=' + Math.random(),
+            data: { cid: '@Model.CID', AuthorID: '@Model.AuthorID' },
+            cache: false,
+            success: function(data) {
+                //新稿件
+                if (data.flag == "19") {
+                    $("#oldFile3").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=1&isDown=false \">[附件]</a>");
+                    $("#oldFile4").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_图表介绍信&downType1=3&downType2=1&isDown=false \">[图表/介绍信]</a>");
+                }
+                if (data.flag == "12") {
+                    $("#oldFile3").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=1&isDown=false \">[附件]</a>");
+                }
+                if (data.flag == "13") {
+                    $("#oldFile4").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_图表介绍信&downType1=3&downType2=1&isDown=false \">[图表/介绍信]</a>");
+                }
+
+                //不是新稿件_有修改稿
+                if (data.flag == "29") {
+                    $("#oldFile1").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_作者已修&downType1=1&downType2=2&isDown=false \">[修改稿]</a>");
+                    $("#oldFile3").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=2&isDown=false \">[附件]</a>");
+                    $("#oldFile4").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_图表介绍信&downType1=3&downType2=2\">[图表/介绍信]</a>");
+                }
+                if (data.flag == "22") {
+                    $("#oldFile1").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_作者已修&downType1=1&downType2=2&isDown=false \">[修改稿]</a>");
+                    $("#oldFile3").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=2&isDown=false \">[附件]</a>");
+                }
+                if (data.flag == "23") {
+                    $("#oldFile1").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_作者已修&downType1=1&downType2=2&isDown=false \">[修改稿]</a>");
+                    $("#oldFile4").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_图表介绍信&downType1=3&downType2=2&isDown=false \">[图表/介绍信]</a>");
+                }
+
+
+                if (data.flag == "39") {
+                    $("#oldFile1").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_作者已修&downType1=1&downType2=2&isDown=false \">[修改稿]</a>");
+                    $("#oldFile3").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=1&isDown=false \">[附件]</a>");
+                    $("#oldFile4").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_图表介绍信&downType1=3&downType2=1\">[图表/介绍信]</a>");
+                }
+                if (data.flag == "32") {
+                    $("#oldFile1").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_作者已修&downType1=1&downType2=2&isDown=false \">[修改稿]</a>");
+                    $("#oldFile3").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=1&isDown=false \">[附件]</a>");
+                }
+                if (data.flag == "33") {
+                    $("#oldFile1").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_作者已修&downType1=1&downType2=2&isDown=false \">[修改稿]</a>");
+                    $("#oldFile4").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_图表介绍信&downType1=3&downType2=1&isDown=false \">[图表/介绍信]</a>");
+                }
+
+
+
+                //不是新稿件_无修改稿
+                if (data.flag == "49") {
+                    $("#oldFile3").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=2&isDown=false \">[附件]</a>");
+                    $("#oldFile4").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_图表介绍信&downType1=3&downType2=2\">[图表/介绍信]</a>");
+                }
+                if (data.flag == "42") {
+                    $("#oldFile3").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=2&isDown=false \">[附件]</a>");
+                }
+                if (data.flag == "43") {
+                    $("#oldFile4").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_图表介绍信&downType1=3&downType2=2&isDown=false \">[图表/介绍信]</a>");
+                }
+
+                if (data.flag == "59") {
+                    $("#oldFile3").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=1&isDown=false \">[附件]</a>");
+                    $("#oldFile4").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_图表介绍信&downType1=3&downType2=1\">[图表/介绍信]</a>");
+                }
+                if (data.flag == "52") {
+                    $("#oldFile3").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=1&isDown=false \">[附件]</a>");
+                }
+                if (data.flag == "53") {
+                    $("#oldFile4").html("<a href=\"@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=@Model.CNumber《@Model.Title》_图表介绍信&downType1=3&downType2=1&isDown=false \">[图表/介绍信]</a>");
+                }
+                //alert(data.flag);
+            },
+            error: function(xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+
+        $(function() {
+            InitFlowLog();
+            InitMsg();
+            //当备注不为空时显示备注内容
+            if ($("#txtCRemark").val().length > 0) {
+                $("#aRemark").slideToggle('medium');
+                $("#divRemark").slideToggle('medium');
+            }
+            //默认显示流程记录
+            OpenTags('aFlowLog', 'divFlowLog');
+
+            if ('@ViewBag.IsWait' == '1') {
+                $("#divTopmenu").ligerMenuBar({
+                    items: [
+                        //{ text: '在线审稿', click: Online, icon: 'modify' },
+                        //{text: '下载最新稿件', click: FileDownLoad, icon: 'ok' },
+                        { text: '填写审稿单', click: ReviewBill, icon: 'ok' },
+                        { text: '拒   审', click: Cancel, icon: 'delete' }
+                    ]
+                });
+            }
+            $("#aRemark").click(function() {
+                $(this).slideToggle('medium');
+                $("#divRemark").slideToggle('medium');
+            });
+            $("#btnCancel").click(function() {
+                $("#divRemark").slideToggle('medium');
+                $("#aRemark").slideToggle('medium');
+            });
+            $("#btnSave").click(function() {
+                var remark = $.trim($("#txtCRemark").val());
+                if (remark.length > 200) {
+                    alert("最多输入200个字符！");
+                    return false;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '@Html.RootPath()/ContributionInfo/SaveCRemark/',
+                    data: {
+                        CID: '@Model.CID',
+                        RemarkID: '@Model.CRemarkInfo.RemarkID',
+                        Remark: remark
+                    },
+                    cache: false,
+                    success: function(data) {
+                        alert(data.msg);
+                    },
+                    error: function(xhr) {
+                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                    }
+                });
+            });
+        });
+
+        function OpenTags(tId, cId) {
+            if ($("#" + cId).css("display") == "none") {
+                $("#" + tId).text("<< 折叠");
+                if(tId=="aFlowLogOther")
+                {
+                    initOtherExpertFlowLog();
+                }
+            } else {
+                $("#" + tId).text(">> 展开");
+            }
+            $("#" + cId).slideToggle('medium');
+        }
+
+
+        function InitFlowLog() {
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/ContributionInfo/GetExpertFlowLogList/',
+                data: {
+                    CID: '@Model.CID',
+                    AuthorID:'@ViewBag.ExpertID',
+                    GroupID:'@ViewBag.GroupID',
+                    isViewHistoryFlow:0                 
+                },
+                cache: false,
+                success: function(data) {
+                    var list = data, str = '';
+                    for (var i = 0; i < list.length; i++) {
+                        str += '<div class="liucheng">' + GetDate(list[i].AddDate, "yyyy-MM-dd HH:mm:ss");
+                        str += '（' + list[i].SendUserGroupName + '）' + list[i].SendUserName + '&nbsp;<img src="@Html.RootPath()/content/img/jiantou.gif" width="11" height="8" />&nbsp;';
+                        str += list[i].StatusName + '&nbsp;<img src="@Html.RootPath()/content/img/jiantou.gif" width="11" height="8" />&nbsp;';
+                        str += '（' + list[i].RecUserGroupName + '）' + list[i].RecUserName;
+                        if(list[i].IsHaveBill == 1)
+                        {
+                            str += "&nbsp;<a href=\"javascript:void(0);\" onclick=\"ViewAuditBill("+list[i].RecUserID+"," + list[i].SendUserID + ","+list[i].FlowLogID+")\">审稿单</a>";
+                        }
+                        if (list[i].CPath != "" && list[i].CPath != null) {
+                            if (list[i].CFileName == "")
+                                str += "&nbsp;<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=" + list[i].CNumber + "《@Model.Title》_修改稿&downType1=1&downType2=3&isDown="+list[i].IsDown+" \">[修改稿]</a>&nbsp;";
+                            else
+                                str += "&nbsp;<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=" + list[i].CNumber + "《@Model.Title》_" + list[i].CFileName + "&downType1=1&downType2=3&isDown="+list[i].IsDown+" \">[" + list[i].CFileName + "]</a>&nbsp;";
+                        }
+                        if (list[i].FigurePath != "" && list[i].FigurePath != null) {
+                            if (list[i].FFileName == "")
+                                str += "&nbsp;<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=" + list[i].CNumber + "《@Model.Title》_附件&downType1=2&downType2=3&isDown="+list[i].IsDown+" \">[附件]</a>";
+                            else
+                                str += "&nbsp;<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=" + list[i].CNumber + "《@Model.Title》_" + list[i].FFileName + "&downType1=2&downType2=3&isDown="+list[i].IsDown+" \">[" + list[i].FFileName + "]</a>";
+
+                        }
+                        if (list[i].OtherPath != "" && list[i].OtherPath != null) {
+                            str += "&nbsp;<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_图表介绍信&downType1=3&downType2=3&isDown="+list[i].IsDown+" \">[图表/介绍信]</a>";
+                        }
+                        if (list[i].DealAdvice != "") {
+                            var index = list[i].FormatDealAdvice.indexOf('A1');
+                            var lastIndex = list[i].FormatDealAdvice.lastIndexOf('A2');
+                            var content = list[i].FormatDealAdvice.substring(index + 2, lastIndex);
+                            list[i].FormatDealAdvice = list[i].FormatDealAdvice.replace('A1', '<a href=' + content + ' target="_blank">').replace('A2', '</a>');
+                            str += "<div style=\"margin-top:5px;margin-left:20px;color:#000000;\">处理意见：" + list[i].FormatDealAdvice + "</div>";
+                        }
+                        // 设置顶部显示
+                        if (i == 0) {
+                            $("#spanSendUser").text(list[0].SendUserName);
+                            $("#spanSendMail").text(list[0].SendUserEmail);
+                            $("#spanRecUser").text(list[0].RecUserName);
+                            $("#spanRecMail").text(list[0].RecUserEmail);
+                            $("#spanSendDate").text(GetDate(list[0].AddDate, "yyyy-MM-dd HH:mm:ss"));
+                            $("#spanWeek").text(GetWeek(list[0].AddDate));
+                            $("#HExpertID").val(list[0].RecUserID);
+
+                            if (list[0].CPath != "" && list[0].CPath != null) {
+                                if (list[0].CFileName == "")
+                                    $("#newFile1").html("<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[0].CID + "&FlowLogID=" + list[0].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_修改稿&downType1=1&downType2=2&isDown="+list[0].IsDown+" \">[修改稿]</a>");
+                                else {
+                                    $("#newFile1").html("<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[0].CID + "&FlowLogID=" + list[0].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_" + list[0].CFileName + "&downType1=1&downType2=2&isDown="+list[0].IsDown+" \">[" + list[0].CFileName + "]</a>");
+                                }
+                            }
+                            if (list[0].FigurePath != "" && list[0].FigurePath != null) {
+                                if (list[0].FFileName == "")
+                                    $("#newFile2").html("<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[0].CID + "&FlowLogID=" + list[0].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=2&isDown="+list[0].IsDown+" \">[附件]</a>");
+                                else {
+                                    $("#newFile2").html("<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[0].CID + "&FlowLogID=" + list[0].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_" + list[0].FFileName + "&downType1=2&downType2=2&isDown="+list[0].IsDown+" \">[" + list[0].FFileName + "]</a>");
+                                }
+                            } else {
+                                $("#newFile1").html("《无》");
+                            }
+                        }
+                    }
+                    $("#spanFlow").html(list.length);
+                    $("#divFlowLog").html(str);
+                },
+                error: function(xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+        function InitMsg() {
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/ContributionInfo/GetMsgList/',
+                data: {
+                    CID: '@Model.CID'
+                },
+                cache: false,
+                success: function(data) {
+                    var list = data, str = '';
+                    for (var i = 0; i < list.length; i++) {
+                        str += '<tr>';
+                        str += '<td class="left" style="width:40px;">' + (i + 1) + '</td>';
+                        str += '<td class="left">' + list[i].MsgTypeName + '</td>';
+                        str += '<td class="left">' + list[i].SendUserName + '</td>';
+                        str += '<td class="left">' + list[i].ReciveUserName + '</td>';
+                        str += '<td class="left">' + GetDate(list[i].SendDate, "yyyy-MM-dd") + '</td>';
+                        str += '<td class="left">' + list[i].MsgTitle + '</td>';
+                        str += '<td class="left">' + list[i].MsgContent + '</td>';
+                        str += '</tr>';
+                    }
+                    $("#spanMsg").html(list.length);
+                    $("#tbMsg").html(str);
+                },
+                error: function(xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+
+        function initOtherExpertFlowLog()
+        {
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/ContributionInfo/GetExpertFlowLogList/',
+                data: {
+                    CID: '@Model.CID',
+                    AuthorID:'@ViewBag.ExpertID',
+                    isViewHistoryFlow:1               
+                },
+                cache: false,
+                success: function(data) {
+                    var list = data, str = '';
+                    if(list.length==0)
+                        str="暂无其他专家审理过此稿件！";
+                    else{
+                        for (var i = 0; i < list.length; i++) {
+                            str += '<div class="liucheng">' + GetDate(list[i].AddDate, "yyyy-MM-dd HH:mm:ss");
+                            str += '（' + list[i].SendUserGroupName + '）' + list[i].SendUserName + '&nbsp;<img src="@Html.RootPath()/content/img/jiantou.gif" width="11" height="8" />&nbsp;';
+                            str += list[i].StatusName + '&nbsp;<img src="@Html.RootPath()/content/img/jiantou.gif" width="11" height="8" />&nbsp;';
+                            str += '（' + list[i].RecUserGroupName + '）' + list[i].RecUserName;
+
+                            if (list[i].CPath != "" && list[i].CPath != null) {
+                                if (list[i].CFileName == "")
+                                    str += "&nbsp;<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=" + list[i].CNumber + "《@Model.Title》_修改稿&downType1=1&downType2=3&isDown=true \">[修改稿]</a>&nbsp;";
+                                else
+                                    str += "&nbsp;<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=" + list[i].CNumber + "《@Model.Title》_" + list[i].CFileName + "&downType1=1&downType2=3&isDown=true \">[" + list[i].CFileName + "]</a>&nbsp;";
+                            }
+                            if (list[i].FigurePath != "" && list[i].FigurePath != null) {
+                                if (list[i].FFileName == "")
+                                    str += "&nbsp;<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=" + list[i].CNumber + "《@Model.Title》_附件&downType1=2&downType2=3&isDown=true \">[附件]</a>";
+                                else
+                                    str += "&nbsp;<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=" + list[i].CNumber + "《@Model.Title》_" + list[i].FFileName + "&downType1=2&downType2=3&isDown=true \">[" + list[i].FFileName + "]</a>";
+
+                            }
+                            if (list[i].OtherPath != "" && list[i].OtherPath != null) {
+                                str += "&nbsp;<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_图表介绍信&downType1=3&downType2=3&isDown=true \">[图表/介绍信]</a>";
+                            }
+                            if (list[i].DealAdvice != "") {
+                                var index = list[i].FormatDealAdvice.indexOf('A1');
+                                var lastIndex = list[i].FormatDealAdvice.lastIndexOf('A2');
+                                var content = list[i].FormatDealAdvice.substring(index + 2, lastIndex);
+                                list[i].FormatDealAdvice = list[i].FormatDealAdvice.replace('A1', '<a href=' + content + ' target="_blank">').replace('A2', '</a>');
+                                str += "<div style=\"margin-top:5px;margin-left:20px;color:#000000;\">处理意见：" + list[i].FormatDealAdvice + "</div>";
+                            }
+                        
+                        }
+                    }
+                    $("#spanFlowOther").html(list.length+"条");
+                    $("#divFlowLogOther").html(str);
+                },
+                error: function(xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+        function Online() {
+            $('form[name="action_command"]').attr("action", "@Html.RootPath()/Plugins/WordOnline.aspx?CID=@Model.CID").attr("method", "post").submit();
+        }
+
+        function ReviewBill() {
+            window.parent.f_removeTabItem('ReviewBill');
+            if('@ViewBag.GroupID'=='4')
+            {
+                window.parent.f_addTab('ReviewBill', '填写审稿单[@Model.CNumber]', '@Html.RootPath()/FlowSet/CreateReviewBillContent?CID=@Model.CID'+'&authorID='+$("#HExpertID").val()+'&IsEnExpert=true');
+            }
+            else
+            {
+                window.parent.f_addTab('ReviewBill', '填写审稿单[@Model.CNumber]', '@Html.RootPath()/FlowSet/CreateReviewBillContent?CID=@Model.CID'+'&authorID='+$("#HExpertID").val());
+            }
+            
+        }
+
+        // 查看审稿单
+        function ViewAuditBill(EditorID,ExpertID,FlowLogID)
+        {
+            window.open('@Html.RootPath()/FlowSet/ViewReviewBillContent?CID=@Model.CID' + '&EditorID='+EditorID+'&ExpertID=' + ExpertID + '&FlowLogID='+FlowLogID+'&rnd=' + Math.random(),'查看审稿单','');
+        }
+
+//        function FileDownLoad() {
+//            //DownLoad('@Html.RootPath()', '@Model.ContributePath',encodeURIComponent('(稿件编号：@Model.CNumber)《@Model.Title》'));
+//            window.open("@Html.RootPath()/Upload/Download?cid=@Model.CID&FlowLogID=@Model.FlowLogID&fileName=(稿件编号:@Model.CNumber)《@Model.Title》&downType1=1&downType2=1", "_blank");
+//        }
+
+        function FileDownLoad() {
+            //DownLoad('@Html.RootPath()', '@Model.ContributePath',encodeURIComponent('(稿件编号：@Model.CNumber)《@Model.Title》'));
+            window.location.href = "@Html.RootPath()/Upload/DownloadAuthorCID?cid=@Model.CID&AuthorID=@Model.AuthorID&fileName=(稿件编号:@Model.CNumber)《@Model.Title》";
+        }
+
+
+        function OnLineOpen() {
+            window.open('@Html.RootPath()/Plugins/WordOnline.aspx?FlowID=@Model.FlowLogID', '', '');
+        }
+
+        function Cancel() {
+            $.ligerDialog.open({
+                height: 240,
+                width: 400,
+                content: '<textarea id="txtReason" class="l-dialog-textarea" style="width:370px;height:170px;"></textarea>',
+                title: '拒审[@Model.CNumber]',
+                slide: false,
+                buttons: [{
+                    text: '确定',
+                    onclick: function(item, dialog) {
+                        if (!confirm("您确定拒绝审核该稿件吗？")) return;
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Html.RootPath()/Expert/ExpertDeledit/',
+                            data: {
+                                CID: '@Model.CID',
+                                DealAdvice: $.trim($("#txtReason").val())
+                            },
+                            cache: false,
+                            success: function(data) {
+                                alert(data.msg);
+                                if (data.result == "success") {
+                                    window.parent.f_removeSelectedTabItem();
+                                    window.parent.f_addTab('Deledit', '拒审稿件', '@Html.RootPath()/Expert/Deledit');
+                                }
+                            },
+                            error: function(xhr) {
+                                alert('数据源访问错误' + '\n' + xhr.responseText);
+                            }
+                        });
+                    }
+                }, { text: '取消', onclick: function(item, dialog) { dialog.close(); } }]
+            });
+        }
+    </script>
+}
+
+

@@ -1,0 +1,134 @@
+﻿@model WKT.Model.Pager<WKT.Model.IssueContentEntity>
+@{
+    ViewBag.Title = "期刊检索" + "-" + Html.SiteName();
+    ViewBag.Position = "期刊排序";
+}
+        <div class="Book">
+            	<div class="B_left">
+                	<div class="show">
+                    	<p><img style="width:120px;height:165px;" src="../../Content/ZHJBKZ/Images/zazhi.jpg" /></p>
+                        <div class="pics">
+                    		<p><a href="javascript:addfavorite();"><img src="../../Content/ZHJBKZ/Images/zzx_btn2.gif" /></a>
+                            <a href="#" target="_blank"><img src="../../Content/ZHJBKZ/Images/zzx_btn3.gif" /></a></p>
+                        	<p><a href="@Html.AdminUrl()/user/login?group=author" target="_blank"><img src="../../Content/ZHJBKZ/Images/zzx_btn4.gif" /></a>
+                            <a href="#" target="_blank"><img src="../../Content/ZHJBKZ/Images/zzx_btn5.gif" /></a></p>
+                        </div>
+                       
+                    </div>
+                    <div class="name" style=" height:1143px;">
+                    	<h4>本刊各期</h4>
+                        @for (int i = 0; i < Html.GetYearVolumeList().Count-5;i++)
+                        {
+                            
+                            <div class="ren"> 
+                                <p>@(Html.GetYearVolumeList()[i].Year)年：</p>
+                                <p><a href="/Magazine/OrderList?Year=@Html.GetYearVolumeList()[i].Year&Issue=1" target="_blank">01</a>|<a href="/Magazine/OrderList?Year=@Html.GetYearVolumeList()[i].Year&Issue=2" target="_blank">02</a>|<a href="/Magazine/OrderList?Year=@Html.GetYearVolumeList()[i].Year&Issue=3" target="_blank">03</a>|<a href="/Magazine/OrderList?Year=@Html.GetYearVolumeList()[i].Year&Issue=4" target="_blank">04</a>|<a href="/Magazine/OrderList?Year=@Html.GetYearVolumeList()[i].Year&Issue=5" target="_blank">05</a>|<a href="/Magazine/OrderList?Year=@Html.GetYearVolumeList()[i].Year&Issue=6" target="_blank">06</a>|</p>
+                                <p><a href="/Magazine/OrderList?Year=@Html.GetYearVolumeList()[i].Year&Issue=7" target="_blank">07</a>|<a href="/Magazine/OrderList?Year=@Html.GetYearVolumeList()[i].Year&Issue=8" target="_blank">08</a>|<a href="/Magazine/OrderList?Year=@Html.GetYearVolumeList()[i].Year&Issue=9" target="_blank">09</a>|<a href="/Magazine/OrderList?Year=@Html.GetYearVolumeList()[i].Year&Issue=10" target="_blank">10</a>|<a href="/Magazine/OrderList?Year=@Html.GetYearVolumeList()[i].Year&Issue=11" target="_blank">11</a>|<a href="/Magazine/OrderList?Year=@Html.GetYearVolumeList()[i].Year&Issue=12" target="_blank">12</a>|</p>
+                            </div>
+                            
+                        }
+                        @*@foreach (WKT.Model.YearVolumeEntity item in Html.GetYearVolumeList())
+                        { 
+                            
+                        }*@
+                        
+                    </div>
+                
+                </div>
+                <div class="B_center">
+                	<p class="china" style="margin-top:15px;"><a style="font-size:25px;color:#024a91;font-weight:900;" href="#" target="_blank">中华疾病控制杂志</a></p>
+                    <p style="color:#024a91">Chinese Journal of Disease Control and Prevention</p>
+                	<p style="background:url(../../Content/ZHJBKZ/Images/tops.jpg) repeat-x;font-weight:900;color:#fff;">&nbsp;&nbsp;@ViewBag.Year 年第 @ViewBag.Issue 期 共 @ViewBag.journalChannelList 篇 </p>
+                    @foreach (WKT.Model.JournalChannelEntity item in Html.GetJournalChannelList())
+                    {
+                        int Year = @ViewBag.Year;
+                        int Issue = @ViewBag.Issue;
+                        <ul class="article">
+                    	    <li class="header">@item.ChannelName</li>
+                            @{
+                                if (Html.GeIssueContentList(item.JChannelID, Year, Issue, 1000).Count == 0)
+                                {
+                                    <li><span></span> ·&nbsp;&nbsp;<u style=" text-decoration:none; color:#787672;">该栏目下暂无期刊数据！</u></li>
+                                }
+                                else
+                                {
+                                    foreach (WKT.Model.IssueContentEntity item2 in Html.GeIssueContentList(@item.JChannelID, Year, Issue, 1000))
+                                    {
+                                        <li><span>@item2.AddDate.ToString("yyyy-MM-dd")</span> ·&nbsp;&nbsp;<u><a href="/Magazine/Show?ID=@item2.ContentID" target="_blank">@item2.Title</a></u></li> 
+                                    }
+                                }
+                                
+                             }
+                        </ul>
+                    }  
+                </div>
+                <div class="C_right">
+                	<div class="name">
+                    	<h4>本刊重点主题</h4>
+                        <!--从期刊关键字中获取-->
+                        <div class="ren">   
+                        @{
+                               int Year2 = @ViewBag.Year;
+                               int Issue2 = @ViewBag.Issue;
+                               foreach (WKT.Model.IssueContentEntity item in Html.GeIssueContentList(100,Issue2,Year2))
+                               {
+                                    <a>@item.Keywords</a>
+                               }    
+                         }
+                         <!--从后台按资讯类数据添加-->
+                        @* @foreach (WKT.Model.SiteContentEntity item in Html.GetNewsList(220,9))
+                         { 
+                               <a href="#" target="_blank">@item.Title</a>
+                         }*@
+                        
+                        
+                       
+                        </div>
+                    </div>
+                    <div class="name">
+                    	<h4>相关作者</h4>
+                        <div class="ren">
+                            @foreach (WKT.Model.IssueContentEntity item in Html.GeIssueContentList(100,Issue2,Year2))
+                            {
+                                 <a>@item.Authors</a>
+                            }    
+                         
+                        </div>
+                    </div>
+                    <div class="name names">
+                    	<h4>相关机构</h4>
+                        <div class="ren">
+                            @foreach (WKT.Model.IssueContentEntity item in Html.GeIssueContentList(100,Issue2,Year2))
+                            {
+                                 <a>@item.WorkUnit</a>
+                            }   
+                            
+                        </div>
+                    </div>
+                    <div class="name names">
+                    	<h4>相关基金</h4>
+                        <div class="ren">
+                            @foreach (WKT.Model.IssueContentEntity item in Html.GeIssueContentList(100,Issue2,Year2))
+                            {
+                                 <a>@item.Funds</a>
+                            } 
+                            
+                        </div>
+                    </div>
+                   
+                </div>
+                
+     	
+    	</div> 
+        <script type="text/javascript">
+            //加入收藏夹
+            function addfavorite() {
+                if (document.all) {
+                    window.external.addFavorite('http://www.zhjbkz.cn', '中华疾病控制杂志');
+                }
+                else if (window.sidebar) {
+                    window.sidebar.addPanel('中华疾病控制杂志', 'http://www.zhjbkz.cn', "");
+                }
+            } 
+        
+        </script>

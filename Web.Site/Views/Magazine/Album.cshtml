@@ -1,0 +1,81 @@
+﻿@model WKT.Model.Pager<WKT.Model.IssueContentEntity>
+@{
+    ViewBag.Title = "专辑文章" + "-" + Html.SiteName();
+    ViewBag.Position = "专辑文章";
+}
+<script src="../../Content/ZHYJY/js/Search.js" type="text/javascript"></script>
+<div class="C_right" style="height: auto; min-height:740px;">
+    <h4 class="list_site">您当前的位置：<a href="/">首页</a> &gt;&gt; <a>特色栏目</a></h4>
+    <div style="background-color:#bdd9ca; text-align:center;width: 798px; margin-top:-5px; margin-bottom:5px;">
+        <table style="text-align:center;">
+            <tr>
+                <td>                        
+                    <select name="MenuTree2" id="MenuTree2">
+                        @foreach (WKT.Model.JournalChannelEntity item in Html.GetJournalChannelList())
+                        {
+                            if (item.JChannelID == 9)
+                            {
+                                <option value="9">@item.ChannelName</option>
+                            }
+                            if (item.JChannelID == 16)
+                            {
+                                <option value="16">@item.ChannelName</option>
+                            }
+                        }
+                        
+                    </select>
+                    <input name="Key" type="text" id="Key2" onfocus="KeyA()" onblur="KeyB()" value="请输入搜索关键字" />
+                    <input type="submit" name="Button1" value="搜索" id="Button1" class="btnB" onclick="Search(6)" />  
+                </td>
+            </tr>
+        </table>
+    </div>
+    <table id="tab" border="0" cellspacing="0" cellpadding="0" style="width: 798px;" >
+        @foreach (WKT.Model.IssueContentEntity item in Model.ItemList)
+        {
+            <tr>
+                <td style="border-bottom:1px #c5c5c5 dashed;"></td>
+                <td style="border-bottom:1px #c5c5c5 dashed;">
+                    <ul style="float:left; text-decoration:none;padding-bottom:5px; padding-top:5px; padding-left:5px; padding-right:5px; font-size:12px;">
+                        <li style=" margin-bottom:5px;"><a href="/Magazine/show/?id=@item.ContentID" style="color:#3A3838; font-weight:bold; font-size:12px;">@Html.CleanHtml(item.Title)</a></li>
+                        <li style="line-height:20px;"><span style="color:#207d44;">[摘要]</span>@Html.CleanHtmlCutString(item.Abstract, 250, "")</li> 
+                        <li style="color:#666; margin-top:3px;">作者：@Html.CleanHtmlNbsp(item.Authors)</li>       
+                        <li style=" padding-top:5px;"><span style="color:#207d44;">全文</span>[ <a href="/Stat/FileDownload?ContentID=@item.ContentID&fileName=@Html.CleanHtmlNbsp(item.Title)" id="@item.ContentID" style="color:#207d44;">PDF</a> @item.FileSize KB ] @item.Year.@item.Volume（@item.Issue）：@item.StartPageNum-@item.EndPageNum  &nbsp;共有 @item.Hits 人次浏览</li>    
+                    </ul>
+                </td>
+            </tr> 
+        }
+    </table>
+    
+    <div class="digg">
+        @Html.Raw(ViewBag.PagerInfo)
+    </div>
+    
+    <script type="text/javascript">
+        //获取URL参数
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null)
+                return unescape(r[2]);
+            return null;
+        }
+        //根据栏目ID自动选中列表选项
+        if (GetQueryString("JChannelID") == "9") {
+            document.getElementById("MenuTree2").selectedIndex = 0;
+        }
+        if (GetQueryString("JChannelID") == "16") {
+            document.getElementById("MenuTree2").selectedIndex = 1;
+        }
+
+    </script>
+
+</div>
+
+        <div>&nbsp;</div>       
+        <div id="footer" style=" margin-top:-15px;">
+            <p></p><br/>
+            <p>北京市丰台区东大街8号信息楼 《灾害医学与救援（电子版）》 编辑部<br />
+                电话：（010）66947905，（010）51128591 传真：（010）66947906</p>
+        </div>
+

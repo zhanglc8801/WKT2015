@@ -1,0 +1,162 @@
+﻿@model WKT.Model.SiteConfigEntity
+<div style="min-width:1100px;" tabid="LetterPrint" id="notice_container" class="notice notice0">
+	<div class="c">
+        <input type="text" class="txtbox" id="txtCNumber" value="稿件编号" style="width:100px;font-style:italic;" onfocus="javascript:txtCNumberFocus();" onblur="javascript:txtCNumberBlur();" />
+        <input type="text" class="txtbox" id="txtTitle" value="稿件标题" style="width:150px;font-style:italic;" onfocus="javascript:txtTitleFocus();" onblur="javascript:txtTitleBlur();" />
+        @Html.Raw(Html.SelectIssueYear("Year", "80px", string.Empty, string.Empty, "选择年"))  
+        @Html.Raw(Html.SelectIssueSet("Issue", "80px", string.Empty, string.Empty, "选择期"))  
+        &nbsp;开始日期：<input type="text" name="StartDate" class="txtbox" id="txtStartDate" style="width:100px;" /> &nbsp;结束日期：<input type="text" name="EndDate" class="txtbox" id="txtEndDate" style="width:100px;" /> &nbsp;
+        <input type="button" value="搜索" class="btnsearch" id="btnSearch" />&nbsp;
+        <input type="button" value="重置" class="btnreset" id="btnReset" />&nbsp;
+        <input type="button" value="导出" class="btnword" style=" display:none;" id="btnWord" />
+        <input type="button" value="打印" class="btnprint" id="btnPrint" />
+    </div>
+</div>
+<div id="box">
+	<div id="divWorkloadList" style="margin-left:10px;">
+        
+    </div>
+</div>
+
+
+
+
+@section Scripts{
+<script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+    // 日期选择
+    $("#txtStartDate").bind("click", function () {
+        var d5222 = $dp.$('txtEndDate');
+        WdatePicker({ readOnly: true, onpicked: function () { d5222.focus(); }, maxDate: '#F{$dp.$D(\'txtEndDate\')}' });
+    });
+    $("#txtEndDate").bind("click", function () { WdatePicker({ readOnly: true, minDate: '#F{$dp.$D(\'txtStartDate\')}' }); });
+    //稿件标题/稿件编号输入框设置
+    function txtCNumberFocus() {
+        if (document.getElementById("txtCNumber").value == "稿件编号") {
+            document.getElementById("txtCNumber").value = "";
+            document.getElementById("txtCNumber").style.fontStyle = "normal";
+        }
+    }
+    function txtCNumberBlur() {
+        if (document.getElementById("txtCNumber").value == "") {
+            document.getElementById("txtCNumber").value = "稿件编号";
+            document.getElementById("txtCNumber").style.fontStyle = "italic";
+        }
+    }
+    function txtTitleFocus() {
+        if (document.getElementById("txtTitle").value == "稿件标题") {
+            document.getElementById("txtTitle").value = "";
+            document.getElementById("txtTitle").style.fontStyle = "normal";
+        }
+    }
+    function txtTitleBlur() {
+        if (document.getElementById("txtTitle").value == "") {
+            document.getElementById("txtTitle").value = "稿件标题";
+            document.getElementById("txtTitle").style.fontStyle = "italic";
+        }
+    }
+
+    //重置
+    $("#btnReset").click(function () {
+        $("#txtTitle").val("");
+        $("#txtCNumber").val("");
+        $("#Year").val("");
+        $("#Issue").val("");
+        $("#txtStartDate").val("");
+        $("#txtCNumber").val("");
+    });
+    //搜索
+    $("#btnSearch").click(function () {
+        var CNumber = $("#txtCNumber").val() == "稿件编号" ? "" : $("#txtCNumber").val();
+        var Title = $("#txtTitle").val() == "稿件标题" ? "" : $("#txtTitle").val();
+        var Year = $("#Year").val();
+        var Issue = $("#Issue").val();
+        var StartDate = $("#txtStartDate").val();
+        var EndDate = $("#txtEndDate").val();
+        $.ajax({
+            beforeSend: function () {
+                $("#divWorkloadList").html("<img src=\"@Html.RootPath()/Content/images/checkreg.gif\" style=\"vertical-align:middle;\" /><span style=\"font-size:14px;color:#333;\">请稍候...</span>");
+            },
+            type: 'POST',
+            url: '@Html.RootPath()/ContributionInfo/GetContributionAuthorListAjax/?rnd=' + Math.random(),
+            data: { CNumber: CNumber, Title: Title, Year: Year, Issue: Issue, StartDate: StartDate, EndDate: EndDate },
+            cache: false,
+            success: function (data) {
+                var list = data, str = '';
+                for (var i = 0; i < list.length; i++) {
+                    for (var j = 0; j < list[i].AuthorList.length; j++) {
+                        if (list[i].AuthorList[j].IsCommunication == true) {
+                            str += "<table width=\"500px\" border=\"0\" bgcolor=\"#ffffff\" cellpadding=\"4\" cellspacing=\"0\" style=\"border: solid 1px #333;float:left; margin-right:10px; margin-bottom:10px;\">";
+                            str += "<tr><td height=\"25\">" + list[i].AuthorList[j].ZipCode + "</td></tr>";
+                            str += "<tr><td height=\"25\">&nbsp;&nbsp;邮：" + list[i].AuthorList[j].Address + "</td></tr>";
+                            str += "<tr><td height=\"30\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + list[i].AuthorList[j].AuthorName + "（收）</td></tr>";
+                            str += "<tr><td height=\"30\" align=\"right\">@Model.Address 邮编：@Model.ZipCode &nbsp;&nbsp;&nbsp;&nbsp;</td></tr>";
+                            str += "</table>";
+                        }
+                    }
+
+                }
+                $("#divWorkloadList").html(str);
+            }
+
+        });
+
+    });
+
+    //导出
+    $("#btnWord").click(function () {
+        var CNumber = $("#txtCNumber").val() == "稿件编号" ? "" : $("#txtCNumber").val();
+        var Title = $("#txtTitle").val() == "稿件标题" ? "" : $("#txtTitle").val();
+        var Year = $("#Year").val().length == 0 ? "" : $("#Year").val() + "年";
+        var Issue = $("#Issue").val().length == 0 ? "" : "第" + $("#Issue").val() + "期";
+        var StartDate = $("#txtStartDate").val().length == 0 ? "" : $("#txtStartDate").val() + "_";
+        var EndDate = $("#txtEndDate").val().length == 0 ? "" : $("#txtEndDate").val();
+        if ((Year == "" && Issue != "") || (Year != "" && Issue == "")) {
+            alert("请输入完整的年期"); return;
+        }
+        if ((StartDate != "" && EndDate == "") || (StartDate == "" && EndDate != "")) {
+            alert("请输入完整的开始/结束日期"); return;
+        }
+        var fileName = CNumber + Title + Year + Issue + StartDate + EndDate + "信封导出";
+        window.open("@Html.RootPath()/ContributionInfo/SaveToWord?cNumber=" + CNumber + "&title=" + Title + "&year=" + $("#Year").val() + "&issue=" + $("#Issue").val() + "&startDate=" + StartDate + "&endDate=" + EndDate + "&fileName=111.doc");
+
+    });
+
+    //打印
+    $("#btnPrint").click(function () {
+        if ($("#divWorkloadList").html().length < 1) {
+            alert("请先进行查询后再打印"); return;
+        }
+        if (!confirm("确定打印？")) return;
+        preview();
+        //window.parent.RealoadTab('LetterPrint');
+    });
+
+    var HKEY_Root, HKEY_Path, HKEY_Key;
+    HKEY_Root = "HKEY_CURRENT_USER";
+    HKEY_Path = "\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+    //设置网页打印的页眉页脚为空 
+    function PageSetup_Null() {
+        try {
+            var Wsh = new ActiveXObject("WScript.Shell");
+            HKEY_Key = "header";
+            Wsh.RegWrite(HKEY_Root + HKEY_Path + HKEY_Key, "");
+            HKEY_Key = "footer";
+            Wsh.RegWrite(HKEY_Root + HKEY_Path + HKEY_Key, "");
+        }
+        catch (e) {
+        }
+    }
+
+    function preview() {
+        PageSetup_Null();
+        var bdhtml = window.document.getElementById("divWorkloadList").innerHTML;
+        window.document.body.innerHTML = bdhtml;
+        window.print();
+    }
+
+
+
+</script>
+}
+

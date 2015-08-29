@@ -1,0 +1,15 @@
+﻿@model WKT.Model.SiteModel
+@{
+    ViewBag.Title = ViewBag.Title + "_" +  Html.SiteName();
+}
+<div class="news">    
+<h1>
+    位置: 首页 &gt;&gt; <a id="SiteNav1_HNav">@ViewBag.ChannelName</a>
+</h1>
+<div class="wz">
+<p>@Html.Raw(Model.ConentEntity.Title)</p>
+<div id="HText" class="fonts">
+    @Html.Raw(Model.ConentEntity.Content)
+</div>
+</div>
+</div>

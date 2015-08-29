@@ -1,0 +1,322 @@
+﻿<link href="@Html.RootPath()/Content/ContributionInfo.css" rel="stylesheet" type="text/css" />
+@if (string.IsNullOrEmpty(ViewBag.IsView))
+{
+    <div style="" id="notice_container" class="notice notice0">
+        <div class="c">
+            <a href="javascript:void(0)" id="noticeTip">系统提示：保存审稿信息后，该稿件将会在已审稿件看到.</a>
+        </div>
+    </div>
+}
+@if (!string.IsNullOrEmpty(ViewBag.IsView))
+{
+    <div style="padding-left: 10px; border-bottom: 1px solid #ccc;">
+        <input type="button" value="打印" style="width: 80px;" id="btnPrint" class="l-button" />
+    </div>
+        <div style="padding-left: 10px; border-bottom: 1px solid #ccc;">
+        <input type="button" value="保存" style="width: 80px;" id="btnSave" class="l-button" />
+    </div>
+}
+<div style="padding: 0px 5px 5px 5px">
+    <form name="form1" method="post" id="form1">
+    <div style="margin-top: 10px; text-align: center">
+        <font size="10">@Html.Raw(ViewBag.header)</font>
+    </div>
+    <div style="margin-top: 10px;">
+        <table width="100%" align="center" border="0" cellspacing="1" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td style="padding-left: 20px;">
+                        @Html.Raw(ViewBag.content)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="margin-top: 10px;">
+        @Html.Raw(ViewBag.contributeInfo)
+    </div>
+    <div>
+        <table  class="mainTable">
+            <tr style="border-bottom-style:solid; border-bottom-color:Black; border-bottom-width:1px;border-left-style:solid; border-left-width:1px; border-left-color:Black; border-right-style:solid; border-right-width:1px; border-right-color:Black;">
+                <td style=" width:6%;border-right-style:solid; border-right-width:1px; border-right-color:Black;">对本稿的总评价：</td>
+                <td>@Html.Raw(ViewBag.html)</td>
+            </tr>
+            <tr style=" border-bottom-style:solid; border-bottom-color:Black; border-bottom-width:1px; border-left-style:solid; border-left-width:1px; border-left-color:Black; border-right-style:solid; border-right-width:1px; border-right-color:Black;">
+                <td style=" width:6%; border-right-style:solid; border-right-width:1px; border-right-color:Black;">评审意见：</td>
+                <td style=" height:150px;">
+			<textarea id="txtDealAdvice" rows="5" cols="30" style="width: 100%; height: 150px;"></textarea>
+		</td>
+            </tr>
+        </table>
+        
+    </div>
+    
+
+        
+    @if (string.IsNullOrEmpty(ViewBag.IsView))
+    {
+        <div style="padding-left: 5px; margin-top: 10px;">
+            <input type="file" name="UrlPath" id="txtUrlPath" />&nbsp;
+            <input type="text" id="CFileName" class="txtbox" value="输入自定义文件名,不输入则显示默认名称[修改稿]" style="width:500px;font-style:italic;" onfocus="javascript:CFileNameFocus();" onblur="javascript:CFileNameBlur();" />
+                <a href="" id="CPathMsg"></a><br/>
+                <span style="font-size: 12px;color:cadetblue;margin-left: 5px;">&nbsp;&nbsp;如果您对稿件进行了修改,请在此上传。&nbsp;</span>
+                <script type="text/javascript">
+                    function CFileNameFocus() {
+                        if (document.getElementById("CFileName").value == "输入自定义文件名,不输入则显示默认名称[修改稿]") {
+                            document.getElementById("CFileName").value = "";
+                            document.getElementById("CFileName").style.fontStyle = "normal";
+                        }
+                    }
+                    function CFileNameBlur() {
+                        if (document.getElementById("CFileName").value == "") {
+                            document.getElementById("CFileName").value = "输入自定义文件名,不输入则显示默认名称[修改稿]";
+                            document.getElementById("CFileName").style.fontStyle = "italic";
+                        }
+                    }
+                </script>
+        </div><br/>
+        
+        <div style="padding-left: 5px;">
+            <input type="file" name="FigurePath" id="txtFigurePath" />&nbsp;
+            <input type="text" id="FFileName" class="txtbox"  value="输入自定义文件名,不输入则显示默认名称[附件]" style="width:500px;font-style:italic;" onfocus="javascript:FFileNameFocus();" onblur="javascript:FFileNameBlur();" />
+                <a href="" id="FPathMsg"></a><br/>
+                <span style="font-size: 12px;color:cadetblue;margin-left: 5px;">&nbsp;&nbsp;如果您还有其他附件(多个需压缩打包)请在此上传。&nbsp;</span>
+                <script type="text/javascript">
+                    function FFileNameFocus() {
+                        if (document.getElementById("FFileName").value == "输入自定义文件名,不输入则显示默认名称[附件]") {
+                            document.getElementById("FFileName").value = "";
+                            document.getElementById("FFileName").style.fontStyle = "normal";
+                        }
+                    }
+                    function FFileNameBlur() {
+                        if (document.getElementById("FFileName").value == "") {
+                            document.getElementById("FFileName").value = "输入自定义文件名,不输入则显示默认名称[附件]";
+                            document.getElementById("FFileName").style.fontStyle = "italic";
+                        }
+                    }
+                </script>
+        </div>
+        <div style="padding-left: 20px; margin-top: 10px; margin-bottom: 10px;">
+            无法上传稿件？请下载安装<a href="http://www.yywkt.cn/Content/Tools/InstallFlashPlayer.exe" target="_blank" style="color:Blue; font-weight:bold;">Flash插件</a>并重启您的浏览器后重试。
+        </div>
+        <div style="padding-left: 15%; margin-top: 10px; margin-bottom: 10px;">
+            @*<input type="button" value="确定完成" style="width: 100px; display: inline" id="btnSave" class="l-button" />*@
+            <input id="btnSave" type="button" class="SubmitMouse" onmouseover="this.className='SubmitMouseOut'" onmouseout="this.className='SubmitMouse'" value="提&nbsp;&nbsp;交"/>
+        </div>
+    }
+    </form>
+    <form name="action_command" action="" target="_self" method="post">
+    </form>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript" src="@Html.RootPath()/Scripts/Uploadify/jquery.uploadify.js"></script>
+    <script src="@Html.RootPath()/Scripts/validation/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/validation/jquery.metadata.js?111" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/validation/messages_cn.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var urlPath = '';
+        var figurePath = '';
+        var cFileName='';
+        var fFileName = '';
+        //设置上传文件夹(按双月设置)
+        var UpFolder = '';
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        if (month % 2 == 0) {
+            UpFolder = year + "/" + month;
+        }
+        else {
+            UpFolder = year + "/" + (month + 1);
+        } 
+
+        $(function () {
+            $.metadata.setType("attr", "validate");
+            validator = $("#form1").validate({
+                debug: false,
+                errorPlacement: function (lable, element) {
+                    if (element.is(':radio') || element.is(':checkbox')) {
+                        element.parent().ligerTip({ content: lable.html(), target: element[0] });
+                    }
+                    else {
+                        element.ligerTip({ content: lable.html(), target: element[0] });
+                    }
+                },
+                success: function (lable) {
+                    lable.ligerHideTip();
+                    lable.remove();
+                }
+            });
+            
+
+            $(function () {
+                setTimeout(function () {
+                    $("#txtUrlPath").uploadify({
+                        postData: { folder: 'FlowSet/ReviewBillContent/' + UpFolder },
+                        uploader: '@Html.RootPath()/Upload/Save/',
+                        buttonText: '上传修改稿件',
+                        fileTypeExts: "@Html.ContributionInfoFileExt(0)",
+                        swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',
+                        onUploadSuccess: function (obj, data, response) {
+                            var result = eval("(" + data + ")");
+                            if (result.result == "success") {
+                                urlPath = result.url;
+                                //LoadFile(urlPath, "divUrlPath", "aUrlPath");
+                                document.getElementById("CPathMsg").innerHTML = "上传成功！";
+                                $("#CPathMsg").removeAttr("href");
+                                document.getElementById("CFileName").value = result.filename;
+                                document.getElementById("CFileName").style.fontStyle = "normal";
+                            }
+                            else {
+                                alert(result.msg);
+                                return;
+                            }
+                        }
+                    });
+                }, 10);
+            });
+
+            $(function () {
+                setTimeout(function () {
+                    $("#txtFigurePath").uploadify({
+                        postData: { folder: 'FlowSet/ReviewBillContent/' + UpFolder },
+                        uploader: '@Html.RootPath()/Upload/Save/',
+                        buttonText: '上传附件',
+                        fileTypeExts: "@Html.ContributionInfoFileExt(0)",
+                        swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',
+                        onUploadSuccess: function (obj, data, response) {
+                            var result = eval("(" + data + ")");
+                            if (result.result == "success") {
+                                figurePath = result.url;
+                                //LoadFile(figurePath, "divFigurePath", "aFigurePath"); //figurePath
+                                document.getElementById("FPathMsg").innerHTML = "上传成功！";
+                                $("#FPathMsg").removeAttr("href");
+                                document.getElementById("FFileName").value = result.filename;
+                                document.getElementById("FFileName").style.fontStyle = "normal";
+                            }
+                            else {
+                                alert(result.msg);
+                                return;
+                            }
+                        }
+                    });
+                }, 10);
+            });
+            
+            $("#btnSave").click(function () { Save(); });
+            $("#btnPrint").click(function () {
+                if (!confirm("您确定打印该审稿单吗？")) return;
+                var html = '<input type="hidden" name="CID" value="@ViewBag.CID"/>';
+                print();
+                window.close();
+                // $('form[name="action_command"]').html(html).attr("action", '@Html.RootPath()/FlowSet/BillContentReport').attr("method", "post").submit();
+            });
+        });
+
+        function Save() {
+            var isvalided = $("#form1").valid();
+            if (isvalided) {
+                $("#form1").ligerHideTip();
+                if (!confirm("您确定要提交审稿信息吗？")) return;
+                var saveParams = {}, arry = new Array(), obj;
+                cFileName = document.getElementById("CFileName").value == "输入自定义文件名,不输入则显示默认名称[修改稿]" ? "" : document.getElementById("CFileName").value;
+                fFileName = document.getElementById("FFileName").value == "输入自定义文件名,不输入则显示默认名称[附件]" ? "" : document.getElementById("FFileName").value;
+                $("input[type=radio],input[type=checkbox]").each(function () {
+                    arry.push({
+                        CID: '@ViewBag.CID',
+                        ItemID: this.value,
+                        ContentValue: '',
+                        IsChecked: this.checked
+                    });
+                });
+                $("input[type=text]").each(function () {
+                    obj = $(this);
+                    arry.push({
+                        CID: '@ViewBag.CID',
+                        ItemID: obj.attr("alt"),
+                        ContentValue: obj.val(),
+                        IsChecked: false
+                    });
+                });
+                saveParams["CID"] = '@ViewBag.CID';
+                saveParams["PathUrl"] = urlPath;
+                saveParams["CFileName"] = cFileName;
+                saveParams["figurePath"] = figurePath;
+                saveParams["FFileName"] = fFileName;
+                saveParams["list"] = arry;
+                saveParams["AddUser"] = '@ViewBag.authorID';
+                saveParams["DealAdvice"] = $("#txtDealAdvice").val();
+                msgdialog = $.ligerDialog.waitting('审稿信息保存中。。。');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Html.RootPath()/FlowSet/SaveReviewBillContent/',
+                    cache: false,
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: $.toJSON({ query: saveParams }),
+                    complete: function () { msgdialog.close(); },
+                    success: function (data) {
+                        if (data.result == "success") {
+                            alert("审稿成功！");
+                            window.parent.RealoadTab('Wait');
+                            window.parent.f_removeTabItem("WaitViewDetail");
+                            window.parent.f_removeSelectedTabItem();
+                        }
+                        else {
+                            alert("审稿失败！");
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                    }
+                });
+            }
+            else {
+                alert('验证失败，请验证填写的内容是否正确!');
+            }
+        }
+
+        function LoadFile(url, divId, aId) {
+            if (url.length < 1)
+                $("#" + divId).css("display", "none");
+            else {
+                $("#" + aId).unbind("click");
+                $("#" + aId).click(function () { DownLoad('@Html.RootPath()', url, $(this).html()); return false; });
+                $("#" + divId).css("display", "inline");
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        var HKEY_Root, HKEY_Path, HKEY_Key;
+        HKEY_Root = "HKEY_CURRENT_USER";
+        HKEY_Path = "\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+        //设置网页打印的页眉页脚为空 
+        function PageSetup_Null() {
+            try {
+                var Wsh = new ActiveXObject("WScript.Shell");
+                HKEY_Key = "header";
+                Wsh.RegWrite(HKEY_Root + HKEY_Path + HKEY_Key, "");
+                HKEY_Key = "footer";
+                Wsh.RegWrite(HKEY_Root + HKEY_Path + HKEY_Key, "");
+            }
+            catch (e) {
+            }
+        }
+
+        function preview() {
+            PageSetup_Null();
+            var bdhtml = window.document.getElementById("form1").innerHTML;
+            
+            window.document.body.innerHTML = bdhtml;
+            window.print();
+            window.close();
+        }
+
+        function TiLocal() {
+               
+        }
+    </script>
+}

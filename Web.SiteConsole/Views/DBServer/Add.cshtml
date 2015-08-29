@@ -1,0 +1,97 @@
+﻿@model DBServerInfoEntity
+<script type="text/javascript">
+    // 设置标题
+    Index.SetTitle('新增DBServer');
+    </script>
+<div class="container">
+    <div class="location">当前位置：系统设置 -&gt; DBServer管理 -&gt; @(Model == null ? "新增DBServer" : "编辑DBServer")</div>
+    <div class="blank10"></div>
+    <div class="block">
+        <div class="h">
+            <span class="icon-sprite icon-list"></span>
+            <h3>@(Model == null ? "新增DBServer" : "编辑DBServer")</h3>
+            <div class="bar">
+                <a class="btn-lit" href="javascript:Index.Open('/DBServer');"><span>返回</span></a>
+            </div>
+        </div>
+        <div class="tl corner"></div><div class="tr corner"></div><div class="bl corner"></div><div class="br corner"></div>
+        <div class="cnt-wp">
+            <div class="cnt form">
+                <form method="post" id="frmDBServerAdd" name="frmDBServerAdd">
+                <table class="data-form" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <th scope="row">服务器IP：</th>
+                            <td><input value="@(Model != null ? Model.ServerIP.ToString() : "")" type="text" name="ServerIP" id="txtServerIP" class="input-normal" /></td>
+                            <td align="left"><div id="txtServerIPTip" style="line-height:13px;"></div></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">端口号：</th>
+                            <td><input value="@(Model != null ? Model.Port.ToString() : "")" type="text" name="Port" id="txtPort" class="input-normal" /></td>
+                            <td align="left"><div id="txtPortTip" style="line-height:13px;"></div></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">账号：</th>
+                            <td><input value="@(Model != null ? Model.Account.ToString() : "")" type="text" name="Account" id="txtAccount" class="input-normal" /></td>
+                            <td align="left"><div id="txtAccountTip" style="line-height:13px;"></div></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">密码：</th>
+                            <td><input value="@(Model != null ? Model.Pwd.ToString() : "")" type="password" name="Pwd" id="txtPwd" class="input-normal" /></td>
+                            <td align="left"><div id="txtPwdTip" style="line-height:13px;"></div></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">状态：</th>
+                            <td>
+                                @if (Model == null)
+                                {
+                                    <select name="Status" id="selStatus"><option value="1">启用</option><option value="0">禁用</option></select>
+                                }
+                                else
+                                {
+                                    <select name="Status" id="selStatus"><option value="1" @(Model.Status == 1 ? "selected" : "")>启用</option><option value="0" @(Model.Status == 0 ? "selected" : "")>禁用</option></select>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">备注：</th>
+                            <td><input value="@(Model != null ? Model.Note.ToString() : "")" type="text" name="Note" id="txtNote" class="input-big" /></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">&nbsp;</th>
+                            <td>
+                                <a class="btn-lit" id="btnSubmit" href="javascript:void(0)"><span>确定</span></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table><input type="hidden" id="hiddenDBServerID" value="@(Model != null ? Model.DBServerID.ToString() : "")" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script src="/Scripts/Validator/formValidator-4.1.1.js" type="text/javascript"></script>
+<script src="/Scripts/Validator/formValidatorRegex.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $.formValidator.initConfig({ formID: "frmDBServerAdd", theme: "ArrowSolidBox", submitOnce: true });
+        $("#txtServerIP").formValidator({ onShowText: "DB Server IP", onShow: "IP地址", onFocus: "请输入服务器IP", onCorrect: "ok" }).regexValidator({ regExp: "ip4", dataType: "enum", onError: "请输入正确的服务器IP" });
+        $("#txtPort").formValidator({ onShowText: "", onShow: "请输入端口号", onFocus: "请输入端口号", defaultValue: "1431", onCorrect: "ok" }).regexValidator({ regExp: "intege1", dataType: "enum", onError: "请输入正确的端口号" });
+        $("#txtAccount").formValidator({ onShowText: "", onShow: "请输入服务器账号", onFocus: "最少2个字符,最多30个字符", onCorrect: "ok" }).inputValidator({ min: 2, max: 30, onError: "请输入正确的服务器账号" })
+        $("#txtPwd").formValidator({ onShow: "请输入密码", onFocus: "至少3个长度", onCorrect: "ok" }).inputValidator({ min: 3, empty: { leftEmpty: false, rightEmpty: false, emptyError: "密码两边不能有空符号" }, onError: "密码不能为空,请确认" });
+        
+        $("#btnSubmit").click(
+        function () {
+            var objParam = {"ServerIP": $("#txtServerIP").val(),"Port": $("#txtPort").val(),"Account": $("#txtAccount").val(),"Pwd": $("#txtPwd").val(),"Status": $("#selStatus").val(),"Note": $("#txtNote").val()};
+            var url = "/DBServer/AddAjax";
+            if ($("#hiddenDBServerID").val() != "") {
+                url = "/DBServer/EditAjax";
+                objParam = { "DBServerID": $("#hiddenDBServerID").val(),"ServerIP": $("#txtServerIP").val(),"Port": $("#txtPort").val(),"Account": $("#txtAccount").val(),"Pwd": $("#txtPwd").val(),"Status": $("#selStatus").val(),"Note": $("#txtNote").val()};
+            }
+            Admin.SubmitForm(url, objParam, '/DBServer');
+        }
+    )
+    });
+</script>
+}

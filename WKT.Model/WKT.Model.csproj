@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{73BD5439-9F9A-4DCB-A80E-6E3DCD0A0181}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WKT.Model</RootNamespace>
+    <AssemblyName>WKT.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\lib\MongoDB\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="APIConstant.cs" />
+    <Compile Include="CommonQuery.cs" />
+    <Compile Include="CustomEntity\AuditBillEntity.cs" />
+    <Compile Include="CustomEntity\BlogEntity.cs" />
+    <Compile Include="CustomEntity\CirculationEntity.cs" />
+    <Compile Include="CustomEntity\ContinuSendEntity.cs" />
+    <Compile Include="CustomEntity\FieldsSet.cs" />
+    <Compile Include="CustomEntity\FlowContribution.cs" />
+    <Compile Include="CustomEntity\FlowNode.cs" />
+    <Compile Include="CustomEntity\FlowStep.cs" />
+    <Compile Include="CustomEntity\MenuBar.cs" />
+    <Compile Include="CustomEntity\SetContributionEditorEntity.cs" />
+    <Compile Include="CustomEntity\TreeModel.cs" />
+    <Compile Include="Entity\AuthorDetailEntity.cs" />
+    <Compile Include="Entity\AuthorInfoEntity.cs" />
+    <Compile Include="Entity\AuthorMenuRightExceptionEntity.cs" />
+    <Compile Include="Entity\AuthorStatEntity.cs" />
+    <Compile Include="Entity\DoiRegLogEntity.cs" />
+    <Compile Include="Entity\ExpertApplyLogEntity.cs" />
+    <Compile Include="Entity\IssueDownLogEntity.cs" />
+    <Compile Include="Entity\IssueSiteEntity.cs" />
+    <Compile Include="Entity\IssueViewLogEntity.cs" />
+    <Compile Include="Entity\LoginErrorLogEntity.cs" />
+    <Compile Include="Entity\StatDealContributionDetailEntity.cs" />
+    <Compile Include="Entity\TokenEntity.cs" />
+    <Compile Include="Entity\WorkloadEntity.cs" />
+    <Compile Include="Entity\ContactWayEntity.cs" />
+    <Compile Include="Entity\ContributeSetEntity.cs" />
+    <Compile Include="Entity\ContributionAuthorEntity.cs" />
+    <Compile Include="Entity\ContributionFundEntity.cs" />
+    <Compile Include="Entity\ContributionInfoAttEntity.cs" />
+    <Compile Include="Entity\ContributionInfoEntity.cs" />
+    <Compile Include="Entity\ContributionReferenceEntity.cs" />
+    <Compile Include="Entity\CRemarkEntity.cs" />
+    <Compile Include="Entity\DictEntity.cs" />
+    <Compile Include="Entity\DictValueEntity.cs" />
+    <Compile Include="Entity\EditorAutoAllotEntity.cs" />
+    <Compile Include="Entity\ExpertGroupMapEntity.cs" />
+    <Compile Include="Entity\FinanceAccountEntity.cs" />
+    <Compile Include="Entity\FinanceContributeEntity.cs" />
+    <Compile Include="Entity\FinancePayDetailEntity.cs" />
+    <Compile Include="Entity\FlowActionEntity.cs" />
+    <Compile Include="Entity\FlowAuthAuthorEntity.cs" />
+    <Compile Include="Entity\FlowAuthRoleEntity.cs" />
+    <Compile Include="Entity\FlowConfigEntity.cs" />
+    <Compile Include="Entity\FlowLogInfoEntity.cs" />
+    <Compile Include="Entity\FlowNodeConditionEntity.cs" />
+    <Compile Include="Entity\FlowStatusEntity.cs" />
+    <Compile Include="Entity\FriendlyLinkEntity.cs" />
+    <Compile Include="Entity\GuestbookEntity.cs" />
+    <Compile Include="Entity\IssueContentEntity.cs" />
+    <Compile Include="Entity\IssueReferenceEntity.cs" />
+    <Compile Include="Entity\IssueSetEntity.cs" />
+    <Compile Include="Entity\IssueSubscribeEntity.cs" />
+    <Compile Include="Entity\JournalChannelEntity.cs" />
+    <Compile Include="Entity\MenuEntity.cs" />
+    <Compile Include="Entity\MessageRecodeEntity.cs" />
+    <Compile Include="Entity\MessageTemplateEntity.cs" />
+    <Compile Include="Entity\PayNoticeEntity.cs" />
+    <Compile Include="Entity\RetractionsBillsEntity.cs" />
+    <Compile Include="Entity\ReviewBillContentEntity.cs" />
+    <Compile Include="Entity\ReviewBillEntity.cs" />
+    <Compile Include="Entity\RoleAuthorEntity.cs" />
+    <Compile Include="Entity\RoleInfoEntity.cs" />
+    <Compile Include="Entity\RoleMenuEntity.cs" />
+    <Compile Include="Entity\SiteBlockEntity.cs" />
+    <Compile Include="Entity\SiteChannelEntity.cs" />
+    <Compile Include="Entity\SiteConfigEntity.cs" />
+    <Compile Include="Entity\SiteContentEntity.cs" />
+    <Compile Include="Entity\SiteMessageEntity.cs" />
+    <Compile Include="Entity\SiteModel.cs" />
+    <Compile Include="Entity\SiteNoticeEntity.cs" />
+    <Compile Include="Entity\SiteResourceEntity.cs" />
+    <Compile Include="Entity\SubjectAuthorMapEntity.cs" />
+    <Compile Include="Entity\YearVolumeEntity.cs" />
+    <Compile Include="Enum\EnumContentType.cs" />
+    <Compile Include="Enum\EnumContributionStatus.cs" />
+    <Compile Include="Enum\EnumDictKey.cs" />
+    <Compile Include="Enum\EnumMailPriority.cs" />
+    <Compile Include="ExecResult.cs" />
+    <Compile Include="CustomEntity\AccessLog.cs" />
+    <Compile Include="CustomEntity\AccessLogQuery.cs" />
+    <Compile Include="DB\EnumOperator.cs" />
+    <Compile Include="DB\MongoDBConnnection.cs" />
+    <Compile Include="DB\Pager.cs" />
+    <Compile Include="Entity\ApiServerInfoEntity.cs" />
+    <Compile Include="Entity\DBServerInfoEntity.cs" />
+    <Compile Include="Entity\JournalInfoEntity.cs" />
+    <Compile Include="Entity\JournalSetInfoEntity.cs" />
+    <Compile Include="Entity\SysAccountInfoEntity.cs" />
+    <Compile Include="Enum\EnumJsonResult.cs" />
+    <Compile Include="Enum\EnumMemberGroup.cs" />
+    <Compile Include="Enum\EnumMongoDB.cs" />
+    <Compile Include="Enum\EnumMongoDBTable.cs" />
+    <Compile Include="FangZ\doc.cs" />
+    <Compile Include="FangZ\Magazine.cs" />
+    <Compile Include="FangZ\magOrder.cs" />
+    <Compile Include="JsonExecResult.cs" />
+    <Compile Include="ObjectBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryBase.cs" />
+    <Compile Include="QueryEntity\ApiServerInfoQuery.cs" />
+    <Compile Include="QueryEntity\AuthorDetailQuery.cs" />
+    <Compile Include="QueryEntity\AuthorInfoQuery.cs" />
+    <Compile Include="QueryEntity\ContactWayQuery.cs" />
+    <Compile Include="QueryEntity\ContributionAuthorQuery.cs" />
+    <Compile Include="QueryEntity\ContributionFundQuery.cs" />
+    <Compile Include="QueryEntity\ContributionInfoAttQuery.cs" />
+    <Compile Include="QueryEntity\ContributionInfoQuery.cs" />
+    <Compile Include="QueryEntity\ContributionReferenceQuery.cs" />
+    <Compile Include="QueryEntity\CRemarkQuery.cs" />
+    <Compile Include="QueryEntity\DBServerInfoQuery.cs" />
+    <Compile Include="QueryEntity\DictQuery.cs" />
+    <Compile Include="QueryEntity\DictValueQuery.cs" />
+    <Compile Include="QueryEntity\DoiRegLogQuery.cs" />
+    <Compile Include="QueryEntity\ExpertApplyLogQuery.cs" />
+    <Compile Include="QueryEntity\ExpertGroupMapQuery.cs" />
+    <Compile Include="QueryEntity\FinanceContributeQuery.cs" />
+    <Compile Include="QueryEntity\FinancePayDetailQuery.cs" />
+    <Compile Include="QueryEntity\FlowActionQuery.cs" />
+    <Compile Include="QueryEntity\FlowAuthAuthorQuery.cs" />
+    <Compile Include="QueryEntity\FlowAuthRoleQuery.cs" />
+    <Compile Include="QueryEntity\FlowConfigQuery.cs" />
+    <Compile Include="QueryEntity\FlowLogInfoQuery.cs" />
+    <Compile Include="QueryEntity\FlowLogQuery.cs" />
+    <Compile Include="QueryEntity\FlowNodeConditionQuery.cs" />
+    <Compile Include="QueryEntity\FlowStatusQuery.cs" />
+    <Compile Include="QueryEntity\FriendlyLinkQuery.cs" />
+    <Compile Include="QueryEntity\GuestbookQuery.cs" />
+    <Compile Include="QueryEntity\IssueContentQuery.cs" />
+    <Compile Include="QueryEntity\IssueDownLogQuery.cs" />
+    <Compile Include="QueryEntity\IssueReferenceQuery.cs" />
+    <Compile Include="QueryEntity\IssueSetQuery.cs" />
+    <Compile Include="QueryEntity\IssueSubscribeQuery.cs" />
+    <Compile Include="QueryEntity\IssueViewLogQuery.cs" />
+    <Compile Include="QueryEntity\JournalChannelQuery.cs" />
+    <Compile Include="QueryEntity\JournalInfoQuery.cs" />
+    <Compile Include="QueryEntity\JournalSetInfoQuery.cs" />
+    <Compile Include="QueryEntity\LoginErrorLogQuery.cs" />
+    <Compile Include="QueryEntity\MenuQuery.cs" />
+    <Compile Include="QueryEntity\MessageRecodeQuery.cs" />
+    <Compile Include="QueryEntity\MessageTemplateQuery.cs" />
+    <Compile Include="QueryEntity\PayNoticeQuery.cs" />
+    <Compile Include="QueryEntity\RetractionsBillsQuery.cs" />
+    <Compile Include="QueryEntity\ReviewBillContentQuery.cs" />
+    <Compile Include="QueryEntity\ReviewBillQuery.cs" />
+    <Compile Include="QueryEntity\RoleAuthorQuery.cs" />
+    <Compile Include="QueryEntity\RoleInfoQuery.cs" />
+    <Compile Include="QueryEntity\RoleMenuQuery.cs" />
+    <Compile Include="QueryEntity\SiteBlockQuery.cs" />
+    <Compile Include="QueryEntity\SiteChannelQuery.cs" />
+    <Compile Include="QueryEntity\SiteConfigQuery.cs" />
+    <Compile Include="QueryEntity\SiteContentQuery.cs" />
+    <Compile Include="QueryEntity\SiteMessageQuery.cs" />
+    <Compile Include="QueryEntity\SiteNoticeQuery.cs" />
+    <Compile Include="QueryEntity\SiteResourceQuery.cs" />
+    <Compile Include="QueryEntity\StatQuery.cs" />
+    <Compile Include="QueryEntity\SysAccountInfoQuery.cs" />
+    <Compile Include="QueryEntity\EditorAutoAllotQuery.cs" />
+    <Compile Include="QueryEntity\TokenQuery.cs" />
+    <Compile Include="QueryEntity\WorkloadQuery.cs" />
+    <Compile Include="QueryEntity\YearVolumeQuery.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

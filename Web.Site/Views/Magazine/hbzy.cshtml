@@ -1,0 +1,38 @@
+﻿@model WKT.Model.Pager<WKT.Model.IssueContentEntity>
+@{
+    ViewBag.Title = "期刊检索" + "-" + Html.SiteName();
+    ViewBag.Position = "期刊排序";
+}
+<div class="C_right" style="height: auto; min-height:740px;">
+    <h4 class="list_site">您当前的位置：<a href="/">首页</a> &gt;&gt; <a>合并摘要</a></h4>
+    <ul><li style="background:0;border-bottom:1px solid #5ec9db;font-weight:900;color:#000;"></li></ul>
+    
+    <table id="tab" border="0" cellspacing="0" cellpadding="0" style="width: 798px;" >
+        @foreach (WKT.Model.IssueContentEntity item in Model.ItemList)
+        {
+            <tr>
+                <td style="border-bottom:1px #c5c5c5 dashed;"></td>
+                <td style="border-bottom:1px #c5c5c5 dashed;">
+                    <ul style="float:left; text-decoration:none;padding-bottom:5px; padding-top:5px; padding-left:5px; padding-right:5px; font-size:12px;">
+                        <li style=" margin-bottom:5px;"><a href="/Magazine/show/?id=@item.ContentID" style="color:#3A3838; font-weight:bold; font-size:12px;">@Html.CleanHtml(item.Title)</a></li>
+                        <li style="line-height:20px;"><span style="color:#207d44;">[摘要]</span>@Html.CleanHtmlCutString(item.Abstract, 250, "")</li> 
+                        <li style="color:#666; margin-top:3px;">作者：@Html.CleanHtmlNbsp(item.Authors)</li>       
+                        <li style=" padding-top:5px;"><span style="color:#207d44;">全文</span>[ <a href="/Stat/FileDownload?ContentID=@item.ContentID&fileName=@Html.CleanHtmlNbsp(item.Title)" id="@item.ContentID" style="color:#207d44;">PDF</a> @item.FileSize KB ] @item.Year.@item.Volume（@item.Issue）：@item.StartPageNum-@item.EndPageNum  &nbsp;共有 @item.Hits 人次浏览</li>    
+                    </ul>
+                </td>
+            </tr> 
+        }
+    </table>
+    
+    <div class="digg">
+        @Html.Raw(ViewBag.PagerInfo)
+    </div>
+</div>
+
+
+        <div>&nbsp;</div>       
+        <div id="footer" style=" margin-top:-15px;">
+            <p></p><br/>
+            <p>北京市丰台区东大街8号信息楼 《灾害医学与救援（电子版）》 编辑部<br />
+                电话：（010）66947905，（010）51128591 传真：（010）66947906</p>
+        </div>

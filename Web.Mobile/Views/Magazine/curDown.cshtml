@@ -1,0 +1,167 @@
+﻿@model WKT.Model.Pager<WKT.Model.IssueContentEntity>
+@{
+    ViewBag.Title = "期刊列表" + "-" + Html.SiteName();
+    ViewBag.Position = "期刊列表";
+}
+<div style=" display:none;"><input type="hidden" id="HKey" value="" /></div>
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    $(function () {
+        $('#activator').click(function () {
+            $('#box').animate({ 'top': '65px' }, 500);
+        });
+        $('#boxclose').click(function () {
+            $('#box').animate({ 'top': '-400px' }, 500);
+        });
+
+        $('#noPDFactivator').click(function () {
+            $('#noPDF').animate({ 'top': '65px' }, 500);
+        });
+        $('#noPDFclose').click(function () {
+            $('#noPDF').animate({ 'top': '-400px' }, 500);
+        });
+
+        $('#activator_share').click(function () {
+            $('#box_share').animate({ 'top': '65px' }, 500);
+        });
+        $('#boxclose_share').click(function () {
+            $('#box_share').animate({ 'top': '-400px' }, 500);
+        });
+
+    });
+    $(document).ready(function () {
+        $(".toggle_container").hide();
+        $(".trigger").click(function () {
+            $(this).toggleClass("active").next().slideToggle("slow");
+            return false;
+        });
+
+    });
+</script>
+<!-- Hide Mobiles Browser Navigation Bar -->
+<script type="text/javascript">
+    window.addEventListener("load", function () {
+        // Set a timeout...
+        setTimeout(function () {
+            // Hide the address bar!
+            window.scrollTo(0, 1);
+        }, 0);
+    });
+</script>
+
+<!--获取URL地址栏参数-->
+<script type="text/javascript">
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+</script>
+
+<script type="text/javascript">
+    function ToCNKI() {
+        var Key = encodeURI(document.getElementById("HKey").value);
+        window.location.href = "http://wap.cnki.net/acasearch.aspx?q=" + Key + "&library=CJFDTOTAL&type=&topic=&p=1&rank=relevant&place=qw";
+    }
+</script>
+
+
+
+<div id="main_container">
+	<div class="header">
+    <a href="/Home/" class="left_bt">Home</a>
+    <span>本期下载排行</span>
+    <a href="#" class="right_bt" id="activator"><img src="/Content/images/search.png" alt="" title="" border="0" /></a>
+    <a href="#" id="noPDFactivator"></a>
+    </div> 
+    
+    <!--文章检索对话框-->
+    <div class="box" id="box">
+        <div class="box_content">
+            <div class="box_content_tab">文章检索</div>
+            <div class="box_content_center">
+                <div class="form_content">
+                    <form action="/Magazine/SearchList" method="post">
+                        <label>您要查询哪一年的文章:</label>
+                        <input type="text" class="form_input" id="year" name="year" value="" />
+                        <label>您要查询哪一期的文章:</label>
+                        <input type="text" class="form_input" id="issue" name="issue" value="" />
+                        <label>您要查询的文章标题(支持模糊查询):</label>
+                        <input type="text" class="form_input" id="title" name="title" value="" />
+                        <input type="hidden" name="PageIndex" value="1"/>
+                        <a class="boxclose" id="boxclose">关闭</a>
+                        <input type="submit" class="form_submit" value="提交" />
+                    </form>
+                </div> 
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!--PDF无附件对话框-->
+    <div class="box" id="noPDF">
+        <div class="box_content">
+            <div class="box_content_tab">PDF附件未上传</div>
+            <div class="box_content_center">
+                <div class="form_content">
+                    <label>该文章的PDF附件尚未上传，是否要转到知网进行查询？</label><br/>
+                    <a class="boxclose" id="noPDFclose">否</a>
+                    <input type="button" class="form_submit" value="是" onclick="ToCNKI()" /> 
+                </div> 
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+
+	<div class="content">      
+    	<div class="corner_wrap">
+            <div class="entry">
+            <h3 id="YearIssue"></h3> 
+            <script type="text/javascript">
+                document.getElementById("YearIssue").innerHTML = getQueryString("Year") + "年 第" + getQueryString("Issue") + "期 下载排行";
+            </script>
+            @{
+                int i = 1;
+                foreach (WKT.Model.IssueContentEntity item in Model.ItemList)
+                { 
+                    <div class="services_content">
+                            <h6><a href="/Magazine/Show/?id=@item.ContentID">@i.@Html.CleanHtmlNbsp(item.Title)</a></h6>
+                            <p>@item.Authors</p>
+                            <p>@item.Year,
+                                Vol.@item.Volume
+                                (@item.Issue):@item.StartPageNum-@item.EndPageNum&nbsp;
+                                <a href="/Magazine/Show/?id=@item.ContentID">[摘要]</a>&nbsp;
+                                <a href="javascript:PDF('@item.FilePath','@Html.CleanHtmlNbsp(item.Title)');">[PDF]</a>(@item.Downloads 次下载)
+                            </p>
+                     </div>
+                    i++;
+                }  
+             }
+                      
+            <script type="text/javascript">
+                function PDF(pdfsrc, title) {
+                    if (pdfsrc.length > 0) {
+                        window.location.href = pdfsrc;
+                    } else {
+                        document.getElementById("HKey").value = title;
+                        $('#noPDF').animate({ 'top': '65px' }, 500);
+                    }
+
+                }
+            </script>
+            <!--页码链接-->
+            <div class="digg">@Html.Raw(ViewBag.PagerInfo)</div>      
+            </div>            
+        </div>
+        <div class="shadow_wrap"></div>
+   		<div class="clear_left"></div>
+        
+    </div>
+
+
+</div>
+<div id="footer">
+<span>@Html.SiteName()</span>
+<a onclick="jQuery('html, body').animate( { scrollTop: 0 }, 'slow' );"  href="javascript:void(0);" title="回到顶部" class="right_bt"><img src="/Content/images/top.png" alt="" title="" border="0" /></a>
+</div>
+

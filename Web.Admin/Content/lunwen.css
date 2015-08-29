@@ -1,0 +1,13 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{ margin:0; padding:0}
+a{ text-decoration:none}
+ul{ list-style:none}
+
+.header{ width:auto; height:auto;background:url(images/aaaa.png) no-repeat; margin:0 auto}
+.header1{ width:200px; height:80px;padding-top:450px; margin-left:350px;}
+.header2{ width:50px; height:50px; float:left}
+.header3{ width:50px; height:50px; float:right; margin-left:30px;}
+
+

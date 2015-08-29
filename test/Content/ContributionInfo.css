@@ -1,0 +1,348 @@
+body
+{
+    font-size: 15px;
+    padding: 0px;
+    font-family:Courier New;
+    margin:2px;
+}
+
+
+.mainTable
+{
+    width: 100%;
+    padding: 2px;
+    margin: 0px;
+    border:solid 1px #C4D8ED;
+}
+
+.SecTable
+{
+    padding: 2px;
+    margin:5px;
+    border:1px solid #C4D8ED;
+    background: #c3c3c3; 
+}
+
+.SecTable td .left
+{
+    height: 24px;
+    line-height: 20px;
+    font-size: 12px;
+    background-color:#fff;
+    border: 1px solid #C4D8ED;
+    color: #444;
+    padding: 2px 5px 2px 5px;
+}
+
+.mainTable td
+{
+    height: 24px;
+    line-height: 20px;
+    font-size: 12px;   
+    border: 0px solid #fff;
+    color: #444;
+    padding: 2px 5px 2px 5px;
+}
+
+.mainTable th,td.title
+{
+    height: 24px;
+    line-height: 24px;
+    background: #EEF7FD;
+    color: #666666;
+    font-weight: bold;
+}
+
+/*列头*/
+.title_l
+{
+    height: 24px;
+    line-height: 24px;
+    background: #EEF7FD;
+    color: #666666;
+    font-weight: bold;
+    border-right:solid 1px #C4D8ED;
+}
+
+.title_r
+{
+    height: 24px;
+    line-height: 24px;
+    background: #EEF7FD;
+    color: #666666;
+    font-weight: bold;
+}
+
+.title_l_m
+{
+    height: 24px;
+    line-height: 24px;
+    background: #EEF7FD;
+    color: #666666;
+    font-weight: bold;
+    border-left:solid 1px #C4D8ED;
+}
+
+.title_r_m
+{
+    height: 24px;
+    line-height: 24px;
+    background: #EEF7FD;
+    color: #666666;
+    font-weight: bold;
+    border-left:solid 1px #C4D8ED;
+}
+
+.mainTable td.SecTitle
+{
+    height: 24px;
+    line-height: 24px;
+    background: #eeeeee;
+    color: #000000;
+    font-weight: bold;
+    border: 1px solid #fff;
+}
+
+.mainTable td.listTitle
+{
+    height: 24px;
+    line-height: 24px;
+    background: #fff;
+    color: #222222;
+    font-weight: bold;
+    text-align: center;
+    border-top:solid 1px #C4D8ED;
+    border-right:solid 1px #C4D8ED;
+}
+
+.mainTable td.leftnone
+{
+    background: #fff;
+    color: #222222;
+    padding-left: 5px;
+    font-weight: normal;
+    text-align: left;
+    border-top:solid 1px #C4D8ED;
+}
+
+
+.mainTable td.left
+{
+    background: #fff;
+    color: #222222;
+    padding-left: 5px;
+    font-weight: normal;
+    text-align: left;
+    border-top:solid 1px #C4D8ED;
+    border-right:solid 1px #C4D8ED;
+}
+
+.mainTable td.right
+{
+    background: #fff;
+    color: #135294;
+    padding-left: 5px;
+    text-align: left;
+    border-top:solid 1px #C4D8ED;
+    border-right:solid 1px #C4D8ED;
+}
+
+.mainTable td.left_m
+{
+    background: #fff;
+    color: #222222;
+    padding-left: 5px;
+    font-weight: normal;
+    text-align: left;
+    border-top:solid 1px #C4D8ED;
+    border-left:solid 1px #C4D8ED;
+}
+
+.mainTable td.right_m
+{
+    background: #fff;
+    color: #135294;
+    padding-left: 5px;
+    text-align: left;
+    border-top:solid 1px #C4D8ED;
+    border-left:solid 1px #C4D8ED;
+}
+
+.mainTable td.bottom
+{
+    height:30px;
+    padding:5px 0px 5px 10px;
+}
+
+/*TextBox OR Input 边框样式*/
+.txtbox
+{
+    padding: 3px 0px 2px 2px;
+    border: solid 1px #8AA3BE;
+    font-family:Courier New;
+}
+
+.txtboxfocus
+{
+    padding: 3px 0px 2px 2px;
+    border: solid 1px #AFAFAF;
+    background-color: #FFFFDB;
+}
+
+
+/*BUTTON 按钮样式*/
+/***********按钮样式*******************/
+.btnB
+{
+    border-right: #7b9ebd 1px solid;
+    padding-right: 2px;
+    border-top: #7b9ebd 1px solid;
+    padding-left: 2px;
+    font-size: 12px;
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#b1b2c4);
+    border-left: #7b9ebd 1px solid;
+    cursor: hand;
+    color: black;
+    padding-top: 2px;
+    border-bottom: #7b9ebd 1px solid;
+    height:22px;
+    font-family:Courier New;
+}
+.btnA
+{
+	font-family:Courier New;
+    border-right: #2C59AA 1px solid;
+    padding-right: 2px;
+    border-top: #2C59AA 1px solid;
+    padding-left: 2px;
+    font-size: 12px;
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#D7E7FA);
+    border-left: #2C59AA 1px solid;
+    cursor: hand;
+    color: black;
+    padding-top: 2px;
+    border-bottom: #2C59AA 1px solid;
+    height:22px;
+}
+
+
+div.top
+{
+    padding:5px 0px 5px 0px; 
+}
+
+div.bottom
+{
+    padding:5px 0px 0px 0px;
+}
+
+div.tip
+{
+    color: #666666;
+    font-weight: bold;
+}
+
+
+span.tip
+{
+    font-size:12px;
+    color:Red;
+    padding:0px 5px 0px 5px;
+}
+
+span.tipNoColor
+{
+    font-size:12px;
+    padding:0px 5px 0px 5px;
+}
+
+input.tip
+{
+    padding: 3px 0px 2px 2px;
+    border: solid 1px #ff0000;
+}
+
+
+/*翻页*/
+.Pager
+{
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.CurrentPager
+{
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: Red;
+}
+
+
+/*GridView*/
+.GridTable
+{
+    width: 100%;
+    padding: 2px;
+    margin: 0px;
+    background: #C4D8ED;
+}
+
+.GridTitle
+{
+    height: 24px;
+    line-height: 24px;
+    background: #EEF7FD;
+    color: #666666;
+    font-weight: bold;
+    border: 1px solid #C4D8ED;
+}
+
+
+
+/*Check UnCheck*/
+/*
+span.error 
+{
+    background:url("/Images/Icon/unchecked.gif") no-repeat 0px 0px;
+    padding-left : 16px;
+    padding-bottom: 2px;
+    font-weight: bold;
+    color: #EA5200;
+}
+*/
+
+span.checked 
+{
+    background:url("/Images/Icon/checked.gif") no-repeat right center;
+    padding-top:5px;
+}
+
+
+.searchkeycolor
+{
+    background-color:Yellow;
+}
+
+.dragLayer
+{
+    border: 1px #A6CBE7 solid;
+    background: white;
+    padding: 1px;
+    margin-bottom: 2px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+.dragHeader
+{
+    background-color: #EEF7FD;
+    padding: 3px 1%;
+    margin: 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: #666666;
+    width: 98%;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+}

@@ -1,0 +1,80 @@
+﻿<div id="searchbar">
+    邮箱：<input id="txtLoginName" name="LoginName" style="width:120px;" type="text" class="txtbox" />&nbsp;姓名：<input id="txtRealName" style="width:100px;" name="RealName" type="text" class="txtbox" />&nbsp;研究方向：<input id="txtRemark" style="width:100px;" name="ResearchTopics" type="text" class="txtbox" />&nbsp;分组：@Html.Raw(Html.SelectDcitValue("selExpertGroup", "100px", "ExpertGroupMap", "", "0", "-请选择-"))&nbsp;<input id="btnSearch" class="btnsearch" type="button" value="搜索"/>
+</div>
+<div id="divList"></div>
+@section Scripts{
+<script type="text/javascript">
+    var memberSelDialog;
+    $(function () {
+        memberSelDialog = $("#divList").ligerGrid({
+            columns: [
+            { display: '编号', name: 'AuthorID', width: '6%', align: 'center', hide: true },
+            { display: '专家姓名', name: 'RealName', width: '15%', align: 'center' },
+            { display: '登录账号', name: 'LoginName', width: '25%', align: 'left', render: function (item) {
+                var title = item.LoginName;
+                title = '<a href="javascript:void(0)" onclick="ViewDetail(' + item.AuthorID + ')">' + title + '</a>';
+                return title;
+            } 
+            },
+            { display: '手机号码', name: 'Mobile', width: '15%', align: 'center' },
+            { display: '研究方向', name: 'ExpertList', width: '18%', align: 'center' },
+            { display: '待审', name: 'AuditCount', width: '8%', align: 'center' },
+            { display: '已审', name: 'AuditedCount', width: '8%', align: 'center' }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+            url: '@Html.RootPath()/Expert/GetExpertList?rnd=' + Math.random(), pageSize: 10, isChecked: f_isChecked, onCheckRow: f_onCheckRow, onCheckAllRow: f_onCheckAllRow
+        });
+        $("#btnSearch").click(function () {
+            memberSelDialog.setOptions({ parms: {
+                RealName: $("#txtRealName").val(),
+                LoginName: $("#txtLoginName").val(),
+                ResearchTopics: $("#txtRemark").val(),
+                ExpertGroupID: $("#selExpertGroup").val()
+            }
+            });
+            memberSelDialog.loadData();
+        });
+    });
+    function ViewDetail(AuthorID) {
+        window.open('@Html.RootPath()/AuthorDetail/Create?AuthorID=' + AuthorID + '&GroupID=3&rnd=' + Math.random());
+    }
+
+    function f_onCheckAllRow(checked) {
+        for (var rowid in this.records) {
+            if (checked)
+                AddCheckedExpert({ AuthorID: this.records[rowid]['AuthorID'], AuthorName: this.records[rowid]['RealName'], LoginName: this.records[rowid]['LoginName'], Mobile: this.records[rowid]['Mobile'] });
+            else
+                RemovecheckedExpert({ AuthorID: this.records[rowid]['AuthorID'], AuthorName: this.records[rowid]['RealName'], LoginName: this.records[rowid]['LoginName'], Mobile: this.records[rowid]['Mobile'] });
+        }
+    }
+
+    /*
+    利用onCheckRow将选中的行记忆下来，并利用isChecked将记忆下来的行初始化选中
+    */
+    var checkedExpert = [];
+    function FindcheckedExpert(AuthorObj) {
+        for (var i = 0; i < checkedExpert.length; i++) {
+            if (checkedExpert[i].AuthorID == AuthorObj.AuthorID) return i;
+        }
+        return -1;
+    }
+    function AddCheckedExpert(AuthorObj) {
+        if (FindcheckedExpert(AuthorObj) == -1)
+            checkedExpert.push(AuthorObj);
+    }
+    function RemovecheckedExpert(AuthorObj) {
+        var i = FindcheckedExpert(AuthorObj);
+        if (i == -1) return;
+        checkedExpert.splice(i, 1);
+    }
+    function f_isChecked(rowdata) {
+        if (FindcheckedExpert({ AuthorID: rowdata.AuthorID, AuthorName: rowdata.RealName, LoginName: rowdata.LoginName, Mobile: rowdata.Mobile }) == -1)
+            return false;
+        return true;
+    }
+    function f_onCheckRow(checked, data) {
+        if (checked) AddCheckedExpert({ AuthorID: data.AuthorID, AuthorName: data.RealName, LoginName: data.LoginName, Mobile: data.Mobile });
+        else RemovecheckedExpert({ AuthorID: data.AuthorID, AuthorName: data.RealName, LoginName: data.LoginName, Mobile: data.Mobile });
+    }
+
+</script>
+}

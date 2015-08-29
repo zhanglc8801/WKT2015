@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/common.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/skin1/css.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-1.7.2.min.js")" type="text/javascript"></script>
+</head>
+<body>
+<!--top-->
+<div class="top_bg">
+    <script language="JAVASCRIPT">
+        var flashURL = "/content/skin1/images/index/banner.swf";
+        var flashWIDTH = "1003";
+        var flashHEIGHT = "205"; 
+    </script>
+    <script language="JAVASCRIPT" src="/scripts/flash_view.js"></script>
+</div>
+<div class="dh">
+    <ul class="bai">
+        <li><a href="/" target="_self">首    页</a></li>
+        @foreach (WKT.Model.SiteChannelEntity item in Html.GetSiteNav())
+        {
+            if (item.ContentType == 7)
+            {
+                <li><a href="/@item.ChannelUrl" target="_self">@item.Keywords</a></li>
+            }
+            else
+            {
+                <li><a href="/channel/@(item.ChannelUrl)" target="_self">@item.Keywords</a></li>
+            }
+        }
+        <li><a href="http://www.zhjbkz.cn/" target="_blank">旧系统入口</a></li>
+    </ul>
+</div>
+<!--top end-->
+    @RenderBody()
+<!--bottom-->
+<div class="con_bottom">
+    <p>
+        地址：安徽省合肥市梅山路81号安徽医科大学中华疾病控制杂志编辑部 邮编：230032<br />
+        电话：0551-5161171 传真：0551-5161171<br />
+        <a target="_blank" href="http://www.zhjbkz.cn">http://www.zhjbkz.cn</a> E-mail:<a href="mailto:mrzazhi@chmra.org">mrzazhi@chmra.org</a><br />
+        技术支持：北京志清伟业科技发展有限公司 许可证编号：133343424242
+    </p>
+</div>
+<!--bottom end-->
+</body>
+</html>

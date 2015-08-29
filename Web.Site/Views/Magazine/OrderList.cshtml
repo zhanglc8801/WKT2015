@@ -1,0 +1,85 @@
+﻿@model WKT.Model.Pager<WKT.Model.IssueContentEntity>
+@{
+    ViewBag.Title = "期刊检索" + "-" + Html.SiteName();
+    ViewBag.Position = "期刊排序";
+}
+@*<div class="nr_right_gengduo">
+	<ul>
+    @foreach (WKT.Model.IssueContentEntity item in Model.ItemList)
+    {
+		<li>
+			<div class="wenzhang">
+				<ul style="line-height:22px;">
+					<li class="wenzhang_bt"><a href="/Magazine/Show/?ID=@item.ContentID">@item.Title</a><font><a href="javascript:void(0);">@(item.Hits)人次已浏览</a></font></li>
+					<li class="wenzhang_zuoz"><a>@item.Authors</a></li>
+					<li class="wenzhang_mudi" style="line-height:22px;"><a>@Html.CleanHtmlCutString(item.Abstract,100,"")</a></li>
+					<li class="wenzhang_zhanya"><a href="/Magazine/Show/?ID=@item.ContentID">摘要</a>&nbsp;&nbsp;[ <a href="#">HTML</a> 0KB ] [ <a href="/stat/DownStat?CID=@item.ContentID">PDF</a> @item.FileSize KB ] ( @item.Downloads ) @item.Year ,@item.Volume (@item.Issue):@item.PageNumber</li>
+				</ul>
+			</div>
+		</li>
+    }
+    </ul>
+</div>*@
+<div class="Book">
+    <h4>
+        <img style="position: relative; top: 5px;" src="/Content/img/biao.png" />
+        <span style="color: red; font-weight: 900;">您当前的位置：</span>首页|期刊目录</h4>
+    <div class="centers">
+        <dl id="magazine">
+            <dt>
+                <img style="height: 210px; width: 150px;" src="/Content/img/pp1.jpg" /></dt>
+            <dd>
+                <span style="font-weight: 900; color: #000; line-height: 20px; font-size: 13px;">中华疾病控制杂志
+                </span>
+                <p style="font-weight: 900; color: #000; line-height: 20px; margin-bottom: 10px;
+                    font-size: 13px; border-bottom: 1px solid #000; width: 145px;">
+                                @ViewBag.Year 年  @ViewBag.Issue 期<br />
+                    刊出日期 2013-09-10</p>
+                <p>
+                    <a href="#">论著</a></p>
+                <p>
+                    <a href="#">短篇论著</a></p>
+                <p>
+                    <a href="#">卫生应急管理</a></p>
+                <p>
+                    <a href="#">方法学</a></p>
+                <p>
+                    <a href="#">综述</a></p>
+                <p>
+                    <a href="#">预防医学教学研究</a></p>
+                <p>
+                    <a href="#">经验交流</a></p>
+            </dd>
+        </dl>
+        <p class="B_lr">
+            <a style="background: url(/Content/img/left.png) no-repeat;" href="#">上一期</a><a style="background: url(/Content/img/right.png) no-repeat;
+                margin-left: 3px;" href="#">下一期</a></p>
+        <div class="tabMenu">
+            <div style="background: #ccc; height: 25px; color: #000; padding-left: 30px; line-height: 25px;">
+                【论著】</div>
+            <div class="tabContent">
+                @{
+                    var index = 1;
+                }
+                @foreach (WKT.Model.IssueContentEntity item in Model.ItemList)
+                {
+                    <div class="contents hod">
+                        <p>
+                            &nbsp;&nbsp;@index <b>@item.Title【@Html.GetJChannelNameByJChannelID(item.JournalID).ChannelName】</b></p>
+                        <p class="hud">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@item.Authors</p>
+                        <p>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@item.Year ,@item.Volume (@item.Issue):@item.PageNumber
+                            [<u><a href="/Magazine/Show/?ID=@item.ContentID" target="_blank">摘要</a></u>] [<u><a href="/stat/DownStat?CID=@item.ContentID" target="_blank">PDF</a></u>
+                            @item.FileSize KB]
+                        </p>
+                    </div>
+                    index++;
+                }
+            </div>
+        </div>
+        <div id="pageArticleControl" class="Pager">
+            @Html.Raw(ViewBag.PagerInfo)
+        </div>
+    </div>
+</div>

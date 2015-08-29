@@ -1,0 +1,262 @@
+﻿<style type="text/css">
+    img
+    {
+        vertical-align: middle;
+    }
+</style>
+<div style="" id="notice_container" class="notice notice0">
+    <div class="c">
+        录用年期：@Html.Raw(Html.SelectIssueYear("Year", "80px", string.Empty, string.Empty, "选择年"))  
+                  @Html.Raw(Html.SelectIssueSet("Issue", "80px", string.Empty, string.Empty, "选择期"))&nbsp;
+        <input type="text" name="CNumber" class="txtbox" id="txtCNumber" value="稿件编号" style="width:100px;font-style:italic;" onfocus="javascript:txtCNumberFocus();" onblur="javascript:txtCNumberBlur();" />&nbsp;
+        费用类型：<select id="selFeeType" class="nui-txt-s12 fN" style="width:70px;">
+                    <option value="">全部</option>
+                    <option value="1">审稿费</option>
+                    <option value="2">版面费</option>
+                    <option value="3">加急费</option>
+                  </select>
+        <input type="button" value="搜索" class="btnsearch" id="btnSearch" />&nbsp;
+        <input type="button" value="导出Excel" class="btnexcel" id="btnExportExcel" />&nbsp;
+        <span><a id="ReportLink" style="display:inherit;"></a></span>&nbsp;
+        <input type="button" value="更多查询" class="btnmore" id="btnMore" />&nbsp;
+        
+    </div>
+    <div class="c" id="divMore" style="display:none;">
+        <input type="text" name="Title" class="txtbox" id="txtTitle" value="稿件标题" style="width:150px;font-style:italic;" onfocus="javascript:txtTitleFocus();" onblur="javascript:txtTitleBlur();" />&nbsp;
+        <input type="text" name="Author" class="txtbox" id="txtAuthor" value="第一作者" style="width:100px;font-style:italic;" onfocus="javascript:txtAuthorFocus();" onblur="javascript:txtAuthorBlur();" />&nbsp;
+        投稿人：<input type="text" name="InAuthor" class="txtbox" id="txtInAuthor" style="width:125px;" />
+        <input type="hidden" id="hiddenInAuthor" />&nbsp;<img src="@Html.GetImages("zoom.jpg")" style="cursor:pointer;" id="selAuthor" alt="选择投稿人" title="选择投稿人"/>
+        入款日期：<input type="text" name="StartDate" class="txtbox Wdate" id="txtStartDate" style="width:100px;" />
+                   -
+                  <input type="text" name="EndDate" class="txtbox Wdate" id="txtEndDate" style="width:100px;" />
+    </div>
+</div>
+<div class="clear">
+</div>
+<div id="box">
+    <div id="divList">
+    </div>
+</div>
+<div style="display: none">
+    <form name="action_command" action="" target="_self" method="post">
+    </form>
+</div>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="@Html.RootPath()/content/ui/jquery.ui.all.css"/>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.core.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.widget.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.position.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.menu.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.autocomplete.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var manager, DataQuery;
+        $(function () {
+            var common = new CommonPage();
+            common.AutoAuthor("txtInAuthor", "hiddenInAuthor");
+
+            $("#txtStartDate").bind("click", function () {
+                var d5222 = $dp.$('txtEndDate');
+                WdatePicker({ readOnly: true, onpicked: function () { d5222.focus(); }, maxDate: '#F{$dp.$D(\'txtEndDate\')}' });
+            });
+            $("#txtEndDate").bind("click", function () { WdatePicker({ readOnly: true, minDate: '#F{$dp.$D(\'txtStartDate\')}' }); });
+            $("#selAuthor").click(function () {
+                var common = new CommonPage();
+                common.SelAuthor("txtInAuthor", "hiddenInAuthor");
+            });
+            manager = $("#divList").ligerGrid({
+                columns: [
+            { display: '编号', name: 'CID', hide: true, width: '10%' },
+            { display: '编号', name: 'PKID', hide: true, width: '10%' },
+            { display: '稿件编号', name: 'CNumber', width: '85', align: 'center' },
+            { display: '稿件标题', name: 'Title', width: '15%', align: 'left', render: function (item) {
+                return '<a href="javascript:void(0)" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\')">' + item.Title + '</a>';
+            }
+            },
+            { display: '通讯作者', name: 'CommunicationAuthorName', width: '80', align: 'center', render: function (item) {
+                return '<a href="javascript:void(0)" onclick="ViewAuthor(' + item.CommunicationAuthorID + ')">' + item.CommunicationAuthorName + '</a>';
+            } 
+            },
+            { display: '第一作者', name: 'FirstAuthorName', width: '80', align: 'center', render: function (item) {
+                return '<a href="javascript:void(0)" onclick="ViewAuthor(' + item.FirstAuthorID + ')">' + item.FirstAuthorName + '</a>';
+            } 
+            },
+            { display: '单位', name: 'WorkUnit', width: '180', align: 'left' },
+            { display: '费用类型', name: 'FeeTypeName', width: '70', align: 'center' },
+            { display: '应交', name: 'ShouldMoney', width: '80', align: 'center', render: function (item) {
+                return '￥' + MoneyFormat(item.ShouldMoney);
+            }
+            },
+            { display: '实交', name: 'Amount', width: '80', align: 'center', render: function (item) {
+                return '￥' + MoneyFormat(item.Amount);
+            }
+            },
+            { display: '备注', name: 'Note', width: '100', align: 'left' },
+            { display: '入款人', name: 'InUserName', width: '80', align: 'center' },
+            { display: '入款日期', name: 'InComeDate', width: '85', align: 'center', type: 'date', format: 'yyyy-MM-dd' },
+            { display: '发票抬头', name: 'InvoiceUnit', width: '8%', align: 'center' },
+            { display: '发票号码', name: 'InvoiceNo', width: '80', align: 'center' },
+            { display: '挂号号码', name: 'PostNo', width: '80', align: 'center' },
+            { display: '寄出日期', name: 'SendDate', width: '85', align: 'center', type: 'date', format: 'yyyy-MM-dd' }
+            ], width: '99.5%', height: 'auto', rownumbers: false, usePager: true, checkbox: true, enabledSort: false,
+                url: '@Html.RootPath()/Finance/GetFinanceGlancePageList', pageSize: 30, totalRender: f_totalRender,
+                toolbar: { items: [
+                { text: '编  辑', click: Update, icon: 'modify' }
+                ]
+                }
+            });
+            $("#btnReset").click(function () {
+                $("#txtCNumber").val("");
+                $("#txtTitle").val("");
+                $("#txtKeyword").val("");
+                $("#txtAuthor").val("");
+                $("#hiddenInAuthor").val("");
+                $("#txtInAuthor").val("");
+                $("#txtStartDate").val("");
+                $("#txtEndDate").val("");
+                $("#selFeeType").val("");
+            });
+            $("#btnSearch").click(function () {
+                var params = GetParams();
+                DataQuery = params;
+                manager.setOptions({ parms: params });
+                manager.loadData();
+            });
+        });
+
+        function f_totalRender(data, currentPageData) {
+
+            return "实交金额合计:" + (data.SolidMoney == undefined ? "￥0.00" : data.SolidMoney);
+        }
+
+        function GetParams() {
+            var params = {
+                CNumber: $("#txtCNumber").val() == "稿件编号" ? "" : $("#txtCNumber").val(),
+                Title: $("#txtTitle").val() == "稿件标题" ? "" : $("#txtTitle").val(),
+                FirstAuthor: $("#txtAuthor").val() == "第一作者" ? "" : $("#txtAuthor").val(),
+                AuthorID: $("#hiddenInAuthor").val(),
+                Year: $("#Year").val(),
+                Issue: $("#Issue").val(),
+                StartDate: $("#txtStartDate").val(),
+                EndDate: $("#txtEndDate").val(),
+                FeeType: $("#selFeeType").val()
+            }
+            return params;
+        }
+
+        function ViewDetail(cID, cNumber) {
+            if (cID.text != undefined) {
+                var rows = manager.getSelectedRows();
+                if (rows == "") { alert('请选择需要查看的稿件！'); return; }
+                cID = rows[0].CID;
+                cNumber = rows[0].cNumber;
+            }
+            window.parent.f_addTab('View' + cNumber, '稿件信息[' + cNumber + ']', '@Html.RootPath()/ContributionInfo/SearchViewDetail?CID=' + cID);
+        }
+
+        //稿件编号输入框设置
+        function txtCNumberFocus() {
+            if (document.getElementById("txtCNumber").value == "稿件编号") {
+                document.getElementById("txtCNumber").value = "";
+                document.getElementById("txtCNumber").style.fontStyle = "normal";
+            }
+        }
+        function txtCNumberBlur() {
+            if (document.getElementById("txtCNumber").value == "") {
+                document.getElementById("txtCNumber").value = "稿件编号";
+                document.getElementById("txtCNumber").style.fontStyle = "italic";
+            }
+        }
+        //稿件标题输入框设置
+        function txtTitleFocus() {
+            if (document.getElementById("txtTitle").value == "稿件标题") {
+                document.getElementById("txtTitle").value = "";
+                document.getElementById("txtTitle").style.fontStyle = "normal";
+            }
+        }
+        function txtTitleBlur() {
+            if (document.getElementById("txtTitle").value == "") {
+                document.getElementById("txtTitle").value = "稿件标题";
+                document.getElementById("txtTitle").style.fontStyle = "italic";
+            }
+        }
+        //第一作者输入框设置
+        function txtAuthorFocus() {
+            if (document.getElementById("txtAuthor").value == "第一作者") {
+                document.getElementById("txtAuthor").value = "";
+                document.getElementById("txtAuthor").style.fontStyle = "normal";
+            }
+        }
+        function txtAuthorBlur() {
+            if (document.getElementById("txtAuthor").value == "") {
+                document.getElementById("txtAuthor").value = "第一作者";
+                document.getElementById("txtAuthor").style.fontStyle = "italic";
+            }
+        }
+
+        //显示更多查询区
+        $("#btnMore").click(function () {
+            if (document.getElementById("divMore").style.display == "none") {
+                $("#divMore").removeAttr("style");
+            }
+            else {
+                document.getElementById("divMore").style.display = "none"
+            }
+        });
+
+        function Update() {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择需要编辑的交费记录！'); return; }
+            $.ligerDialog.open({
+                height: 450,
+                width: 600,
+                url: '@Html.RootPath()/Finance/FContributeCreate?PKID=' + rows[0].PKID,
+                title: '更新交费信息',
+                slide: false,
+                buttons: [{ text: '确认', onclick: function (item, dialog) {
+                    dialog.frame.Save(manager, dialog, rows[0].CID, 0);
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        //查看作者信息
+        function ViewAuthor(CAuthorID) {
+            $.ligerDialog.open({
+                height: 450,
+                width: 600,
+                url: '@Html.RootPath()/ContributionInfo/ViewContributionAuthor?CAuthorID=' + CAuthorID,
+                title: '查看作者信息',
+                slide: false,
+                buttons: [{ text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        $("#btnExportExcel").click(function () {
+            var FileName = "财务统计一览表.xls";
+            $.ajax({
+                beforeSend: function () {
+                    $("#ReportLink").removeAttr("href");
+                    document.getElementById("ReportLink").style.color = "#000000";
+                    $("#ReportLink").html("正在生成下载链接...");
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/Finance/FinanceGlanceToExcel/?rnd=' + Math.random(),
+                data: { Year: $('#Year').val(), Issue: $('#Issue').val() },
+                cache: false,
+                success: function (data) {
+                    if (data.flag == 1) {
+                        $("#ReportLink").attr("href", "@Html.RootPath()/Upload/DownLoadFile?path=" + data.ExcelPath + "&fileName=" + FileName + "");
+                        document.getElementById("ReportLink").style.color = "Green";
+                        $("#ReportLink").html(FileName);
+                    }
+
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        });
+    </script>
+}

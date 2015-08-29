@@ -1,0 +1,230 @@
+﻿@model WKT.Model.FinanceContributeEntity
+<link href="@Html.RootPath()/Content/ContributionInfo.css" rel="stylesheet" type="text/css" />
+<form name="form1" method="post" id="form1">
+<table border="0" class="mainTable" cellpadding="0" cellspacing="1" align="center"
+    width="100%">
+    <tr>
+        <td colspan="2" class="title">
+            ※稿费情况 带<span class="tip">*</span>为必填项
+        </td>
+    </tr>
+    <tr>
+        <td class="left" style="width: 80px;">
+            费用类型：
+        </td>
+        <td class="right">
+            <select name="FeeType" id="ddlFeeType">
+                <option value="4">稿费</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="left" style="width: 80px;">
+            @{
+                if(Model.Amount==0)
+                {
+                    if(Html.GaoFeeText1()>0)
+                    {
+                        <span>篇数：</span>
+                    }
+                    else if(Html.GaoFeeText2()>0)
+                    {
+                        <span>页数：</span>
+                    }
+                    else
+                    {
+                        <span>篇/页数：</span>
+                    }
+                }
+                else
+                {
+                    if (@Model.ArticleType == 0)
+                    {
+                        <span>篇数：</span>
+                    }
+                    else if (@Model.ArticleType == 1)
+                    {
+                        <span>页数：</span>
+                    }
+                    else
+                    {
+                        <span>篇/页数：</span>
+                    }
+                }
+
+                   
+             }
+        </td>
+        <td class="right">
+            <input name="PageCount" type="text" id="txtPageCount" class="txtbox" value="@Model.ArticleCount" onkeyup="amount(this.value)" />
+        </td>
+    </tr>
+
+    <tr>
+        <td class="left" style="width: 80px;">
+            金额：
+        </td>
+        <td class="right">
+            <input name="Amount" type="text" id="txtAmount" class="txtbox" value="@Model.Amount" validate="{required:true,positivemoney:true}" />
+            <span class="tip">*</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="left" style="width: 80px;">
+            支付方式：
+        </td>
+        <td class="right">
+            <select name="PayType" id="ddlPayType">
+                <option value="2">邮局汇款</option>
+                <option value="3">银行转帐</option>
+                <option value="1">网银支付</option>
+                <option value="4">现金支付</option>
+            </select>
+        </td>
+    </tr>
+    <tr style=" display:none">
+        <td class="left" style="width: 80px;">
+            汇款单号：
+        </td>
+        <td class="right">
+            <input name="RemitBillNo" type="text" id="txtRemitBillNo" class="txtbox" value="@Model.RemitBillNo" validate="{byteMaxLength:50}" />
+        </td>
+    </tr>
+    <tr style=" display:none">
+        <td colspan="2" class="title">
+            ※发票情况
+        </td>
+    </tr>
+    <tr style=" display:none">
+        <td class="left" style="width: 80px;">
+            发票号码：
+        </td>
+        <td class="right">
+            <input name="InvoiceNo" type="text" id="txtInvoiceNo" class="txtbox" value="@Model.InvoiceNo" validate="{byteMaxLength:50}" />
+        </td>
+    </tr>
+    <tr style=" display:none">
+        <td class="left" style="width: 80px;">
+            挂号号码：
+        </td>
+        <td class="right">
+            <input name="PostNo" type="text" id="txtPostNo" class="txtbox" value="@Model.PostNo" validate="{byteMaxLength:50}" />
+        </td>
+    </tr>
+    <tr>
+        <td class="left" style="width: 80px;">
+            支付日期：
+        </td>
+        <td class="right">
+            <input name="SendDate" type="text" id="txtSendDate" class="txtbox Wdate" value="@Html.Raw(Model.SendDate == null ? string.Empty : Model.SendDate.Value.ToString("yyyy-MM-dd"))" onclick="WdatePicker({ readOnly: true});" />
+        </td>
+    </tr>
+    <tr >
+        <td class="left" style="width: 80px;">
+            备注：
+        </td>
+        <td class="right">
+            <textarea name="Note" rows="2" cols="20" id="txtNote" class="txtbox" style="height: 100px;
+                width: 98%;" validate="{byteMaxLength:500}">@Model.Note</textarea>
+        </td>
+    </tr>
+</table>
+</form>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/validation/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/validation/jquery.metadata.js?111" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/validation/messages_cn.js" type="text/javascript"></script>
+    <script src="/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var PKID = '@Model.PKID', IsAuthor = '@ViewBag.IsAuthor';
+        $(function () {
+            $("#ddlFeeType").val('@Model.FeeType');
+            $("#ddlPayType").val('@Model.PayType');
+            $("#ddlFeeType").attr("disabled", "disabled");
+            $("#txtSendDate").bind("click", function () {
+                var d5222 = $dp.$('txtSendDate');
+                WdatePicker({ readOnly: true, onpicked: function () { d5222.focus(); }, maxDate: '#F{$dp.$D(\'txtSendDate\')}' });
+            });
+            if (IsAuthor == '1') {
+                $("#ddlPayType").val('2');
+                $("#ddlPayType").attr("disabled", "disabled");
+            }
+            $.metadata.setType("attr", "validate");
+            validator = $("#form1").validate({
+                debug: false,
+                errorPlacement: function (lable, element) {
+                    element.ligerTip({ content: lable.html(), target: element[0] });
+                },
+                success: function (lable) {
+                    lable.ligerHideTip();
+                    lable.remove();
+                }
+            });
+        });
+        function amount(obj) {
+            //先把非数字的都替换掉，除了数字和.
+            obj=obj.replace(/[^\d.]/g, "");
+            //必须保证第一个为数字而不是.		
+            obj = obj.replace(/^\./g, "");
+            //保证只有出现一个.而没有多个.		
+            obj = obj.replace(/\.{2,}/g, ".");
+            //保证.只出现一次，而不能出现两次以上		
+            obj = obj.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+            $("#txtPageCount").val(obj);
+            var result = 0;
+            if ("@Html.GaoFeeText1()" > 0) {
+                result=@Html.GaoFeeText1()*obj;
+            }
+
+            if ("@Html.GaoFeeText2()" > 0) {
+                result=@Html.GaoFeeText2()*obj;
+            }
+            $("#txtAmount").val(result);
+        }
+        
+
+        function Save(manager, dialog, CID, EditAuthorID) {
+            var isvalided = $("#form1").valid();
+            if (isvalided) {
+                $("#form1").ligerHideTip();
+                var saveParams = {
+                    PKID: PKID,
+                    CID: CID,
+                    FeeType: $("#ddlFeeType").val(),
+                    ArticleType:@Html.GaoFeeText1()>0?0:1,
+                    ArticleCount:$("#txtPageCount").val(),
+                    Amount: $.trim($("#txtAmount").val()),
+                    PayType: $("#ddlPayType").val(),
+                    RemitBillNo: $.trim($("#txtRemitBillNo").val()),
+                    InvoiceNo: $.trim($("#txtInvoiceNo").val()),
+                    PostNo: $.trim($("#txtPostNo").val()),
+                    SendDate: $.trim($("#txtSendDate").val()),
+                    EditAuthorID: EditAuthorID,
+                    Note: $.trim($("#txtNote").val())
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '@Html.RootPath()/Finance/FContributeSave?EditAuthorID=@ViewBag.EditAuthorID',
+                    data: saveParams,
+                    cache: false,
+                    success: function (data) {
+                        if (data.result == "success") {
+                            alert("操作成功！");
+                            dialog.close();
+                            manager.loadData();
+                        }
+                        else {
+                            alert("操作失败！");
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                    }
+                });
+            }
+            else {
+                alert('验证失败，请验证填写的内容是否正确!');
+            }
+        }
+    </script>
+}

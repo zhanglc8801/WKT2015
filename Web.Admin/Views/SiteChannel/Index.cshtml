@@ -1,0 +1,101 @@
+﻿<div style="" id="notice_container" class="notice notice0">
+	<div class="c">
+        <a href="javascript:void(0)" id="noticeTip">系统提示：在相关节点上点击鼠标右键进行相关操作。 </a>
+    </div>
+</div>
+<ul id="ulTree" style="margin-top:3px;"></ul>
+@section Scripts{
+<script type="text/javascript">
+    var activeNode, menu, manager = null;
+    $(function () {        
+        menu = $.ligerMenu({ top: 100, left: 100, width: 120, items:
+            [
+            { text: '新增下级', click: Add, icon: 'add' },
+            { text: '修改', click: Update, icon: 'modify' },
+            { line: true },
+            { text: '删除', click: Del, icon: 'delete' }
+            ]
+        });
+        loadTree();
+    });
+
+    function loadTree() {
+        if (manager != null)
+            manager.clear(); 
+        manager = $("#ulTree").ligerTree({
+            url: '@Html.RootPath()/SiteChannel/GetTree?v=' + new Date().getMilliseconds(),
+            checkbox: false,
+            slide: false,
+            nodeWidth: 240,
+            attribute: ['nodename', 'url'],
+            onContextmenu: function (node, e) {
+                activeNode = node.data;
+                menu.show({ top: e.pageY, left: e.pageX });
+                return false;
+            },
+            onSelect: function (node) {
+
+            }
+        });
+        
+    }
+
+    function Add(item, i) {       
+        $.ligerDialog.open({
+            height: 350,
+            width: 600,
+            url: '@Html.RootPath()/SiteChannel/Create',
+            title: '新增下级栏目【' + activeNode.text + '】',
+            slide: false,
+            buttons: [{ text: '确认', onclick: function (item, dialog) {
+                dialog.frame.Save(loadTree, dialog, activeNode.Id);
+            }
+            }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+        });
+    }
+
+    function Update(item, i) {
+        if (activeNode.Id == 0)
+            alert("根节点不允许修改！");
+        $.ligerDialog.open({
+            height: 350,
+            width: 600,
+            url: '@Html.RootPath()/SiteChannel/Create?ChannelID=' + activeNode.Id,
+            title: '修改栏目',
+            slide: false,
+            buttons: [{ text: '确认', onclick: function (item, dialog) {
+                dialog.frame.Save(loadTree, dialog, manager.getParent(activeNode));
+            }
+            }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+        });
+    }
+
+    function Del(item, i) {
+        if (activeNode.Id == 0) {
+            alert("根节点不允许删除！");
+            return;
+        }
+        if (manager.hasChildren(activeNode)) {
+            alert("请先删除子节点！");
+            return;
+        }
+        if (!confirm("确定删除栏目【"+activeNode.text+"】吗？")) return;
+        $.ajax({
+            type: 'POST',
+            url: '@Html.RootPath()/SiteChannel/Delete/',
+            data: { "ChannelID": activeNode.Id },
+            cache: false,
+            traditional: true,
+            success: function (data) {
+                alert(data.msg);
+                if (data.result == "success") {                    
+                    loadTree();
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+</script>
+}

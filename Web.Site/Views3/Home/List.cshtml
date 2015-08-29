@@ -1,0 +1,18 @@
+﻿@model WKT.Model.SiteModel
+@{
+    ViewBag.Title = ViewBag.ChannelName + "-" + Html.SiteName();
+    ViewBag.Position = ViewBag.ChannelName;
+}
+<div id="center2">
+<ul>
+    @foreach (WKT.Model.NewsModel item in Model.ListConentEntity)
+    {
+    <li><a href="@item.LinkUrl" target="_blank">@item.Title</a></li>
+    }
+</ul>
+<div style="text-align: right; margin-top:10px;">
+    <div id="pageArticleControl" class="Pager">
+    @Html.Raw(ViewBag.PagerInfo)
+    </div>
+</div>
+</div>

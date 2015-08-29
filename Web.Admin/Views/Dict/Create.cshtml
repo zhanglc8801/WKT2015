@@ -1,0 +1,83 @@
+﻿@model WKT.Model.DictEntity
+
+@{
+    ViewBag.Title = "Create";
+}
+<style type="text/css">
+    body{ font-size:12px;}
+    .l-table-edit {border:1px solid #bed5f3;border-collapse: collapse;width:100%}
+    .l-table-edit-td-left{ padding:4px;text-align:right;width:90px;}
+    .l-table-edit-td{ padding:4px;}
+    .l-button-submit,.l-button-test{width:80px; float:left; margin-left:10px; padding-bottom:2px;}    
+</style>
+<div style="width: 98%; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    <input type="hidden" id="hdDictID" value="@Model.DictID" />
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+       <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color:Red">*</span>字典名称：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtKey" ltype="text" maxlength="25" value="@Model.DictKey" />
+            </td>
+        </tr>
+         <tr>
+            <td align="right" class="l-table-edit-td-left">
+                <span style="color:Red">*</span>字典描述：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <textarea cols="100" rows="4" class="l-textarea" id="txtNode" style="width: 300px">@Model.Note</textarea>
+            </td>
+        </tr>       
+    </table>
+    </form>
+    </div>
+    @section Scripts{
+    <script language="javascript" type="text/javascript">
+        $(function () {
+            $("form").ligerForm({ inputWidth: 150 });           
+        });
+
+        function Save(manager, dialog) {           
+            var objTitle = $("#txtKey"), title = $.trim(objTitle.val());
+            if (title.length < 1) {
+                alert("请输入字典名称！");
+                objTitle.focus();
+                return;
+            }
+            var objNode = $("#txtNode"), node = $.trim(objNode.val());
+            if (node.length < 1) {
+                alert("请输入字典描述！");
+                objNode.focus();
+                return;
+            }
+            if (node.length > 100) {
+                alert("描述必须小于100个字符！");
+                objNode.focus();
+                return;
+            }
+            var saveParams = {
+                        DictID: $("#hdDictID").val(),
+                        DictKey: title,
+                        Note: node
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Html.RootPath()/Dict/Save/',
+                        data: saveParams,
+                        cache: false,
+                        success: function (data) {
+                            alert(data.msg);
+                            if (data.result == "success") {
+                                manager.loadData();
+                                dialog.close();
+                            }
+                        },
+                        error: function (xhr) {
+                            alert('数据源访问错误' + '\n' + xhr.responseText);
+                        }
+                    });
+        }
+    </script>
+}

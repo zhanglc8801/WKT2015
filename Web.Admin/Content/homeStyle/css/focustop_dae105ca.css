@@ -1,0 +1,29 @@
+
+
+
+img{ border:none;}
+ul,li{ list-style:none;}
+
+.main{width:95%;height:95%;margin-top:20px; margin-left:20px}
+
+
+.hotwords{@fis-clearfix height:408px;width:806px;}
+.hotwords li{background:#53aecf;font-size:14px;float:left;width:191px;height:199px;margin:0 8px 8px 0;position:relative;overflow:hidden;text-align:center;line-height:199px;}
+
+
+.hotwords li a:link,.hotwords li a:visited{display:block;visibility:hidden;color:#FFF;padding:2px;width:191px;line-height:18px;text-decoration:none;font-family:"Î¢ÈíÑÅºÚ";line-height:199px;}
+
+.hotwords li.li_0,.hotwords li.li_3,.hotwords li.li_8,.hotwords li.li_11{background:#53aecf;font-size:14px;;font-weight:bold;height:199px;width:390px}
+
+.hotwords li.li_0 a:link,.hotwords li.li_3 a:link,.hotwords li.li_8 a:link,.hotwords li.li_11 a:link{width:390px}.hotwords li.li_5,.hotwords li.li_11{margin-right:0}
+
+.hotwords li.li_color_0{background:#53aecf}
+.hotwords li.li_color_1{background:#53aecf}
+.hotwords li.li_color_hove{background:#055c6f}
+
+
+
+.hotwords li a.detail{display:block;visibility:visible;background:rgba(0,0,0,0.8);filter:progid:DXImageTransform.Microsoft.gradient(enabled = 'true',startColorstr = '#80000000',endColorstr = '#80000000');height:208px;position:absolute;top:208px;left:0}
+
+
+

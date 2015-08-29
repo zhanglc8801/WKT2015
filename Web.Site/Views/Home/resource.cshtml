@@ -1,0 +1,33 @@
+﻿@model WKT.Model.SiteResourceEntity
+@{
+    ViewBag.Position = ViewBag.Title;
+    ViewBag.Title = ViewBag.Title + "_" +  Html.SiteName();
+}
+<table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
+<tr>
+    <td height="10">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	        <tr>
+		        <td height="31" background="../../Content/DZXB/Images/2_dhbg.GIF" class="nr">
+			        <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
+				    <tr>
+					    <td width="2%"><img src="../../Content/DZXB/Images/a3.gif" width="19" height="15"></td>
+					    <td id="SiteNav1_HNav" class="HNavagation">您当前的位置：<a href="/">网站首页</a>→<a>下载专区</a></td>
+				    </tr>
+			        </table>
+		        </td>
+	        </tr>
+        </table>
+    </td>
+</tr>
+</table>
+
+
+@foreach (WKT.Model.SiteResourceEntity item in Html.GetResourceList(259, 20))
+{ 
+    <p style=" border-bottom-style:dashed; border-bottom-color:Black; border-bottom-width:1px; line-height:20px;">
+        <img src="../../Content/DZXB/Images/downleft.jpg" />
+        <a href="@item.FilePath" style=" font-size:12px; line-height:25px;">【下载】(@item.FileSize KB)</a>
+        <span style=" font-size:12px;">@item.Name</span>
+    </p>
+}

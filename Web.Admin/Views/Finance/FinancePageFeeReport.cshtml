@@ -1,0 +1,239 @@
+﻿<style type="text/css">
+    img
+    {
+        vertical-align: middle;
+    }
+</style>
+<div style="" id="notice_container" class="notice notice0">
+    <div class="c">
+        录用年期：@Html.Raw(Html.SelectIssueYear("Year", "80px", string.Empty, string.Empty, "选择年"))  
+                  @Html.Raw(Html.SelectIssueSet("Issue", "80px", string.Empty, string.Empty, "选择期"))&nbsp;
+        <input type="button" value="重新设定版面费" class="btnmore" id="btnSetPageFee" />&nbsp;
+        <input type="button" value="导出Excel报表" class="btnexcel" id="btnExportExcel" />&nbsp;
+        <span><a id="ReportLink" style="margin:0 0 0 0; display:inherit;"></a></span>
+    </div>
+
+</div>
+<div class="clear">
+</div>
+<div id="box">
+    <div id="divList">
+    </div>
+</div>
+<div style="display: none">
+    <form name="action_command" action="" target="_self" method="post">
+    </form>
+</div>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="@Html.RootPath()/content/ui/jquery.ui.all.css"/>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.core.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.widget.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.position.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.menu.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/ui/jquery.ui.autocomplete.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var manager, DataQuery;
+        $(function () {
+            var common = new CommonPage();
+            common.AutoAuthor("txtInAuthor", "hiddenInAuthor");
+
+            manager = $("#divList").ligerGrid({
+                columns: [
+            { display: '编号', name: 'CID', hide: true, width: '10%' },
+            { display: '编号', name: 'PKID', hide: true, width: '10%' },
+            { display: '稿件编号', name: 'CNumber', width: '85', align: 'center' },
+            { display: '稿件标题', name: 'Title', width: '15%', align: 'left', render: function (item) {
+                return '<a href="javascript:void(0)" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\')">' + item.Title + '</a>';
+            }
+            },
+            { display: '版面费<lable color="#fff">（通知）<\lable>', name: 'PageNoticeID', width: '120', align: 'center', render: function (item) {
+                var id = item.PageNoticeID;
+                return '<a href="javascript:void(0)" onclick="LayoutFee(' + id + ',' + item.CID + ',' + item.UserID + ',' + item.EditAuthorID + ')">' + (id == 0 ? "通知版面费" : "已通知(￥:" + MoneyFormat(item.PageMoneyNotice) + ")") + '</a>';
+            }
+            },
+            { display: '通讯作者', name: 'AuthorName', width: '80', align: 'center' },
+            { display: '版面费', name: 'PageMoney', width: '80', align: 'center', render: function (item) {
+                if (item.PageMoney == 0) {
+                    return "";
+                }
+                else {
+                    return '￥' + MoneyFormat(item.PageMoney);
+                }
+            }
+            },
+            { display: '备注', name: 'Note', width: '100', align: 'left', render: function (item) {
+                return '<span title=' + item.Note + ' style="color:blue;">' + item.Note + '</span>';
+            } 
+            },
+            { display: '作者电话', name: 'Tel', width: '95', align: 'center' },
+            { display: '作者手机', name: 'Mobile', width: '85', align: 'center' },
+            { display: '作者地址', name: 'Address', width: '180', align: 'center' },
+            { display: '发票抬头', name: 'InvoiceUnit', width: '8%', align: 'center' },
+            { display: '单位', name: 'WorkUnit', width: '180', align: 'left' },
+            { display: '发票号码', name: 'InvoiceNo', width: '80', align: 'center' },
+            { display: '挂号号码', name: 'PostNo', width: '80', align: 'center' },
+            { display: '寄出日期', name: 'SendDate', width: '85', align: 'center', type: 'date', format: 'yyyy-MM-dd' }
+
+            ], width: '99.5%', height: 'auto', rownumbers: false, usePager: true, checkbox: true, enabledSort: false,
+                url: '@Html.RootPath()/Finance/GetFinancePageFeeReportPageList?Year=@Html.GetCurIssueInfo().Year&Issue=@Html.GetCurIssueInfo().Issue', pageSize: 30, totalRender: f_totalRender
+
+            });
+
+        });
+
+        function f_totalRender(data, currentPageData) {
+
+            return "版面费金额合计:" + (data.PageMoney == undefined ? "￥0.00" : data.PageMoney);
+        }
+
+        function GetParams() {
+            var params = {
+                CNumber: $("#txtCNumber").val(),
+                Title: $("#txtTitle").val(),
+                Keyword: $("#txtKeyword").val(),
+                FirstAuthor: $("#txtAuthor").val(),
+                AuthorID: $("#hiddenInAuthor").val(),
+                StartDate: $("#txtStartDate").val(),
+                EndDate: $("#txtEndDate").val(),
+                FeeType: $("#selFeeType").val()
+            }
+            return params;
+        }
+
+        $("#btnSetPageFee").click(function () {
+            var rows = manager.getSelectedRows();
+            if (rows == "") { alert('请选择需要修改的交费记录！'); return; }
+            //如果没有记录则执行添加
+            if (rows[0].FeeType != 2) {
+                AddLayoutFee(rows[0].CID, rows[0].PKID, rows[0].PageNoticeID, rows[0].EditAuthorID);
+            }
+            else {
+                $.ligerDialog.open({
+                    height: 450,
+                    width: 600,
+                    url: '@Html.RootPath()/Finance/FContributeCreate?PKID=' + rows[0].PKID,
+                    title: '更新交费信息',
+                    slide: false,
+                    buttons: [{ text: '确认', onclick: function (item, dialog) {
+                        dialog.frame.Save(manager, dialog, rows[0].CID, 0);
+                    }
+                    }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+                });
+            }    
+        });
+
+        $("#btnExportExcel").click(function () {
+            if ($(".l-grid-row").length < 1) {
+                alert('没有数据不能导出，请先进行查询！')
+                return;
+            }
+            var FileName = $('#Year').val() + "年第" + $('#Issue').val() + "期_作者版面费报表.xls";
+            $.ajax({
+                beforeSend: function () {
+                    $("#ReportLink").removeAttr("href");
+                    $("#ReportLink").html("正在生成下载链接...");
+                },
+                type: 'POST',
+                url: '@Html.RootPath()/Finance/FinancePageFeeRenderToExcel/?rnd=' + Math.random(),
+                data: { Year: $('#Year').val(), Issue: $('#Issue').val() },
+                cache: false,
+                success: function (data) {
+                    if (data.flag == 1) {
+                        $("#ReportLink").attr("href", "@Html.RootPath()/Upload/DownLoadFile?path=" + data.ExcelPath + "&fileName=" + FileName + "");
+                        //$("#ReportLink").attr("style", "color:red;");
+                        document.getElementById("ReportLink").style.color = "Red";
+                        $("#ReportLink").html(FileName);
+                    }
+
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        });
+
+        function ViewDetail(cID, cNumber) {
+            if (cID.text != undefined) {
+                var rows = manager.getSelectedRows();
+                if (rows == "") { alert('请选择需要查看的稿件！'); return; }
+                cID = rows[0].CID;
+                cNumber = rows[0].cNumber;
+            }
+            window.parent.f_addTab('View' + cNumber, '稿件信息[' + cNumber + ']', '@Html.RootPath()/ContributionInfo/SearchViewDetail?CID=' + cID);
+        }
+
+        function ReadingFee(NoticeID, CID, AuthorID, EditAuthorID) {
+            if (EditAuthorID == "") {
+                alert("稿件是未分配稿件，请先分配，再通知!!");
+                return;
+            }
+            $.ligerDialog.open({
+                height: 500,
+                width: 700,
+                url: '@Html.RootPath()/Finance/PayNotice?PayType=1&NoticeID=' + NoticeID + '&CID=' + CID,
+                title: '交费通知单',
+                slide: false,
+                buttons: [{ text: '确认', onclick: function (item, dialog) {
+                    dialog.frame.Save(manager, dialog, AuthorID);
+                    manager.loadData();
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function LayoutFee(NoticeID, CID, AuthorID, EditAuthorID) {
+            if (EditAuthorID == "") {
+                alert("稿件是未分配稿件，请先分配，再通知!!");
+                return;
+            }
+            $.ligerDialog.open({
+                height: 500,
+                width: 700,
+                url: '@Html.RootPath()/Finance/PayNotice?PayType=2&NoticeID=' + NoticeID + '&CID=' + CID,
+                title: '交费通知单',
+                slide: false,
+                buttons: [{ text: '确认', onclick: function (item, dialog) {
+                    dialog.frame.Save(manager, dialog, AuthorID);
+                    manager.loadData();
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        function AddLayoutFee(CID, ID, NoticeID, EditAuthorID) {
+            if (EditAuthorID == "") {
+                alert("该稿件是未分配稿件.请先分配,再通知!!");
+                return;
+            }
+            $.ligerDialog.open({
+                height: 450,
+                width: 620,
+                url: '@Html.RootPath()/Finance/FContributeCreate?FeeType=2&NoticeID=' + NoticeID + '&PKID=' + ID,
+                title: '入款-版面费',
+                slide: false,
+                buttons: [{ text: '确认', onclick: function (item, dialog) {
+                    dialog.frame.Save(manager, dialog, CID, NoticeID);
+                }
+                }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+            });
+        }
+
+        $("#Issue").change(function () {
+            if ($("#Year").val() == "") {
+                alert("请选择年");
+                return;
+            }
+            else {
+                manager.setOptions({ parms: {
+                    Year: $("#Year").val(),
+                    Issue: $("#Issue").val()
+                }
+                });
+                manager.loadData();
+            }
+
+        });
+    </script>
+}

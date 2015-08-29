@@ -1,0 +1,87 @@
+﻿<div id="divToolbar"></div>
+<div id="divList"></div>
+@section Scripts{
+<script type="text/javascript">
+    var manager,ChannelID=@ViewBag.ChannelID;
+    $(function () {
+        window['g'] =
+        manager = $("#divList").ligerGrid({
+            columns: [
+            { display: '编号', name: 'ContactID', width: '10%', align: 'center' },
+            { display: '联系人', name: 'LinkMan', width: '10%', align: 'left' },
+            { display: '公司', name: 'Company', width: '30%', align: 'left' },
+            { display: '邮编', name: 'ZipCode', width: '10%', align: 'center' },
+            { display: '联系电话', name: 'Tel', width: '10%', align: 'center' },
+            { display: '传真', name: 'Fax', width: '10%', align: 'center' },
+            { display: '创建时间', name: 'AddDate', width: '18%', align: 'center', type: 'date', format: 'yyyy-MM-dd' }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,enabledSort: false, 
+            url: '@Html.RootPath()/ContactWay/GetPageList', pageSize: 20,parms: [{ name: 'ChannelID', value: ChannelID}],
+            toolbar: { items: [
+            { text: '新增', click: AddContactWay, icon: 'add' },
+            { line: true },
+            { text: '修改', click: UpdateContactWay, icon: 'modify' },
+            { line: true },
+            { text: '删除', click: DelContactWay, icon: 'delete' }
+            ]
+            }
+        });
+    });
+
+    function AddContactWay() {
+        $.ligerDialog.open({
+            height: 320,
+            width: 500,
+            url: '@Html.RootPath()/ContactWay/Create',
+            title: '新增联系人',
+            slide:false,
+            buttons: [{ text: '确认', onclick: function (item, dialog) {
+                dialog.frame.Save(manager, dialog,ChannelID);
+            }
+            }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+        });
+    }
+
+    function UpdateContactWay() {
+        var rows = manager.getSelectedRows();
+        if (rows == "") { alert('请选择需要编辑的数据！'); return; }
+        $.ligerDialog.open({
+            height: 320,
+            width: 500,
+            url: '@Html.RootPath()/ContactWay/Create?ContactID=' + rows[0].ContactID,
+            title: '编辑联系人',
+            slide:false,
+            buttons: [{ text: '确认', onclick: function (item, dialog) {
+                dialog.frame.Save(manager, dialog,ChannelID);
+            }
+            }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+        });
+    }
+
+    function DelContactWay() {
+        var rows = manager.getSelectedRows();
+        if (rows == "") { alert('请选择需要删除的数据！'); return; }
+        var data = [];
+        for (i = 0; i < rows.length; i++) {
+            data.push(rows[i].ContactID);
+        }
+        if (!confirm("确定删除所选的数据吗？")) return;
+        $.ajax({
+            type: 'POST',
+            url: '@Html.RootPath()/ContactWay/Delete/',
+            data: { "ContactIDs": data },
+            cache: false,
+            traditional: true,
+            success: function (data) {
+                alert(data.msg);
+                if (data.result == "success") {
+                    manager.loadData();
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+</script>
+}
+

@@ -1,0 +1,645 @@
+﻿@model WKT.Model.AuthorDetailEntity
+<link href="@Html.RootPath()/Content/ContributionInfo.css" rel="stylesheet" type="text/css" />
+<div style="width: 99%; padding: 5px;">
+<form name="form1" method="post" id="form1">
+    <div class="top" style="padding-top: 5px;">
+        带<span class="tip">*</span>为必填项，填写完成后点击“保存”按钮即可。
+    </div>
+    <table border="0" class="mainTable" cellpadding="0" cellspacing="1" align="center"
+        width="100%" id="tbBody">
+        <tr>
+            <td class="title" colspan="2">
+                登录信息
+            </td>
+        </tr>
+        <tr>
+            <td class="left">
+                登录帐号：
+            </td>
+            <td class="right">
+                <input type="text" value="@Model.Emial" id="txtEmial" disabled="disabled"
+                    class="txtbox" style="width: 180px;" />
+                <span class="tip">*</span>此帐号不能修改，如果想修改请联系编辑部
+            </td>
+        </tr>
+        <tr>
+            <td class="title" colspan="2">
+                个人信息
+            </td>
+        </tr>
+        @{
+            var field = Model.FieldList.Find(p => p.DBField.Equals("AuthorName"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="AuthorName" type="text" id="txtAuthorName" class="txtbox" style="width: 300px;" value="@Model.AuthorName" validate="{byteMaxLength:50}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="AuthorName">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("EnglishName"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="EnglishName" type="text" id="txtEnglishName" class="txtbox" style="width: 300px;" value="@Model.EnglishName" validate="{byteMaxLength:50}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="EnglishName">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Gender"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input type="radio" id="Gender1" value="1" name="Gender" @Html.Raw(Model.Gender == "男" ? "checked=\"checked\"" : "") /><label
+                        for="Gender1">男</label>
+                    <input type="radio" id="Gender2" value="2" name="Gender" @Html.Raw(Model.Gender == "" ? "checked=\"checked\"" : "") /><label
+                        for="Gender2">女</label>
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Birthday"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input type="text" id="txtBirthday" name="Birthday" class="txtbox Wdate" value="@Html.Raw(Model.Birthday == null ? string.Empty : Model.Birthday.Value.ToString("yyyy-MM-dd"))" onclick="WdatePicker({ readOnly: true});" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Birthday">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Nation"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="Nation" type="text" id="txtNation" class="txtbox" style="width: 100px;" value="@Model.Nation" validate="{byteMaxLength:20}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Nation">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("NativePlace"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="NativePlace" type="text" id="txtNativePlace" class="txtbox" style="width: 100px;" value="@Model.NativePlace" validate="{byteMaxLength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="NativePlace">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("IDCard"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="IDCard" type="text" id="txtIDCard" class="txtbox" style="width: 200px;" value="@Model.IDCard" validate="{byteMaxLength:20}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="IDCard">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Education"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    @Html.Raw(Html.SelectDcitValue("Education", "200px;", "Education", Model.Education.ToString(), string.Empty, "请选择" + field.DisplayName))
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Education">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Professional"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="Professional" type="text" id="txtProfessional" class="txtbox" style="width: 200px;" value="@Model.Professional" validate="{byteMaxLength:50}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Professional">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("JobTitle"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    @Html.Raw(Html.SelectDcitValue("JobTitle", "200px;", "JobTitle", Model.JobTitle.ToString(), string.Empty, "请选择" + field.DisplayName))
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="JobTitle">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("ResearchTopics"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <textarea rows="2" cols="20" id="txtResearchTopics" name="ResearchTopics" class="txtbox"
+                        style="width: 500px; height: 60px;" validate="{byteMaxLength:1000}">@Model.ResearchTopics</textarea>
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="ResearchTopics">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("WorkUnit"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="WorkUnit" type="text" id="txtWorkUnit" class="txtbox" style="width: 300px;" value="@Model.WorkUnit" validate="{byteMaxLength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="WorkUnit">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("SectionOffice"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="SectionOffice" type="text" id="txtSectionOffice" class="txtbox" style="width: 200px;" value="@Model.SectionOffice" validate="{byteMaxLength:50}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="SectionOffice">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Job"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="Job" type="text" id="txtJob" class="txtbox" style="width: 200px;" value="@Model.Job" validate="{byteMaxLength:50}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Job">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Mentor"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="Mentor" type="text" id="txtMentor" class="txtbox" style="width: 200px;" value="@Model.Mentor" validate="{byteMaxLength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Mentor">*</span>
+                    }
+                </td>
+            </tr>
+            }
+        }
+        <tr>
+            <td class="title" colspan="2">
+                联系方式<span class="tip" >(请务必提供详实信息，以便我刊编辑部与您及时取得联系及邮寄相关材料)</span>
+            </td>
+        </tr>
+        @{
+            field = Model.FieldList.Find(p => p.DBField.Equals("Mobile"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="Mobile" type="text" id="txtMobile" class="txtbox" style="width: 200px;" value="@Model.Mobile" validate="{maxlength:20,mobile:true}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Mobile">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Tel"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="Tel" type="text" id="txtTel" class="txtbox" style="width: 200px;" value="@Model.Tel" validate="{maxlength:12,phone:true}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Tel">*</span>
+                    }
+                    <span>如:010-66947905</span>
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Fax"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="Fax" type="text" id="txtFax" class="txtbox" style="width: 200px;" value="@Model.Fax" validate="{maxlength:20,phone:true}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Fax">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("MSN"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="MSN" type="text" id="txtMSN" class="txtbox" style="width: 200px;" value="@Model.MSN" validate="{maxlength:100,email:true}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="MSN">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("QQ"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="QQ" type="text" id="txtQQ" class="txtbox" style="width: 200px;" value="@Model.QQ" validate="{maxlength:20,qq:true}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="QQ">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("InvoiceUnit"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="InvoiceUnit" type="text" id="txtInvoiceUnit" class="txtbox" style="width: 200px;" value="@Model.InvoiceUnit" validate="{maxlength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="InvoiceUnit">*</span>
+                    }
+                    编辑部邮寄发票抬头用
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("ZipCode"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="ZipCode" type="text" id="txtZipCode" class="txtbox" style="width: 200px;" value="@Model.ZipCode" validate="{maxlength:10,zipCode:true}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="ZipCode">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Address"));
+            if (field != null && field.IsShow)
+            {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="Address" type="text" id="txtAddress" class="txtbox" style="width: 400px;" value="@Model.Address" validate="{maxlength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Address">*</span>
+                    }
+                </td>
+            </tr>
+            }
+            field = Model.FieldList.Find(p => p.DBField.Equals("Remark") || p.DBField.Equals("ReserveField")
+                || p.DBField.Equals("ReserveField1") || p.DBField.Equals("ReserveField2") || p.DBField.Equals("ReserveField3")
+                || p.DBField.Equals("ReserveField4") || p.DBField.Equals("ReserveField5"));
+            if (field != null)
+            {
+                field = Model.FieldList.Find(p => p.DBField.Equals("Remark"));
+                if (field != null && field.IsShow)
+                {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <textarea rows="2" cols="20" id="txtRemark" name="Remark" class="txtbox" style="width: 500px;
+                        height: 60px;" validate="{byteMaxLength:500}">@Model.Remark</textarea>
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="Remark">*</span>
+                    }
+                </td>
+            </tr>
+                }
+                field = Model.FieldList.Find(p => p.DBField.Equals("AuthorOpus"));
+                if (field != null && field.IsShow)
+                {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <textarea rows="2" cols="20" id="txtAuthorOpus" name="AuthorOpus" class="txtbox" style="width: 500px;
+                        height: 60px;" validate="{byteMaxLength:2000}">@Model.AuthorOpus</textarea>
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="AuthorOpus">*</span>
+                    }
+                </td>
+            </tr>
+                }
+                field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField"));
+                if (field != null && field.IsShow)
+                {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="ReserveField" type="text" id="txtReserveField" class="txtbox" style="width: 300px;" value="@Model.ReserveField" validate="{maxlength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="ReserveField">*</span>
+                    }
+                </td>
+            </tr>
+                }
+                field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField1"));
+                if (field != null && field.IsShow)
+                {   
+            <tr>
+                <td class="title" colspan="2">银行信息</td>
+            </tr>      
+            <tr>
+
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="ReserveField1" type="text" id="txtReserveField1" class="txtbox" style="width: 300px;" value="@Model.ReserveField1" validate="{maxlength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="ReserveField1">*</span>
+                    }
+                </td>
+            </tr>
+                }
+                field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField2"));
+                if (field != null && field.IsShow)
+                {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="ReserveField2" type="text" id="txtReserveField2" class="txtbox" style="width: 300px;" value="@Model.ReserveField2" validate="{maxlength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="ReserveField2">*</span>
+                    }
+                </td>
+            </tr>
+                }
+                field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField3"));
+                if (field != null && field.IsShow)
+                {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="ReserveField3" type="text" id="txtReserveField3" class="txtbox" style="width: 300px;" value="@Model.ReserveField3" validate="{maxlength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="ReserveField3">*</span>
+                    }
+                </td>
+            </tr>
+                }
+                field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField4"));
+                if (field != null && field.IsShow)
+                {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="ReserveField4" type="text" id="txtReserveField4" class="txtbox" style="width: 300px;" value="@Model.ReserveField4" validate="{maxlength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="ReserveField4">*</span>
+                    }
+                </td>
+            </tr>
+                }
+                field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField5"));
+                if (field != null && field.IsShow)
+                {        
+            <tr>
+                <td class="left" style="width: 80px;">
+                    @field.DisplayName：
+                </td>
+                <td class="right">
+                    <input name="ReserveField5" type="text" id="txtReserveField5" class="txtbox" style="width: 300px;" value="@Model.ReserveField5" validate="{maxlength:100}" />
+                    @if (field.IsRequire)
+                    {
+                        <span class="tip" name="sapnRequire" alt="ReserveField5">*</span>
+                    }
+                </td>
+            </tr>
+                }
+            }
+        }
+        <tr>
+            <td class="left" colspan="2" style="padding-left: 15%">
+                <input type="button" value="保存个人信息" style="margin-top: 10px; margin-bottom: 10px;
+                    width: 100px;" id="btnSave" class="l-button" />
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/validation/jquery.validate.min.js" type="text/javascript"></script> 
+    <script src="@Html.RootPath()/Scripts/validation/jquery.metadata.js?111" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/validation/messages_cn.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/areaJson.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/json2select.min.js" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+        var validator = null;
+        $(function () {
+            $("span[name='sapnRequire']").each(function () {
+                var field = $(this).attr("alt"), obj = $("[name=" + field + "]");
+                if (obj.attr("validate") == null || obj.attr("validate") == undefined)
+                    return;
+                var attr = obj.attr("validate");
+                if (attr == null || attr == undefined)
+                    obj.attr("validate", "{required:true}");
+                else
+                    obj.attr("validate", "{required:true," + /^{(.+)}$/.exec(attr)[1] + "}");
+            });
+
+            $.metadata.setType("attr", "validate");
+            validator = $("#form1").validate({
+                debug: false,
+                errorPlacement: function (lable, element) {
+                    element.ligerTip({ content: lable.html(), target: element[0] });
+                },
+                success: function (lable) {
+                    lable.ligerHideTip();
+                    lable.remove();
+                }
+            });
+            $("#btnSave").click(function () { Save(); });
+        });
+
+        function Save() {
+            var isvalided = $("#form1").valid();
+            if (isvalided) {
+                $("#form1").ligerHideTip();
+                var saveParams = {}, field = '';
+                $("#tbBody input[type=text],textarea,select").each(function () {
+                    field = $(this).attr("name");
+                    if (field == null || field == undefined) return;
+                    saveParams[field] = $.trim($(this).val());
+                });
+                if ($("input[name='Gender']").length > 0) {
+                    saveParams["Gender"] = $("input[name='Gender']:checked").val();
+                }
+                saveParams["PKID"] = '@Model.PKID';
+                saveParams["AuthorID"] = '@Model.AuthorID';
+                saveParams["AuthorModel"] = {
+                    AuthorID: '@Model.AuthorID'
+                };
+                saveParams["ReserveField1"] = $.trim($("#txtReserveField1").val());
+                saveParams["ReserveField2"] = $.trim($("#txtReserveField2").val());
+                saveParams["ReserveField3"] = $.trim($("#txtReserveField3").val());
+                msgdialog = $.ligerDialog.waitting('数据保存中。。。');
+                $("#btnSave").attr("disabled", false);
+                $.ajax({
+                    type: 'POST',
+                    beforeSend: function () { $("#btnSave").attr("disabled", true); $("#btnSave").val("正在提交..."); },
+                    complete: function () { $("#btnSave").attr("disabled", false); $("#btnSave").val("保存个人信息"); },
+                    url: '@Html.RootPath()/AuthorDetail/Save/',
+                    cache: false,
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: $.toJSON({ model: saveParams }),
+                    complete: function () { msgdialog.close(); },
+                    success: function (data) {
+                        alert(data.msg);
+                        $("#btnSave").attr("disabled", true);
+                        $("#btnSave").val("保存个人信息");
+                        window.parent.f_removeSelectedTabItem();
+                    },
+                    error: function (xhr) {
+                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                    }
+                });
+            }
+            else {
+                alert('验证失败，请验证填写的内容是否正确!');
+            }
+        }
+
+        
+    </script>
+}

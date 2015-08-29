@@ -1,0 +1,245 @@
+.bdpass-bgsprite { background-image:url(../img/bd-split.gif?cdnversion=20121119);}
+/* 通用UI CSS，修改了名称空间 */
+.bdpass-ui .clear{clear:both;line-height:0px;height:0px;font-size:0px}
+.bdpass-ui dl, .bdpass-ui dt, .bdpass-ui dd, .bdpass-ui ul, .bdpass-ui ol, .bdpass-ui li, .bdpass-ui input , .bdpass-ui form{margin: 0;	padding: 0; outline:none;}
+.bdpass-ui table{	border-collapse: collapse;	border-spacing: 0;}
+.bdpass-ui img{border: 0;}
+.bdpass-ui li{list-style: none;}
+.bdpass-ui th{text-align: left;}
+.bdpass-ui input, .bdpass-ui textarea, .bdpass-ui select{	font-family: inherit;font-weight: inherit;	*font-size: 100%;font-size:12px;}
+/* Dialog组建样式-修 修改了名称空间 */
+.bdpass-dialog{position: absolute;}
+.bdpass-dialog div.tang-title span{
+	width: auto; height: 35px;line-height: 35px;
+	font-size: 14px;font-family:"宋体";font-weight: bold;color: #333;
+	text-indent:20px;/* padding:10; 修改为了 indent 设置为20时自动设置的宽度会和 close btn 撑到两行 */
+	margin-right: 29px;display: block;overflow: hidden;
+	text-overflow: ellipsis;
+	text-align:left;
+}
+.bdpass-dialog div.tang-title{background-color: #FCFCFC;border: 1px solid #CCC;border-width: 1px 1px 0 1px;border-bottom:0px;}
+.bdpass-dialog div.tang-title-dragable{cursor: move;position: relative;}
+.bdpass-dialog div.tang-title .buttons{width: 14px;height: 13px;position: absolute;right:10px;top:11px;}
+.bdpass-dialog div.tang-title .buttons a{width: 14px;height: 13px; outline: none;display: block;background-repeat:no-repeat;}
+.bdpass-dialog div.tang-body{background-color: #FFF;	border: 1px solid #CCC;	border-width: 0 1px 1px 1px;}
+.bdpass-dialog div.tang-content {border-top:1px solid #F2F2F2;}
+/* Tab组件样式-修 修改了名称空间 */
+.bdpass-tab {width:auto;}
+.bdpass-tab ul.tang-title {margin-left:55px;height: 35px;clear: both; border:1px solid #D4D4D4;border-width:0px 0px 1px 1px;}
+.bdpass-tab ul.tang-title .tang-title-item {width:106px;height:35px;float: left; position: relative;cursor: pointer;}
+.bdpass-tab ul.tang-title .tang-title-item a {width:105px;height:34px; line-height: 34px;font-family:'宋体';color: #333333;font-size: 14px;text-align:center;display: block; background-color:#F4F4F4;text-decoration: none;outline: none;position: absolute;border-top:1px solid #D4D4D4;border-right:1px solid #D4D4D4;    border-bottom:1px solid #D4D4D4;bottom:-1px;_bottom:-2px;}
+.bdpass-tab ul.tang-title .tang-title-item a:hover{background-color:#fafafa}
+.bdpass-tab ul.tang-title .tang-title-item-selected a {font-weight: bold; background-color:#FFF;border-bottom:1px solid #FFF;}
+.bdpass-tab ul.tang-title .tang-title-item-selected a:hover{background-color:#FFF}
+.bdpass-tab ul.tang-body {height:auto;position: relative;padding-bottom:4px;}
+.bdpass-tab ul.tang-body .tang-body-item { display: none; height:auto;}
+.bdpass-tab ul.tang-body .tang-body-item-selected { display: block;}
+/* Tooltip组件样式*/
+.pass-tang-tooltip{padding:13px 41px 16px 16px;font-size:12px;line-height:18px;width:230px;}/*宽度应当变动，或者以较小（有产品图）的为准*/
+.pass-tang-tooltip  .tang-close{z-index:1;position:absolute;}
+.pass-tang-tooltip .pass-tang-background { border:none;background-color:transparent;}
+.pass-tang-tooltip-close{position:absolute; width:10px; height:9px; top:11px; right:14px;}
+.pass-tang-tooltip-close a{display:block; width:100%; height:100%; background:url(../img/close.gif) no-repeat center center; text-decoration:none;}
+.pass-tang-tooltip-close a:hover{background-color:yellow;}
+
+.pass-tang-tooltip  .tang-foreground{}/* 两箭头的处理 */
+.pass-tang-tooltip  .arrow_top{ top:-7px; left:0px; height:8px; width:100%; z-index:1; font-size:1px; position:absolute; background:transparent url(../img/arrow.png) no-repeat 20px top;}
+.pass-tang-tooltip  .arrow_bottom{ top:100%; left:0px; width:100%; height:12px; z-index:1; font-size:1px; position:absolute; margin-top:-5px; background:transparent url(../img/arrow.png) no-repeat center -10px;}
+
+.pass-tang-tooltip   .ie6__  .arrow_bottom{margin-top:-4px;}
+.pass-tang-tooltip   .ie6__  .arrow_top,
+.pass-tang-tooltip   .ie6__  .arrow_bottom{background-image:url( ../img/arrow.gif);}
+.pass-tang-tooltip   .align_left      .arrow_top{background-position:20px top;}
+.pass-tang-tooltip   .align_center  .arrow_top{background-position:center top;}
+.pass-tang-tooltip   .align_right    .arrow_top{background-position:right top; left:-20px;}
+.pass-tang-tooltip   .align_left      .arrow_bottom{background-position:10px -10px;}
+.pass-tang-tooltip   .align_center  .arrow_bottom{background-position:center -10px;}
+.pass-tang-tooltip   .align_right    .arrow_bottom{background-position:right -10px; left:-20px;}
+.pass-tang-tooltip   .dir_top            .arrow_bottom{display:none;}
+.pass-tang-tooltip   .dir_bottom      .arrow_top{display:none;}
+
+.pass-tang-popup{}
+.pass-tang-popup .tang-foreground {padding:5px;}
+.pass-tang-popup .pass-tang-background {border:1px solid #CCCCCC;background-color:#FFFFFF;}
+
+/* 普通模式，直接使用 png 实现渐变透明的效果 */
+.pass-tang-background .top__{height:12px; font-size:1px;}
+.pass-tang-background .middle__{font-size:1px;}
+.pass-tang-background .bottom__{height:12px; font-size:1px;}
+
+.pass-tang-background .left__{width:12px;}
+.pass-tang-background .center__{}
+.pass-tang-background .right__{width:12px;}
+
+/* 放入背景图 */
+.pass-tang-background .corner__{background:transparent url(../img/corner.png) no-repeat;}
+.pass-tang-background .vertical__{background:transparent url(../img/vertical.png) repeat-x;}
+.pass-tang-background .horizontal__{background:transparent url(../img/horizontal.png) repeat-y;}
+.pass-tang-background .midland__{background-image:url(../img/midland.png);}
+
+.pass-tang-background .top__ .left__{background-position:top left;}
+.pass-tang-background .top__ .center__{background-position:top left;}
+.pass-tang-background .top__ .right__{background-position:top right;}
+.pass-tang-background .middle__ .left__{background-position:top left;}
+.pass-tang-background .middle__ .right__{background-position:top right;}
+.pass-tang-background .bottom__ .left__{background-position:bottom left;}
+.pass-tang-background .bottom__ .center__{background-position:bottom left;}
+.pass-tang-background .bottom__ .right__{background-position:bottom right;}
+/* 针对低端浏览器（IE6）使用gif代替png，优雅降级 */
+.gif__{}
+.pass-tang-background .gif__ .corner__{background-image:url(../img/corner.gif);}
+.pass-tang-background .gif__ .vertical__{background-image:url(../img/vertical.gif);}
+.pass-tang-background .gif__ .horizontal__{background-image:url(../img/horizontal.gif);}
+.pass-tang-background .gif__ .midland__{background-image:url(../img/midland.gif);}
+
+
+
+
+
+/* 登录区域布局公共样式 */
+.bdpass-dialog{height:auto;display: block;}
+.bdpass-tab   {height:auto;display: block;position:relative;margin:0px auto;background-color: #FFF;text-align:left;}
+
+/* 有产品图片处理 */
+.bdpass-hasimglogin {width:600px;}
+.bdpass-hasimglogin div.tang-body div.tang-content{padding:20px 20px 25px 20px;}
+.bdpass-hasimglogin .bdpass-tab{width:318px}
+.bdpass-hasimglogin .bdpass-tab ul.tang-title{width:263px; }
+.bdpass-hasimglogin .pass_login_input_username,
+.bdpass-hasimglogin .pass_login_input_phoneNumber,
+.bdpass-hasimglogin .pass_login_input_password{ width:245px; }
+.bdpass-hasimglogin .bdpass-register{padding:16px 0 0px 55px;}
+.bdpass-img {width: 220px;height: 276px;display: block;overflow: hidden;}
+/* 无产品图片 */
+.bdpass-singlelogin {width:458px;}
+.bdpass-singlelogin div.tang-body div.tang-content{padding:30px 20px;}
+.bdpass-singlelogin .bdpass-tab{width:336px;margin:0px 40px;}
+.bdpass-singlelogin .tang-tab ul.tang-title{width:283px; }
+.bdpass-singlelogin .pass_login_input_username,
+.bdpass-singlelogin .pass_login_input_phoneNumber,
+.bdpass-singlelogin .pass_login_input_password{ width:263px;}
+.bdpass-singlelogin .bdpass-register{padding:16px 0 0px 95px;}
+.bdpass-singlelogin #bdpass-phoenix{padding-left:40px;}
+
+/* 登录区Table盒子 */
+.bdpass-tablebox{display:block}
+.bdpass-tablebox{width:100%;padding: 0px;margin: 0px;background#CCC}
+.bdpass-tablebox td{text-align:center;padding: 0px;margin: 0px;}
+.bdpass-tablebox .imgbox{width:220px;overflow: hidden;}
+.bdpass-tablebox .login {/* width:auto; */height:auto;}
+.bdpass-tablebox .imgspace{width:20px;font-size:0px;}
+
+/* 虚线公共样式 */
+.bdpass-topsplit {background-position: 0px -199px ;background-repeat:repeat-x;}
+/* 合作登录区域 */
+.bdpass-phoenix{margin-top:13px;text-align:left;font-size:12px;}
+.bdpass-phoenix-title{color: #333;margin-left:55px;line-height:28px;height:28px;padding-top:7px;}
+.bdpass-phoenix-note{color: #999;}
+.bdpass-phoenix-list{margin-left:55px;clear: both;line-height:20px;}
+.bdpass-phoenix-list li{float:left;margin-right:20px;color: #00C;text-decoration:underline;padding-left:18px;cursor: pointer;font-size:12px;}
+.bdpass-phoenix-list .bd-acc-renren{background-position:-320px -39px ;background-repeat:no-repeat;}
+.bdpass-phoenix-list .bd-acc-tsina {background-position:-320px -79px ;background-repeat:no-repeat;}
+.bdpass-phoenix-list .bd-acc-fetion {background-position:-320px -119px ;background-repeat:no-repeat;}
+.bdpass-phoenix-list .bd-acc-qzone {background-position:0px -40px ;background-repeat:no-repeat;}
+.bdpass-phoenix-list .bd-acc-tqq {background-position:0px -80px ;background-repeat:no-repeat;}
+/* 立即注册区 */
+.bdpass-register {margin-top:12px;font-size:12px;color:#666;text-align:left }
+.bdpass-register a{padding-left:10px;color: #0000cc;text-decoration: underline;}
+/*	隐藏原始错误信息内容	*/
+.bdpass-dialog .pass_login_p_des,
+.bdpass-dialog .pass_login_err{display: none;}
+/* 错误信息显示区域 */
+.bdpass-login-errmsg { height:30px;overflow:hidden;line-height:34px;  margin: 0px; padding: 0px;	font-size:12px ;color: #da1111; text-indent:55px;}
+/*	Pass组件 - 格式化每一行	*/
+.bdpass-dialog .pass_login_p{width:100%;margin: 0px;padding: 0px;clear:both;position:relative}
+.bdpass-dialog .pass_login_input{font-size:12px;}
+/* Pass组件 - 每行间距微调 */
+.bdpass-dialog .pass_login_p_username,
+.bdpass-dialog .pass_login_p_phoneNumber{height:32px;}
+.bdpass-dialog .pass_login_p_verifycode,
+.bdpass-dialog .pass_login_p_password{height:32px; margin-top:15px; display: block;overflow: hidden;position: relative;}
+/*	修改label字体样式	*/
+.bdpass-dialog .pass_login_label_verifycode,
+.bdpass-dialog .pass_login_label_phoneNumber,
+.bdpass-dialog .pass_login_label_password,
+.bdpass-dialog .pass_login_label_username{width:45px;height:32px;line-height:32px;padding-right:10px;display:block;float:left;text-align:right;font-size:14px;color: #333;font-family:"宋体";}
+/*	帐号密码输入框的样式	*/
+.bdpass-dialog .pass_login_input_username,
+.bdpass-dialog .pass_login_input_phoneNumber,
+.bdpass-dialog .pass_login_input_password{ padding:0 10px 0px 6px; font-family:'宋体'; float:left;}
+/* 记住登录区域微调 */
+.bdpass-dialog .pass_login_p_rem{height:30px;font-size:12px;color: #666;position: relative;}
+.bdpass-dialog .pass_login_input_rem{position: absolute;left:55px;top:10px;width:14px;height:14px;display: block;}
+.bdpass-dialog .pass_login_label_rem{position: absolute;left:73px;top:10px;height:15px;line-height:15px;}
+/* 验证码输入调整 */
+.bdpass-dialog .pass_login_p_img_verifycode{width:145px;height:32px;overflow: hidden;position: absolute;left:172px;top:124px;}
+.bdpass-dialog .pass_login_input_verifycode{padding:0 8px;width:89px;height:30px;display:block;float:left;}
+.bdpass-dialog .pass_login_p_img_verifycode img{width:90px;height:30px;border:1px solid #DDD;float: left;}
+.bdpass-dialog .pass_login_change_verifycode {padding-left:10px;font-size:12px;text-decoration:underline;color: #0000CC;line-height:32px;float: left; cursor: pointer;}
+/* 登录按部分 */
+.bdpass-dialog .pass_login_p_btn{height:34px; line-height:34px;padding: 12px 0px 0px 0px;}
+.bdpass-dialog .pass_login_p_btn .pass_login_input_submit{margin-left:55px;float:left;font-size:14px;cursor: pointer;}
+.bdpass-dialog .pass_login_p_btn a.pass_login_a_fgtpwd{ font-size:12px; color: #0000cc;margin-left:20px;float: left;height: 32px;line-height: 32px;text-decoration: underline;}
+/* 输入框提示信息，默认状态，改变字体大小，高优先级 */
+.bdpass-dialog .pass_login_label_username_tip{width:80px;color:#ababab;cursor: text;height:20px;line-height:20px;display:block; position:absolute;top:6px;left:63px;font-size:12px;}
+/* 输入框状态 */
+.bdpass-dialog .pass_login_input_verifycode,
+.bdpass-dialog .pass_login_input_username,
+.bdpass-dialog .pass_login_input_phoneNumber,
+.bdpass-dialog .pass_login_input_password{
+	background-position:0 -160px;
+	background-repeat:no-repeat ;
+	border-left:1px solid #cccccc;
+	border-top:1px solid #cccccc;
+	border-right:1px solid #dddddd;
+	border-bottom:1px solid #dddddd;
+	height:30px;
+	font-size:14px;
+	color:#333;
+	*line-height:30px;
+	line-height:30px\0;
+	-webkit-transition-property:all;
+	-webkit-transition-duration:0.5s;
+	-moz-transition-property:all;
+	-moz-transition-duration:0.5s;
+	-o-transition-property:all;
+	-o-transition-duration:0.5s;
+	transition-property:all;
+	transition-duration:0.5s;
+}
+/* 登录按钮状态定义区域 */
+.bdpass-dialog .bdpass-login-input-default { 
+	border-left-color:#ccc;
+	border-top-color:#ccc;
+	border-right-color:#ddd;
+	border-bottom-color:#ddd;
+}
+.bdpass-dialog .bdpass-login-input-hover   { 
+	border-left-color:#ababab;
+	border-top-color:#ababab;
+	border-right-color:#cccccc;
+	border-bottom-color:#cccccc;
+}
+.bdpass-dialog .bdpass-login-input-focus   {
+	border-left-color:#377bcb;
+	border-top-color:#377bcb;
+	border-right-color:#377bcb;
+	border-bottom-color:#377bcb;
+}
+.bdpass-dialog .bdpass-login-input-error   {
+	border-left-color:#d91111;
+	border-top-color:#db1111;
+	border-right-color:#d91111;
+	border-bottom-color:#d91111;
+}
+/* 登录按钮状态 */
+.bdpass-dialog .pass_login_input_submit {width:109px;height:34px;border:0px;color:#FFF;}
+.bdpass-dialog .bdpass-login-submit-default  {background-position:-0px 0px;}
+.bdpass-dialog .bdpass-login-submit-hover    {background-position:-120px 0px;}
+.bdpass-dialog .bdpass-login-submit-mousedown{background-position:-240px 0px;}
+/* 关闭按钮状态 */
+.bdpass-dialog div.tang-title a.close-btn-default{background-position: -281px -41px ;}
+.bdpass-dialog div.tang-title a.close-btn-hover{background-position: -281px -81px ;}
+.bdpass-dialog div.tang-title a.close-btn-mousedown{background-position: -281px -121px ;}
+/* 未激活的错误信息隐藏 */
+#pass_login_p_generalerror_0{display:none}

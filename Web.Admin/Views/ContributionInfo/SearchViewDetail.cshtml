@@ -1,0 +1,984 @@
+﻿@model WKT.Model.ContributionInfoEntity
+<link href="@Html.RootPath()/Content/ContributionInfo.css" rel="stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<div style="width: 99%; padding: 2px;">
+    <div style="background-color: #EFF7FC; padding-bottom: 8px;">
+        <div id="divTopmenu" style="margin-bottom: 10px;">
+        </div>
+        <h2 style="margin-bottom: 5px;">
+            《@Model.Title》(稿件编号：@Model.CNumber)</h2>
+        <p style="margin-top: 10px;">
+            发送人：<span id="spanSendUser"></span> <<span id="spanSendMail"></span>></p>
+        <p style="margin-top: 10px;">
+            发送时间：<span id="spanSendDate"></span> (星期<span id="spanWeek"></span>)</p>
+        <p style="margin-top: 10px;">
+            接收人：<span id="spanRecUser"></span> <<span id="spanRecMail"></span>></p>
+        <p style="margin-top: 10px;" id="pAtt">
+            <span id="newContibute">最新稿件： <span id="newFile1"></span>&nbsp;<span id="newFile2"></span>&nbsp;</span>原稿件：<span id="oldFile1"></span>&nbsp;<span id="oldFile2"></span>&nbsp;<span id="oldFile3"></span><br />
+        </p>
+        <p style="margin-top: 10px; cursor: pointer; color: Blue" id="aRemark">
+            点击此处添加备注
+        </p>
+        <div style="margin-top: 10px; display: none; vertical-align: top" id="divRemark">
+            <table cellpadding="2">
+                <tr>
+                    <td valign="top">
+                        备注：
+                    </td>
+                    <td>
+                        <textarea rows="2" cols="20" id="txtCRemark" class="txtbox" style="height: 60px;
+                            width: 300px;">@Model.CRemarkInfo.Remark</textarea>
+                    </td>
+                </tr>
+                <tr style="margin-top: 2px;">
+                    <td>
+                    </td>
+                    <td>
+                        <input type="button" id="btnSave" value="保存" class="btnadd" />
+                        <input type="button" id="btnCancel" value="取消" class="btndelete" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="dragLayer">
+        <div class="dragHeader" style="cursor: pointer;" onclick="OpenTags('aFlowLog','divFlowLog')">
+            <div style="float: left;">
+                流程记录(<span id="spanFlow">0</span>条)
+            </div>
+            <div style="float: right; width: 70%; text-align: right;" id="aFlowLog">
+                >> 展开
+            </div>
+        </div>
+        <div id="divFlowLog" style="display: none; padding: 10px;">
+            <img src="@Html.RootPath()/Content/images/checkreg.gif" style="vertical-align:middle;" /><span style="font-size:14px;color:#333;">正在加载...</span>
+        </div>
+    </div>
+    <div class="dragLayer">
+        <div class="dragHeader" style="cursor: pointer;" onclick="OpenTags('aMsg','divMsg')">
+            <div style="float: left;">
+                消息记录(<span id="spanMsg">0</span>条)
+            </div>
+            <div style="float: right; width: 70%; text-align: right;" id="aMsg">
+                >> 展开
+            </div>
+        </div>
+        <div id="divMsg" style="display: none">
+            <table border="0" class="mainTable" cellpadding="0" cellspacing="1" style="width: 100%">
+                <tr>
+                    <td style="width: 40px;" class="listTitle">
+                        序号
+                    </td>
+                    <td style="width: 100px;" class="listTitle">
+                        消息类型
+                    </td>
+                    <td style="width: 100px;" class="listTitle">
+                        发送人
+                    </td>
+                    <td style="width: 100px;" class="listTitle">
+                        接收人
+                    </td>
+                    <td style="width: 100px;" class="listTitle">
+                        发送时间
+                    </td>
+                    <td class="listTitle" style="width: 200px;">
+                        标题
+                    </td>
+                    <td class="listTitle">
+                        内容
+                    </td>
+                </tr>
+                <tbody id="tbMsg">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="dragLayer">
+        <div class="dragHeader" style="cursor: pointer;" onclick="OpenTags('aContribution','divContribution')">
+            <div style="float: left;">
+                稿件信息
+            </div>
+            <div style="float: right; width: 70%; text-align: right;" id="aContribution">
+                >> 展开
+            </div>
+        </div>
+        <div id="divContribution" style="display: none">
+            <table border="0" class="mainTable" cellpadding="0" cellspacing="1" align="center"
+                width="100%">
+                <tr>
+                    <td class="left" style="width: 80px;">
+                        中文标题：
+                    </td>
+                    <td class="right">
+                        @Model.Title
+                    </td>
+                </tr>
+                @{
+                    var field = Model.FieldList.Find(p => p.DBField.Equals("EnTitle"));
+                    if (field != null && field.IsShow)
+                    {        
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.EnTitle
+                        </td>
+                    </tr>
+                    }
+                }
+                <tr>
+                   <td class="left" style="width: 80px;">
+                       学科分类：
+                   </td>
+                   <td class="right">
+                       @Html.Raw(@Html.SelectDcitValue("SubjectCat", "200px;\" disabled=\"disabled", "SubjectCat", Model.SubjectCat.ToString(), string.Empty, string.Empty))
+                   </td>
+                </tr>
+                <tr>
+                    <td class="left" style="width: 80px;">
+                        拟投栏目：
+                    </td>
+                    <td class="right">
+                        @Html.Raw(@Html.SelectJChannel("JChannelID", "200px;\" disabled=\"disabled", Model.JChannelID.ToString(), string.Empty, string.Empty))
+                    </td>
+                </tr>
+                <tr>
+                    <td class="left" style="width: 80px;">
+                        投稿类型：
+                    </td>
+                    <td class="right">
+                        @Html.Raw(@Html.SelectDcitValue("ContributionType", "200px;\" disabled=\"disabled", "ContributionType", Model.ContributionType.ToString(), string.Empty, string.Empty))
+                    </td>
+                </tr>
+                <tr id="SelSpecial" style="display:none;">
+                    <td class="left" style="width: 80px;">
+                        约稿人：
+                    </td>
+                    <td class="right">
+                        @Html.Raw(@Html.SelectDcitValue("Special", "200px;\" disabled=\"disabled", "Special", Model.Special.ToString(), "0", "未选择约稿人"))
+                    </td>
+                </tr>
+                <tr>
+                    <td class="left" style="width: 80px;">
+                        中文关键词：
+                    </td>
+                    <td class="right">
+                        @Model.Keywords
+                    </td>
+                </tr>
+                @{
+                    field = Model.FieldList.Find(p => p.DBField.Equals("EnKey"));
+                    if (field != null && field.IsShow)
+                    {      
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.EnKeywords
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("Abstract"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.AttModel.Abstract
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("EnAbstract"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.AttModel.EnAbstract
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("Reference"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            <table border="0" class="mainTable" cellpadding="0" cellspacing="1" style="width: 98%">
+                                <tr>
+                                    <td style="width: 40px;" class="listTitle">
+                                        序号
+                                    </td>
+                                    <td class="listTitle">
+                                        文献格式
+                                    </td>
+                                    <td class="listTitle">
+                                        文献来源
+                                    </td>
+                                </tr>
+                                @{
+                        int j = 1;
+                        foreach (var item in Model.ReferenceList)
+                        {
+                                    <tr>
+                                        <td style="width: 40px;" class="left">
+                                            @j
+                                        </td>
+                                        <td class="left">
+                                            @item.Title
+                                        </td>
+                                        <td class="left">
+                                            @item.RefUrl
+                                        </td>
+                                    </tr>                       
+                        }
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("Fund"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @if (Model.IsFund)
+                            {
+                                <table border="0" class="mainTable" cellpadding="0" cellspacing="1" style="width: 98%">
+                                    <tr>
+                                        <td style="width: 40px;" class="listTitle">
+                                            序号
+                                        </td>
+                                        <td style="width: 120px;" class="listTitle">
+                                            基金级别
+                                        </td>
+                                        <td class="listTitle">
+                                            基金号
+                                        </td>
+                                        <td class="listTitle">
+                                            基金名称
+                                        </td>
+                                        <td class="listTitle">
+                                            备注
+                                        </td>
+                                    </tr>
+                                    @{
+                                int k = 1;
+                                foreach (var item in Model.FundList)
+                                {
+                                        <tr>
+                                            <td class="left">@k
+                                            </td>
+                                            <td class="left">
+                                                @Html.Raw(Html.SelectDcitValue("FundLevel_" + k, "100px;\" disabled=\"disabled\"", "FundLevel", item.FundLevel.ToString(), string.Empty, string.Empty))
+                                            </td>
+                                            <td class="left">
+                                                @item.FundCode
+                                            </td>
+                                            <td class="left">
+                                                @item.FundName
+                                            </td>
+                                            <td class="left">
+                                                @item.Note
+                                            </td>
+                                        </tr>                            
+                                    k++;
+                                }
+                                    }
+                                </table>
+                            }
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("InvoiceTitle"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.InvoiceTitle
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("CLC"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.CLC
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("CommendExpert"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.CommendExpert
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.ReserveField
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField1"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                        @Model.ReserveField1
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField2"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.ReserveField2
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField3"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.ReserveField3
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField4"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.ReserveField4
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("ReserveField5"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.ReserveField5
+                        </td>
+                    </tr>
+                    }
+                    field = Model.FieldList.Find(p => p.DBField.Equals("Remark"));
+                    if (field != null && field.IsShow)
+                    {
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            @field.DisplayName：
+                        </td>
+                        <td class="right">
+                            @Model.AttModel.Remark
+                        </td>
+                    </tr>
+                    }
+                    <tr>
+                        <td class="left" style="width: 80px;">
+                            附件：
+                        </td>
+                        <td class="right" id="tdFile">
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="dragLayer">
+        <div class="dragHeader" style="cursor: pointer;" onclick="OpenTags('aAuthor','divAuthor')">
+            <div style="float: left;">
+                作者信息(@Model.AuthorList.Count)
+            </div>
+            <div style="float: right; width: 70%; text-align: right;" id="aAuthor">
+                >> 展开
+            </div>
+        </div>
+        <div id="divAuthor" style="display: none">
+            @{
+                if (Html.SiteID() == "20150420001")
+                {
+                    int i = 1;
+                    foreach (var item in Model.AuthorList)
+                    {
+                        <table border="0" class="mainTable" cellpadding="0" cellspacing="1" align="center" width="98%" style="margin-bottom: 1px;">
+                        <tr>
+                            <td class="left" style="width: 80px;">
+                                通讯作者：
+                            </td>
+                            <td class="right" colspan="3">
+                                @Html.Raw(item.IsCommunication ? "<span style=\"color:Green;\">是</span>" : "<span style=\"color:Red;\">否</span>")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="left" style="width: 80px;">
+                                姓名：
+                            </td>
+                            <td class="right" style="width: 38%;">
+                                @Html.Raw(item.AuthorName + "(第" + i + "作者)")
+                            </td>
+                            <td class="left" style="width: 80px;">
+                                性别：
+                            </td>
+                            <td class="right">
+                                @Html.Raw(item.Gender)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="left">
+                                联系电话：
+                            </td>
+                            <td class="right">
+                                <span>@item.Tel</span>&nbsp;&nbsp;<span>@item.Mobile</span>
+                            </td>
+                            <td class="left" style="width: 80px;">
+                                电子邮箱：
+                            </td>
+                            <td class="right">
+                                @item.Email
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="left">
+                                联系地址：
+                            </td>
+                            <td class="right">
+                                @item.Address
+                            </td>
+                            <td class="left" style="width: 80px;">
+                                邮编：
+                            </td>
+                            <td class="right">
+                                @item.ZipCode
+                            </td>
+                        </tr>
+                        </table>
+                        i++;
+                    }
+                }
+                else
+                {
+                    int i = 1;
+                    foreach (var item in Model.AuthorList)
+                    {
+                        <table border="0" class="mainTable" cellpadding="0" cellspacing="1" align="center" width="98%" style="margin-bottom: 1px;">
+                        <tr>
+                            <td class="left" style="width: 80px;">
+                                通讯作者：
+                            </td>
+                            <td class="right" colspan="3">
+                                @Html.Raw(item.IsCommunication ? "<span style=\"color:Green;\">是</span>" : "<span style=\"color:Red;\">否</span>")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="left" style="width: 80px;">
+                                姓名：
+                            </td>
+                            <td class="right" style="width: 38%;">
+                                @Html.Raw(item.AuthorName + "(第" + i + "作者)")
+                            </td>
+                            <td class="left" style="width: 80px;">
+                                性别：
+                            </td>
+                            <td class="right">
+                                @Html.Raw(item.Gender)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="left">
+                                出生年月：
+                            </td>
+                            <td class="right">
+                                @Html.Raw(item.Birthday == null ? "" : item.Birthday.Value.ToString("yyyy年MM月dd日"))
+                            </td>
+                            <td class="left" style="width: 80px;">
+                                民族：
+                            </td>
+                            <td class="right">
+                                @item.Nation
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="left">
+                                籍贯：
+                            </td>
+                            <td class="right">
+                                @item.NativePlace
+                            </td>
+                            <td class="left" style="width: 80px;">
+                                单位：
+                            </td>
+                            <td class="right">
+                                @item.WorkUnit
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="left">
+                                手机：
+                            </td>
+                            <td class="right">
+                                @item.Mobile
+                            </td>
+                            <td class="left" style="width: 80px;">
+                                电子邮箱：
+                            </td>
+                            <td class="right">
+                                @item.Email
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="left">
+                                科室：
+                            </td>
+                            <td class="right">
+                                @item.SectionOffice
+                            </td>
+                            <td class="left" style="width: 80px;">
+                                邮编：
+                            </td>
+                            <td class="right">
+                                @item.ZipCode
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="left">
+                                联系电话：
+                            </td>
+                            <td class="right">
+                                @item.Tel
+                            </td>
+                            <td class="left">
+                                联系地址：
+                            </td>
+                            <td class="right">
+                                @item.Address
+                            </td>
+                        </tr>
+                        </table>
+                        i++;
+                    }
+                }
+                
+            }
+        </div>
+    </div>
+    @{
+        if (Html.IsFinance())
+        {
+        <div class="dragLayer">
+            <div class="dragHeader" style="cursor: pointer;" onclick="OpenTags('aFinance','divFinance')">
+                <div style="float: left;">
+                    财务信息(<span id="spanFinance">0</span>条)
+                </div>
+                <div style="float: right; width: 70%; text-align: right;" id="aFinance">
+                    >> 展开
+                </div>
+            </div>
+            <div id="divFinance" style="display: none">
+                <table border="0" class="mainTable" cellpadding="0" cellspacing="1" style="width: 100%">
+                    <tr>
+                        <td style="width: 40px;" class="listTitle">
+                            序号
+                        </td>
+                        <td class="listTitle">
+                            费用类型
+                        </td>
+                        <td class="listTitle">
+                            支付方式
+                        </td>
+                        <td class="listTitle">
+                            支付金额
+                        </td>
+                        <td class="listTitle">
+                            汇款单号
+                        </td>
+                        <td class="listTitle">
+                            发票号码
+                        </td>
+                        <td class="listTitle">
+                            挂号号码
+                        </td>
+                        <td class="listTitle">
+                            寄出日期
+                        </td>
+                    </tr>
+                    <tbody id="tbFinance">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        }
+    }
+</div>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var RootPath = '@Html.RootPath()';
+        var CID = '@Model.CID';
+
+        $(function () {            
+            InitFlowLog();
+            InitMsg();
+            if ('@Html.IsFinance()' == 'True')
+                InitFinance();
+            if ($("#ContributionType").val() == 2)//如果投稿类型是特约稿 显示约稿人信息
+                $("#SelSpecial").removeAttr("style");
+            $("#aRemark").click(function () {
+                $(this).slideToggle('medium');
+                $("#divRemark").slideToggle('medium');
+            });
+            $("#btnCancel").click(function () {
+                $("#divRemark").slideToggle('medium');
+                $("#aRemark").slideToggle('medium');
+            });
+            $("#btnSave").click(function () {
+                var remark = $.trim($("#txtCRemark").val());
+                if (remark.length > 200) {
+                    alert("最多输入200个字符！");
+                    return false;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '@Html.RootPath()/ContributionInfo/SaveCRemark/',
+                    data: {
+                        CID: '@Model.CID',
+                        RemarkID: '@Model.CRemarkInfo.RemarkID',
+                        Remark: remark
+                    },
+                    cache: false,
+                    success: function (data) {
+                        alert(data.msg);
+                    },
+                    error: function (xhr) {
+                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                    }
+                });
+            });
+        });
+
+        if ('@Html.SiteID()' == '20150420001') {
+            $("#divTopmenu").ligerMenuBar({
+                items: [
+                        {text: '打印审稿意见', click: PrintReviewBill, icon: 'print' }
+                    ]
+            });
+        }
+
+        function PrintReviewBill() {
+            window.parent.f_addTab('PrintReviewBill', '打印审稿意见', RootPath + "/ContributionInfo/PrintReviewBill/?CID=@Model.CID" + "&rnd=" + Math.random());
+
+        }
+
+        function OpenTags(tId, cId) {
+            if ($("#" + cId).css("display") == "none") {
+                $("#" + tId).text("<< 折叠");
+            }
+            else {
+                $("#" + tId).text(">> 展开");
+            }
+            $("#" + cId).slideToggle('medium');
+        }
+
+        function InitFlowLog() {
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/ContributionInfo/GetFlowLogList/',
+                data: {
+                    CID: '@Model.CID', isViewMoreFlow: 0
+                },
+                cache: false,
+                success: function (data) {
+                    var list = data, str = '';
+                    for (var i = 0; i < list.length; i++) {
+                        str += '<div class="liucheng"><span style="color:#135294;">' + GetDate(list[i].AddDate, "yyyy-MM-dd HH:mm:ss");
+                        str += '（' + list[i].SendUserGroupName + '）' + list[i].SendUserName + '&nbsp;<img src="@Html.RootPath()/content/img/jiantou.gif" width="11" height="8" />&nbsp;';
+                        if (list[i].CStatus == '200' && list[i].SendUserID == '@ViewBag.AdminID') {
+                            str += list[i].StatusName + '(@Model.Year<span>年第</span>@Model.Issue<span>期</span>)<a href=\"javascript:SetYearIssue();\">重新设置</a>&nbsp;<img src="@Html.RootPath()/content/img/jiantou.gif" width="11" height="8" />&nbsp;';
+                        }
+                        else if (list[i].CStatus == '200') {
+                            str += list[i].StatusName + '(@Model.Year<span>年第</span>@Model.Issue<span>期</span>)&nbsp;<img src="@Html.RootPath()/content/img/jiantou.gif" width="11" height="8" />&nbsp;';
+                        }
+                        else {
+                            str += list[i].StatusName + '&nbsp;<img src="@Html.RootPath()/content/img/jiantou.gif" width="11" height="8" />&nbsp;';
+                        }
+                        str += '（' + list[i].RecUserGroupName + '）' + list[i].RecUserName+'</span>';
+                        if (list[i].IsHaveBill == 1) {
+                            str += "&nbsp;<a href=\"javascript:void(0);\" onclick=\"ViewAuditBill(" + list[i].RecUserID + "," + list[i].SendUserID + "," + list[i].FlowLogID + ")\">审稿单</a>";
+                        }
+                        if (list[i].CPath != "" && list[i].CPath != null) {
+                            if (list.length == 1 && i == 0) {
+                                str += "&nbsp;[原稿件]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》&downType1=1&downType2=3&isDown=true \">[下载/另存为]</a>&nbsp;<a href=\"@Html.RootPath()/Plugins/PageOffice/OpenWord.aspx?FlowID=" + list[i].FlowLogID + "&FileName=《@Model.Title》(稿件编号：@Model.CNumber)" + "\" target=\"_blank\">[在线打开]</a>";
+                            }
+                            if (list.length > 1) {
+                                if (i == list.length - 1) {
+                                    str += "&nbsp;[原稿件]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》&downType1=1&downType2=3&isDown=true \">[下载/另存为]</a>&nbsp;<a href=\"@Html.RootPath()/Plugins/PageOffice/OpenWord.aspx?FlowID=" + list[i].FlowLogID + "&FileName=《@Model.Title》(稿件编号：@Model.CNumber)" + "\" target=\"_blank\">[在线打开]</a>";
+                                }
+                                else {
+                                    if (list[i].CFileName == "")
+                                        str += "&nbsp;[修改稿]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_修改稿&downType1=1&downType2=3&isDown=true \">[下载/另存为]</a>&nbsp;<a href=\"@Html.RootPath()/Plugins/PageOffice/OpenWord.aspx?FlowID=" + list[i].FlowLogID + "&FileName=《@Model.Title》(稿件编号：@Model.CNumber)" + "\" target=\"_blank\">[在线打开]</a>";
+                                    else
+                                        str += "&nbsp;[" + list[i].CFileName + "]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_" + list[i].CFileName + "&downType1=1&downType2=3&isDown=true \">[下载/另存为]</a>&nbsp;<a href=\"@Html.RootPath()/Plugins/PageOffice/OpenWord.aspx?FlowID=" + list[i].FlowLogID + "&FileName=《@Model.Title》(稿件编号：@Model.CNumber)" + "\" target=\"_blank\">[在线打开]</a>";
+                                }
+                            }
+
+                        }
+                        if (list[i].FigurePath != "" && list[i].FigurePath != null) {
+                            if (list[i].FFileName == "")
+                                str += "&nbsp;[附件]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=3&isDown=true \">[下载/另存为]</a>";
+                            else
+                                str += "&nbsp;[" + list[i].FFileName + "]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_" + list[i].FFileName + "&downType1=2&downType2=3&isDown=true \">[下载/另存为]</a>";
+                        }
+                        if (list[i].OtherPath != "" && list[i].OtherPath != null) {
+                            str += "&nbsp;[图表/介绍信]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[i].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_图表介绍信&downType1=3&downType2=3&isDown=true \">[下载/另存为]</a>";
+                        }
+                        if (list[i].DealAdvice != "") {
+                            str += "<div style=\"margin-top:5px;margin-left:20px;\">处理意见：" + list[i].DealAdvice + "</div>";
+                        }
+                        // 设置顶部显示
+                        if (i == 0) {
+                            $("#spanSendUser").text(list[0].SendUserName);
+                            $("#spanSendMail").text(list[0].SendUserEmail);
+                            $("#spanRecUser").text(list[0].RecUserName);
+                            $("#spanRecMail").text(list[0].RecUserEmail);
+                            $("#spanSendDate").text(GetDate(list[0].AddDate, "yyyy-MM-dd HH:mm:ss"));
+                            $("#spanWeek").text(GetWeek(list[0].AddDate));
+                            if (list.length == 1) {
+                                $("#newContibute").attr("style", "display:none");
+                                if (list[0].CPath != "" && list[0].CPath != null) {
+                                    $("#oldFile1").html("<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[0].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=" + list[0].CNumber + "《@Model.Title》&downType1=1&downType2=1&isDown=true \">[下载/另存为]</a>&nbsp;<a href=\"@Html.RootPath()/Plugins/PageOffice/OnlyOpenWord.aspx?FlowID=" + list[list.length - 1].FlowLogID + "&FileName=《@Model.Title》(稿件编号：@Model.CNumber)" + "\" target=\"_blank\">[在线打开]</a>");
+                                }
+                                if (list[0].FigurePath != "" && list[0].FigurePath != null) {
+                                    $("#oldFile2").html("[附件]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[0].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=2&isDown=true \">[下载/另存为]</a>");
+                                }
+                                if (list[0].OtherPath != "" && list[0].OtherPath != null) {
+                                    $("#oldFile3").html("[图表/介绍信]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[0].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_图表或介绍信&downType1=3&downType2=2&isDown=true \">[下载/另存为]</a>");
+                                }
+
+                            }
+                            else {
+                                if (list[0].CPath.length == 0 && list[0].FigurePath.length == 0) {
+                                    $("#newContibute").attr("style", "display:none");
+                                }
+                                if (list[list.length - 1].CPath.length == 0 && list[list.length - 1].FigurePath.length == 0 && list[list.length - 1].OtherPath.length == 0) {
+                                    $("#oldFile1").html("《无》");
+                                }
+                                //最新稿件/原始稿件
+                                if (list[0].CPath != "" && list[0].CPath != null) {
+                                    if (list[0].CFileName == "")
+                                        $("#newFile1").html("[修改稿]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[0].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_修改稿&downType1=1&downType2=2&isDown=true \">[下载/另存为]</a>&nbsp;<a href=\"@Html.RootPath()/Plugins/PageOffice/OpenWord.aspx?FlowID=" + list[i].FlowLogID + "&FileName=《@Model.Title》(稿件编号：@Model.CNumber)" + "\" target=\"_blank\">[在线打开]</a>");
+                                    else
+                                        $("#newFile1").html("[" + list[i].CFileName + "]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[0].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_" + list[i].CFileName + "&downType1=1&downType2=2&isDown=true \">[下载/另存为]</a>&nbsp;<a href=\"@Html.RootPath()/Plugins/PageOffice/OpenWord.aspx?FlowID=" + list[i].FlowLogID + "&FileName=《@Model.Title》(稿件编号：@Model.CNumber)" + "\" target=\"_blank\">[在线打开]</a>");
+                                }
+                                if (list[list.length - 1].CPath != "" && list[list.length - 1].CPath != null) {
+                                    $("#oldFile1").html("<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[0].CID + "&FlowLogID=" + list[list.length - 1].FlowLogID + "&fileName=" + list[0].CNumber + "《@Model.Title》&downType1=1&downType2=1&isDown=true \">[下载/另存为]</a>&nbsp;<a href=\"@Html.RootPath()/Plugins/PageOffice/OpenWord.aspx?FlowID=" + list[list.length - 1].FlowLogID + "&FileName=《@Model.Title》(稿件编号：@Model.CNumber)" + "\" target=\"_blank\">[在线打开]</a>");
+                                }
+                                //其他附件
+                                if (list[0].FigurePath != "" && list[0].FigurePath != null) {
+                                    if (list[0].FFileName == "")
+                                        $("#newFile2").html("[附件]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[0].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=2&isDown=true \">[下载/另存为]</a>");
+                                    else
+                                        $("#newFile2").html("[" + list[i].FFileName + "]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[0].CID + "&FlowLogID=" + list[i].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_" + list[i].FFileName + "&downType1=2&downType2=2&isDown=true \">[下载/另存为]</a>");
+
+                                }
+                                if (list[list.length - 1].FigurePath != "" && list[list.length - 1].FigurePath != null) {
+                                    $("#oldFile2").html("[附件]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[list.length - 1].CID + "&FlowLogID=" + list[list.length - 1].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_附件&downType1=2&downType2=1&isDown=true \">[下载/另存为]</a>");
+                                }
+                                //介绍信
+                                if (list[list.length - 1].OtherPath != "" && list[list.length - 1].OtherPath != null) {
+                                    $("#oldFile3").html("[图表/介绍信]<a href=\"@Html.RootPath()/Upload/Download?cid=" + list[0].CID + "&FlowLogID=" + list[list.length - 1].FlowLogID + "&fileName=@Model.CNumber《@Model.Title》_图表介绍信&downType1=3&downType2=1&isDown=true \">[下载/另存为]</a>");
+                                }
+                            }
+
+                        }
+                    }
+                    $("#spanFlow").html(list.length);
+                    $("#divFlowLog").html(str);
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+        function InitMsg() {
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/ContributionInfo/GetMsgList/',
+                data: {
+                    CID: '@Model.CID'
+                },
+                cache: false,
+                success: function (data) {
+                    var list = data, str = '';
+                    for (var i = 0; i < list.length; i++) {
+                        str += '<tr>';
+                        str += '<td class="left" style="width:40px;">' + (i + 1) + '</td>';
+                        str += '<td class="left">' + list[i].MsgTypeName + '</td>';
+                        str += '<td class="left">' + list[i].SendUserName + '</td>';
+                        str += '<td class="left">' + list[i].ReciveUserName + '</td>';
+                        str += '<td class="left">' + GetDate(list[i].SendDate, "yyyy-MM-dd") + '</td>';
+                        str += '<td class="left">' + list[i].MsgTitle + '</td>';
+                        str += '<td class="left">' + list[i].MsgContent + '</td>';
+                        str += '</tr>';
+                    }
+                    $("#spanMsg").html(list.length);
+                    $("#tbMsg").html(str);
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+        // 设置年卷期
+        function SetYearIssue() {
+            var CID = '@Model.CID';
+            var AuthorID = '@Model.AuthorID';
+            $.ligerDialog.open({ height: 300, url: RootPath + '/Contribution/SetYearIssue?rnd=' + Math.random(), title: '设置年卷期', width: 400, slide: false, buttons: [
+        { text: '确定', onclick: function (item, dialog) {
+            Year = dialog.frame.Year;
+            if (Year == 0) {
+                alert('请选择年');
+                return false;
+            }
+            Volume = dialog.frame.Volume;
+            Issue = dialog.frame.Issue;
+            if (Issue == 0) {
+                alert('请选择期');
+                return false;
+            }
+            JChannelID = dialog.frame.JChannelID;
+            //            if (JChannelID == 0) {
+            //                alert('请选择栏目');
+            //                return false;
+            //            }
+            $.ajax({
+                beforeSend: function () {
+
+                },
+                type: 'POST',
+                url: RootPath + '/Contribution/SetYearVolumnIssueAjax/?rnd=' + Math.random(),
+                data: { CID: CID, AuthorID: AuthorID, Year: Year, Volume: Volume, Issue: Issue, JChannelID: JChannelID },
+                success: function (data) {
+                    var e = eval("(" + data + ")");
+                    if (e.result == 'success') {
+                        dialog.close();
+                        window.parent.RealoadTab("View"+'@Model.CNumber');
+                    }
+                    else if (e.result == 'failure') {
+                        alert(e.msg);
+                    }
+                    else if (e.result == 'error') {
+                        alert(e.msg);
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+        },
+        { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+        ]
+            });
+        }
+
+        // 查看审稿单
+        function ViewAuditBill(EditorID,ExpertID,FlowLogID)
+        {
+//            $.ligerDialog.open({ height: 500,width: 680, url: '@Html.RootPath()/FlowSet/ViewReviewBillContent?CID=' + CID +  '&ExpertID=' + ExpertID + '&rnd=' + Math.random(), title: '查看审稿单',  slide: false, buttons: [
+//            { text: '确定', onclick: function (item, dialog) { dialog.close(); } },
+//            { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+//            ]
+//        });
+            //window.parent.f_removeTabItem('ReviewBill');
+            window.open('@Html.RootPath()/FlowSet/ViewReviewBillContent?CID=' + CID +  '&EditorID='+EditorID+'&ExpertID=' + ExpertID + '&FlowLogID='+FlowLogID+'&rnd=' + Math.random(),'查看审稿单','');
+
+        }
+
+        function InitFinance() {
+            $.ajax({
+                type: 'POST',
+                url: '@Html.RootPath()/ContributionInfo/GetFinanceList/',
+                data: {
+                    CID: '@Model.CID'
+                },
+                cache: false,
+                success: function (data) {
+                    var list = data, str = '';
+                    for (var i = 0; i < list.length; i++) {
+                        str += '<tr>';
+                        str += '<td class="left" style="width:40px;">' + (i + 1) + '</td>';
+                        str += '<td class="left">' + list[i].FeeTypeName + '</td>';
+                        str += '<td class="left">' + list[i].PayTypeName + '</td>';
+                        str += '<td class="left">' + list[i].Amount + '</td>';
+                        str += '<td class="left">' + list[i].RemitBillNo + '</td>';
+                        str += '<td class="left">' + list[i].InvoiceNo + '</td>';
+                        str += '<td class="left">' + list[i].PostNo + '</td>';
+                        str += '<td class="left">' + GetDate(list[i].SendDate, "yyyy-MM-dd") + '</td>';
+                        str += '</tr>';
+                    }
+                    $("#spanFinance").html(list.length);
+                    $("#tbFinance").html(str);
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+        //当备注不为空时显示备注内容
+        if ($("#txtCRemark").val().length > 0) {
+            $("#aRemark").slideToggle('medium');
+            $("#divRemark").slideToggle('medium');
+        }
+        //默认显示流程记录
+        OpenTags('aFlowLog', 'divFlowLog'); 
+
+    </script>
+}

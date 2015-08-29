@@ -1,0 +1,102 @@
+﻿<div id="divToolbar"></div>
+<div id="divList"></div>
+@section Scripts{
+<script type="text/javascript">
+    var manager,ChannelID=@ViewBag.ChannelID;
+    $(function () {
+        window['g'] =
+        manager = $("#divList").ligerGrid({
+            columns: [
+            { display: '编号', name: 'LinkID', width: '10%', align: 'center' },
+            { display: '站点名称', name: 'SiteName', width: '17%', align: 'left' },
+            { display: '站点URL', name: 'SiteUrl', width: '17%', align: 'center', render: function (item) {
+                return "<a href='" + item.SiteUrl + "' target='_blank'>" + item.SiteUrl + "</a>";
+            }
+            },
+            { display: '站点LOG', name: 'LogoUrl', width: '16%', align: 'center', render: function (item) {
+                if (item.LogoUrl.length < 1)
+                    return '';
+                return '<a href="javascript:void(0)" onclick="ViewPhoto(\''+item.LogoUrl+'\')" >站点LOG</a>';
+            }
+            },
+            { display: '链接类型', name: 'LinkType', width: '10%', align: 'center', render: function (item) {
+                return item.LinkType == 1 ? "图片链接" : "文字链接";
+            }
+            },
+            { display: '排序号', name: 'SortID', width: '10%', align: 'center' },
+            { display: '创建时间', name: 'AddDate', width: '18%', align: 'center', type: 'date', format: 'yyyy-MM-dd' }
+            ], width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,enabledSort: false, 
+            url: '@Html.RootPath()/FriendlyLink/GetPageList', pageSize: 20,parms: [{ name: 'ChannelID', value: ChannelID}],
+            toolbar: { items: [
+            { text: '新增', click: AddFriendlyLink, icon: 'add' },
+            { line: true },
+            { text: '修改', click: UpdateFriendlyLink, icon: 'modify' },
+            { line: true },
+            { text: '删除', click: DelFriendlyLink, icon: 'delete' }
+            ]
+            }
+        });
+    });
+
+     function ViewPhoto(url) {
+            DownLoad('@Html.RootPath()', url, '站点LOG');
+        }
+
+    function AddFriendlyLink() {
+        $.ligerDialog.open({
+            height: 350,
+            width: 500,
+            url: '@Html.RootPath()/FriendlyLink/Create',
+            title: '新增友情链接',
+            slide:false,
+            buttons: [{ text: '确认', onclick: function (item, dialog) {
+                dialog.frame.Save(manager, dialog,ChannelID);
+            }
+            }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+        });
+    }
+
+    function UpdateFriendlyLink() {
+        var rows = manager.getSelectedRows();
+        if (rows == "") { alert('请选择需要编辑的数据！'); return; }
+        $.ligerDialog.open({
+            height: 350,
+            width: 500,
+            url: '@Html.RootPath()/FriendlyLink/Create?LinkID=' + rows[0].LinkID,
+            title: '编辑友情链接',
+            slide:false,
+            buttons: [{ text: '确认', onclick: function (item, dialog) {
+                dialog.frame.Save(manager, dialog,ChannelID);
+            }
+            }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+        });
+    }
+
+    function DelFriendlyLink() {
+        var rows = manager.getSelectedRows();
+        if (rows == "") { alert('请选择需要删除的数据！'); return; }
+        var data = [];
+        for (i = 0; i < rows.length; i++) {
+            data.push(rows[i].LinkID);
+        }
+        if (!confirm("确定删除所选的数据吗？")) return;
+        $.ajax({
+            type: 'POST',
+            url: '@Html.RootPath()/FriendlyLink/Delete/',
+            data: { "LinkIDs": data },
+            cache: false,
+            traditional: true,
+            success: function (data) {
+                alert(data.msg);
+                if (data.result == "success") {
+                    manager.loadData();
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+</script>
+}
+

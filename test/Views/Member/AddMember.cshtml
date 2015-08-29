@@ -1,0 +1,110 @@
+﻿<style type="text/css">
+    .l-table-edit {font-size:14px;}
+    .l-table-edit-td{ padding:4px;height:30px;}
+    .l-verify-tip{ left:230px; top:120px;}
+</style>
+<div>
+<form id="frmReg" name="frmReg"  action="">
+	<table cellpadding="0" cellspacing="0" class="l-table-edit" >
+		<tr>
+			<td align="right" class="l-table-edit-td"><span style="color:Red">*</span>登录邮箱：</td>
+			<td align="left" class="l-table-edit-td"><input class="text" name="LoginName" id="txtLoginName" type="text" validate="{required:true,email:true}" /></td>
+			<td align="left"></td>
+		</tr>
+		<tr>
+			<td align="right" class="l-table-edit-td"><span style="color:Red">*</span>登录密码：</td>
+			<td align="left" class="l-table-edit-td"><input class="text" name="Pwd" id="txtPwd" type="password"  validate="{required:true,minlength:3,maxlength:20}"/></td>
+			<td align="left"></td>
+		</tr>
+		<tr>
+			<td align="right" class="l-table-edit-td"><span style="color:Red">*</span>确认密码：</td>
+			<td align="left" class="l-table-edit-td"><input class="text" name="ConfPwd" id="txtConfPwd" type="password" validate="{required:true,equalTo:'#txtPwd'}"/></td>
+			<td align="left"></td>
+		</tr>
+		<tr>
+			<td align="right" class="l-table-edit-td"><span style="color:Red">*</span>成员姓名：</td>
+			<td align="left" class="l-table-edit-td"><input class="text" name="RealName" id="txtRealName" type="text" validate="{required:true,minlength:2,maxlength:30}" /></td>
+			<td align="left"></td>
+		</tr>
+        <tr>
+			<td align="right" class="l-table-edit-td"><span style="color:Red">*</span>手&nbsp;机&nbsp;号：</td>
+			<td align="left" class="l-table-edit-td"><input class="text" name="Mobile" id="txtMobile" type="text" validate="{required:true,mobile:true}" /></td>
+			<td align="left"></td>
+		</tr>
+		<tr>
+			<td align="right" class="l-table-edit-td"><span style="color:Red">*</span>成员角色：</td>
+			<td align="left" class="l-table-edit-td">@Html.Raw(Html.SelectRole("selRole","180px","","0","-请选择-"))</td>
+			<td align="left"></td>
+		</tr>
+	</table>    
+</form>
+</div>
+@section Scripts{
+<script src="@Html.RootPath()/Scripts/validation/jquery.validate.min.js" type="text/javascript"></script> 
+<script src="@Html.RootPath()/Scripts/validation/jquery.metadata.js?111" type="text/javascript"></script>
+<script src="@Html.RootPath()/Scripts/validation/messages_cn.js" type="text/javascript"></script>
+<script type="text/javascript">
+var validator = null;
+$(function () {
+    $.metadata.setType("attr", "validate");
+    validator = $("#frmReg").validate({
+        debug: false,
+        errorPlacement: function (lable, element) {
+            if (element.hasClass("l-textarea")) {
+                element.ligerTip({ content: lable.html(), target: element[0] });
+            }
+            else if (element.hasClass("l-text-field")) {
+                element.parent().ligerTip({ content: lable.html(), target: element[0] });
+            }
+            else {
+                lable.appendTo(element.parents("td:first").next("td"));
+            }
+        },
+        success: function (lable) {
+            lable.ligerHideTip();
+            lable.remove();
+        }
+    });
+    $("#frmReg").ligerForm();
+});
+
+function Save(manager, dialog) {
+    var isvalided = $("#frmReg").valid();
+    if (isvalided) {
+        $("#frmReg .l-text,.l-textarea").ligerHideTip();
+        $.ajax({
+            beforeSend: function () {
+
+            },
+            type: 'POST',
+            url: '@Html.RootPath()/member/AddMemberAjax/?rnd=' + Math.random(),
+            data: { LoginName: $('#txtLoginName').val(), Pwd: $('#txtPwd').val(), RealName: $("#txtRealName").val(), Mobile: $('#txtMobile').val(), RoleID: $("#selRole").val() },
+            cache: false,
+            success: function (data) {
+                var e = eval("(" + data + ")");
+                if (e.result == 'success') {
+                    msgdialog = $.ligerDialog.waitting('添加成员成功!');
+                    setTimeout(function () {
+                        msgdialog.close();
+                    }, 2000);
+                    manager.loadData();
+                    dialog.close();
+                }
+                else if (e.result == 'failure') {
+                    alert(e.msg);
+                }
+                else if (e.result == 'error') {
+                    alert(e.msg);
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+    else {
+        alert('验证失败，请验证填写的内容是否正确!');
+    }
+}
+</script>
+}

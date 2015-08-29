@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="jquery-1.7.2.min.js" type="text/javascript"></script>
+</head>
+<body id="aaa">
+    <div style=" float:right; margin-right:20px;">
+        <a style="font-size:14px; color:Blue;" id="btnPrint" href="javascript:preview();">打印</a>
+        <a style="font-size:14px; color:Blue;" id="btnSave" href="javascript:void(0);">保存</a>
+    </div>
+    <div id="content" style="border:1px solid #888888; width:794px; height:1123px;">
+        <div style="text-align:center; font-size:24px; margin-top:40px;">稿件审稿单</div>
+        <table style="border-collapse:collapse; text-align:center;" align="center">
+            <tr>
+                <td style="width:100px; height:25px; border:1px solid #000000; text-align:center;">总序号</td>
+                <td style="width:200px; border:1px solid #000000;"></td>
+                <td style="width:100px; border:1px solid #000000; text-align:center;">电话</td>
+                <td style="width:200px; border:1px solid #000000;"></td>
+            </tr>
+
+            <tr>
+                <td style="width:100px; height:25px; border:1px solid #000000; text-align:center;">题目</td>
+                <td style="width:200px; border:1px solid #000000;" colspan="3" ></td>
+            </tr>
+
+            <tr>
+                <td style="width:100px; height:25px; border:1px solid #000000; text-align:center;">作者姓名</td>
+                <td style="width:200px; border:1px solid #000000;"></td>
+                <td style="width:100px; border:1px solid #000000; text-align:center;">通讯地址</td>
+                <td style="width:200px; border:1px solid #000000;"></td>
+            </tr>
+
+            <tr>
+                <td style="width:100px; height:25px; border:1px solid #000000; text-align:center;">Email</td>
+                <td style="width:200px; border:1px solid #000000;"></td>
+                <td style="width:100px; border:1px solid #000000; text-align:center;">身份证号</td>
+                <td style="width:200px; border:1px solid #000000;"></td>
+            </tr>
+
+            <tr style="min-height:300px; height:auto;">
+                <td style="width:100px; border:1px solid #000000; text-align:center;">内容提要</td>
+                <td style="width:200px; border:1px solid #000000; text-align:left; vertical-align:top; padding:10px; line-height:25px; font-family:微软雅黑;" colspan="3">内容提要内容提要内容提要内容提要内容提要内容提要内容提要内容提要内容提要内容提要内容提要内容提要</td>
+            </tr>
+
+            <tr style="min-height:300px; height:auto;">
+                <td style="width:100px; border:1px solid #000000; text-align:center;">初审意见</td>
+                <td style="width:200px; border:1px solid #000000;text-align:left; vertical-align:top; padding:10px;line-height:25px; font-family:微软雅黑;" colspan="3" >初审意见初审意见初审意见初审意见初审意见初审意见初审意见初审意见</td>
+            </tr>
+
+            <tr style="min-height:300px; height:auto;">
+                <td style="width:100px; border:1px solid #000000; text-align:center;">复审意见</td>
+                <td style="width:200px; border:1px solid #000000;text-align:left; vertical-align:top; padding:10px;line-height:25px; font-family:微软雅黑;" colspan="3" >复审意见复审意见复审意见复审意见复审意见复审意见复审意见复审意见</td>
+            </tr>
+
+            <tr style="min-height:300px; height:auto;">
+                <td style="width:100px; border:1px solid #000000; text-align:center;">主编意见</td>
+                <td style="width:200px; border:1px solid #000000;text-align:left; vertical-align:top; padding:10px;line-height:25px; font-family:微软雅黑;" colspan="3" >主编意见主编意见主编意见主编意见主编意见主编意见主编意见主编意见主编意见</td>
+            </tr>
+        
+        </table>
+    </div>
+</body>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnPrint").click(function () {
+            if (!confirm("您确定打印该审稿单吗？")) return;
+            preview();
+            window.close();
+        }); 
+    });
+    $(function () {
+        $("#btnSave").click(function () {
+            window.open("@Html.RootPath()/FlowSet/ReviewBillContentToReport?CID=@ViewBag.CID&FlowLogID=@ViewBag.FlowLogID&EditorID=@ViewBag.EditorID&ExpertID=@ViewBag.ExpertID");
+        });
+    });
+
+    </script>
+    <script type="text/javascript">
+        var HKEY_Root, HKEY_Path, HKEY_Key;
+        HKEY_Root = "HKEY_CURRENT_USER";
+        HKEY_Path = "\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+        //设置网页打印的页眉页脚为空 
+        function PageSetup_Null() {
+            try {
+                var Wsh = new ActiveXObject("WScript.Shell");
+                HKEY_Key = "header";
+                Wsh.RegWrite(HKEY_Root + HKEY_Path + HKEY_Key, "");
+                HKEY_Key = "footer";
+                Wsh.RegWrite(HKEY_Root + HKEY_Path + HKEY_Key, "");
+            }
+            catch (e) {
+            }
+        }
+
+        function preview() {
+            PageSetup_Null();
+            var bdhtml = window.document.getElementById("content").innerHTML;
+            window.document.body.innerHTML = bdhtml;
+            window.print();
+            window.close();
+        }
+    </script>
+
+
+</html>

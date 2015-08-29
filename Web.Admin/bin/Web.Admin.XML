@@ -1,0 +1,2017 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Web.Admin</name>
+    </assembly>
+    <members>
+        <member name="T:Web.Admin.Controllers.BaseController">
+            <summary>
+            基类
+            </summary>
+        </member>
+        <member name="M:Web.Admin.Controllers.BaseController.OnException(System.Web.Mvc.ExceptionContext)">
+            <summary>
+            异常日志
+            </summary>
+            <param name="filterContext"></param>
+        </member>
+        <member name="M:Web.Admin.Controllers.BaseController.GetUploadPath(System.String)">
+            <summary>
+            获取完整路径
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ExpertController.SelDialog">
+            <summary>
+            专家助选页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ExpertController.GetExpertList(WKT.Model.AuthorInfoQuery)">
+            <summary>
+            获取当前编辑部成员列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ExpertController.Wait">
+            <summary>
+            待审稿件
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ExpertController.Editlist">
+            <summary>
+            已审稿件
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ExpertController.Deledit">
+            <summary>
+            拒审稿件
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ExpertController.ReciveSmsIndex">
+            <summary>
+            收到信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ExpertController.MsgContentView(WKT.Model.MessageRecodeQuery,System.Int64)">
+            <summary>
+            信息内容查看
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Web.Admin.Controllers.AuthorStatController">
+            <summary>
+            作者统计
+            </summary>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorStatController.Index(System.Nullable{System.Int32})">
+            <summary>
+            作者统计，默认注册数量统计
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorStatController.GetAuthorContributeStat">
+            <summary>
+            注册数统计
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorStatController.GetAuthorProvinceStat">
+            <summary>
+            地区统计
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorStatController.GetAuthorProfessionalStat">
+            <summary>
+            专业统计
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorStatController.GetAuthorEducationStat(System.Int32,System.String)">
+            <summary>
+            地区统计
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorStatController.GetAuthorGenderStat">
+            <summary>
+            性别统计
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Plugins.Download.GetUploadPath(System.String)">
+            <summary>
+            获取完整路径
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Web.Admin.Controllers.MemberController">
+            <summary>
+            编辑部成员管理
+            </summary>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.Index">
+            <summary>
+            成员管理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.AddMember">
+            <summary>
+            新增编辑部成员
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.AddMemberAjax(WKT.Model.AuthorInfoEntity)">
+            <summary>
+            添加编辑部成员
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.EditMember(System.Int64)">
+            <summary>
+            新增编辑部成员
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.EditMemberAjax(WKT.Model.AuthorInfoEntity)">
+            <summary>
+            编辑编辑部成员
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.DelMemberAjax(System.Int64[])">
+            <summary>
+            删除编辑部成员
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.SelDialog(System.Int32)">
+            <summary>
+            选择窗体
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.WorkLoadStat">
+            <summary>
+            编辑工作量统计
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.WorkLoadStatNew">
+            <summary>
+            编辑工作量统计
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.GetMemberList(WKT.Model.AuthorInfoQuery)">
+            <summary>
+            获取当前编辑部成员列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.GetMemberListByRole(System.Int64)">
+            <summary>
+            根据角色ID获取成员列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.AddAurhorRole(System.Int64,System.Int64[])">
+            <summary>
+            添加用户到指定角色
+            </summary>
+            <param name="authorEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.DelAurhorRole(System.Int64,System.Int64[])">
+            <summary>
+            删除用户角色
+            </summary>
+            <param name="authorEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.SetAurhorException(System.Int64,System.Int64[],System.Int64[])">
+            <summary>
+            添加用户到指定角色
+            </summary>
+            <param name="authorEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MemberController.EditPwd">
+            <summary>
+            登录后修改密码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Web.Admin.Controllers.FlowSetController">
+            <summary>
+            流程设置
+            </summary>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.AddFlowStatus">
+            <summary>
+            添加流程状态
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.EditFlowStatus(System.Int64)">
+            <summary>
+            修改流程状态
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.FlowActionSet(System.Int64,System.Nullable{System.Int64})">
+            <summary>
+            流转状态操作设置
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.FlowAuthSet(System.Int64,System.Int64)">
+            <summary>
+            流转步骤权限设置
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.AuditBill(System.Int64,System.Int64,System.String)">
+            <summary>
+            审稿单
+            </summary>
+            <param name="ActionID">当前所做操作ID</param>
+            <param name="StatusID">当前状态</param>
+            <param name="CIDS">稿件ID,多个稿件ID用逗号分隔</param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.SendMessage(System.Int64,System.Int64,System.String)">
+            <summary>
+            消息通知
+            </summary>
+            <param name="ActionID">操作ID</param>
+            <param name="StatusID">当前审稿状态</param>
+            <param name="CIDS">稿件ID,多个稿件ID用逗号分隔</param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.GetFlowStatusListGridAjax(WKT.Model.FlowStatusQuery)">
+            <summary>
+            获取审稿状态
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.GetFlowStatusListDataAjax(WKT.Model.FlowStatusQuery)">
+            <summary>
+            获取审稿状态
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.GetFlowStatusNum">
+            <summary>
+            获取审稿状态序号
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.GetFlowStatusInfo(WKT.Model.FlowStatusQuery)">
+            <summary>
+            获取流程状态及配置信息
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.AddFlowStatusAjax(WKT.Model.FlowStep)">
+            <summary>
+            新增审稿状态
+            </summary>
+            <param name="flowSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.EditFlowStatusAjax(WKT.Model.FlowStep)">
+            <summary>
+            修改审稿状态
+            </summary>
+            <param name="flowSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.DelFlowStatusAjax(WKT.Model.FlowStatusEntity)">
+            <summary>
+            删除审稿状态
+            </summary>
+            <param name="flowSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.EditStatusAjax(WKT.Model.FlowStatusEntity)">
+            <summary>
+            修改审稿状态的状态
+            </summary>
+            <param name="flowSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.GetFlowActionEntityAjax(System.Int64)">
+            <summary>
+            获取流程操作
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.GetFlowActionListByIDAjax(WKT.Model.FlowActionQuery)">
+            <summary>
+            获取流程操作列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.GetFlowActionListAjax(WKT.Model.FlowActionQuery)">
+            <summary>
+            获取流程操作列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.AddFlowActionAjax(WKT.Model.FlowActionEntity)">
+            <summary>
+            新增流程操作
+            </summary>
+            <param name="flowSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.EditFlowActionAjax(WKT.Model.FlowActionEntity)">
+            <summary>
+            编辑流程操作
+            </summary>
+            <param name="flowSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.DelFlowActionAjax(WKT.Model.FlowActionEntity)">
+            <summary>
+            删除流程操作
+            </summary>
+            <param name="flowSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.GetFlowAuthAuthorListAjax(WKT.Model.FlowAuthAuthorQuery)">
+            <summary>
+            获取流程环节成员权限列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.SetFlowAuthAuthorAjax(System.Collections.Generic.List{WKT.Model.FlowAuthAuthorEntity})">
+            <summary>
+            设置审稿流程成员权限
+            </summary>
+            <param name="flowSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.DelFlowAuthAuthorAjax(System.Collections.Generic.List{WKT.Model.FlowAuthAuthorEntity})">
+            <summary>
+            删除审稿流程成员权限
+            </summary>
+            <param name="flowSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.GetFlowAuthRoleListAjax(WKT.Model.FlowAuthRoleQuery)">
+            <summary>
+            获取流程环节角色权限列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.SetFlowAuthRoleAjax(System.Collections.Generic.List{WKT.Model.FlowAuthRoleEntity})">
+            <summary>
+            设置审稿流程角色权限
+            </summary>
+            <param name="flowSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.DelFlowAuthRoleAjax(System.Collections.Generic.List{WKT.Model.FlowAuthRoleEntity})">
+            <summary>
+            删除审稿流程角色权限
+            </summary>
+            <param name="flowSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.SendSysMessageAjax(WKT.Model.AuditBillEntity)">
+            <summary>
+            发送系统通知
+            </summary>
+            <param name="auditBillEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.SubmitAuditBillAjax(WKT.Model.AuditBillEntity)">
+            <summary>
+            提交审稿
+            </summary>
+            <param name="auditBillEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.GetReviewBillContent(System.Int64,System.Int64)">
+            <summary>
+            获取审稿单内容
+            </summary>
+            <param name="CID"></param>
+            <param name="ExpertID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.JumpSelAuthor(System.Int64)">
+            <summary>
+            根据状态响应角色跳转到选择成员、作者或专家页
+            </summary>
+            <param name="StatusID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlowSetController.ContinuSend(WKT.Model.ContinuSendEntity)">
+            <summary>
+            继续送交
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Web.Admin.Controllers.ExpertStatController">
+            <summary>
+            专家统计
+            </summary>
+        </member>
+        <member name="M:Web.Admin.Controllers.ExpertStatController.GetEditorWorkloadList(WKT.Model.WorkloadQuery)">
+            <summary>
+            获取编辑工作量统计列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ExpertStatController.GetWorkloadList(WKT.Model.WorkloadQuery)">
+            <summary>
+            获取编辑或专家工作量统计列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ExpertStatController.GetStatDetail(WKT.Model.StatQuery)">
+            <summary>
+            获取专家统计详情列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Web.Admin.FangZService.JournalXService">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.#ctor">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.MessageNotification(System.String,System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.MessageNotificationAsync(System.String,System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.MessageNotificationAsync(System.String,System.String,System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.AddSchema(System.String)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.AddSchemaAsync(System.String)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.AddSchemaAsync(System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.UpdateSchema(System.Int32,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.UpdateSchemaAsync(System.Int32,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.UpdateSchemaAsync(System.Int32,System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.DeleteSchema(System.Int32)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.DeleteSchemaAsync(System.Int32)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.DeleteSchemaAsync(System.Int32,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.GetFFXTemplate(System.Int32)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.GetFFXTemplateAsync(System.Int32)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.GetFFXTemplateAsync(System.Int32,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.GetUser">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.GetUserAsync">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.GetUserAsync(System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.FangZService.JournalXService.CancelAsync(System.Object)">
+            <remarks/>
+        </member>
+        <member name="E:Web.Admin.FangZService.JournalXService.MessageNotificationCompleted">
+            <remarks/>
+        </member>
+        <member name="E:Web.Admin.FangZService.JournalXService.AddSchemaCompleted">
+            <remarks/>
+        </member>
+        <member name="E:Web.Admin.FangZService.JournalXService.UpdateSchemaCompleted">
+            <remarks/>
+        </member>
+        <member name="E:Web.Admin.FangZService.JournalXService.DeleteSchemaCompleted">
+            <remarks/>
+        </member>
+        <member name="E:Web.Admin.FangZService.JournalXService.GetFFXTemplateCompleted">
+            <remarks/>
+        </member>
+        <member name="E:Web.Admin.FangZService.JournalXService.GetUserCompleted">
+            <remarks/>
+        </member>
+        <member name="T:Web.Admin.FangZService.MessageNotificationCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:Web.Admin.FangZService.MessageNotificationCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:Web.Admin.FangZService.MessageNotificationCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:Web.Admin.FangZService.AddSchemaCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:Web.Admin.FangZService.AddSchemaCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:Web.Admin.FangZService.AddSchemaCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:Web.Admin.FangZService.UpdateSchemaCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:Web.Admin.FangZService.UpdateSchemaCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:Web.Admin.FangZService.UpdateSchemaCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:Web.Admin.FangZService.DeleteSchemaCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:Web.Admin.FangZService.DeleteSchemaCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:Web.Admin.FangZService.DeleteSchemaCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:Web.Admin.FangZService.GetFFXTemplateCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:Web.Admin.FangZService.GetFFXTemplateCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:Web.Admin.FangZService.GetFFXTemplateCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:Web.Admin.FangZService.GetUserCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:Web.Admin.FangZService.GetUserCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:Web.Admin.FangZService.GetUserCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:JournalXService">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.#ctor">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.AddSchema(System.String)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.BeginAddSchema(System.String,System.AsyncCallback,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.EndAddSchema(System.IAsyncResult)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.AddSchemaAsync(System.String)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.AddSchemaAsync(System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.UpdateSchema(System.Int32,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.BeginUpdateSchema(System.Int32,System.String,System.AsyncCallback,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.EndUpdateSchema(System.IAsyncResult)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.UpdateSchemaAsync(System.Int32,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.UpdateSchemaAsync(System.Int32,System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.DeleteSchema(System.Int32)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.BeginDeleteSchema(System.Int32,System.AsyncCallback,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.EndDeleteSchema(System.IAsyncResult)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.DeleteSchemaAsync(System.Int32)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.DeleteSchemaAsync(System.Int32,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.GetFFXTemplate(System.Int32)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.BeginGetFFXTemplate(System.Int32,System.AsyncCallback,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.EndGetFFXTemplate(System.IAsyncResult)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.GetFFXTemplateAsync(System.Int32)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.GetFFXTemplateAsync(System.Int32,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.MessageNotification(System.String,System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.BeginMessageNotification(System.String,System.String,System.String,System.AsyncCallback,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.EndMessageNotification(System.IAsyncResult)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.MessageNotificationAsync(System.String,System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.MessageNotificationAsync(System.String,System.String,System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:JournalXService.CancelAsync(System.Object)">
+            <remarks/>
+        </member>
+        <member name="E:JournalXService.AddSchemaCompleted">
+            <remarks/>
+        </member>
+        <member name="E:JournalXService.UpdateSchemaCompleted">
+            <remarks/>
+        </member>
+        <member name="E:JournalXService.DeleteSchemaCompleted">
+            <remarks/>
+        </member>
+        <member name="E:JournalXService.GetFFXTemplateCompleted">
+            <remarks/>
+        </member>
+        <member name="E:JournalXService.MessageNotificationCompleted">
+            <remarks/>
+        </member>
+        <member name="T:AddSchemaCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:AddSchemaCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:AddSchemaCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:UpdateSchemaCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:UpdateSchemaCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:UpdateSchemaCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:DeleteSchemaCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:DeleteSchemaCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:DeleteSchemaCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:GetFFXTemplateCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:GetFFXTemplateCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:GetFFXTemplateCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:MessageNotificationCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:MessageNotificationCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:MessageNotificationCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionStatController.GetContributionAccountListByAuhor(WKT.Model.ContributionAccountQuery)">
+            <summary>
+            按作者统计收稿量
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionStatController.GetContributionAccountListByYear(System.Int32)">
+            <summary>
+            按时间统计收稿量
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionStatController.GetContributionAccountListByFund">
+            <summary>
+            按基金统计收稿量
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionStatController.GetContributionReturnList">
+            <summary>
+            获取退稿
+            </summary>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionStatController.GetContributionProcessList">
+            <summary>
+            获取过程稿
+            </summary>
+        </member>
+        <member name="F:Web.Admin.Controllers.FlashCompatibleAuthorizeAttribute.TOKEN_KEY">
+            <summary>
+            The key to the authentication token that should be submitted somewhere in the request.
+            </summary>
+        </member>
+        <member name="M:Web.Admin.Controllers.FlashCompatibleAuthorizeAttribute.AuthorizeCore(System.Web.HttpContextBase)">
+            <summary>
+            This changes the behavior of AuthorizeCore so that it will only authorize
+            users if a valid token is submitted with the request.
+            </summary>
+            <param name="httpContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.WordOnline.GetUploadPath(System.String)">
+            <summary>
+            获取完整路径
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.WordOnline.CheckWord(System.String)">
+            <summary>
+            判断是否为Word文档
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Web.Admin.WordOnline.ZSOfficeCtrl">
+            <summary>
+            ZSOfficeCtrl control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:Web.Admin.WordOnline.lblMsg">
+            <summary>
+            lblMsg control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="P:Web.Admin.WordOnline.FilePath">
+            <summary>
+            文件路径
+            </summary>
+        </member>
+        <member name="M:Web.Admin.Controllers.HomeController.SelectRole(System.String,System.String)">
+            <summary>
+            角色下拉框控件
+            </summary>
+            <param name="id"></param>
+            <param name="width"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.Tips">
+            <summary>
+            上传稿件提示页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.Stat">
+            <summary>
+            投稿声明
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.Index(System.Int64)">
+            <summary>
+            投稿主页
+            </summary>
+            <param name="CID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.SendSms(System.Int32,System.Int64)">
+            <summary>
+            发送消息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.NewArticles">
+            <summary>
+            新投稿
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.DraftIndex">
+            <summary>
+            暂存新稿
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.RetreatIndex">
+            <summary>
+            退修稿件
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.ProofIndex">
+            <summary>
+            已发校样
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.EmploymentIndex">
+            <summary>
+            录用稿件
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.ManuscriptIndex">
+            <summary>
+            退稿
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.FormatIndex">
+            <summary>
+            格式修改
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.NewStatus">
+            <summary>
+            最新状态
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.GetContributionListAjax(WKT.Model.CirculationEntity)">
+            <summary>
+            获取当前步骤的稿件列表
+            </summary>
+            <param name="cirEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.View(System.Int64)">
+            <summary>
+            查看详情(作者平台)
+            </summary>
+            <param name="CID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.ViewDetail(System.Int64,System.Int64,System.Int64)">
+            <summary>
+            查看详情(编辑平台)
+            </summary>
+            <param name="CID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.SearchViewDetail(System.Int64)">
+            <summary>
+            查看详情
+            </summary>
+            <param name="CID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.ViewExpert(System.Int64,System.Int32)">
+            <summary>
+            查看详情(专家平台)
+            </summary>
+            <param name="CID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.ReciveSmsIndex">
+            <summary>
+            收到信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.ReplySms(System.Byte)">
+            <summary>
+            回复信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.GetModel(System.Int64)">
+            <summary>
+            获取稿件实体
+            </summary>
+            <param name="CID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.GetMsgList(System.Int64,System.Int64,System.Byte)">
+            <summary>
+            获取消息记录
+            </summary>
+            <param name="CID"></param>
+            <param name="AuthorID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.GetFinanceList(System.Int64,System.Int64,System.Byte)">
+            <summary>
+            获取稿件费用记录
+            </summary>
+            <param name="CID"></param>
+            <param name="AuthorID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.GetFlowLogList(System.Int64,System.Int64,System.Byte)">
+            <summary>
+            获取审核日志
+            </summary>
+            <param name="CID"></param>
+            <param name="AuthorID"></param>
+            <param name="GroupID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.GetAuthorInfoModel(System.Int64)">
+            <summary>
+            获取作者信息
+            </summary>
+            <param name="AuthorID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.GetCRemarkModel(System.Int64,System.Int64)">
+            <summary>
+            获取稿件备注实体
+            </summary>
+            <param name="CID"></param>
+            <param name="AuthorID"></param>       
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionInfoController.GetAuthorDetailModel">
+            <summary>
+            获取作者详细信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.SiteMessageController.GetCurrentMsgList">
+            <summary>
+            获取当前人所有未读的站内消息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.SiteMessageController.AuthorSendMessage(System.Int64,System.Int32,WKT.Model.SiteMessageEntity)">
+            <summary>
+            作者平台发送短信(不用模版)
+            </summary>
+            <param name="CID"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.SiteMessageController.GetAuthorInfo(System.Int64,System.Int32)">
+            <summary>
+            获取接收人信息
+            </summary>
+            <param name="CID"></param>
+            <param name="Status"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.SiteChannelController.GetTree">
+            <summary>
+            获取菜单列表Ajax
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ReportController.GetAuthorDetail">
+            <summary>
+            获取作者字段信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ReportController.GetIssueSubscribe">
+            <summary>
+            获取期刊订阅字段信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ReportController.GetFinanceGlance">
+            <summary>
+            获取财务费用一览导出字段信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ReportController.GetFinanceAccount">
+            <summary>
+            获取财务登记与通知
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ReportController.GetContributionAccountByYear">
+            <summary>
+            获取按时间统计收稿量导出字段信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ReportController.GetContributionAccountByFund">
+            <summary>
+            获取按基金统计收稿量导出字段信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ReportController.GetContributionAccountByAuhor">
+            <summary>
+            获取按作者统计收稿量导出字段信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ReportController.GetContributionAccountByReturn">
+            <summary>
+            获取退稿导出字段信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ReportController.GetContributionAccountByProcessing">
+            <summary>
+            获取过程稿导出字段信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FinanceController.FinanceAccount">
+            <summary>
+            入款通知
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FinanceController.PayNotice(System.Byte,System.Int64,System.Int64)">
+            <summary>
+            通知单
+            </summary>
+            <param name="NoticeID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.UploadController.GetUploadPath(System.String)">
+            <summary>
+            获取完整路径
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.UploadController.DownProcess(System.Int64)">
+            <summary>
+            下载过程稿件
+            </summary>
+            <param name="path"></param>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.UploadController.CheckImage(System.String)">
+            <summary>
+            判断是否为图片
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Web.Admin.Controllers.AuthorController">
+            <summary>
+            作者、编辑、专家
+            </summary>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorController.FieldSet">
+            <summary>
+            字段设置
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorController.GetAuthorList(WKT.Model.AuthorInfoQuery)">
+            <summary>
+            获取作者列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorController.AuthorSearchList(System.String)">
+            <summary>
+            获取作者列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorController.GetFieldsAjax">
+            <summary>
+            得到字段设置
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorController.SaveFieldsSetAjax(System.Collections.Generic.List{WKT.Model.FieldsSet})">
+            <summary>
+            保存字段设置
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Web.Admin.Controllers.MenuController">
+            <summary>
+            系统菜单
+            </summary>
+        </member>
+        <member name="M:Web.Admin.Controllers.MenuController.View(System.Nullable{System.Int64})">
+            <summary>
+            查看
+            </summary>
+            <param name="MenuID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MenuController.GetMenuListAjax">
+            <summary>
+            获取菜单列表Ajax
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MenuController.GetMenuAjaxByRole(System.Int64)">
+            <summary>
+            获取菜单列表Ajax,角色权限用
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MenuController.GetExceptionMenuAjaxByRole(System.Int64,System.Nullable{System.Int64})">
+            <summary>
+            获取菜单列表Ajax
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MenuController.GetHaveRightMenuAjax">
+            <summary>
+            获取当前用户拥有权限的菜单列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MenuController.GetMenuAjax(System.Nullable{System.Byte})">
+            <summary>
+            获取菜单列表Ajax
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MenuController.SetMenuStatus(System.Byte,System.Int64[])">
+            <summary>
+            修改菜单状态
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.MenuController.SetMenuRight(System.Int64,System.Int64[])">
+            <summary>
+            菜单赋权
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Web.Admin.Controllers.RoleController">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="M:Web.Admin.Controllers.RoleController.Index">
+            <summary>
+            角色管理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.RoleController.RoleDialog">
+            <summary>
+            选择框
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.RoleController.Add">
+            <summary>
+            添加角色
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.RoleController.Edit(System.Nullable{System.Int64})">
+            <summary>
+            角色修改
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.RoleController.GetRoleListAjax">
+            <summary>
+            获取角色列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.RoleController.AddRole(WKT.Model.RoleInfoEntity)">
+            <summary>
+            新增角色
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.RoleController.UpdateRole(WKT.Model.RoleInfoEntity)">
+            <summary>
+            更新角色信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.RoleController.DelRole(System.Int64[])">
+            <summary>
+            删除角色列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Web.Admin.FangzAPI">
+            <summary>
+            FangzAPI 的摘要说明
+            </summary>
+        </member>
+        <member name="M:Web.Admin.FangzAPI.GetMagazineDoc(System.String,System.String,System.String)">
+            <summary>
+            获取杂志期刊信息
+            </summary>
+            <param name="strManuId"></param>
+            <param name="strUserID"></param>
+            <param name="strSafetyCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.FangzAPI.Login(System.String,System.String,System.String)">
+            <summary>
+            登录返回安全码
+            </summary>
+            <param name="strMagazineName"></param>
+            <param name="strUserName"></param>
+            <param name="strPassword"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.FangzAPI.GetMagazineStruct(System.String,System.String,System.String)">
+            <summary>
+            获取杂志栏目
+            </summary>
+            <param name="strMagazineID"></param>
+            <param name="strUserID"></param>
+            <param name="strSafetyCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.FangzAPI.UploadSingleFile(System.String,System.String,System.String,System.String)">
+            <summary>
+            回传排版稿件
+            </summary>
+            <param name="strManuId"></param>
+            <param name="strUserID"></param>
+            <param name="strSafetyCode"></param>
+            <param name="indexXml"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.FangzAPI.GetUploadPath(System.String)">
+            <summary>
+            获取完整路径
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Web.Admin.Controllers.UserController.VERFIYCODEKEY">
+            <summary>
+            验证码Key
+            </summary>
+        </member>
+        <member name="M:Web.Admin.Controllers.UserController.Login(System.String)">
+            <summary>
+            登录
+            </summary>
+            <param name="Group">登录分组:Author，Expert，Editor</param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.UserController.LoginAjax(System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            登录
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.UserController.Reg">
+            <summary>
+            注册
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.UserController.RegAjax(System.String,System.String,System.String,System.String)">
+            <summary>
+            注册
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.UserController.RetakePwd">
+            <summary>
+            重置密码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.UserController.RetakePwdAjax(System.String,System.String)">
+            <summary>
+            重置密码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.UserController.ResetPwd(System.Int64,System.String)">
+            <summary>
+            重置密码
+            </summary>
+            <param name="AuthorID"></param>
+            <param name="TokenCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.UserController.ExpertRedirect(System.Int64,System.String)">
+            <summary>
+            专家自动登录
+            </summary>
+            <param name="AuthorID"></param>
+            <param name="TokenCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.UserController.AuthorRedirect(System.Int64,System.String)">
+            <summary>
+            作者自动登录
+            </summary>
+            <param name="AuthorID"></param>
+            <param name="TokenCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.UserController.Logout">
+            <summary>
+            退出
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.UserController.GetGroup(WKT.Model.AuthorInfoEntity,System.String)">
+            <summary>
+            根据登录参数设置登录分组
+            </summary>
+            <param name="authorEntity"></param>
+            <param name="Group"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.UserController.GetAdminUrl">
+            <summary>
+            获取管理页面地址
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.IssueController.GetJournalChannelTree(System.String)">
+            <summary>
+            获取菜单列表Ajax
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.CurUserLoginName(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            当前登录人信息
+            </summary>
+            <param name="helper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.StatUrl(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            访问统计地址
+            </summary>
+            <param name="helper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SiteName(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            站点名称
+            </summary>
+            <param name="helper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.IsFinance(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            是否显示财务信息
+            </summary>
+            <param name="helper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.UploadFileExt(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            上传文件格式
+            </summary>
+            <param name="helper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.UploadPath(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            上传路径
+            </summary>
+            <param name="helper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.UploadImgExt(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            上传图片格式
+            </summary>
+            <param name="helper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.ContributionInfoFileExt(System.Web.Mvc.HtmlHelper,System.Int32)">
+            <summary>
+            获取稿件相关附件格式限制
+            </summary>
+            <param name="helper"></param>
+            <param name="type">0:稿件 1:附图 3:稿件pdf 4:介绍信</param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SiteHome(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            站点首页
+            </summary>
+            <param name="helper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.RootPath(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            资源根路径
+            </summary>
+            <param name="helper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.GetImages(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+            获取图片
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.GetIcons(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+            获取图标
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SelectDictionary``1(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            枚举键值集合下拉框控件
+            </summary>
+            <param name="helper"></param>       
+            <param name="id"></param>
+            <param name="width"></param>
+            <param name="selectedValue">选中值</param>
+            <param name="defaultValue"></param>
+            <param name="defaultText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SelectRole(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            角色下拉框控件
+            </summary>
+            <param name="helper"></param>       
+            <param name="id"></param>
+            <param name="width"></param>
+            <param name="selectedValue">选中值</param>
+            <param name="defaultValue"></param>
+            <param name="defaultText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SelectAllRole(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            带有作者和专家的角色下拉框控件
+            </summary>
+            <param name="helper"></param>       
+            <param name="id"></param>
+            <param name="width"></param>
+            <param name="selectedValue">选中值</param>
+            <param name="defaultValue"></param>
+            <param name="defaultText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SelectMsgTemplateList(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Int32,System.String,System.String,System.String)">
+            <summary>
+            邮件短信模版下拉框
+            </summary>
+            <param name="helper"></param>       
+            <param name="id"></param>
+            <param name="width">带px 如：150px</param>
+            <param name="ttype">类型 1:邮件 2:短信</param>
+            <param name="selectedValue">选中值</param>
+            <param name="defaultValue"></param>
+            <param name="defaultText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SelectTCategory(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Int32,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            邮件短信模版类型下拉框
+            </summary>
+            <param name="helper"></param>       
+            <param name="id"></param>
+            <param name="width">带px 如：150px</param>
+            <param name="ttype">类型 1:邮件 2:短信</param>
+            <param name="selectedValue">选中值</param>
+            <param name="defaultValue"></param>
+            <param name="defaultText"></param>
+            <param name="isChecked">是否去掉已经存在的模版 默认false</param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SelectEmailVariable(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            获取短信邮件全局变量下拉框
+            </summary>
+            <param name="helper"></param>       
+            <param name="id"></param>
+            <param name="width">带px 如：150px</param>       
+            <param name="selectedValue">选中值</param>
+            <param name="defaultValue"></param>
+            <param name="defaultText"></param>      
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SelectDcitValue(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            获取数据字典下拉框
+            </summary>
+            <param name="helper"></param>       
+            <param name="id"></param>
+            <param name="width">带px 如：150px</param>   
+            <param name="dictKey">字典值</param>
+            <param name="selectedValue">选中值</param>
+            <param name="defaultValue"></param>
+            <param name="defaultText"></param>      
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SelectJChannel(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            获取期刊栏目设置中的栏目下拉框
+            </summary>
+            <param name="helper"></param>       
+            <param name="id"></param>
+            <param name="width">带px 如：150px</param>       
+            <param name="selectedValue">选中值</param>
+            <param name="defaultValue"></param>
+            <param name="defaultText"></param>      
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SelSystemGroup(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            获取系统分组
+            </summary>
+            <param name="?"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SelectExpertGroup(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IList{WKT.Model.ExpertGroupMapEntity})">
+            <summary>
+            获取专家分组
+            </summary>
+            <param name="helper"></param>
+            <param name="name"></param>        
+            <param name="list"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SelectIssueYear(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            获取期刊年卷下拉框
+            </summary>
+            <param name="helper"></param>
+            <param name="id"></param>
+            <param name="width"></param>
+            <param name="selectedValue"></param>
+            <param name="defaultValue"></param>
+            <param name="defaultText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SelectIssueSet(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            获取期刊期数下拉框
+            </summary>
+            <param name="helper"></param>
+            <param name="id"></param>
+            <param name="width"></param>
+            <param name="selectedValue"></param>
+            <param name="defaultValue"></param>
+            <param name="defaultText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SelectFlowStatus(System.Web.Mvc.HtmlHelper,System.Int64,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            获取审稿状态
+            </summary>
+            <param name="helper"></param>
+            <param name="name"></param>        
+            <param name="list"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.SelectYear(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            获取年下拉框
+            </summary>
+            <param name="helper"></param>
+            <param name="id"></param>
+            <param name="width"></param>
+            <param name="selectedValue"></param>
+            <param name="defaultValue"></param>
+            <param name="defaultText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.GetSubHtmlText(System.Web.Mvc.HtmlHelper,System.String,System.Int32)">
+            <summary>
+            获取截取内容
+            </summary>
+            <param name="board"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.HtmlHelperExtensions.UrlEncode(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+            URL编码
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.ExceptionContribution">
+            <summary>
+            异常稿件处理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.SetYearIssue">
+            <summary>
+            设置年卷期
+            </summary>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.MergeStatus(System.Int64)">
+            <summary>
+            合并稿件状态
+            </summary>
+            <param name="CID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.ContributionDialog(System.Int64)">
+            <summary>
+            稿件状态列表
+            </summary>
+            <param name="CID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.Download(System.String,System.Int64,System.String)">
+            <summary>
+            稿件下载
+            </summary>
+            <param name="CType">稿件类型：Flow：流程附件 为空则为稿件附件</param>
+            <param name="CID">稿件ID</param>
+            <param name="AttType">附件类型，当为流程附件时可以指定下载哪个附件，附件一：CPath附件二：FigurePath附件三：OtherPath</param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.SetYearVolumnIssueAjax(WKT.Model.IssueContentQuery)">
+            <summary>
+            设置年卷期
+            </summary>
+            <param name="autoAllotEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.GetContributionFlowStatusListAjax(WKT.Model.FlowLogInfoQuery)">
+            <summary>
+            获取指定稿件的状态列表
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.MergeStatusAjax(WKT.Model.FlowLogInfoQuery)">
+            <summary>
+            稿件状态合并
+            </summary>
+            <param name="flowLogQuery"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.JudgeIsMoreStatusAjax(WKT.Model.FlowLogInfoQuery)">
+            <summary>
+            稿件状态合并
+            </summary>
+            <param name="flowLogQuery"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.SetAutoAllotAjax(WKT.Model.EditorAutoAllotEntity)">
+            <summary>
+            投稿自动分配设置
+            </summary>
+            <param name="autoAllotEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.NumberSet">
+            <summary>
+            稿件编号设置
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.Statement">
+            <summary>
+            投稿声明
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.FieldsSet">
+            <summary>
+            投稿字段设置
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.SetNumberFormatAjax(WKT.Model.ContributeSetEntity)">
+            <summary>
+            稿件编号格式设置
+            </summary>
+            <param name="cSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.SetStatementAjax(WKT.Model.ContributeSetEntity)">
+            <summary>
+            投稿声明设置
+            </summary>
+            <param name="cSetEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.GetFieldsAjax">
+            <summary>
+            得到字段设置
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.SaveFieldsSetAjax(System.Collections.Generic.List{WKT.Model.FieldsSet})">
+            <summary>
+            保存字段设置
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.PrintSign(System.String)">
+            <summary>
+            打印信封
+            </summary>
+            <param name="CID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.PrintEnvelope(System.String)">
+            <summary>
+            打印信封
+            </summary>
+            <param name="CID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.Search">
+            <summary>
+            搜索
+            </summary>
+            <param name="cirEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.ContributionArea">
+            <summary>
+            稿件处理专区
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.ViewRetraction(System.Int64)">
+            <summary>
+            查看撤稿申请
+            </summary>
+            <param name="CID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.GetContributionListAjax(WKT.Model.CirculationEntity)">
+            <summary>
+            获取当前步骤的稿件列表
+            </summary>
+            <param name="cirEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.SearchContributionListAjax(WKT.Model.CirculationEntity)">
+            <summary>
+            获取当前步骤的稿件列表
+            </summary>
+            <param name="cirEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.SearchImportExcel(WKT.Model.CirculationEntity)">
+            <summary>
+            导出搜索的稿件列表
+            </summary>
+            <param name="cirEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.GetExceptionContributionListAjax(WKT.Model.CirculationEntity)">
+            <summary>
+            获取没有设置责任编辑的异常稿件
+            </summary>
+            <param name="cirEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.GetReturnContributionListAjax(WKT.Model.CirculationEntity)">
+            <summary>
+            获取没有设置责任编辑的异常稿件
+            </summary>
+            <param name="cirEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.GetHaveRightFlowStatus(System.Nullable{System.Byte})">
+            <summary>
+            获取当前人可以处理的稿件状态
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.GetFlowStatusStat">
+            <summary>
+            获取稿件状态统计
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.GetFlowActionByStatus(WKT.Model.FlowActionQuery)">
+            <summary>
+            获取当前状态下的可做操作
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.SetContributionFlagAjax(System.Collections.Generic.List{WKT.Model.ContributionInfoQuery})">
+            <summary>
+            设置稿件旗帜标记
+            </summary>
+            <param name="cEntityList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.SetContributionQuickAjax(System.Collections.Generic.List{WKT.Model.ContributionInfoQuery})">
+            <summary>
+            设置稿件加急标记
+            </summary>
+            <param name="cEntityList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.ContributionController.DeleteContributionAjax(System.Collections.Generic.List{WKT.Model.ContributionInfoQuery})">
+            <summary>
+            设置稿件删除标记
+            </summary>
+            <param name="cEntityList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorFinanceController.ToMakeMoney(System.Byte)">
+            <summary>
+            待交稿费
+            </summary>
+            <param name="FeeType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorFinanceController.GoServiceRecharge(System.Int64)">
+            <summary>
+            在线支付
+            </summary>
+            <param name="NoticeID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorFinanceController.GoPay(WKT.Model.PayNoticeEntity,System.String)">
+            <summary>
+            在线支付
+            </summary>
+            <param name="model"></param>
+            <param name="ProductTable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.EmailTempController.SendEmail(WKT.Model.MessageRecodeEntity,System.Boolean,System.String,System.String)">
+            <summary>
+            群发
+            </summary>
+            <param name="model"></param>
+            <param name="IsAuthor"></param>
+            <param name="ReciveUserStr"></param>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.EmailTempController.AuthorSendEmail(System.Int64,System.Int32,WKT.Model.MessageRecodeEntity)">
+            <summary>
+            作者平台发送邮件(不用模版)
+            </summary>
+            <param name="CID"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.EmailTempController.GetAuthorInfo(System.Int64,System.Int32)">
+            <summary>
+            获取接收人信息
+            </summary>
+            <param name="CID"></param>
+            <param name="Status"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorDetailController.AuthorIndex">
+            <summary>
+            作者管理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorDetailController.ExpertIndex">
+            <summary>
+            专家管理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorDetailController.Create(System.Int64,System.Byte)">
+            <summary>
+            添加修改专家作者
+            </summary>
+            <param name="AuthorID"></param>
+            <param name="GroupID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorDetailController.UpdateSelf">
+            <summary>
+            作者专家完善个人信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorDetailController.SetExpert(System.Int64[])">
+            <summary>
+            设置为专家
+            </summary>
+            <param name="AuthorIDs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorDetailController.CancelExpert(System.Int64[])">
+            <summary>
+            取消设置为专家
+            </summary>
+            <param name="AuthorIDs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.AuthorDetailController.GetExpertGroupMapHtml(System.Int32)">
+            <summary>
+            获取显示html
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.SmsTempController.AuthorSendSms(System.Int64,System.Int32,WKT.Model.MessageRecodeEntity)">
+            <summary>
+            作者平台发送短信(不用模版)
+            </summary>
+            <param name="CID"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.SmsTempController.GetAuthorInfo(System.Int64,System.Int32)">
+            <summary>
+            获取接收人信息
+            </summary>
+            <param name="CID"></param>
+            <param name="Status"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Admin.Controllers.FangzApiController.SingleSendTypesetting(System.Int64)">
+            <summary>
+            单篇送排
+            </summary>
+            <param name="CID"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Web.Admin.Controllers.VerifyCodeController.VERFIYCODEKEY">
+            <summary>
+            验证码Key
+            </summary>
+        </member>
+        <member name="M:Web.Admin.Controllers.VerifyCodeController.VerifyCode">
+            <summary>
+            验证码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Web.Admin.Controllers.VerifyCodeController.VerifyCodeText">
+            <summary>
+            验证码
+            </summary>
+        </member>
+    </members>
+</doc>

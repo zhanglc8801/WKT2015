@@ -1,0 +1,108 @@
+﻿<style>
+    .mainTable
+    {
+        margin: 0px;
+        padding: 2px;
+        border: 2px solid;
+        width: 100%;
+    }
+    .SecTable
+    {
+        background: rgb(195, 195, 195);
+        margin: 10px;
+        padding: 2px;
+    }
+    td
+    {
+        padding: 2px 5px;
+        border: 1px solid;
+        height: 24px;
+        color: rgb(68, 68, 68);
+        line-height: 20px;
+        font-size: 12px;
+        background-color: rgb(255, 255, 255);
+    }
+    th
+    {
+        border: 1px solid;
+        height: 24px;
+        color: rgb(102, 102, 102);
+        line-height: 24px;
+        font-weight: bold;
+    }
+    td.right_r
+    {
+        background: rgb(238, 247, 253);
+        height: 72px;
+        color: rgb(102, 102, 102);
+        line-height: 24px;
+        font-weight: bold;
+    }
+    td.right_b
+    {
+        background: rgb(238, 247, 253);
+        height: 216px;
+        color: rgb(102, 102, 102);
+        line-height: 24px;
+        font-weight: bold;
+    }
+</style>
+<div style="padding-left: 10px; border-bottom: 1px solid #ccc;">
+    <input type="button" value="打印" style="width: 80px;" id="btnPrint" class="l-button" />
+</div>
+<div id="divSign" style="margin: 10px;">
+    @Html.Raw(ViewBag.SignContent)
+</div>
+<div style="display: none">
+    <form name="action_command" action="" target="_self" method="post">
+    </form>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#btnPrint").click(function () {
+                if (!confirm("您确定打印该稿签吗吗？")) return;
+                var html = '<input type="hidden" name="CID" value="@ViewBag.CID"/>';
+                print();
+                window.close();
+                // $('form[name="action_command"]').html(html).attr("action", '@Html.RootPath()/FlowSet/BillContentReport').attr("method", "post").submit();
+            });
+        });
+
+        function EnvelopePrint() {
+            if (!confirm("您确定导出稿签吗？")) return;
+            var html = '<input type="hidden" name="html" value="' + encodeURIComponent($("#divSign").html()) + '"/>';
+            $('form[name="action_command"]').html(html).attr("action", '@Html.RootPath()/Contribution/SignToWord').attr("method", "post").submit();
+        }
+    </script>
+    <script type="text/javascript">
+        var HKEY_Root, HKEY_Path, HKEY_Key;
+        HKEY_Root = "HKEY_CURRENT_USER";
+        HKEY_Path = "\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+        //设置网页打印的页眉页脚为空 
+        function PageSetup_Null() {
+            try {
+                var Wsh = new ActiveXObject("WScript.Shell");
+                HKEY_Key = "header";
+                Wsh.RegWrite(HKEY_Root + HKEY_Path + HKEY_Key, "");
+                HKEY_Key = "footer";
+                Wsh.RegWrite(HKEY_Root + HKEY_Path + HKEY_Key, "");
+            }
+            catch (e) {
+            }
+        }
+
+        function preview() {
+            PageSetup_Null();
+            var bdhtml = window.document.getElementById("divSign").innerHTML;
+
+            window.document.body.innerHTML = bdhtml;
+            window.print();
+            window.close();
+        }
+
+        function TiLocal() {
+
+        }
+    </script>
+}

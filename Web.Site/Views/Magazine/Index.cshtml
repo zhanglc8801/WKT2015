@@ -1,0 +1,135 @@
+﻿@model WKT.Model.Pager<WKT.Model.IssueContentEntity>
+@{
+    ViewBag.Title = "期刊检索" + "-" + Html.SiteName();
+    ViewBag.Position = "期刊检索";
+}
+
+
+<div class="C_right" style=" height: auto; min-height:740px;">
+    <h4 class="list_site">您当前的位置：<a href="/">首页</a> &gt;&gt; <a>期刊列表</a></h4>
+    <div style="background-color:#bdd9ca; text-align:center;width: 798px; margin-top:-5px; margin-bottom:5px;">
+        <table style="text-align:center;">
+            <tr>
+                <td>                        
+                    <font style="font-size:13px;">标题：</font><input type="text" id="Title2" style="width:100px;" />
+                    <font style="font-size:13px;">作者：</font><input type="text" id="Authors2" style="width:80px;" />
+                    <input type="hidden" id="WorkUnit2" style="width:100px;" />&nbsp;
+                    <font style="font-size:13px;">关键词：</font><input type="text" id="Key2" style="width:80px;" />
+                    <select id="Year2">
+                        <option value="" style="width:115px;">所有年</option>
+                        @foreach (WKT.Model.YearVolumeEntity item in Html.GetYearVolumeList())
+                        {
+                            <option value="@item.Year">@(item.Year)年</option>
+                        }                       
+                    </select>&nbsp;
+                    <select id="Issue2">
+                        <option value="" style="width:115px;">所有期</option>
+                        @foreach (WKT.Model.IssueSetEntity item in Html.GetIssueSetList())
+                        {
+                            <option value="@item.Issue">No.@item.Issue</option>
+                        }
+                    </select>&nbsp;
+                    <select id="MenuTree2">
+                        <option value="" style="width:115px;">所有栏目</option>
+                        @foreach (WKT.Model.JournalChannelEntity item in Html.GetJournalChannelList())
+                        {
+                            if (item.JChannelID != 20)
+                            {
+                                <option value="@item.JChannelID">@(item.ChannelName)</option>
+                            }
+                        }
+                    </select>
+                    <input type="submit" name="btnSearch" value="查询" id="btnSearch" onclick="Search(1)" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <table id="tab" border="0" cellspacing="0" cellpadding="0" style="width: 798px;" >
+        @foreach (WKT.Model.IssueContentEntity item in Model.ItemList)
+        {
+           <tr>
+               <td style="border-bottom:1px #c5c5c5 dashed;"></td>
+               <td style="border-bottom:1px #c5c5c5 dashed;">
+                   <ul style="float:left; text-decoration:none;padding-bottom:5px; padding-top:5px; padding-left:5px; padding-right:5px; font-size:12px;">
+                       <li style=" margin-bottom:5px;"><a href="/Magazine/show/?id=@item.ContentID" style="color:#3A3838; font-weight:bold; font-size:12px;">@Html.CleanHtml(item.Title)</a></li>
+                       <li style="line-height:20px;"><span style="color:#207d44;">[摘要]</span>@Html.CleanHtmlCutString(item.Abstract, 250, "")</li> 
+                       <li style="color:#666; margin-top:3px;">作者：@Html.CleanHtmlNbsp(item.Authors)</li>       
+                       <li style=" padding-top:5px;"><span style="color:#207d44;">全文</span>[ <a href="/Stat/FileDownload?ContentID=@item.ContentID&fileName=@Html.CleanHtmlNbsp(item.Title)" id="@item.ContentID" style="color:#207d44;">PDF</a> @item.FileSize KB ] @item.Year.@item.Volume（@item.Issue）：@item.StartPageNum-@item.EndPageNum  &nbsp;共有 @item.Hits 人次浏览</li>    
+                   </ul>
+                   @{
+            if (item.Issue == 7)
+            {
+                <span></span>
+            }    
+                    }
+               </td>
+           </tr> 
+        }
+        
+    </table>
+    <div class="digg">
+        @Html.Raw(ViewBag.PagerInfo)
+    </div>
+
+</div>
+
+        <div>&nbsp;</div>       
+        <div id="footer" style=" margin-top:-15px;">
+            <p></p><br/>
+            <p>北京市丰台区东大街8号信息楼 《灾害医学与救援（电子版）》 编辑部<br />
+                电话：（010）66947905，（010）51128591 传真：（010）66947906</p>
+        </div>
+
+
+<script type="text/javascript">
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)
+            return unescape(r[2]);
+        return null;
+    }
+
+    document.getElementById("Year2").value = getQueryString("Year") == null ? "" : getQueryString("Year");
+    document.getElementById("Issue2").value = getQueryString("Issue") == null ? "" : getQueryString("Issue");
+    document.getElementById("MenuTree2").value = getQueryString("JChannelID") == null ? "" : getQueryString("JChannelID");
+
+    //document.getElementById("Title2").value = getQueryString("Title") == null ? "" : getQueryString("Title");
+    document.getElementById("Authors2").value = getQueryString("Authors") == null ? "" : getQueryString("Authors");
+    document.getElementById("WorkUnit2").value = getQueryString("WorkUnit") == null ? "" : getQueryString("WorkUnit");
+    document.getElementById("Key2").value = getQueryString("Title") == null ? "" : getQueryString("Title");
+
+</script>
+
+<script type="text/javascript">
+
+    function DownloadPDF(ContentID, filename) {
+        debugger
+        $.ajax({
+            type: 'POST',
+            url: '/stat/CheckLogin',
+            data: '',
+            success: function (data) {
+                if (data.flag == "0") {
+                    $("#" + ContentID).attr('data-reveal-id', 'myModal');
+                    $("#" + ContentID).click();
+                    document.getElementById("hiddenRefererUrl").value = "/Stat/FileDownload?ContentID=" + ContentID + "&fileName=" + filename;
+                }
+                else if (data.flag == "1") {
+                    //window.open("/Stat/FileDownload?ContentID=" + ContentID, "_self");
+                    window.location.href = "/Stat/FileDownload?ContentID=" + ContentID + "&fileName=" + filename;
+                }
+                else {
+                    alert(data.flag);
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }    
+    
+    </script>
+
+

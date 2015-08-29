@@ -1,0 +1,39 @@
+﻿@model WKT.Model.Pager<WKT.Model.IssueContentEntity>
+@{
+    ViewBag.Title = "期刊检索" + "-" + Html.SiteName();
+    ViewBag.Position = "期刊排序";
+}
+<div id="center2"> 
+    <div class="wz">
+        <table cellspacing="1" cellpadding="3" align="Center" rules="all" border="0" id="MagazineList" style="border-width:0px;width:100%;">
+	        <tr class="HeaderTitle" align="center" valign="middle" style="height:25px;">
+		        <th scope="col">文章标题</th><th scope="col">文章作者</th><th scope="col">年,卷(期):页码</th><th scope="col">下载次数</th><th scope="col">浏览次数</th>
+	        </tr>
+            @foreach (WKT.Model.IssueContentEntity item in Model.ItemList)
+            {
+            <tr class="MagazineTitle" valign="middle" style="background-color:White;">
+		        <td align="left">
+                    · <a href='/Magazine/Show/?ID=@item.ContentID' target="_blank" title='@item.Title'>@item.Title</a>
+                </td>
+                <td align="left">
+                    @item.Authors
+                </td>
+                <td class="PageClass" align="left">
+                    @(item.Year),@(item.Volume)(@(item.Issue)):@item.PageNumber
+                </td>
+                <td align="left">
+                    @item.Downloads
+                </td>
+                <td align="left">
+                    @item.Hits
+                </td>
+	        </tr>
+           }
+        </table>
+        <div style="text-align: right; margin-top:10px;">
+            <div id="pageArticleControl" class="Pager">
+            @Html.Raw(ViewBag.PagerInfo)
+            </div>
+        </div>
+    </div>
+</div>

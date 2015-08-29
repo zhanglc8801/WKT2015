@@ -1,0 +1,44 @@
+﻿<style type="text/css">
+img{vertical-align:middle;}
+</style>
+<div class="clear"></div>
+<div id="box">
+    <div id="divContributionGrid"></div><input type="hidden" id="hiddenStatus" /><input type="hidden" id="hiddenWorkStatus" value="0" />
+</div>
+<form name="action_command" action="" target="_self" method="post"></form>
+@section Scripts{
+
+<link rel="stylesheet" href="@Html.RootPath()/content/ui/jquery.ui.all.css"/>
+<script src="@Html.RootPath()/Scripts/ui/jquery.ui.core.js" type="text/javascript"></script>
+<script src="@Html.RootPath()/Scripts/ui/jquery.ui.widget.js" type="text/javascript"></script>
+<script src="@Html.RootPath()/Scripts/ui/jquery.ui.position.js" type="text/javascript"></script>
+<script src="@Html.RootPath()/Scripts/ui/jquery.ui.menu.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    var RootPath = '@Html.RootPath()';
+    var contributiongrid;
+    $(function () {
+        // 稿件列表
+        contributiongrid = $("#divContributionGrid").ligerGrid({
+            columns: [
+            { display: '稿件编号', name: 'CNumber', width: '70', align: 'center' },
+            { display: '稿件标题', name: 'Title', width: '250', align: 'left', render: function (item) {
+                var title = item.Title;
+                title = item.IsQuick == true ? "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/up.gif' alt='加急稿件' title='加急稿件'/>&nbsp;" + title : title;
+                if (item.Flag != "") {
+                    title = "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/" + item.Flag + ".gif' alt='旗帜标记' title='旗帜标记'/>&nbsp;" + title;
+                }
+                return title;
+            }
+            },
+            { display: '作者', name: 'AuthorName', width: '70', align: 'center' },
+            { display: '处理人', name: 'RecUserName', width: '70', align: 'center' },
+            { display: '天数', name: 'Days', width: '60', align: 'center' },
+            { display: '投稿时间', name: 'AddDate', width: '100', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm:ss' },
+            ], delayLoad: false, width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+            url: '@Html.RootPath()/Contribution/GetContributionListAjax?rnd=' + Math.random(), pageSize: 15, parms: { 'StatusID': @ViewBag.StatusID, 'IsHandled': 2 }
+        });
+    });
+
+</script>
+}

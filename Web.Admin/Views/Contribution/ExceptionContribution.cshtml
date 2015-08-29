@@ -1,0 +1,161 @@
+﻿<style type="text/css">
+    img
+    {
+        vertical-align: middle;
+    }
+</style>
+<div style="" id="notice_container" class="notice notice0">
+    <div class="c">
+        稿件编号：<input type="text" name="CNumber" class="txtbox" id="txtCNumber" />&nbsp;&nbsp;稿件标题：<input
+            type="text" name="Title" class="txtbox" id="txtTitle" />&nbsp;&nbsp;关&nbsp;键&nbsp;&nbsp;词：<input
+                type="text" name="Keyword" class="txtbox" id="txtKeyword" />
+    </div>
+    <div class="c">
+        第一作者：<input type="text" name="Author" class="txtbox" id="txtAuthor" />&nbsp;&nbsp;投&nbsp;稿&nbsp;&nbsp;人：<input
+            type="text" name="InAuthor" class="txtbox" id="txtInAuthor" style="width: 125px;" /><input
+                type="hidden" id="hiddenInAuthor" />&nbsp;<img src="@Html.GetImages("zoom.jpg")" style="cursor:pointer;" id="selAuthor" alt="选择投稿人" title="选择投稿人"/>
+        <span style="margin-left: 62px;">
+            <input type="button" value="搜索" class="btnsearch" id="btnSearch" />&nbsp;<input type="button"
+                value="重置" class="btnreset" id="btnReset" /></span>
+    </div>
+</div>
+<div class="clear">
+</div>
+<div id="box">
+    <div id="divTopmenu">
+    </div>
+    <div id="divContributionGrid">
+    </div>
+</div>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/page/page.contributionarea.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var RootPath = '@Html.RootPath()';
+        var contributiongrid;
+        $(function () {
+            // 菜单
+            $("#divTopmenu").ligerMenuBar({ items: [
+                { text: '<img src="@Html.RootPath()/Content/ligerUI/skins/icons/settings.gif" alt="设置责编" title="设置责编"/><b style="margin-top:2px;">设置责编</b>', click: SetEditor }
+            ]
+            });
+            // 稿件列表
+            contributiongrid = $("#divContributionGrid").ligerGrid({
+                columns: [
+            { display: '作者ID', name: 'AuthorID', hide: true },
+            { display: '稿件ID', name: 'CID', width: '6%', align: 'center', hide: true },
+            { display: '日志ID', name: 'FlowLogID', hide: true },
+            { display: '稿件编号', name: 'CNumber', width: '10%', align: 'center' },
+            { display: '稿件标题', name: 'Title', width: '20%', align: 'left', render: function (item) {
+                var title = item.Title;
+                title = item.IsQuick == true ? "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/up.gif' alt='加急稿件' title='加急稿件'/>&nbsp;" + title : title;
+                if (item.Flag != "") {
+                    title = "<img src='@Html.RootPath()/Content/ligerUI/skins/icons/" + item.Flag + ".gif' alt='旗帜标记' title='旗帜标记'/>&nbsp;" + title;
+                }
+                title = '<a href="javascript:void(0)" onclick="ViewDetail(' + item.CID + ',\'' + item.CNumber + '\',' + getStatus()+ "," + item.FlowLogID + ')">' + title + '</a>';
+                return title;
+            }
+            },
+            { display: '学科分类', name: 'SubjectCatName', width: '12%', align: 'center' },
+            { display: '第一作者', name: 'FirstAuthor', width: '8%', align: 'center' },
+            { display: '投稿人', name: 'AuthorName', width: '8%', align: 'center' },
+            { display: '稿件状态', name: 'AuditStatus', width: '8%', align: 'center' },
+            { display: '投稿时间', name: 'AddDate', width: '10%', align: 'center', type: 'date', format: 'yyyy-MM-dd hh:mm:ss' }
+            ], delayLoad: false, width: '99.5%', height: '98%', rownumbers: false, usePager: true, checkbox: true,
+                url: '@Html.RootPath()/Contribution/GetExceptionContributionListAjax?rnd=' + Math.random(), pageSize: 15
+            });
+
+            // 选择投稿人
+            $("#selAuthor").click(function () {
+                var common = new CommonPage();
+                common.SelAuthor("txtInAuthor", "hiddenInAuthor");
+            });
+            // 搜索
+            $("#btnSearch").click(function () {
+                Search();
+            });
+            // 重置
+            $("#btnReset").click(function () {
+                $("#txtCNumber").val("");
+                $("#txtTitle").val("");
+                $("#txtKeyword").val("");
+                $('#selActionStatus')[0].options[0].selected = true;
+                $("#txtAuthor").val("");
+                $("#hiddenInAuthor").val("");
+                $("#txtInAuthor").val("");
+            });
+
+            $("#selEditor").click(function () {
+                var common = new CommonPage();
+                common.SelMember("txtEditor", "hiddenEditor");
+            });
+        });
+
+        function Search() {
+            contributiongrid.setOptions({ parms: {
+                CNumber: $("#txtCNumber").val(),
+                Title: $("#txtTitle").val(),
+                Keyword: $("#txtKeyword").val(),
+                FirstAuthor: $("#txtAuthor").val(),
+                AuthorID: $("#hiddenInAuthor").val()
+            }
+            });
+            contributiongrid.loadData();
+        }
+
+        // 设置责任编辑
+        function SetEditor() {
+            var rows = contributiongrid.getSelectedRows();
+            if (rows == "") { alert('请选择要设置的稿件'); return; }
+            var cArray = new Array();
+            for (i = 0; i < rows.length; i++) {
+                cArray.push(rows[i].CID);
+            }
+            var seldialog = $.ligerDialog.open({ height: 420, url: RootPath + '/member/seldialog', title: '选择责编', width: 580, slide: false, buttons: [
+            { text: '确定', onclick: function (item, dialog) {
+                rows = dialog.frame.memberSelDialog.getSelectedRows();
+                if (rows == "") { alert('请选择指定的责编'); return; }
+                SetContributionEditor(cArray, rows[0].AuthorID);
+                dialog.close();
+            }
+            },
+            { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+            ]
+            });
+        }
+
+        function SetContributionEditor(CIDArray, AuthorID) {
+            $.ajax({
+                beforeSend: function () {
+
+                },
+                type: 'POST',
+                url: RootPath + '/Contribution/SetContributionEditor/?rnd=' + Math.random(),
+                data: { "CIDArray": CIDArray, "AuthorID": AuthorID },
+                cache: false,
+                traditional: true,
+                success: function (data) {
+                    var e = eval("(" + data + ")");
+                    if (e.result == 'success') {
+                        alert('设置成功');
+                        contributiongrid.loadData();
+                    }
+                    else if (e.result == 'failure') {
+                        alert(e.msg);
+                    }
+                    else if (e.result == 'error') {
+                        alert(e.msg);
+                    }
+                },
+                error: function (xhr) {
+                    alert('数据源访问错误' + '\n' + xhr.responseText);
+                }
+            });
+        }
+
+        function getStatus() {
+                return 0;
+        }
+    </script>
+}

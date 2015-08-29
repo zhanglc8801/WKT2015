@@ -1,0 +1,123 @@
+﻿<style type="text/css">   
+    .l-table-edit-td-left{ padding:4px;text-align:right;width:90px;}
+    .l-table-edit-td{ padding:4px;}  
+    .l-button-search{width:80px; float:left; margin-left:10px; padding-bottom:2px;}    
+</style>
+<div id="divSearch">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="right" class="l-table-edit-td-left">
+                模版类型：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                @Html.Raw(Html.SelectTCategory("ddlTCategory", "150px", 2, string.Empty, string.Empty, "全部"))
+            </td>
+            <td align="right" class="l-table-edit-td-left">
+                模版名称：
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="text" id="txtTitle" ltype="text" maxlength="25" />
+            </td>
+            <td>
+                <input type="button" id="btnSearch" value="搜索" class="l-button l-button-search" />
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+<div id="divList" style="margin-top:5px;"></div>
+@section Scripts{
+<script type="text/javascript">
+    var manager;
+    $(function () {
+        $("form").ligerForm({ inputWidth: 150 });
+        window['g'] =
+        manager = $("#divList").ligerGrid({
+            columns: [
+            { display: '模版名称', name: 'Title', width: '20%', align: 'left' },
+            { display: '模版类型', name: 'TCategory', width: '10%', align: 'center', render: function (item) {
+                return GetDLLText("ddlTCategory", item.TCategory);
+            }
+            },
+            { display: '短信内容', name: 'TContent', width: '40%', align: 'left' },
+            { display: '创建时间', name: 'AddDate', width: '28%', align: 'center', type: 'date', format: 'yyyy-MM-dd' }
+            ], width: '99.5%', height: '95%', rownumbers: false, usePager: true, checkbox: true,
+            url: '@Html.RootPath()/SmsTemp/GetPageList', pageSize: 20, enabledSort: false,
+            toolbar: { items: [
+            { text: '新增', click: AddSmsTemp, icon: 'add' },
+            { line: true },
+            { text: '修改', click: UpdateSmsTemp, icon: 'modify' },
+            { line: true },
+            { text: '删除', click: DelSmsTemp, icon: 'delete' }
+            ]
+            }
+        });
+        $("#btnSearch").click(function () {
+            manager.setOptions({ parms: {
+                TCategory: $("#ddlTCategory").val(),
+                Title: $("#txtTitle").val()
+            }
+            });
+            manager.loadData();
+        });
+    });
+
+    function AddSmsTemp() {
+        $.ligerDialog.open({
+            height: 260,
+            width: 550,
+            url: '@Html.RootPath()/SmsTemp/Create',
+            title: '新增短信模版',
+            slide: false,
+            buttons: [{ text: '确认', onclick: function (item, dialog) {
+                dialog.frame.Save(manager, dialog);
+            }
+            }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+        });
+    }
+
+    function UpdateSmsTemp() {
+        var rows = manager.getSelectedRows();
+        if (rows == "") { alert('请选择需要编辑的数据！'); return; }
+        $.ligerDialog.open({
+            height: 260,
+            width: 550,
+            url: '@Html.RootPath()/SmsTemp/Create?TemplateID=' + rows[0].TemplateID,
+            title: '编辑短信模版',
+            slide: false,
+            buttons: [{ text: '确认', onclick: function (item, dialog) {
+                dialog.frame.Save(manager, dialog);
+            }
+            }, { text: '关闭', onclick: function (item, dialog) { dialog.close(); } }]
+        });
+    }
+
+    function DelSmsTemp() {
+        var rows = manager.getSelectedRows();
+        if (rows == "") { alert('请选择需要删除的数据！'); return; }
+        var data = [];
+        for (i = 0; i < rows.length; i++) {
+            data.push(rows[i].TemplateID);
+        }
+        if (!confirm("确定删除所选的数据吗？")) return;
+        $.ajax({
+            type: 'POST',
+            url: '@Html.RootPath()/SmsTemp/Delete/',
+            data: { "TemplateIDs": data },
+            cache: false,
+            traditional: true,
+            success: function (data) {
+                alert(data.msg);
+                if (data.result == "success") {
+                    manager.loadData();
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+</script>
+}
+

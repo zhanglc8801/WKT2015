@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = Html.SiteName();
+    WKT.Model.IssueSiteEntity CurIssueInfo = Html.GetCurIssueInfo();
+}
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    $(function () {
+        $('#activator').click(function () {
+            $('#box').animate({ 'top': '65px' }, 500);
+        });
+        $('#boxclose').click(function () {
+            $('#box').animate({ 'top': '-400px' }, 500);
+        });
+
+        $('#btnLogin').click(function () {
+            $('#noLogin').animate({ 'top': '65px' }, 500);
+        });
+
+        $('#noLoginClose').click(function () {
+            $('#noLogin').animate({ 'top': '-400px' }, 500);
+        });
+
+    });
+    $(document).ready(function () {
+        $(".toggle_container").hide();
+        $(".trigger").click(function () {
+            $(this).toggleClass("active").next().slideToggle("slow");
+            return false;
+        });
+
+    });
+</script>
+    <div id="main_container">
+        <div style=" text-align:center; margin-left: auto; margin-right:auto; z-index: -10;">
+            <img src="/Content/images/top_bg.png" style=" margin-left: auto; margin-right: auto; width: 100%;" />
+        </div>
+	<div class="logo"></div>
+        <!--登录对话框-->
+        <div class="box" id="noLogin">
+            <div class="box_content">
+                <div class="box_content_tab">请您登录</div>
+                <div class="box_content_center">
+                    <div class="form_content">
+                        <label>用户名:</label>
+                        <input type="text" class="form_input" id="txtUserName" name="txtUserName" value="" />
+                        <label>密码:</label>
+                        <input type="text" class="form_input" id="txtPwd" name="txtPwd" value="" />
+                        <input id="remAutoLogin" type="checkbox" /><label style="font-size: 12px;">记住密码</label>&nbsp;<label id="msg" style="font-size: 12px; float: right;"></label><br/>
+                        <a class="boxclose" id="noLoginClose">关闭</a>
+                        <input type="button" id="btnLogin" class="form_submit" style="width: 100px;" value="登录" />
+                    </div> 
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    
+    <div id="welcome" style="float:right;color:#302f2f; margin-right:5px;"></div>
+	<div class="menu">
+    	<ul>
+            <li><a href="/Magazine/"><img src="/Content/images/icon1.png" border="0" alt="" title=""/>期刊目录</a></li>
+            <li><a href="/ContributionInfo/NewStatus"><img src="/Content/images/icon2.png" border="0" alt="" title=""/>稿件查询</a></li>
+            <li><a href="/Magazine/curList/?Year=@CurIssueInfo.Year&Issue=@CurIssueInfo.Issue"><img src="/Content/images/icon3.png" border="0" alt="" title=""/>本期点击排行</a></li>
+            <li><a href="/Magazine/curDown/?Year=@CurIssueInfo.Year&Issue=@CurIssueInfo.Issue"><img src="/Content/images/icon4.png" border="0" alt="" title=""/>本期下载排行</a></li>
+            <li><a href="/Magazine/oldList/"><img src="/Content/images/icon5.png" border="0" alt="" title=""/>历史点击排行</a></li>
+            <li><a href="/Magazine/oldDown/"><img src="/Content/images/icon6.png" border="0" alt="" title=""/>历史下载排行</a></li>
+        </ul>
+    </div>
+</div>
+<div style="color:#302f2f; font-weight:bold; text-align:center;">建议您在WiFi环境下浏览本页面</div>
+
+<script type="text/javascript">
+    function getCookie(objName) {//获取指定名称的cookie的值
+        var arrStr = document.cookie.split("; ");
+        for (var i = 0; i < arrStr.length; i++) {
+            var temp = arrStr[i].split("=");
+            if (temp[0] == objName) return unescape(temp[1]);
+        }
+    }
+    function Login(parameters) {
+        $('#noLogin').animate({ 'top': '65px' }, 500);
+    }
+    $("#btnLogin").click(function () {
+        var Group = 2;
+        var isAutoLogin = document.getElementById("remAutoLogin").checked ? 1 : 0;
+        var UserName = document.getElementById("txtUserName").value;
+        var Password = document.getElementById("txtPwd").value;
+
+        document.getElementById("btnLogin").value = "正在登录";
+        $.ajax({
+            type: 'POST',
+            url: '@Html.RootPath()/user/CheckLoginErrorLogAjax/?rnd=' + Math.random(),
+            data: { LoginName: UserName, Pwd: Password, Group: Group, IsAutoLogin: isAutoLogin },
+            success: function (data) {
+                if (data.flag == "1") {//登录成功
+                    $("#noLoginClose").click(); //关闭模态窗口
+                    history.go(0);
+                }
+                else if (data.flag == "0") {//帐号未激活
+                    document.getElementById("msg").innerHTML = "登录失败！您的帐号未激活或已被禁用。";
+                }
+                else if (data.flag == "-1") {//用户名/密码错误
+                    document.getElementById("msg").innerHTML = "登录失败！用户名或密码不正确。";
+                }
+                else {
+                    document.getElementById("msg").innerHTML = "登录失败！请检查您的用户名及密码。";
+                }
+            },
+            error: function (xhr) {
+                alert('Error' + '\n' + xhr.responseText);
+            }
+        });
+    });
+
+
+    if (getCookie("WKT_PRELOGINUSERID") != null) {
+        document.getElementById("welcome").innerHTML = "您好," + getCookie("WKT_PRELOGINUSERNAME") + ".&nbsp;<a href='@Html.RootPath()/user/logout'>退出</a>";
+    }
+    else {
+        document.getElementById("welcome").innerHTML = "您好,请<a id='btnLogin' href='javascript:Login()'>[登录]</a>.";
+    }
+</script>

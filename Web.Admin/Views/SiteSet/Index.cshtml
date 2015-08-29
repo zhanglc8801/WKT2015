@@ -1,0 +1,398 @@
+﻿@model WKT.Model.SiteConfigEntity
+@{
+    ViewBag.Title = "Index";
+}
+<style type="text/css">
+    body{ font-size:12px;}
+    .l-table-edit {border:1px solid #bed5f3;border-collapse: collapse;width:100%}
+    .l-table-edit-td-left{ padding:4px;text-align:right;width:90px;}
+    .l-table-edit-td{ padding:4px;}
+    .l-button-submit,.l-button-test{width:80px; float:left; margin-left:10px; padding-bottom:2px;}    
+</style>
+<div style="width:99%; padding: 5px; height:auto;">
+    <form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+        <tr>
+            <td colspan="4">
+                <div class="l-toolbar" style="padding-left: 10px;font-weight:bold">网站基本信息配置</div>
+            </td>
+        </tr>
+        <tr>
+            <td class="l-table-edit-td-left"><span style="color:Red">*</span> 站点标题：</td>
+            <td class="l-table-edit-td">
+                <input type="text" id="txtTitle" ltype="text" maxlength="50" value="@Model.Title" />
+            </td>
+
+            <td class="l-table-edit-td-left"> 站点英文标题：</td>
+            <td class="l-table-edit-td">
+                <input type="text" id="txtEnTitle" ltype="text" maxlength="50" value="@Model.EnTitle" />
+            </td>
+
+        </tr>
+        <tr>
+            <td class="l-table-edit-td-left"> 国内刊号：</td>
+            <td class="l-table-edit-td">
+                <input type="text" id="txtCN" ltype="text" maxlength="50" value="@Model.CN" />
+            </td>
+
+            <td class="l-table-edit-td-left"> 国际刊号：</td>
+            <td class="l-table-edit-td">
+                <input type="text" id="txtISSN" ltype="text" maxlength="50" value="@Model.ISSN" />
+            </td>
+
+        </tr>
+
+        <tr>
+            <td class="l-table-edit-td-left">站点关键字：</td>
+            <td class="l-table-edit-td">
+                <input type="text" id="txtKeywords" ltype="text" maxlength="50" value="@Model.Keywords" />
+            </td>
+            <td class="l-table-edit-td-left">站点主页地址：</td>
+            <td class="l-table-edit-td">
+                <input type="text" id="txtHome" ltype="text" maxlength="50" value="@Model.Home" />
+            </td>
+        </tr>
+        <tr>
+            <td class="l-table-edit-td-left">站点描述：</td>
+            <td class="l-table-edit-td" colspan="3">
+                <textarea cols="100" rows="4" class="l-textarea" id="txtDescription" style="width: 400px">@Model.Description</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="l-table-edit-td-left">ICP备案号 ：</td>
+            <td class="l-table-edit-td" colspan="3">
+                <input type="text" id="txtICPCode" ltype="text" maxlength="15" value="@Model.ICPCode" />
+            </td>
+        </tr>
+        <tr>
+            <td class="l-table-edit-td-left">邮政编码 ：</td>
+            <td class="l-table-edit-td" colspan="3">
+                <input type="text" id="txtZipCode" ltype="text" maxlength="10" value="@Model.ZipCode" />
+            </td>
+        </tr>
+        <tr>
+            <td class="l-table-edit-td-left">通讯地址 ：</td>
+            <td class="l-table-edit-td" colspan="3">
+                <input type="text" id="txtAddress" ltype="text" maxlength="50" value="@Model.Address" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <div class="l-toolbar" style="padding-left: 10px;font-weight:bold">电子邮件信息配置</div>
+            </td>
+        </tr>
+        <tr>
+            <td class="l-table-edit-td-left">邮件服务器：<img src="@Html.RootPath()/Content/images/helpmsg.gif" alt="Help" title="查看更多帮助信息" onclick="javascript:alert('如使用IP地址，请在IP后添加详细的SMTP地址并以英文分号分隔。\r\n示例：219.142.78.230;smtp.sina.com');" style="cursor:help;" /></td>
+            <td class="l-table-edit-td">
+                <input type="text" id="txtMailServer" ltype="text" maxlength="50" value="@Model.MailServer" />
+            </td>
+            <td class="l-table-edit-td-left">邮件端口：</td>
+            <td class="l-table-edit-td">
+                <input type="text" id="txtMailPort" ltype="text" value="@Model.MailPort" />
+            </td>
+        </tr>
+        <tr>
+            <td class="l-table-edit-td-left">邮件发送人：</td>
+            <td class="l-table-edit-td">
+                <input type="text" id="txtSendMail" ltype="text" maxlength="50" value="@Model.SendMail" />
+            </td>
+            <td class="l-table-edit-td-left">是否加密：</td>
+            <td class="l-table-edit-td">
+                <input type="checkbox" id="chkMailIsSSL" /><label for="chkMailIsSSL">SSL</label>
+            </td>
+        </tr>
+        <tr>
+            <td class="l-table-edit-td-left">邮件帐号：</td>
+            <td class="l-table-edit-td">
+                <input type="text" id="txtMailAccount" ltype="text" maxlength="50" value="@Model.MailAccount" />
+            </td>
+            <td class="l-table-edit-td-left">邮件密码：</td>
+            <td class="l-table-edit-td">
+                <input type="password" id="txtMailPwd" ltype="text" maxlength="25" value="@Model.MailPwd" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <div class="l-toolbar" style="padding-left: 10px;font-weight:bold;">短信发送信息配置&nbsp;&nbsp<a href="http://www.139000.com/" target="_blank">注册帐号</a></div>
+            </td>
+        </tr>
+        <tbody id="SMS1">
+            <tr>
+            <td class="l-table-edit-td-left">
+                短信帐号：
+            </td>
+            <td class="l-table-edit-td">
+                <input type="text" id="txtSMSUserName" ltype="text" maxlength="25" value="@Model.SMSUserName" />
+            </td> 
+        </tr>
+            <tr>
+                <td class="l-table-edit-td-left">短信密码：
+            </td>
+            <td class="l-table-edit-td">
+                <input type="password" id="txtSMSPwd" ltype="text" maxlength="25" value="@Model.SMSPwd" />
+            </td>
+        </tr>
+        </tbody>
+        <tr>
+            <td colspan="4">
+                <div class="l-toolbar" style="padding-left: 10px;font-weight:bold">
+                    <input type="checkbox" id="chkIsFinance" />启用在线支付并显示财务信息
+                </div>
+            </td>
+        </tr>
+        
+         <tbody id="PayBody" style="display:none;">
+         <tr>
+            <td align="right" class="l-table-edit-td-left">网银类型：</td>
+            <td align="left" class="l-table-edit-td" colspan="3">
+                <input type="radio" id="EBankType1" value="1" name="EBankType" /><label for="EBankType1">支付宝</label>
+                <input type="radio" id="EBankType2" value="2" name="EBankType" /><label for="EBankType2">银联</label>
+                <input type="radio" id="EBankType3" value="3" name="EBankType" /><label for="EBankType3">网银在线</label>
+            </td>           
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">网银账号：</td>
+            <td align="left" class="l-table-edit-td" colspan="3">
+                <input type="text" id="txtEBankAccount" ltype="text" maxlength="25" value="@Model.EBankAccount" />
+            </td>           
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">商户编号：</td>
+            <td align="left" class="l-table-edit-td" colspan="3">
+                <input type="text" id="txtEBankCode" ltype="text" maxlength="40" value="@Model.EBankCode" />
+            </td>           
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td-left">网银密钥：</td>
+            <td align="left" class="l-table-edit-td" colspan="3">
+                <textarea cols="100" rows="4" class="l-textarea" id="txtEBankEncryKey" style="width: 400px">@Model.EBankEncryKey</textarea>
+            </td>
+        </tr>
+        </tbody>
+
+        <tr>
+            <td colspan="4">
+                <div class="l-toolbar" style="padding-left: 10px;font-weight:bold">DOI注册与查询配置&nbsp;&nbsp;<a href="http://www.chinadoi.cn/" target="_blank" style="color:Blue; font-weight:200;">访问中文DOI</a></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="l-table-edit-td-left">用户名：</td>
+            <td class="l-table-edit-td">
+                <input type="text" id="txtDoiUserName" ltype="text" value="@Model.DoiUserName" />
+            </td>
+            <td class="l-table-edit-td-left">密码：</td>
+            <td class="l-table-edit-td">
+                <input type="password" id="txtDoiUserPwd" ltype="text" value="@Model.DoiUserPwd" />
+            </td>
+        </tr>
+        <tr>
+            <td class="l-table-edit-td-left">期刊ID：</td>
+            <td class="l-table-edit-td">
+                <input type="text" id="txtDoiJournalID" ltype="text" value="@Model.DoiJournalID" />
+            </td>
+            <td class="l-table-edit-td-left">DOI前缀：</td>
+            <td class="l-table-edit-td">
+                <input type="text" id="txtDoiPrefix" ltype="text" value="@Model.DoiPrefix" />
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="4">
+                <div class="l-toolbar" style="padding-left: 10px;font-weight:bold">采编系统全局设置&nbsp;&nbsp<span style="color:#91918d; font-weight:100;">对所有用户有效</span></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" class="l-table-edit-td" colspan="4"  style=" padding-left:10px;">
+                <input type="checkbox" id="isRegAct" value="0" />向注册用户邮箱发送激活链接<img src="@Html.RootPath()/Content/images/helpmsg.gif" alt="Help" title="查看更多帮助信息" onclick="javascript:alert('勾选后将会向作者的注册邮箱发送激活链接\r\n作者需通过点击邮箱收到的激活链接来激活自己的帐号。');" style="cursor:help;" /><br />
+                <input type="checkbox" id="IsHideEditorInfoForAuthor" value="0" />在作者平台隐藏编辑信息<img src="@Html.RootPath()/Content/images/helpmsg.gif" alt="Help" title="查看更多帮助信息" onclick="javascript:alert('在作者平台下的稿件详情页隐藏处理稿件的相关编辑的基本信息。');" style="cursor:help;" /><br /> 
+                <input type="checkbox" id="IsHideEditorInfoForExpert" value="0" />在专家平台隐藏编辑信息<img src="@Html.RootPath()/Content/images/helpmsg.gif" alt="Help" title="查看更多帮助信息" onclick="javascript:alert('在专家平台下的稿件详情页隐藏送审稿件的相关编辑的基本信息。');" style="cursor:help;" /><br /> 
+                <input type="checkbox" id="IsStopNotLoginDownPDF" value="0" />下载期刊PDF附件时要求用户登录<br />
+                <input type="checkbox" id="isViewMoreFlow" value="0" />在作者平台显示更多审稿信息<img src="@Html.RootPath()/Content/images/helpmsg.gif" alt="Help" title="查看更多帮助信息" onclick="javascript:alert('勾选后作者将可以看到稿件在编辑部内部的流程信息\r\n编辑之间转交的附件以及专家的审理意见仍会隐藏。');" style="cursor:help;" /><br />
+                <input type="checkbox" id="isViewHistoryFlow" value="0" />在专家平台显示其他专家审稿信息<img src="@Html.RootPath()/Content/images/helpmsg.gif" alt="Help" title="查看更多帮助信息" onclick="javascript:alert('勾选后审稿专家将可以看到其他专家对稿件的处理意见');" style="cursor:help;" /><br />
+                <input type="checkbox" id="isAutoHandle" value="0" />自动处理撤稿申请<img src="@Html.RootPath()/Content/images/helpmsg.gif" alt="Help" title="查看更多帮助信息" onclick="javascript:alert('勾选后系统将会自动处理作者的撤稿申请\r\n已撤稿件将会在标题后标注(已撤稿)。');" style="cursor:help;" /><br /> 
+                <input type="checkbox" id="isStatByGroup" value="0" />编辑部工作量根据角色进行统计<img src="@Html.RootPath()/Content/images/helpmsg.gif" alt="Help" title="查看更多帮助信息" onclick="javascript:alert('由于一个编辑在多个角色下可能同时有权限执行同一个操作\r\n勾选该选项将会在不同角色下同时统计该操作的工作量。');" style="cursor:help;" /><br />              
+            </td>      
+        </tr>
+
+        <tr>
+            <td colspan="4">
+                <div class="l-toolbar" style="padding-left: 10px;font-weight:bold">采编系统个人设置&nbsp;&nbsp<span style="color:#91918d; font-weight:100;">仅对当前登录用户有效</span></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" class="l-table-edit-td" colspan="4"  style=" padding-left:10px;">
+                <input type="checkbox" id="Personal_Order" value="0" />在【稿件处理专区】根据处理时间(默认根据稿件编号)对稿件排序<br />
+                <input type="checkbox" id="Personal_OnlyMySearch" value="0" />在【稿件搜索】页面仅显示我的稿件<br />
+            </td>      
+        </tr>
+
+        <tr>
+          <td colspan="4" style="padding-left:15%">
+             <input type="hidden" id="hdSiteConfigID" value="@Model.SiteConfigID" />
+             <input type="button" value="保存配置" style="margin-top:10px;margin-bottom:10px;width:100px;" id="btnSave" class="l-button l-button-submit" />
+          </td>
+        </tr>
+    </table>
+    </form>
+</div>
+@section Scripts{
+    <script language="javascript" type="text/javascript">
+        $("#chkIsFinance").change(function () {
+            document.getElementById("chkIsFinance").checked == true ? $("#PayBody").removeAttr("style") : document.getElementById("PayBody").style.display = "none"; //
+        });
+        
+
+
+        $(function () {
+            var ss=@ViewBag.AuthorID;
+            if ('@Model.MailIsSSL' == 'True')
+                $("#chkMailIsSSL").attr("checked", "checked");
+            if ('@Html.IsFinance()' == 'True') {
+                $("#chkIsFinance").attr("checked", "checked");
+                $("#PayBody").removeAttr("style");
+            }
+            if ('@Html.IsFinance()' == 'false') {
+                document.getElementById("PayBody").style.display = "none";
+            }
+
+            if ('@ViewBag.IsEnableRegActivate' == '1') {
+                $("#isRegAct").attr("checked", "checked"); 
+            }
+
+            if ('@ViewBag.IsHideEditorInfoForAuthor' == '1') {
+                $("#IsHideEditorInfoForAuthor").attr("checked", "checked"); 
+            }
+
+            if ('@ViewBag.IsHideEditorInfoForExpert' == '1') {
+                $("#IsHideEditorInfoForExpert").attr("checked", "checked"); 
+            }
+
+            if ('@ViewBag.IsStopNotLoginDownPDF' == '1') {
+                $("#IsStopNotLoginDownPDF").attr("checked", "checked");
+            }
+
+            if ('@ViewBag.ShowMoreFlowInfoForAuthor' == '1') {
+                $("#isViewMoreFlow").attr("checked", "checked");
+            }
+
+            if ('@ViewBag.ShowHistoryFlowInfoForExpert' == '1') {
+                $("#isViewHistoryFlow").attr("checked", "checked");
+            }
+
+            if ('@ViewBag.isAutoHandle' == '1') {
+                $("#isAutoHandle").attr("checked", "checked");
+            }
+
+            if ('@ViewBag.isStatByGroup' == '1') {
+                $("#isStatByGroup").attr("checked", "checked");
+            }
+
+            if ('@ViewBag.Personal_Order' == '1') {
+                $("#Personal_Order").attr("checked", "checked");
+            }
+
+            if ('@ViewBag.Personal_OnlyMySearch' == '1') {
+                $("#Personal_OnlyMySearch").attr("checked", "checked");
+            }
+            
+            if('@ViewBag.IsShowPwdInput'=='1'){
+                document.getElementById("txtMailPwd").type="text"; 
+                document.getElementById("txtSMSPwd").type="text"; 
+                document.getElementById("txtDoiUserPwd").type="text"; 
+            }
+
+            $("#EBankType" + '@Model.EBankType').attr("checked", "checked");
+            $("#txtMailPort").bind("keypress", function (evt) {
+                var k = window.event ? evt.keyCode : evt.which;
+                if ((k <= 57 && k >= 48) || k == 8) {
+                    return true;
+                }
+                return false;
+            });
+            $("form").ligerForm({ inputWidth: 280 });
+            $("#btnSave").click(function () {
+                var objTitle = $("#txtTitle"), title = $.trim(objTitle.val());
+                var objEnTitle = $("#txtEnTitle"), entitle = $.trim(objEnTitle.val());
+                if (title.length < 1) {
+                    alert("请输入网站标题！");
+                    objTitle.focus();
+                    return;
+                }
+                var objEmail = $("#txtMailAccount"), email = $.trim(objEmail.val());
+                var objCode = $("#txtZipCode"), code = $.trim(objCode.val());
+                if (code.length > 0 & !/^[1-9][0-9]{5}$/.test(code)) {
+                    alert("请输入正确邮编！");
+                    objCode.focus();
+                    return;
+                }
+                var btn = $(this),
+                    saveParams = {
+                        SiteConfigID: $("#hdSiteConfigID").val(),
+                        Title: title,
+                        EnTitle: entitle,
+                        CN:$.trim($('#txtCN').val()),
+                        ISSN:$.trim($('#txtISSN').val()),
+                        Home:$.trim($('#txtHome').val()),
+                        Keywords: $.trim($('#txtKeywords').val()),
+                        Description: $.trim($('#txtDescription').val()),
+                        ICPCode: $.trim($("#txtICPCode").val()),
+                        ZipCode: code,
+                        Address: $.trim($("#txtAddress").val()),
+                        MailServer: $.trim($("#txtMailServer").val()),
+                        MailPort: $.trim($("#txtMailPort").val()),
+                        SendMail: $.trim($("#txtSendMail").val()),
+                        MailIsSSL: document.getElementById("chkMailIsSSL").checked,
+                        MailAccount: email,
+                        MailPwd: $.trim($("#txtMailPwd").val()),
+                        SMSUserName: $.trim($("#txtSMSUserName").val()),
+                        SMSPwd: $("#txtSMSPwd").val(),
+                        //DOI配置参数
+                        DoiUserName:$("#txtDoiUserName").val(),
+                        DoiUserPwd:$("#txtDoiUserPwd").val(),
+                        DoiJournalID:$("#txtDoiJournalID").val(),
+                        DoiPrefix:$("#txtDoiPrefix").val(),
+                        //网银配置参数
+                        EBankType: $("input[name='EBankType']:checked").val(),
+                        EBankAccount: $.trim($("#txtEBankAccount").val()),
+                        EBankCode: $.trim($("#txtEBankCode").val()),
+                        EBankEncryKey: $.trim($("#txtEBankEncryKey").val()),
+                        IsFinance: document.getElementById("chkIsFinance").checked,
+                        //系统全局设置
+                        isRegAct: document.getElementById("isRegAct").checked?1:0,
+                        IsHideEditorInfoForAuthor:document.getElementById("IsHideEditorInfoForAuthor").checked?1:0,
+                        IsHideEditorInfoForExpert:document.getElementById("IsHideEditorInfoForExpert").checked?1:0,
+                        IsStopNotLoginDownPDF: document.getElementById("IsStopNotLoginDownPDF").checked?1:0,
+                        ShowMoreFlowInfoForAuthor: document.getElementById("isViewMoreFlow").checked?1:0,
+                        ShowHistoryFlowInfoForExpert: document.getElementById("isViewHistoryFlow").checked?1:0,
+                        isAutoHandle: document.getElementById("isAutoHandle").checked?1:0,
+                        isStatByGroup: document.getElementById("isStatByGroup").checked?1:0,
+                        //个人设置
+                        isPersonal_Order: document.getElementById("Personal_Order").checked?1:0,
+                        isPersonal_OnlyMySearch: document.getElementById("Personal_OnlyMySearch").checked?1:0
+                    };
+                $.ajax({
+                    type: 'POST',
+                    url: '@Html.RootPath()/SiteSet/Edit/',
+                    data: saveParams,
+                    cache: false,
+                    beforeSend: function () { btn.attr("disabled", true); btn.val("正在保存站点配置。。。"); },
+                    complete: function () { btn.attr("disabled", false); btn.val("保存配置"); },
+                    success: function (data) {
+                        alert(data.msg);
+                    },
+                    error: function (xhr) {
+                        alert('数据源访问错误' + '\n' + xhr.responseText);
+                    }
+                });
+            });
+        });
+        function ValiEmial(value) {
+            var txt = $.trim(value);
+            if (value.length == 0)
+                return true;
+            if (!/^([\.a-zA-Z0-9_-])+@@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/.test(txt))
+                return false;
+            return true;
+        }
+    </script>
+}

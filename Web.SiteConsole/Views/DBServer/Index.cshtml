@@ -1,0 +1,192 @@
+﻿@model List<WKT.Model.DBServerInfoEntity>
+<script type="text/javascript">
+    // 设置标题
+    Index.SetTitle('DBServer管理');
+</script>
+<div class="container">
+    <div class="location">当前位置：系统设置 -&gt; DBServer管理</div>
+    
+    <div class="blank10"></div>
+
+    <div class="search block">
+        <div class="h">
+            <span class="icon-sprite icon-magnifier"></span>
+            <h3>快速搜索</h3>
+        </div>
+        <div class="tl corner"></div><div class="tr corner"></div><div class="bl corner"></div><div class="br corner"></div>
+        <div class="cnt-wp">
+            <div class="cnt">
+                <div class="search-bar">
+                    <label class="first txt-green">Server IP：</label>
+                    <input value="" type="text" name="ServerIP" id="txtServerIP" class="input-small" />
+                    <label class="txt-green">账号：</label>
+                    <input value="" type="text" name="Account" id="txtAccount" class="input-small" />
+                    <label class="txt-green">状态：</label>
+                    <select name="Status" id="selStatus"><option value="">不限</option><option value="1">启用</option><option value="0">禁用</option></select>
+                    <label><a class="btn-lit btn-middle" href="javascript:void(0);"><span id="spanSearch">搜索</span></a></label>
+                </div>
+            </div>
+        </div>
+    </div>
+                
+    <div class="blank10"></div>
+
+    <div class="block">
+        <div class="h">
+            <span class="icon-sprite icon-list"></span>
+            <h3>DBServer管理</h3>
+            <div class="bar">
+                <a class="btn-lit" href="javascript:Index.Open('/DBServer/Add');"><span>新增</span></a>
+                <a class="btn-lit" href="javascript:DeleteByIds();"><span>删除选中</span></a>
+            </div>
+        </div>
+        <div class="tl corner"></div><div class="tr corner"></div><div class="bl corner"></div><div class="br corner"></div>
+        <div class="cnt-wp">
+            <div class="cnt">
+                <table class="data-table" width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th scope="col"><input value="true" type="checkbox" title="全选/不选" onclick="CheckBox.CheckAll(this);" name="CheckAll" id="CheckAll" /><input value="false" type="hidden" name="CheckAll" /></th>
+                        <th scope="col">ServerIP</th>
+                        <th scope="col">端口</th>
+                        <th scope="col">账户</th>
+                        <th scope="col">状态</th>
+                        <th scope="col">备注</th>
+                        <th scope="col">添加时间</th>
+                        <th scope="col">编辑</th>
+                        <th scope="col">删除</th>
+                    </tr>
+                    <tbody id="tbodyList">
+                        @foreach (WKT.Model.DBServerInfoEntity item in Model)
+                        {
+                        <tr>
+                            <td class="chk"><input value="true" type="checkbox" rel="@item.DBServerID" name="CheckBox" class="check-box" /><input value="@item.DBServerID" type="hidden" name="CheckBox" /></td>
+                            <td class="txt c">@item.ServerIP</td>
+                            <td class="txt80 c">@item.Port</td>
+                            <td class="txt120 c">@item.Account</td>
+                            <td class="txt80 c">@(item.Status == 1 ? "启用" : "禁用")</td>
+                            <td class="txt180 c">@item.Note</td>
+                            <td class="txt160 c">@item.AddDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                            <td class="icon"><a class="opt" title="编辑" href="javascript:void(0);" onclick="Edit(@item.DBServerID);"><span class="icon-sprite icon-edit"></span></a></td>
+                            <td class="icon tail"><a class="opt" title="删除" href="javascript:void(0);" onclick="DeleteById(@item.DBServerID);"><span class="icon-sprite icon-delete"></span></a></td>
+                        </tr> 
+                        }                                  
+                    </tbody>
+                </table>
+            </div>
+            <div id="divPage" class="pager-bar"></div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script type="text/javascript" src="/Scripts/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="/Scripts/jquery.pagination.js"></script>
+<script id="jsTemplate" type="text/x-jquery-tmpl">
+    <tr>
+        <td class="chk"><input value="true" type="checkbox" rel="${DBServerID}" name="CheckBox" class="check-box" /><input value="${DBServerID}" type="hidden" name="CheckBox" /></td>
+        <td class="txt c">${ServerIP}</td>
+        <td class="txt80 c">${Port}</td>
+        <td class="txt120 c">${Account}</td>
+        <td class="txt80 c">${FormatStatus(Status)}</td>
+        <td class="txt180 c">${Note}</td>
+        <td class="txt160 c">${$.format.date(AddDate,"yyyy-MM-dd hh:mm:ss")}</td>
+        <td class="icon"><a class="opt" title="编辑" href="javascript:void(0);" onclick="Edit(${DBServerID});"><span class="icon-sprite icon-edit"></span></a></td>
+        <td class="icon tail"><a class="opt" title="删除" href="javascript:void(0);" onclick="DeleteById(${DBServerID});"><span class="icon-sprite icon-delete"></span></a></td>
+    </tr>
+</script>
+<script type="text/javascript">
+
+    jQuery(document).ready(function () {
+        PageInit(0);
+        $.template('pagetemplate', $("#jsTemplate").html());
+        // 搜索
+        $("#spanSearch").click(function()
+        {
+            PageCallback(0);
+        });
+    });
+
+    function PageInit(pageIndex,totalcount) {
+        if(totalcount == undefined){
+            totalcount = @ViewBag.TotalCount
+        }
+        pageobje = $("#divPage").pagination(totalcount, {
+            callback: PageCallback,
+            items_per_page:10,
+		    num_display_entries:0,
+		    current_page:pageIndex,
+		    num_edge_entries:0
+        });
+    }
+
+    function PageCallback(page_id, jq)
+    {
+        $.ajax({
+            type: "POST",//用POST方式传输
+            dataType:"json",//数据格式:JSON
+            url:'/dbserver/indexajax/?rnd=' + Math.random(),//目标地址
+            data:{"ServerIP":$("#txtServerIP").val(),"Account":$("#txtAccount").val(),"Status":$("#selStatus").val(),"CurrentPage": page_id, "PageSize": 10 },
+            beforeSend:function(){$("#divload").show();},//发送数据之前
+            complete:function(){$("#divload").hide();},//接收数据完毕
+            success:function(json) {
+                var jsonobj = eval(json);
+                if (jsonobj.result == "success") {
+                    $("#tbodyList").empty();
+                    $.tmpl('pagetemplate',jsonobj.data.ItemList).appendTo('#tbodyList');
+                    // 隔行变色
+                    $('#tbList tr:even').addClass('even');
+                    if(jq == undefined)
+                    {
+                        PageInit(page_id,jsonobj.data.TotalRecords);
+                    }
+                }
+                else {
+                    alert(jsonobj.message);
+                }
+            }});
+    }
+
+    function FormatStatus(status)
+    {
+        if(status == 1){
+            return "启用";
+        }
+        else{
+            return "禁用";
+        }
+    }
+
+    function Edit(DBServerID)
+    {
+        Index.Open('/DBServer/Add?DBServerID=' + DBServerID);
+    }
+
+    // 根据ID删除
+    DeleteById = function (id) {
+        var data = [];
+        data.push(id);
+        jBox.confirm("此操作不可恢复，确定要删除吗？", "删除DBServer", function (v, h, f) {
+            if (v == 'ok') {
+                Admin.SubmitForm("/DBServer/DeleteAjax", {"IDAarry":data}, '/DBServer');
+            }
+            return true;
+        });
+    };
+
+    // 删除多个
+    DeleteByIds = function () {
+        var idArray = CheckBox.GetCheckedIds();
+        if (idArray.length == 0) {
+            jBox.tip("请选择至少一个DB Server！");
+            return;
+        }
+
+        jBox.confirm("此操作不可恢复，确定要删除选中的DB Server吗？", "删除DBServer", function (v, h, f) {
+            if (v == 'ok') {
+                jBox.tip('正在处理...', 'loading');
+                Admin.SubmitForm("/DBServer/DeleteAjax", {"IDAarry":idArray}, '/DBServer');
+            }
+            return true;
+        });
+    };
+</script>
+}

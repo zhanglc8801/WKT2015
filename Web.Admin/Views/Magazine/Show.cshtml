@@ -1,0 +1,100 @@
+﻿@model WKT.Model.IssueContentEntity
+@{
+    ViewBag.Title = Model.Title + "_" +  Html.SiteName();
+    ViewBag.Position = Model.Title;
+}
+<div id="center2"> 
+    <div class="wz">
+        <div class="fonts" id="HText">
+            <div class="right">
+                <div style="">
+                    <h1>
+                        @Html.CleanHtmlCutString(Model.Title,20,"...")
+                        <a href="#" style="font-size: 12px; font-weight: normal; color: #ff0000; padding-left: 30px;" target="_blank">
+				[中文引用]</a>
+			<a href="#" style="font-size: 12px; font-weight: normal; color: #ff0000; padding-left: 30px;" target="_blank">
+				[英文引用]</a></h1>
+                    <h2>
+                        <div>
+                            </div>
+                    </h2>
+                </div>
+                <div class="xiazai">
+                    <a href="javascript:down()">[PDF下载]</a> <a href="#">[发表评论]</a> <a href="#">[查看评论]</a> <a href="javascript:window.external.AddFavorite(''+document.location.href+'',''+document.title+'');">
+                            [加入收藏]</a> <a href="#">[@(Model.Hits)人次已阅读该文]</a>
+                </div>
+                <div class="zuozhe">
+                    <font>作者：</font><span id="HAuthor">@Model.Authors &nbsp;</span>
+                </div>
+                <div class="zuozhe">
+                    <font>单位：</font><span id="HUnit">@Model.WorkUnit</span>
+                </div>
+                <div class="zuozhe">
+                    <font>关键词：</font><span id="HKey">@Model.Keywords</span>
+                </div>
+                <div class="zuozhe">
+                    <font>分类号：</font>
+                </div>
+                <div class="zuozhe">
+                    <font>出版年·卷·期（页码）：</font>@(Model.Year)·@(Model.Volume)·第@(Model.Issue)期（@Model.PageNumber）
+                </div>
+                <div class="zuozhe">
+                    <font style="color: #ff0000;">DOI:</font>@Model.DOI
+                </div>
+                <div class="xian">
+                    -----<font>摘要：</font>-----------------------------------------------------------------
+                    --------------------------</div>
+                <div class="zaiyao" style="font-size: 14px;">
+                    <p>
+                        <p>摘要:@Html.CleanHtml(Model.Abstract)</p>
+                    </p>
+                </div>
+                   
+                <div class="zaiyao" style="font-size: 14px;display:none;">
+                        
+                </div>
+                <h3 style="font-size: 14px;">
+                    欢迎阅读《@Html.SiteName()》！您是该文第 <font>@(Model.Hits+1)</font>位读者！</h3>
+                <div class="h3" style="font-size: 14px;">
+                    若需在您的论文中引用此文，请按以下格式著录参考文献：</div>
+                <div class="zuozhe">
+                    <font>中文著录格式:</font>
+                    @(Model.Authors).@(Model.Title).@Html.SiteName().@(Model.Year);@(Model.Volume)(@Model.Issue):@Model.PageNumber.
+                </div>
+                <div class="zuozhe">
+                    <font>英文著录格式:</font>
+                    ..No Title Settings.@(Model.Year);@(Model.Volume)(@Model.Issue):@Model.PageNumber.
+                </div>
+                <h4><font style="font-size: 14px;">与该文相关的文章（<span>仅限于本刊内</span>）</font></h4>
+                <ul style="font-size: 14px;">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function down() {
+        $.ajax({
+            type: 'POST',
+            url: '/stat/DownStat?CID=@Model.ContentID&rnd=' + Math.random(),
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            data:"",
+            success: function (data) {
+                var e = data;
+                if (e.flag == 'success') {
+                    window.open("@Model.FilePath");
+                }
+                else{
+                    alert(e.flag);
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+
+</script>
+<!--cont1 end-->

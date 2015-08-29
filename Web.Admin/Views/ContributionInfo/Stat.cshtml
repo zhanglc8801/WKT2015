@@ -1,0 +1,36 @@
+﻿@model WKT.Model.ContributeSetEntity
+<table border="0" cellpadding="0" cellspacing="1" align="center" width="100%">
+    <tr>
+        <td>
+            @Html.Raw(Model.Statement)
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <p>
+                <input id="ckbEnable" type="checkbox" name="ckbEnable" /><label for="ckbEnable" style="font-size: 13px;
+                    color: Red;">我已阅读并同意以上投稿声明</label>
+            </p>
+            <p>
+                <input type="button" id="btnNext" disabled="disabled" class="l-button" name="btnNext" value="下一步" />
+            </p>
+        </td>
+    </tr>
+</table>
+@section Scripts{
+<script type="text/javascript">
+    $(function () {
+        $("#ckbEnable").bind('click', function () {
+            if (document.getElementById("ckbEnable").checked == true) {
+                $("#btnNext").attr("disabled", false);
+            }
+            else {
+                $("#btnNext").attr("disabled", true);
+            }
+        });
+        $("#btnNext").bind('click', function () {
+            window.location.href = "@Html.RootPath()/ContributionInfo/Index/";
+        });
+    });
+</script>
+}

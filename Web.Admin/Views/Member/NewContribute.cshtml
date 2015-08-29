@@ -1,0 +1,217 @@
+﻿@model  IList<WKT.Model.WorkloadEntity>
+<style type="text/css">
+    a
+    {
+        color: #c75f3e;
+    }
+    
+    #mytable
+    {
+        width: auto;
+        padding: 8px;
+        margin: 8px;
+    }
+    
+    caption
+    {
+        padding: 0 0 5px 0;
+        width: 700px;
+        font: italic 11px "Trebuchet MS" , Verdana, Arial, Helvetica, sans-serif;
+        text-align: right;
+    }
+    
+    th
+    {
+        font: bold 16px "Trebuchet MS" , Verdana, Arial, Helvetica, sans-serif;
+        color: #4f6b72;
+        border-right: 1px solid #C1DAD7;
+        border-bottom: 1px solid #C1DAD7;
+        border-top: 1px solid #C1DAD7;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-align: left;
+        padding: 6px 6px 6px 12px;
+        background: #CAE8EA no-repeat;
+    }
+    
+    th.nobg
+    {
+        border-top: 0;
+        border-left: 0;
+        border-right: 1px solid #C1DAD7;
+        background: none;
+    }
+    
+    td
+    {
+        border-right: 1px solid #C1DAD7;
+        border-bottom: 1px solid #C1DAD7;
+        background: #fff;
+        font-size: 13px;
+        height: 30px;
+        color: #4f6b72;
+        text-align: center;
+    }
+    
+    
+    td.alt
+    {
+        background: #F5FAFA;
+        color: #797268;
+    }
+    
+    th.spec
+    {
+        border-left: 1px solid #C1DAD7;
+        border-top: 0;
+        background: #fff no-repeat;
+        font: bold 10px "Trebuchet MS" , Verdana, Arial, Helvetica, sans-serif;
+    }
+    
+    th.specalt
+    {
+        border-left: 1px solid #C1DAD7;
+        border-top: 0;
+        background: #f5fafa no-repeat;
+        font: bold 10px "Trebuchet MS" , Verdana, Arial, Helvetica, sans-serif;
+        color: #797268;
+    }
+    /*---------for IE 5.x bug*/
+</style>
+<div style="" id="notice_container" class="notice notice0">
+    <div class="c">
+        编辑姓名：<input type="text" name="RealName" class="txtbox" id="txtRealName" />
+        &nbsp;开始日期：<input type="text" name="StartDate" class="txtbox" id="txtStartDate" />
+        &nbsp;结束日期：<input type="text" name="EndDate" class="txtbox" id="txtEndDate" />
+        &nbsp;<input type="button" value="搜索" class="btnsearch" id="btnSearch" />
+    </div>
+</div>
+<div id="container">
+    <table id="mytable">
+    </table>
+</div>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function ViewDetail(Status, AuthorID) {
+            var url = '@Html.RootPath()/expertstat/StatDetail?IsNewContribution=True&Status=' + Status + "&AuthorID=" + AuthorID;
+            var StartDate = $("#txtStartDate").val();
+            var EndDate = $("#txtEndDate").val();
+            if ($.trim(StartDate) != "") {
+                url += '&StartDate=' + StartDate;
+            }
+            if ($.trim(EndDate) != "") {
+                url += '&EndDate=' + EndDate;
+            }
+            url += '&rnd=' + Math.random();
+            $.ligerDialog.open({ height: 500, url: url, title: '查看审稿明细', width: 600, slide: false, buttons: [
+        { text: '确定', onclick: function (item, dialog) {
+            dialog.close();
+        }
+        },
+        { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+        ]
+            });
+        }
+        document.onreadystatechange = dataLoad("");
+        function dataLoad(obj) {
+            var str = "@Html.RootPath()/expertstat/GetEditorWorkloadList?";
+            if (obj != "") {
+                str += obj + "IsNewContributes=true&GroupID=1&rnd=" + Math.random();
+            }
+            else {
+                str += "IsNewContributes=true&GroupID=1&rnd=" + Math.random();
+            }
+            $.ajax({
+                type: "POST",
+                url: str,
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var table = document.getElementById("mytable");
+                    if (table != null) {
+                        var tr = "";
+                        var index = 1
+                        for (var i = 0; i < data.length; i++) {
+                            if (index == 1) {
+                                var firstdata = "";
+                                tr += "<tr><th scope=\"col\">真实姓名</th>";
+                                for (var j in data[i].DictEditorStatItems) {
+                                    tr += "<th scope=\"col\">" + j.toString().split('-')[0] + "</th>";
+                                    if (data[i].DictEditorStatItems[j] > 0) {
+                                        firstdata += "<td scope=\"col\"><a  onclick=ViewDetail(" + j.toString().split('-')[1] + "," + data[i].AuthorID + ")>" + data[i].DictEditorStatItems[j] + "</a></td>";
+                                    }
+                                    else {
+                                        firstdata += "<td scope=\"col\">" + data[i].DictEditorStatItems[j] + "</td>";
+                                    }
+
+                                }
+                                tr += "</tr>";
+                                tr += "<tr><td scope=\"col\">" + data[i].RealName + "</td>";
+                                tr += firstdata;
+                            }
+                            else {
+                                tr += "<tr><td class=\"col\">" + data[i].RealName + "</td>";
+                                for (var k in data[i].DictEditorStatItems) {
+                                    if (data[i].DictEditorStatItems[k] > 0) {
+                                        tr += "<td scope=\"col\"><a  onclick=ViewDetail(" + k.toString().split('-')[1] + "," + data[i].AuthorID + ")>" + data[i].DictEditorStatItems[k] + "</a></td>";
+                                    }
+                                    else {
+                                        tr += "<td scope=\"col\">" + data[i].DictEditorStatItems[k] + "</td>";
+                                    }
+                                }
+                                tr += "</tr>";
+                            }
+                            index++;
+                        }
+                       setTableInnerHTML(table,tr);
+                    }
+                },
+                error: function (data) {
+                    alert(data);
+                }
+            });
+        }
+
+        function setTableInnerHTML(table, html) {
+            if (navigator && navigator.userAgent.match(/msie/i)) {
+                var temp = table.ownerDocument.createElement('div');
+                temp.innerHTML = '<table><tbody>' + html + '</tbody></table>';
+                if (table.tBodies.length == 0) {
+                    var tbody = document.createElement("tbody");
+                    table.appendChild(tbody);
+                }
+                table.replaceChild(temp.firstChild.firstChild, table.tBodies[0]);
+            } else {
+                table.innerHTML = html;
+            }
+        }
+
+        $(function () {
+
+            $("#btnSearch").click(function () {
+                var str = "";
+                if ($("#txtStartDate").val() != "") {
+                    str += "StartDate=" + $("#txtStartDate").val() + "&";
+                }
+                if ($("#txtEndDate").val() != "") {
+                    str += "EndDate="+ $("#txtEndDate").val() + "&";
+                }
+                if ($("#txtRealName").val() != "") {
+                    str += "RealName=" + encodeURIComponent($("#txtRealName").val()) + "&";
+                }
+                dataLoad(str);
+            });
+
+            // 日期选择
+            $("#txtStartDate").bind("click", function () {
+                var d5222 = $dp.$('txtEndDate');
+                WdatePicker({ readOnly: true, onpicked: function () { d5222.focus(); }, maxDate: '#F{$dp.$D(\'txtEndDate\')}' });
+            });
+            $("#txtEndDate").bind("click", function () {
+                WdatePicker({ readOnly: true, minDate: '#F{$dp.$D(\'txtStartDate\')}' });
+            });
+        });
+    </script>
+}

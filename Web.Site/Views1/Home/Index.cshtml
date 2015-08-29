@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = Html.SiteName();
+    WKT.Model.IssueSiteEntity CurIssueInfo = Html.GetCurIssueInfo();
+}
+<!--cont1-->
+    <div class="cont">
+        <div class="cont_l">
+            <div class="fonts2"><a href="javascript:void(0);"><img src="/content/skin1/images/index/pic_zg.jpg" /></a></div>
+            <div class="works" id="divNotice">
+                <h1 class="lan1"><a href="/list/7">通知公告</a></h1>
+                <ul id="ulNotice">
+                    @foreach (WKT.Model.SiteNoticeEntity item in Html.GetNoticeList(7, 5))
+                    {
+                        <li><a href="/Show/7/?itemid=@item.NoticeID" target="_blank">@Html.CutString(item.Title,15,"...")</a></li>
+                    }
+                </ul>
+                <script language="javascript" type="text/javascript">
+                    new Marquee(["divNotice", "ulNotice"], 0, 2, 236, 125, 50, 0, 0);
+                </script>
+            </div>
+            <div class="link">
+                <h1></h1>
+                <ul>
+                    <li><a href="http://www.moh.gov.cn/publicfiles//business/htmlfiles/wsb/index.htm" target="_blank">卫生部</a></li>
+                    <li><a href="http://www.moe.edu.cn/" target="_blank">教育部</a></li>
+                    <li><a href="http://www.gapp.gov.cn/cms/html/21/index.html" target="_blank">新闻出版总署</a></li>
+                    <li><a href="http://www.ahwst.gov.cn/" target="_blank">安徽省卫生厅</a></li>
+                    <li><a href="http://www.ahedu.gov.cn/" target="_blank">安徽教育网</a></li>
+                    <li><a href="http://www.ahmu.edu.cn/" target="_blank">安徽医科大学</a></li>
+                </ul>
+            </div>
+            <div class="tj">
+                <h1>访问统计</h1>
+            </div>
+            <div class="font3">
+                <h1><span>当前在线人数</span>总计@(Html.GetCurOnlineCount())人<span>总访问量</span>总计@(Html.GetAllHits())次</h1>
+            </div>
+        </div>
+        <div class="cont_m">
+            <div class="works">
+                <img src="@CurIssueInfo.TitlePhoto" alt="中华疾病杂志" title="中华疾病杂志" />
+                <div class="fonts1">
+                    <h1><span><a href="/news" target="_blank">更多&gt;&gt;</a></span><a href="/news" target="_blank">新闻动态</a></h1>
+                    <div class="fonts">
+                        <ul>
+                            @foreach (WKT.Model.SiteContentEntity item in Html.GetNewsList(4, 5))
+                            {
+                             <li><a href="/Show/4/?itemid=@item.ContentID" target="_blank">@Html.CutString(item.Title,25,"...")</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="act" style="height:488px;">
+                <h1><span><a href="/Magazine/" target="_blank">更多>></a></span></h1>
+                <p id="YearAndIssue">《中华疾病控制杂志》@(CurIssueInfo.Year)年第@(CurIssueInfo.Issue)期</p>
+                <ul class="lan">
+                @foreach (WKT.Model.IssueContentEntity item in Html.GeIssueContentList(10))
+                {
+                    <li>
+                        <a href="/Magazine/Show/?ID=@item.ContentID" target="_blank">·@item.Title</a><br />
+                        本文作者：@item.Authors<br />
+                        @(item.Year)年第@(item.Issue)期 [@item.PageNumber] 摘要 PDF(@(item.FileSize)K)
+                     </li>
+                }
+                </ul>
+            </div>
+        </div>
+        <div class=" cont_r">
+            <div class="search">
+                <form id="frmJS" style="margin: 0px;" method="post" action="/Magazine/"
+                target="_blank">
+                <h1></h1>
+                <p>
+                    <select name="Year" id="Right1_ddlYear" class="search_w2">
+	                    <option value="">全部年</option>
+                        @foreach (WKT.Model.YearVolumeEntity item in Html.GetYearVolumeList())
+                        {
+	                    <option value="@item.Year">@(item.Year)年</option>
+                        }
+                    </select>
+                    <select name="Issue" id="Right1_ddlIssue" class="search_w2">
+	                    <option value="">全部期</option>
+                        @foreach (WKT.Model.IssueSetEntity item in Html.GetIssueSetList())
+                        {
+	                    <option value="@item.Issue">No.@item.Issue</option>
+                        }
+                    </select>
+                </p>
+                <p>
+                    <input name="Title" type="text" value="标题" onfocus="javascript:if(this.value=='标题'){ this.value='';}" onblur="javaxcript: if(this.value==''){this.value='标题';}" />
+                </p>
+                <p>
+                    <input name="Authors" type="text" value="作者姓名" onfocus="javascript:if(this.value=='作者姓名'){ this.value='';}" onblur="javaxcript: if(this.value==''){this.value='作者姓名';}" />
+                </p>
+                <p>
+                    <input name="Keywords" type="text" value="关键词" onfocus="javascript:if(this.value=='关键词'){ this.value='';}" onblur="javaxcript: if(this.value==''){this.value='关键词';}" />
+                </p>
+                <p>
+                    <input type="image" class="search_an" name="imageField" id="imageField" src="/content/skin1/images/index/qkjs_inc.jpg" />
+                </p>
+                </form>
+            </div>
+            <div class="works">
+                <h1></h1>
+                <a href="@Html.AdminUrl()/user/login?group=author" target="_blank"><img src="/content/skin1/images/index/dsq1.jpg" alt="作者在线投稿" title="作者在线投稿" /></a>
+                <a href="@Html.AdminUrl()/user/login?group=author" target="_blank"><img src="/content/skin1/images/index/dsq2.jpg"  alt="作者在线查稿" title="作者在线查稿" /></a>
+                <a href="@Html.AdminUrl()/user/login?group=expert" target="_blank"><img src="/content/skin1/images/index/dsq3.jpg"  alt="专家在线审稿" title="专家在线审稿" /></a>
+                <a href="@Html.AdminUrl()/user/login" target="_blank"><img src="/content/skin1/images/index/dsq4.jpg"  alt="编辑在线办公" title="编辑在线办公" /></a>
+            </div>
+            <div class="fonts">
+                <a href="http://www.ahmu.edu.cn/" class="link1">中华人民共和国卫生部</a>
+                <a href="http://www.cpma.org.cn/" class="link2">中华预防医学会</a>
+                <a href="http://www.moh.gov.cn/publicfiles/business/htmlfiles/wsb/" class="link3">安徽医科大学</a>
+            </div>
+         </div>
+    </div>
+    <!--cont1 end-->

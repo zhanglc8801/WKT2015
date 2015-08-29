@@ -1,0 +1,142 @@
+﻿<style type="text/css">   
+    body{ font-size:12px;}
+    .l-table-edit {border:1px solid #bed5f3;border-collapse: collapse;width:100%}
+    .l-table-edit-td-left{ padding:4px;text-align:right;width:90px;}
+    .l-table-edit-td{ padding:4px;}
+    .l-button-submit,.l-button-test{width:80px; float:left; margin-left:10px; padding-bottom:2px;}  
+</style>
+<div style="width: 98%; padding: 5px;">
+    <form name="form1" method="post" id="form1">
+    @{
+        if (ViewBag.MsgType == 2)
+        {
+        <div id="divSms" style="margin: 5px;">
+            <table cellpadding="0" cellspacing="0" class="l-table-edit">
+                <tr>
+                    <td align="right" class="l-table-edit-td-left">
+                        <span style="color: Red">*</span>短信内容：
+                    </td>
+                    <td align="left" class="l-table-edit-td" colspan="3">
+                        短信内容不得超过70个字，已输入<span id="inputCount" style="color: red;">0</span>个字符<br />
+                        <textarea cols="100" rows="4" class="l-textarea" id="txtSms" maxlength="70" style="width: 400px"
+                            onkeydown="return Ismaxlength('txtSms')" onkeyup="return Ismaxlength('txtSms')"
+                            onchange="Ismaxlength('txtSms')"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        }
+        else
+        {
+        <div id="divEmail" style="margin: 5px;">
+            <table cellpadding="0" cellspacing="0" class="l-table-edit">
+                <tr>
+                    <td align="right" class="l-table-edit-td-left">
+                        <span style="color: Red">*</span>邮件主题：
+                    </td>
+                    <td align="left" class="l-table-edit-td">
+                        <input type="text" id="txtETitle" ltype="text" maxlength="50" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="l-table-edit-td-left">
+                        <span style="color: Red">*</span>邮件内容：
+                    </td>
+                    <td align="left" class="l-table-edit-td" colspan="3">
+                        <textarea cols="100" rows="4" class="l-textarea" id="txtEmail" style="width: 400px"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        }
+    }
+    </form>
+</div>
+@section Scripts{
+<script type="text/javascript" src="@Html.RootPath()/content/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    var msgType='@ViewBag.MsgType';
+    $(function () {
+        if (msgType != '2') {
+            CKEDITOR.replace('txtEmail');           
+        }
+        $("form").ligerForm({ inputWidth: 200 });
+    });
+
+    function Ismaxlength(id) {
+        var obj = $("#" + id);
+        var mlength = parseInt(obj.attr("maxlength"));
+        if (obj.val().length > mlength)
+            obj.val(obj.val().substring(0, mlength));
+        $("#inputCount").html(obj.val().length);
+    }
+
+    function Save(manager, dialog, userId) {
+        var url = '',  msg = '';
+        var saveParams = {  };
+        if (msgType == '2') {
+            msg = GetSmsParams(saveParams); url = '@Html.RootPath()/SmsTemp/SendSms/';
+        }
+        else {
+            msg = GetEmailParams(saveParams); url = '@Html.RootPath()/EmailTemp/SendEmail/';
+        }
+        if (msg.length>0) {
+            alert(msg);
+        }
+        if (!confirm("您确认回复吗？")) return;
+        saveParams.ReciveUserStr = userId;
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: saveParams,
+            cache: false,
+            success: function (data) {
+                alert(data.msg);
+                if (data.result == "success") {
+                    dialog.close();
+                    //manager.loadData();
+                }
+            },
+            error: function (xhr) {
+                alert('数据源访问错误' + '\n' + xhr.responseText);
+            }
+        });
+    }
+
+    function GetEmailParams(saveParams) {
+        var objTitle = $("#txtETitle"), title = $.trim(objTitle.val()), msg = '';
+        if (title.length < 1) {
+            msg = '请输入邮件标题';
+            objTitle.focus();
+            return msg;
+        }
+        if ($.trim(CKEDITOR.instances.txtEmail.document.getBody().getText()).length < 1) {
+            msg = "请输入邮件内容！";
+            $("#txtEmail").focus();
+            return msg;
+        }
+        saveParams.MsgTitle = title;
+        saveParams.MsgContent = encodeURIComponent($.trim(CKEDITOR.instances.txtEmail.getData()));
+        saveParams.MsgType = 1;
+        saveParams.SendType = 0;
+        saveParams.IsAuthor = true;       
+        return msg;
+    }
+
+    function GetSmsParams(saveParams) {
+        var objContent = $("#txtSms"); content = $.trim(objContent.val()), msg = '';
+        if (content.length < 1) {
+            msg = '请输入短信内容';
+            objContent.focus();
+            return msg;
+        }
+        saveParams.MsgTitle = '';
+        saveParams.MsgContent = content;
+        saveParams.MsgType = 2;
+        saveParams.SendType = 0;
+        saveParams.IsAuthor = true;
+        return msg;
+    }
+</script>
+}
+

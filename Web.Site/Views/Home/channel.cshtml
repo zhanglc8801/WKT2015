@@ -1,0 +1,26 @@
+﻿@model WKT.Model.SiteModel
+@{
+    ViewBag.Position = ViewBag.Title;
+    ViewBag.Title = ViewBag.Title + "-" + Html.SiteName();
+}
+<div class="C_right" style=" height: auto; min-height:720px;">
+    <h4 class="list_site">您当前的位置：<a href="/">首页</a> &gt;&gt; <a>@Html.Raw(Model.ConentEntity.Title)</a></h4>
+    <ul><li style="background:0;border-bottom:1px solid #5ec9db;font-weight:900;color:#000;"></li></ul>
+    
+    <div style="text-align:center; margin-top: 20px; font-weight:bold; font-size:22px;">
+        @Html.Raw(Model.ConentEntity.Title)
+    </div>
+    <div style=" padding-left:5px; padding-top:10px; line-height:25px;">
+        @Html.Raw(Model.ConentEntity.Content)
+    </div>  
+    
+     
+
+</div>
+        <div>&nbsp;</div>       
+        <div id="footer" >
+            <p></p><br/>
+            <p>北京市丰台区东大街8号信息楼 《灾害医学与救援（电子版）》 编辑部<br />
+                电话：（010）66947905，（010）51128591 传真：（010）66947906</p>
+        </div>
+  

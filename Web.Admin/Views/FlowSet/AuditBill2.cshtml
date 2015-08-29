@@ -1,0 +1,360 @@
+﻿@model WKT.Model.FlowStep
+<style type="text/css">
+    a
+    {
+        color: #c75f3e;
+    }
+    
+    #mytable
+    {
+        width: auto;
+        padding: 8px;
+        margin: 2px;
+    }
+    #mytable1
+    {
+        width: auto;
+        padding: 8px;
+        margin: 2px;
+    }
+    caption
+    {
+        padding: 0 0 5px 0;
+        width: 700px;
+        font: italic 11px "Trebuchet MS" , Verdana, Arial, Helvetica, sans-serif;
+        text-align: right;
+    }
+    
+    th
+    {
+        font: bold 16px "Trebuchet MS" , Verdana, Arial, Helvetica, sans-serif;
+        color: #4f6b72;
+        border-right: 1px solid #C1DAD7;
+        border-bottom: 1px solid #C1DAD7;
+        border-top: 1px solid #C1DAD7;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-align: left;
+        padding: 6px 6px 6px 12px;
+        background: #CAE8EA no-repeat;
+    }
+    
+    th.nobg
+    {
+        border-top: 0;
+        border-left: 0;
+        border-right: 1px solid #C1DAD7;
+        background: none;
+    }
+    
+    td
+    {
+        border-right: 0px solid #C1DAD7;
+        border-bottom: 0px solid #C1DAD7;
+        background: #fff;
+        font-size: 13px;
+        height: 30px;
+        color: #4f6b72;
+    }
+    
+    
+    td.alt
+    {
+        background: #F5FAFA;
+        color: #797268;
+    }
+    
+    th.spec
+    {
+        border-left: 0px solid #C1DAD7;
+        border-top: 0;
+        background: #fff no-repeat;
+        font: bold 10px "Trebuchet MS" , Verdana, Arial, Helvetica, sans-serif;
+    }
+    
+    th.specalt
+    {
+        border-left: 1px solid #C1DAD7;
+        border-top: 0;
+        background: #f5fafa no-repeat;
+        font: bold 10px "Trebuchet MS" , Verdana, Arial, Helvetica, sans-serif;
+        color: #797268;
+    }
+    /*---------for IE 5.x bug*/
+</style>
+<div style="width: 100%;">
+    <table id="mytable" style="float: left; width: 22%">
+        <tr>
+            <th scope="col">
+                已选稿件列表
+            </th>
+        </tr>
+        <tr>
+            <td scope="row">
+                <select id="selContributionList" multiple="multiple" style="height: 570px; width: 225px;">
+                    @foreach (var key in Model.DictContribution.Keys)
+                    {
+                        <option value="@key">@Model.DictContribution[key]</option>
+                    }
+                </select>
+                <select id="selCIDLogID" style="display: none;">
+                    @foreach (var key in Model.DictLogID.Keys)
+                    {
+                        <option value="@key">@Model.DictLogID[key]</option>
+                    }
+                </select>
+                <input type="hidden" id="hiddenCID" />
+            </td>
+        </tr>
+    </table>
+    <table id="mytable1" style="float: right; width: 74%">
+        <tr>
+            <th scope="col" colspan="2">
+                审稿操作:[@Model.FlowAction.ActionName]
+            </th>
+        </tr>
+        <tr>
+            <td scope="row">
+                接收人：
+            </td>
+            <td scope="row">
+                @if (Model.FlowAuthorList != null)
+                {
+                    if (Model.FlowConfig.IsMultiPerson || Model.FlowAction.ActionRoleID == 3 || Model.FlowAction.ActionID == -1)
+                    {
+                    <div id="divExpertList" class="it1" style="width: 180px;">
+                    </div>
+                    <div style="margin-top: -20px; margin-left: 185px; width: 25px">
+                        <img src="@Html.GetImages("zoom.jpg")" style="cursor:pointer;" id="imgSelExpert" alt="选择专家" title="选择专家"/></div>
+                    }
+                    else
+                    {
+                        var index = 1;
+                        foreach (WKT.Model.AuthorInfoEntity item in Model.FlowAuthorList)
+                        {
+                            if (index%5==0)
+                            {
+                    <input type="radio" name="chbAuthor" value="@item.AuthorID"/> @item.RealName<br />
+                            }
+                            else
+                            {
+                    <input type="radio" name="chbAuthor" value="@item.AuthorID"/> @item.RealName
+
+                            }
+                            index++;
+                        }
+                    }
+                }
+            </td>
+        </tr>
+        <tr>
+            <td scope="row">
+                审毕时间：
+            </td>
+            <td scope="row">
+                <input class="text" name="AuditedDate" id="txtAuditedDate" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td scope="row">
+                消息通知：
+            </td>
+            <td scope="row">
+                <div style="margin-top: 10px" class="data-tab">
+                    <ul>
+                        <li class="on" id="liSendMail"><a href="javascript:void(0);">发送邮件</a></li>
+                        <li class="next" id="liSendSMS"><a href="javascript:void(0);">发送短信</a></li>
+                    </ul>
+                </div>
+                @if (Model.EmailTemplate != null)
+                {
+                    <div id="divSendMail" style="margin: 5px;">
+                        <div style="margin: 5px;">
+                            <input type="checkbox" id="chbSendMail" checked="checked" />&nbsp;发送邮件</div>
+                        <div id="divMailContent" style="overflow-y: scroll;">
+                            <div style="margin: 5px;">
+                                邮件标题：<input type="text" class="txtbox" id="txtEmailTitle" style="width:316px;" value="@Model.EmailTemplate.Title"  /></div>
+                            <div style="margin: 5px;">
+                                <textarea id="fckContent" cols="50" rows="100" name="fckContent">@Model.EmailTemplate.TContent</textarea></div>
+                        </div>
+                    </div>
+                }
+                @if (Model.SMSTemplate != null)
+                {
+                    <div id="divSendSMS" style="margin: 5px; display: none;">
+                        <div style="margin: 5px;">
+                            <input type="checkbox" id="chbSendSMS" />&nbsp;发送短信</div>
+                        <div id="divSMSContent" style="display: none;">
+                            <textarea name="txtSMSBody" rows="2" cols="20" id="txtSMSBody" class="txtbox" style="height: 60px;
+                                width: 98%;">@Model.SMSTemplate.TContent</textarea>
+                        </div>
+                    </div>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td scope="row">
+                <input type="file" name="ContributePath" id="txtContributePath" />
+                <div id="divContributePath" style="display: none; margin-left: 10px; font-size: 14px;
+                    position: relative; width: 100px; margin-top: 3px; float: left;">
+                    <a href="javascript:void(0)" id="aContributePath">附件上传</a></div>
+            </td>
+            <td scope="row">
+                <div>
+                    <span class="tip" style="color: Red">支持文件格式：@Html.ContributionInfoFileExt(0).Replace(";*.", " | ")</span></div>
+            </td>
+        </tr>
+        <tr>
+            <td scope="row">
+                <input type="file" name="FigurePath" id="txtFigurePath" />
+                <div id="divFigurePath" style="display: none; margin-left: 10px; font-size: 14px;
+                    position: relative; width: 100px; margin-top: 3px; float: left;">
+                    <a href="javascript:void(0)" id="aFigurePath">附件上传</a></div>
+            </td>
+            <td scope="row">
+                <div>
+                    <span class="tip" style="color: Red">支持文件格式：@Html.ContributionInfoFileExt(1).Replace(";*.", " | ")</span></div>
+            </td>
+        </tr>
+        <tr>
+            <td scope="row">
+            </td>
+            <th scope="col" align="right">
+                <a href="javascript:submit()">提交</a>
+            </th>
+        </tr>
+    </table>
+</div>
+@section Scripts{
+    <script src="@Html.RootPath()/Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="@Html.RootPath()/content/ckeditor/ckeditor.js"></script>
+    <script src="@Html.RootPath()/Scripts/jquery.tabgroup.js" type="text/javascript"></script>
+    <script type="text/javascript" src="@Html.RootPath()/Scripts/Uploadify/jquery.uploadify.js"></script>
+    <script src="@Html.RootPath()/Scripts/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script type="text/javascript" src="@Html.RootPath()/Scripts/page/page.auditbill.js?rnd=123123"></script>
+    <script type="text/javascript" src="@Html.RootPath()/Scripts/Uploadify/jquery.uploadify.js"></script>
+    <script src="@Html.RootPath()/Scripts/validation/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/validation/jquery.metadata.js?111" type="text/javascript"></script>
+    <script src="@Html.RootPath()/Scripts/validation/messages_cn.js" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+    var ActionType = @Model.FlowAction.ActionType;
+    var ActionID = @Model.FlowAction.ActionID;
+    var RootPath = '@Html.RootPath()';
+    var StatusID = @ViewBag.StatusID;
+    var contributePath = '', figurePath = '', otherPath = '';
+    var selExpertAarray = [];
+    $(function () {
+        CKEDITOR.replace('fckContent', {
+            toolbar: 'basic',
+            height:250,
+            toolbarCanCollapse: false
+        });
+        CKEDITOR.instances.fckContent.setData($("#fckContent").val());
+
+        // 选择专家
+        $("#imgSelExpert").click(function()
+        {
+            var common = new CommonPage();
+            common.SelExpert("divExpertList",selExpertAarray);
+        });
+
+        $("#Layout").ligerLayout({ leftWidth: '22.6%', centerWidth: '77.4%', allowLeftCollapse: false });
+        // tab
+        var tArtist2 = new TabClickGroup("next", "on", ["liSendMail", "liSendSMS"], ["divSendMail", "divSendSMS"]);
+        // 日期选择
+        $("#txtAuditedDate").bind("click", function () {
+            var d5222 = $dp.$('txtAuditedDate');
+            WdatePicker({ readOnly: true,minDate:'%y-%M-{%d}', onpicked: function () { d5222.focus();} });
+        });
+
+        $("#txtContributePath").uploadify({
+            postData: { folder: 'ContributeInfo/ContributePath' },
+            uploader: '@Html.RootPath()/Upload/Save/',
+            buttonText: '附件上传',
+            fileTypeExts: "@Html.ContributionInfoFileExt(0)",
+            swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',
+            onUploadSuccess: function (obj, data, response) {
+                var result = eval("(" + data + ")");
+                if (result.result == "success") {
+                    contributePath = result.url;
+                    LoadFile(contributePath, "divContributePath", "aContributePath");
+                }
+                else {
+                    alert(result.msg);
+                    return;
+                }
+            }
+        });
+        $("#txtFigurePath").uploadify({
+            postData: { folder: 'ContributeInfo/FigurePath' },
+            uploader: '@Html.RootPath()/Upload/Save/',
+            buttonText: '附件上传',
+            fileTypeExts: "@Html.ContributionInfoFileExt(1)",
+            swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',
+            onUploadSuccess: function (obj, data, response) {
+                var result = eval("(" + data + ")");
+                if (result.result == "success") {
+                    figurePath = result.url;
+                    LoadFile(figurePath, "divFigurePath", "aFigurePath");
+                }
+                else {
+                    alert(result.msg);
+                    return;
+                }
+            }
+        });
+        $("#txtOtherPath").uploadify({
+            postData: { folder: 'ContributeInfo/FigurePath' },
+            uploader: '@Html.RootPath()/Upload/Save/',
+            buttonText: '附件上传',
+            fileTypeExts: "@Html.ContributionInfoFileExt(0)",
+            swf: '@Html.RootPath()/Scripts/Uploadify/uploadify.swf',
+            onUploadSuccess: function (obj, data, response) {
+                var result = eval("(" + data + ")");
+                if (result.result == "success") {
+                    otherPath = result.url;
+                    LoadFile(figurePath, "divOtherPath", "aOtherPath");
+                }
+                else {
+                    alert(result.msg);
+                    return;
+                }
+            }
+        });
+
+        $("input:[name='chbAuthor']:first").attr("checked",true);
+        $("#selContributionList").change(function(){
+            $("#hiddenCID").val($(this).val());
+        });
+        $('#selContributionList')[0].options[0].selected = true;
+        $("#hiddenCID").val( $("#selContributionList option:first").val());
+
+        $("#chbSendSMS").click(function () {
+            if ($(this).attr("checked")) {
+                $("#divSMSContent").show();
+            }
+            else {
+                $("#divSMSContent").hide();
+            }
+        });
+    })
+
+    function LoadFile(url, divId, aId) {
+        if (url.length < 1)
+            $("#" + divId).css("display", "none");
+        else {
+            $("#" + aId).unbind("click");
+            $("#" + aId).click(function () { DownLoad('@Html.RootPath()', url, $(this).html()); return false; });
+            $("#" + divId).css("display", "inline");
+        }
+    }
+
+    function  submit()
+    {
+    if (confirm('您确定要提交吗？')) {
+              SubmitAuditBill();
+           }
+    }
+
+    </script>
+}

@@ -1,0 +1,22 @@
+﻿@model WKT.Model.SiteModel
+@{
+    ViewBag.Title = ViewBag.ChannelName + "-" + Html.SiteName();
+}
+<!--cont1-->
+<div class="news">     
+    <h1>
+        位置: 首页 &gt;&gt; <a id="SiteNav1_HNav">@ViewBag.ChannelName</a>
+    </h1>
+    <ul>
+        @foreach (WKT.Model.NewsModel item in Model.ListConentEntity)
+        {
+        <li><a href="/show/@item.ChannelID/?itemid=@item.PKID" target="_blank">@item.Title</a></li>
+        }
+    </ul>
+    <div style="text-align: right; margin-top:10px;">
+        <div id="pageArticleControl" class="Pager">
+        @Html.Raw(ViewBag.PagerInfo)
+        </div>
+    </div>
+</div>
+
